@@ -1,0 +1,81 @@
+# START HERE
+
+cd /projects/Candle_ECP/brettin/integration_tests
+git clone https://github.com/ECP-Candle/Supervisor.git
+git clone https://github.com/ECP-Candle/Benchmarks
+
+cd Benchmarks/
+git branch -u origin/frameworks
+cd ..
+
+# Get benchmark data
+mkdir -p Benchmarks/Data/Pilot1
+mkdir -p Benchmarks/Data/common/
+mkdir -p Benchmarks/Data/P3B1/
+
+# Data for benchmark nt3
+wget -O Benchmarks/Data/Pilot1/nt_train2.csv -nc ftp://ftp.mcs.anl.gov/pub/candle/public/benchmarks/Pilot1/normal-tumor/nt_train2.csv
+wget -O Benchmarks/Data/Pilot1/nt_test2.csv -nc ftp://ftp.mcs.anl.gov/pub/candle/public/benchmarks/Pilot1/normal-tumor/nt_test2.csv
+
+# Data for benchmark p2b1
+wget -O Benchmarks/Data/common/3k_run10_10us.35fs-DPPC.10-DOPC.70-CHOL.20-f20.dir.tar.gz -nc ftp://ftp.mcs.anl.gov/pub/candle/public/benchmarks/Pilot2/3k_run10_10us.35fs-DPPC.10-DOPC.70-CHOL.20-f20.dir.tar.gz
+tar -C Benchmarks/Data/common/ -xvzf Benchmarks/Data/common/3k_run10_10us.35fs-DPPC.10-DOPC.70-CHOL.20-f20.dir.tar.gz
+
+# Data for benchmark p3b1
+wget -O Benchmarks/Data/P3B1/P3B1_data.tgz -nc ftp://ftp.mcs.anl.gov/pub/candle/public/benchmarks/P3B1/P3B1_data.tgz
+tar -C Benchmarks/Data/P3B1/ -xvzf Benchmarks/Data/P3B1/P3B1_data.tgz
+
+# Compile emews queue code
+pushd Supervisor/workflows/nt3_mlrMBO/ext/EQ-R/eqr/
+source ./theta_build_settings.sh
+cp settings.template.sh settings.sh
+./bootstrap
+./configure --prefix=$PWD/..
+make install
+popd
+
+pushd Supervisor/workflows/p2b1_mlrMBO/ext/EQ-R/eqr/
+source ./theta_build_settings.sh
+cp settings.template.sh settings.sh
+./bootstrap
+./configure --prefix=$PWD/..
+make install
+popd
+
+pushd Supervisor/workflows/p3b1_mlrMBO/ext/EQ-R/eqr/
+source ./theta_build_settings.sh
+cp settings.template.sh settings.sh
+./bootstrap
+./configure --prefix=$PWD/..
+make install
+popd
+
+
+
+# set the number of nodes to use (actually, the number of MPI processes)
+export PROCS=10
+
+# set the number of MPI processes per node
+# export PPN=1
+
+# set the parameter set file
+# export PARAM_SET_FILE Supervisor/workflows/nt3_mlrMBO/data/parameter_set3.R
+
+# set the design size (num parameter sets to run in 0th interation)
+export DESIGN_SIZE=8
+
+# set the number of parameter sets to run in 1st - nth iterstions
+export PROPOSE_POINTS=8
+
+# limit the number of interations 
+export MAX_ITERATIONS=2
+
+# limit the maximum number of model evaulations (DESIGN_SIZE + MAX_ITERATIONS*PROPOSE_POINTS)
+export MAX_BUDGET=25
+
+# set new location for TURBINE_OUTPUT
+# not implemetned yet
+
+# run the workflow
+pushd Supervisor/workflows/nt3_mlrMBO/swift
+./theta_workflow.sh Test1
