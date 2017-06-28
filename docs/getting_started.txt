@@ -4,9 +4,9 @@ cd /projects/Candle_ECP/brettin/integration_tests
 git clone https://github.com/ECP-Candle/Supervisor.git
 git clone https://github.com/ECP-Candle/Benchmarks
 
-cd Benchmarks/
+pushd Benchmarks/
 git branch -u origin/frameworks
-cd ..
+popd
 
 # Get benchmark data
 mkdir -p Benchmarks/Data/Pilot1
@@ -74,8 +74,20 @@ export MAX_ITERATIONS=2
 export MAX_BUDGET=25
 
 # set new location for TURBINE_OUTPUT
-# not implemetned yet
+export TURBINE_OUTPUT=/projects/Candle_ECP/brettin
 
-# run the workflow
+
+# run the workflow on nt3
 pushd Supervisor/workflows/nt3_mlrMBO/swift
 ./theta_workflow.sh Test1
+popd
+
+# run the workflow on p2b1
+pushd Supervisor/workflows/p2b1_mlrMBO/swift
+./theta_workflow.sh Test2
+popd
+
+# run the workflow on p3b1
+pushd Supervisor/workflows/p3b1_mlrMBO/swift
+./theta_workflow.sh Test3
+popd
