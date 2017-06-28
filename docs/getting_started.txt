@@ -22,8 +22,8 @@ wget -O Benchmarks/Data/common/3k_run10_10us.35fs-DPPC.10-DOPC.70-CHOL.20-f20.di
 tar -C Benchmarks/Data/common/ -xvzf Benchmarks/Data/common/3k_run10_10us.35fs-DPPC.10-DOPC.70-CHOL.20-f20.dir.tar.gz
 
 # Data for benchmark p3b1
-wget -O Benchmarks/Data/P3B1/P3B1_data.tgz -nc ftp://ftp.mcs.anl.gov/pub/candle/public/benchmarks/P3B1/P3B1_data.tgz
-tar -C Benchmarks/Data/P3B1/ -xvzf Benchmarks/Data/P3B1/P3B1_data.tgz
+wget -O Benchmarks/Data/P3B1/P3B1_data.tar.gz -nc ftp://ftp.mcs.anl.gov/pub/candle/public/benchmarks/P3B1/P3B1_data.tar.gz
+tar -C Benchmarks/Data/P3B1/ -xvzf Benchmarks/Data/P3B1/P3B1_data.tar.gz
 
 # Compile emews queue code
 pushd Supervisor/workflows/nt3_mlrMBO/ext/EQ-R/eqr/
