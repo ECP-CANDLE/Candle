@@ -1,10 +1,17 @@
+# rm -rf /projects/Candle_ECP/brettin/integration_tests
+mkdir /projects/Candle_ECP/brettin/integration_tests-2
+export PROJECT=Candle_ECP
+
+
 # 1. Get the necessary code, data, and compile code that needs to be compiled
-cd /projects/Candle_ECP/brettin/integration_tests
+cd /projects/Candle_ECP/brettin/integration_tests-2
 git clone https://github.com/ECP-Candle/Supervisor.git
 git clone https://github.com/ECP-Candle/Benchmarks
 
+# This should go away when frameworks merges into master
 pushd Benchmarks/
 git branch -u origin/frameworks
+git pull
 popd
 
 # Get benchmark data
@@ -21,33 +28,60 @@ wget -O Benchmarks/Data/common/3k_run10_10us.35fs-DPPC.10-DOPC.70-CHOL.20-f20.di
 tar -C Benchmarks/Data/common/ -xvzf Benchmarks/Data/common/3k_run10_10us.35fs-DPPC.10-DOPC.70-CHOL.20-f20.dir.tar.gz
 
 # Data for benchmark p3b1
-wget -O Benchmarks/Data/P3B1/P3B1_data.tgz -nc ftp://ftp.mcs.anl.gov/pub/candle/public/benchmarks/P3B1/P3B1_data.tgz
-tar -C Benchmarks/Data/P3B1/ -xvzf Benchmarks/Data/P3B1/P3B1_data.tgz
+wget -O Benchmarks/Data/P3B1/P3B1_data.tgz -nc ftp://ftp.mcs.anl.gov/pub/candle/public/benchmarks/P3B1/P3B1_data.tar.gz
+tar -C Benchmarks/Data/P3B1/ -xvzf Benchmarks/Data/P3B1/P3B1_data.tar.gz
 
-# Compile emews queue code
-pushd Supervisor/workflows/nt3_mlrMBO/ext/EQ-R/eqr/
-source ./theta_build_settings.sh
-cp settings.template.sh settings.sh
-./bootstrap
-./configure --prefix=$PWD/..
-make install
-popd
 
 pushd Supervisor/workflows/p2b1_mlrMBO/ext/EQ-R/eqr/
-source ./theta_build_settings.sh
-cp settings.template.sh settings.sh
 ./bootstrap
-./configure --prefix=$PWD/..
+source ./theta_build_settings.sh
+./configure
+make install
+
+# Compile emews queue code
+pushd Supervisor/workflows/p2b1_mlrMBO/ext/EQ-R/eqr/
+./bootstrap
+source ./theta_build_settings.sh
+./configure
 make install
 popd
 
-pushd Supervisor/workflows/p3b1_mlrMBO/ext/EQ-R/eqr/
-source ./theta_build_settings.sh
-cp settings.template.sh settings.sh
+
+# pushd Supervisor/workflows/nt3_mlrMBO/ext/EQ-R/eqr/
+# source ./theta_build_settings.sh
+# cp settings.template.sh settings.sh
+# ./bootstrap
+# ./configure --prefix=$PWD/..
+# make install
+# popd
+
+pushd Supervisor/workflows/p2b1_mlrMBO/ext/EQ-R/eqr/
 ./bootstrap
-./configure --prefix=$PWD/..
+source ./theta_build_settings.sh
+./configure
 make install
 popd
+
+# source ./theta_build_settings.sh
+# cp settings.template.sh settings.sh
+# ./bootstrap
+# ./configure --prefix=$PWD/..
+# make install
+# popd
+
+pushd Supervisor/workflows/p3b1_mlrMBO/ext/EQ-R/eqr/
+./bootstrap
+source ./theta_build_settings.sh
+./configure
+make install
+popd
+
+# source ./theta_build_settings.sh
+# cp settings.template.sh settings.sh
+# ./bootstrap
+# ./configure --prefix=$PWD/..
+# make install
+# popd
 
 
 # 2 Set up the envorinment for the runs
@@ -72,8 +106,8 @@ export MAX_ITERATIONS=2
 # limit the maximum number of model evaulations (DESIGN_SIZE + MAX_ITERATIONS*PROPOSE_POINTS)
 export MAX_BUDGET=25
 
-# set new location for TURBINE_OUTPUT
-export TURBINE_OUTPUT=/projects/Candle_ECP/brettin
+# set new location for TURBINE_OUTPUT_ROOT
+export TURBINE_OUTPUT_ROOT=/projects/Candle_ECP/brettin/integration_tests-2/experiments
 
 # 3. Perform the runs
 # run the workflow on nt3
