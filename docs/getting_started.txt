@@ -1,5 +1,4 @@
-# START HERE
-
+# 1. Get the necessary code, data, and compile code that needs to be compiled
 cd /projects/Candle_ECP/brettin/integration_tests
 git clone https://github.com/ECP-Candle/Supervisor.git
 git clone https://github.com/ECP-Candle/Benchmarks
@@ -51,7 +50,7 @@ make install
 popd
 
 
-
+# 2 Set up the envorinment for the runs
 # set the number of nodes to use (actually, the number of MPI processes)
 export PROCS=10
 
@@ -76,7 +75,7 @@ export MAX_BUDGET=25
 # set new location for TURBINE_OUTPUT
 export TURBINE_OUTPUT=/projects/Candle_ECP/brettin
 
-
+# 3. Perform the runs
 # run the workflow on nt3
 pushd Supervisor/workflows/nt3_mlrMBO/swift
 ./theta_workflow.sh Test1
