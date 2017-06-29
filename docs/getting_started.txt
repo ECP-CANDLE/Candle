@@ -1,10 +1,15 @@
-# rm -rf /projects/Candle_ECP/brettin/integration_tests
-mkdir /projects/Candle_ECP/brettin/integration_tests-2
-export PROJECT=Candle_ECP
+NOW=$(date +%Y-%m-%d-%H:%M:%S)
 
+# #rm -rf /projects/Candle_ECP/brettin/integration_tests
+mkdir /projects/Candle_ECP/brettin/integration_tests-$NOW
+
+# Set project with allocation
+export PROJECT=Candle_ECP
+export QUEUE=debug
+export WALLTIME=02:00:00
 
 # 1. Get the necessary code, data, and compile code that needs to be compiled
-cd /projects/Candle_ECP/brettin/integration_tests-2
+cd /projects/Candle_ECP/brettin/integration_tests-$NOW
 git clone https://github.com/ECP-Candle/Supervisor.git
 git clone https://github.com/ECP-Candle/Benchmarks
 
@@ -31,14 +36,15 @@ tar -C Benchmarks/Data/common/ -xvzf Benchmarks/Data/common/3k_run10_10us.35fs-D
 wget -O Benchmarks/Data/P3B1/P3B1_data.tgz -nc ftp://ftp.mcs.anl.gov/pub/candle/public/benchmarks/P3B1/P3B1_data.tar.gz
 tar -C Benchmarks/Data/P3B1/ -xvzf Benchmarks/Data/P3B1/P3B1_data.tar.gz
 
-
-pushd Supervisor/workflows/p2b1_mlrMBO/ext/EQ-R/eqr/
+# Compile emews queue code nt3
+pushd Supervisor/workflows/nt3_mlrMBO/ext/EQ-R/eqr/
 ./bootstrap
 source ./theta_build_settings.sh
 ./configure
 make install
+popd
 
-# Compile emews queue code
+# Compile emews queue code p2b1
 pushd Supervisor/workflows/p2b1_mlrMBO/ext/EQ-R/eqr/
 ./bootstrap
 source ./theta_build_settings.sh
@@ -46,29 +52,7 @@ source ./theta_build_settings.sh
 make install
 popd
 
-
-# pushd Supervisor/workflows/nt3_mlrMBO/ext/EQ-R/eqr/
-# source ./theta_build_settings.sh
-# cp settings.template.sh settings.sh
-# ./bootstrap
-# ./configure --prefix=$PWD/..
-# make install
-# popd
-
-pushd Supervisor/workflows/p2b1_mlrMBO/ext/EQ-R/eqr/
-./bootstrap
-source ./theta_build_settings.sh
-./configure
-make install
-popd
-
-# source ./theta_build_settings.sh
-# cp settings.template.sh settings.sh
-# ./bootstrap
-# ./configure --prefix=$PWD/..
-# make install
-# popd
-
+# Compile emews queue code p3b1
 pushd Supervisor/workflows/p3b1_mlrMBO/ext/EQ-R/eqr/
 ./bootstrap
 source ./theta_build_settings.sh
@@ -76,15 +60,8 @@ source ./theta_build_settings.sh
 make install
 popd
 
-# source ./theta_build_settings.sh
-# cp settings.template.sh settings.sh
-# ./bootstrap
-# ./configure --prefix=$PWD/..
-# make install
-# popd
 
-
-# 2 Set up the envorinment for the runs
+# 2 Set up the environment for the runs
 # set the number of nodes to use (actually, the number of MPI processes)
 export PROCS=10
 
@@ -107,20 +84,23 @@ export MAX_ITERATIONS=2
 export MAX_BUDGET=25
 
 # set new location for TURBINE_OUTPUT_ROOT
-export TURBINE_OUTPUT_ROOT=/projects/Candle_ECP/brettin/integration_tests-2/experiments
+export TURBINE_OUTPUT_ROOT="/projects/Candle_ECP/brettin/integration_tests-"$NOW"/experiments"
 
 # 3. Perform the runs
 # run the workflow on nt3
 pushd Supervisor/workflows/nt3_mlrMBO/swift
-./theta_workflow.sh Test1
+./theta_workflow.sh Test1 &
 popd
 
 # run the workflow on p2b1
 pushd Supervisor/workflows/p2b1_mlrMBO/swift
-./theta_workflow.sh Test2
+./theta_workflow.sh Test2 &
 popd
 
 # run the workflow on p3b1
 pushd Supervisor/workflows/p3b1_mlrMBO/swift
-./theta_workflow.sh Test3
+./theta_workflow.sh Test3 &
 popd
+
+
+
