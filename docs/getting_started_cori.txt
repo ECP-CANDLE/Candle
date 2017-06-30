@@ -5,11 +5,16 @@ INTEGRATION_TEST_ROOT="/global/project/projectdirs/m2759/brettin/integration_tes
 
 mkdir $INTEGRATION_TEST_ROOT
 
+# Set project with allocation
+export QUEUE=regular
+export WALLTIME=02:00:00
+
 # 1. Get the necessary code, data, and compile code that needs to be compiled
 cd $INTEGRATION_TEST_ROOT
 git clone https://github.com/ECP-Candle/Supervisor.git
 git clone https://github.com/ECP-Candle/Benchmarks
 
+# This should go away when frameworks merges into master
 pushd Benchmarks/
 git branch -u origin/frameworks
 git pull
@@ -46,7 +51,7 @@ pushd Supervisor/workflows/p3b1_mlrMBO/ext/EQ-R/eqr/
 popd
 
 
-# 2 Set up the envorinment for the runs
+# 2 Set up the environment for the runs
 # set the number of nodes to use (actually, the number of MPI processes)
 export PROCS=10
 
@@ -70,9 +75,6 @@ export MAX_BUDGET=25
 
 # set new location for TURBINE_OUTPUT_ROOT
 export TURBINE_OUTPUT_ROOT=$INTEGRATION_TEST_ROOT
-
-export QUEUE=regular
-export WALLTIME=02:00:00
 
 # 3. Perform the runs
 # run the workflow on nt3
