@@ -1,5 +1,8 @@
-export INTEGRATION_TEST_ROOT=/global/project/projectdirs/m2759/hsyoo/integration_test
-rm -rf $INTEGRATION_TEST_ROOT
+NOW=$(date +%Y_%m_%d_%H_%M_%S)
+
+# INTEGRATION_TEST_ROOT="/global/project/projectdirs/m2759/hsyoo/integration_test-"$NOW
+INTEGRATION_TEST_ROOT="/global/project/projectdirs/m2759/brettin/integration_test-"$NOW
+
 mkdir $INTEGRATION_TEST_ROOT
 
 # 1. Get the necessary code, data, and compile code that needs to be compiled
