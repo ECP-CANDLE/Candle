@@ -37,15 +37,17 @@ tar -C Benchmarks/Data/common/ -xvzf Benchmarks/Data/common/3k_run10_10us.35fs-D
 wget -O Benchmarks/Data/P3B1/P3B1_data.tar.gz -nc ftp://ftp.mcs.anl.gov/pub/candle/public/benchmarks/P3B1/P3B1_data.tar.gz
 tar -C Benchmarks/Data/P3B1/ -xvzf Benchmarks/Data/P3B1/P3B1_data.tar.gz
 
-# Compile emews queue code
+# Compile emews queue code nt3
 pushd Supervisor/workflows/nt3_mlrMBO/ext/EQ-R/eqr/
 ./cori_build.sh
 popd
 
+# Compile emews queue code p2b1
 pushd Supervisor/workflows/p2b1_mlrMBO/ext/EQ-R/eqr/
 ./cori_build.sh
 popd
 
+# Compile emews queue code p3b1
 pushd Supervisor/workflows/p3b1_mlrMBO/ext/EQ-R/eqr/
 ./cori_build.sh
 popd
@@ -74,7 +76,7 @@ export MAX_ITERATIONS=2
 export MAX_BUDGET=25
 
 # set new location for TURBINE_OUTPUT_ROOT
-export TURBINE_OUTPUT_ROOT=$INTEGRATION_TEST_ROOT
+export TURBINE_OUTPUT_ROOT=$INTEGRATION_TEST_ROOT/experiments
 
 # 3. Perform the runs
 # run the workflow on nt3

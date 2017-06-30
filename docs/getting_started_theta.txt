@@ -1,15 +1,17 @@
-NOW=$(date +%Y-%m-%d-%H:%M:%S)
+NOW=$(date +%Y_%m_%d_%H_%M_%S)
 
-# #rm -rf /projects/Candle_ECP/brettin/integration_tests
-mkdir /projects/Candle_ECP/brettin/integration_tests-$NOW
+# INTEGRATION_TEST_ROOT="/projects/Candle_ECP/hsyoo/integration_tests-"$NOW
+INTEGRATION_TEST_ROOT="/projects/Candle_ECP/brettin/integration_tests-"$NOW
+
+mkdir $INTEGRATION_TEST_ROOT
 
 # Set project with allocation
 export PROJECT=Candle_ECP
-export QUEUE=debug
+export QUEUE=default
 export WALLTIME=02:00:00
 
 # 1. Get the necessary code, data, and compile code that needs to be compiled
-cd /projects/Candle_ECP/brettin/integration_tests-$NOW
+cd $INTEGRATION_TEST_ROOT
 git clone https://github.com/ECP-Candle/Supervisor.git
 git clone https://github.com/ECP-Candle/Benchmarks
 
@@ -33,7 +35,7 @@ wget -O Benchmarks/Data/common/3k_run10_10us.35fs-DPPC.10-DOPC.70-CHOL.20-f20.di
 tar -C Benchmarks/Data/common/ -xvzf Benchmarks/Data/common/3k_run10_10us.35fs-DPPC.10-DOPC.70-CHOL.20-f20.dir.tar.gz
 
 # Data for benchmark p3b1
-wget -O Benchmarks/Data/P3B1/P3B1_data.tgz -nc ftp://ftp.mcs.anl.gov/pub/candle/public/benchmarks/P3B1/P3B1_data.tar.gz
+wget -O Benchmarks/Data/P3B1/P3B1_data.tar.gz -nc ftp://ftp.mcs.anl.gov/pub/candle/public/benchmarks/P3B1/P3B1_data.tar.gz
 tar -C Benchmarks/Data/P3B1/ -xvzf Benchmarks/Data/P3B1/P3B1_data.tar.gz
 
 # Compile emews queue code nt3
@@ -84,7 +86,7 @@ export MAX_ITERATIONS=2
 export MAX_BUDGET=25
 
 # set new location for TURBINE_OUTPUT_ROOT
-export TURBINE_OUTPUT_ROOT="/projects/Candle_ECP/brettin/integration_tests-"$NOW"/experiments"
+export TURBINE_OUTPUT_ROOT=$INTEGRATION_TEST_ROOT/experiments
 
 # 3. Perform the runs
 # run the workflow on nt3
@@ -101,6 +103,3 @@ popd
 pushd Supervisor/workflows/p3b1_mlrMBO/swift
 ./theta_workflow.sh Test3 &
 popd
-
-
-
