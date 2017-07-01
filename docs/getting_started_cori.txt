@@ -7,7 +7,7 @@ mkdir $INTEGRATION_TEST_ROOT
 
 # Set project with allocation
 export QUEUE=regular
-export WALLTIME=02:00:00
+export WALLTIME=05:00:00
 
 # 1. Get the necessary code, data, and compile code that needs to be compiled
 cd $INTEGRATION_TEST_ROOT
@@ -64,7 +64,7 @@ export PPN=1
 # export PARAM_SET_FILE Supervisor/workflows/nt3_mlrMBO/data/parameter_set3.R
 
 # set the design size (num parameter sets to run in 0th interation)
-export DESIGN_SIZE=20
+export DESIGN_SIZE=16
 
 # set the number of parameter sets to run in 1st - nth iterstions
 export PROPOSE_POINTS=8
