@@ -1,18 +1,19 @@
-import common
-import default_utils
+import mnist
+import candle_keras as candle
+
 from keras.callbacks import CSVLogger
 from keras import backend as K
 
 def initialize_parameters():
-    mnist_common = common.MNIST(common.file_path,
-        'default_model.txt',
+    mnist_common = mnist.MNIST(mnist.file_path,
+        'mnist_params.txt',
         'keras',
         prog='mnist_cnn',
         desc='MNIST CNN example'
     )
 
     # Initialize parameters
-    gParameters = default_utils.initialize_parameters(mnist_common)
+    gParameters = candle.initialize_parameters(mnist_common)
     csv_logger = CSVLogger('{}/params.log'.format(gParameters))
 
     return gParameters
@@ -29,7 +30,8 @@ def run(gParameters):
     16 seconds per epoch on a GRID K520 GPU.
     '''
 
-    from __future__ import print_function
+    # from __future__ import print_function
+
     import keras
     from keras.datasets import mnist
     from keras.models import Sequential

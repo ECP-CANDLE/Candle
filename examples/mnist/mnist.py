@@ -4,12 +4,7 @@ file_path = os.path.dirname(os.path.realpath(__file__))
 lib_path = os.path.abspath(os.path.join(file_path, '..', '..', 'common'))
 sys.path.append(lib_path)
 
-try:
-    import configparser
-except ImportError:
-    import ConfigParser as configparser
-
-import default_utils
+import candle_keras as candle
 
 # thread optimization
 import os
@@ -24,7 +19,7 @@ if K.backend() == 'tensorflow' and 'NUM_INTRA_THREADS' in os.environ:
 additional_definitions = None
 required = None
 
-class MNIST(default_utils.Benchmark):
+class MNIST(candle.Benchmark):
     def set_locals(self):
         if required is not None:
             self.required = set(required)
