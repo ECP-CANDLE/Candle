@@ -5,6 +5,8 @@ import random
 from pprint import pprint
 import inspect
 
+import logging
+
 import os
 import sys
 import gzip
@@ -28,22 +30,39 @@ DEFAULT_TIMEOUT = -1 # no timeout
 DEFAULT_DATATYPE = np.float32
 
 
-def set_seed(seed):
-    os.environ['PYTHONHASHSEED'] = '0'
-    np.random.seed(seed)
-
-    random.seed(seed)
-
+#### IO UTILS
 
 def fetch_file(link, subdir, untar=False, md5_hash=None):
     fname = os.path.basename(link)
     return get_file(fname, origin=link, untar=untar, md5_hash=md5_hash, cache_subdir=subdir)
 
+def verify_path(path):
+    folder = os.path.dirname(path)
+    if folder and not os.path.exists(folder):
+        os.makedirs(folder)
+
+
+def set_up_logger(logfile, logger, verbose):
+    verify_path(logfile)
+    fh = logging.FileHandler(logfile)
+    fh.setFormatter(logging.Formatter("[%(asctime)s %(process)d] %(message)s", datefmt="%Y-%m-%d %H:%M:%S"))
+    fh.setLevel(logging.DEBUG)
+
+    sh = logging.StreamHandler()
+    sh.setFormatter(logging.Formatter(''))
+    sh.setLevel(logging.DEBUG if verbose else logging.INFO)
+
+    logger.setLevel(logging.DEBUG)
+    logger.addHandler(fh)
+    logger.addHandler(sh)
+
+
+#### REFORMATING UTILS
 
 
 def eval_string_as_list(str_read, separator, dtype):
     """Parse a string and convert it into a list of lists.
-
+        
         Parameters
         ----------
         str_read : string
@@ -52,7 +71,7 @@ def eval_string_as_list(str_read, separator, dtype):
             character that specifies the separation between the lists
         dtype : data type
             data type to decode the elements of the list
-
+            
         Return
         ----------
         decoded_list : list extracted from string and with elements of the
@@ -78,7 +97,7 @@ def eval_string_as_list(str_read, separator, dtype):
 
 def eval_string_as_list_of_lists(str_read, separator_out, separator_in, dtype):
     """Parse a string and convert it into a list of lists.
-
+        
         Parameters
         ----------
         str_read : string
@@ -89,7 +108,7 @@ def eval_string_as_list_of_lists(str_read, separator_out, separator_in, dtype):
             character that specifies the separation between the inner level lists
         dtype : data type
             data type to decode the elements of the lists
-
+            
         Return
         ----------
         decoded_list : list of lists extracted from string and with elements
@@ -129,10 +148,11 @@ def str2bool(v):
     else:
         raise argparse.ArgumentTypeError('Boolean value expected.')
 
+#### CLASS DEFINITIONS
 
 class ArgumentStruct:
-    """Structure to keep all the parameters from a
-       dictionary (corresponding to problem parameters)
+    """Structure to keep all the parameters from a 
+       dictionary (corresponding to problem parameters) 
        under a unified object
     """
     def __init__(self, **entries):
@@ -152,6 +172,7 @@ class ListOfListsAction(argparse.Action):
         self.dtype = type
         if self.dtype is None:
             self.dtype = np.int32
+    
 
 
     def __call__(self, parser, namespace, values, option_string=None):
@@ -175,6 +196,14 @@ class ListOfListsAction(argparse.Action):
 
         setattr(namespace, self.dest, decoded_list)
 
+#### INITIALIZATION UTILS
+
+
+def set_seed(seed):
+    os.environ['PYTHONHASHSEED'] = '0'
+    np.random.seed(seed)
+
+    random.seed(seed)
 
 
 def initialize_parameters(bmk):
@@ -368,8 +397,8 @@ def get_common_parser(parser):
                         default=argparse.SUPPRESS,
                         choices=['minabs', 'minmax', 'std', 'none'],
                         help="type of feature scaling; 'minabs': to [-1,1]; 'minmax': to [0,1], 'std': standard unit normalization; 'none': no normalization")
-
-    parser.add_argument("--shuffle", type=str2bool, default=argparse.SUPPRESS,
+                        
+    parser.add_argument("--shuffle", type=str2bool, default=False,
                         help="randomly shuffle data set (produces different training and testing partitions each run depending on the seed)")
 
     # Feature selection
@@ -503,7 +532,7 @@ class Benchmark:
     def __init__(self, filepath, defmodel, framework, prog=None, desc=None, parser=None):
         """Initialize benchmark object. Object to group common and 
         specific (to benchmark) configuration options.
-
+        
             Parameters
             ----------
             filepath : ./
@@ -520,7 +549,7 @@ class Benchmark:
             parser : argparser (default None)
                 if 'neon' framework a NeonArgparser is passed. Otherwise an argparser is constructed.
         """
-
+        
         if parser is None:
             parser = argparse.ArgumentParser(prog=prog, formatter_class=argparse.ArgumentDefaultsHelpFormatter, description=desc, conflict_handler='resolve')
 
@@ -528,10 +557,12 @@ class Benchmark:
         self.file_path = filepath
         self.default_model = defmodel
         self.framework = framework
-
+        
         self.required = set([])
         self.additional_definitions = []
         self.set_locals()
+        
+
 
     def parse_from_common(self):
         """Functionality to parse options common
@@ -556,11 +587,12 @@ class Benchmark:
         self.parser = parser
 
 
+
     def parse_from_benchmark(self):
         """Functionality to parse options specific
            specific for each benchmark.
         """
-
+        
         for d in self.additional_definitions:
             if 'type' not in d:
                 d['type'] = None
@@ -586,18 +618,18 @@ class Benchmark:
                     self.parser.add_argument('--' + d['name'], choices=d['choices'], default=d['default'], help=d['help'])
                 else: # Non an action, one parameter, no choices
                     self.parser.add_argument('--' + d['name'], type=d['type'], default=d['default'], help=d['help'])
-
+                
 
 
     def format_benchmark_config_arguments(self, dictfileparam):
         """Functionality to format the particular parameters of
            the benchmark.
-
+           
             Parameters
             ----------
             dictfileparam : python dictionary
                 parameters read from configuration file
-
+           
         """
 
         configOut = dictfileparam.copy()
@@ -608,7 +640,7 @@ class Benchmark:
                     dtype = d['type']
                 else:
                     dtype = None
-
+                
                 if 'action' in d:
                     if inspect.isclass(d['action']):
                         str_read = dictfileparam[d['name']]
@@ -627,7 +659,7 @@ class Benchmark:
         config.read(file)
         section=config.sections()
         fileParams={}
-
+        
         # parse specified arguments (minimal validation: if arguments
         # are written several times in the file, just the first time
         # will be used)
@@ -635,10 +667,10 @@ class Benchmark:
             for k,v in config.items(sec):
                 if not k in fileParams:
                     fileParams[k] = eval(v)
-
+    
         fileParams = self.format_benchmark_config_arguments(fileParams)
         pprint(fileParams)
-
+    
         return fileParams
 
 
@@ -649,18 +681,20 @@ class Benchmark:
         - additional_definitions: list of dictionaries describing the additional parameters for the
         benchmark.
         """
-
+    
         pass
 
+
+        
     def check_required_exists(self, gparam):
-        """Functionality to verify that the required
+        """Functionality to verify that the required 
            model parameters have been specified.
         """
 
         key_set = set(gparam.keys())
         intersect_set = key_set.intersection(self.required)
         diff_set = self.required.difference(intersect_set)
-
+        
         if ( len(diff_set) > 0 ):
             raise Exception('ERROR ! Required parameters are not specified. ' \
             'These required parameters have not been initialized: ' + str(sorted(diff_set)) + \
