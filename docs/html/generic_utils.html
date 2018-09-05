@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>generic_utils module &mdash; test_candle  documentation</title>
+  <title>generic_utils module &mdash; Candle  documentation</title>
   
 
   
@@ -48,7 +48,7 @@
           
 
           
-            <a href="index.html" class="icon icon-home"> test_candle
+            <a href="index.html" class="icon icon-home"> Candle
           
 
           
@@ -107,7 +107,7 @@
       <nav class="wy-nav-top" aria-label="top navigation">
         
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="index.html">test_candle</a>
+          <a href="index.html">Candle</a>
         
       </nav>
 
@@ -159,8 +159,61 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="generic-utils-module">
-<h1>generic_utils module<a class="headerlink" href="#generic-utils-module" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="module-generic_utils">
+<span id="generic-utils-module"></span><h1>generic_utils module<a class="headerlink" href="#module-generic_utils" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="generic_utils.Progbar">
+<em class="property">class </em><code class="descclassname">generic_utils.</code><code class="descname">Progbar</code><span class="sig-paren">(</span><em>target</em>, <em>width=30</em>, <em>verbose=1</em>, <em>interval=0.01</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/generic_utils.html#Progbar"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#generic_utils.Progbar" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="method">
+<dt id="generic_utils.Progbar.add">
+<code class="descname">add</code><span class="sig-paren">(</span><em>n</em>, <em>values=[]</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/generic_utils.html#Progbar.add"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#generic_utils.Progbar.add" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="generic_utils.Progbar.update">
+<code class="descname">update</code><span class="sig-paren">(</span><em>current</em>, <em>values=[]</em>, <em>force=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/generic_utils.html#Progbar.update"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#generic_utils.Progbar.update" title="Permalink to this definition">¶</a></dt>
+<dd><p>&#64;param current: index of current step
+&#64;param values: list of tuples (name, value_for_last_step).
+The progress bar will display averages for these values.
+&#64;param force: force visual progress update</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="generic_utils.display_table">
+<code class="descclassname">generic_utils.</code><code class="descname">display_table</code><span class="sig-paren">(</span><em>rows</em>, <em>positions</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/generic_utils.html#display_table"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#generic_utils.display_table" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="generic_utils.func_dump">
+<code class="descclassname">generic_utils.</code><code class="descname">func_dump</code><span class="sig-paren">(</span><em>func</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/generic_utils.html#func_dump"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#generic_utils.func_dump" title="Permalink to this definition">¶</a></dt>
+<dd><p>Serialize user defined function.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="generic_utils.func_load">
+<code class="descclassname">generic_utils.</code><code class="descname">func_load</code><span class="sig-paren">(</span><em>code</em>, <em>defaults=None</em>, <em>closure=None</em>, <em>globs=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/generic_utils.html#func_load"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#generic_utils.func_load" title="Permalink to this definition">¶</a></dt>
+<dd><p>Deserialize user defined function.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="generic_utils.func_reconstruct_closure">
+<code class="descclassname">generic_utils.</code><code class="descname">func_reconstruct_closure</code><span class="sig-paren">(</span><em>values</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/generic_utils.html#func_reconstruct_closure"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#generic_utils.func_reconstruct_closure" title="Permalink to this definition">¶</a></dt>
+<dd><p>Deserialization helper that reconstructs a closure.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="generic_utils.get_from_module">
+<code class="descclassname">generic_utils.</code><code class="descname">get_from_module</code><span class="sig-paren">(</span><em>identifier</em>, <em>module_params</em>, <em>module_name</em>, <em>instantiate=False</em>, <em>kwargs=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/generic_utils.html#get_from_module"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#generic_utils.get_from_module" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="generic_utils.make_tuple">
+<code class="descclassname">generic_utils.</code><code class="descname">make_tuple</code><span class="sig-paren">(</span><em>*args</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/generic_utils.html#make_tuple"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#generic_utils.make_tuple" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
 </div>
 
 
@@ -183,7 +236,7 @@
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2018, dc.
+        &copy; Copyright 2018, ANL.gov.
 
     </p>
   </div>
