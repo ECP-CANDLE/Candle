@@ -3,7 +3,7 @@ a set of supported high-performance computers. With the current version
 of CANDLE, users will be able to run a hyperparameter optimization task
 (mlrMBO workflow) or a parallel execution task (upf workflow). In order
 to run those workflows, users are required to implement a class and
-methods (will be explained in section 1) and follow some procedures (see
+methods (will be explained in section1) and follow some procedures (see
 section 2) for each workflow. This user guide will provide an overview
 of these code structures and an explanation of parameters or variables
 as needed.
@@ -28,20 +28,18 @@ will extend to configure your parameters. If you don’t have any
 additional parameters to define, you can use this code as is (see [MNIST
 example](https://github.com/ECP-CANDLE/Candle/blob/library/examples/mnist/mnist.py)).
 
-``` {.sourceCode .python}
-# mnist.py
-additional_definitions = None
-required = None
+    # mnist.py
+    additional_definitions = None
+    required = None
 
-class MNIST(candle.Benchmark):  # 1
-    def set_locals(self):
-        if required is not None:
-            self.required = set(required)
-        if additional_definitions is not None:
-            self.additional_definitions = additional_definitions
-```
+    class MNIST(candle.Benchmark): 
+        def set_locals(self):
+            if required is not None:
+                self.required = set(required)
+            if additional_definitions is not None:
+                self.additional_definitions = additional_definitions
 
--   \# 1: Create a new class by extending `candle.Benchmark`
+-   Create a new class by extending `candle.Benchmark`
 
 #### Additional Parameters
 
@@ -51,18 +49,21 @@ The example illustrates how to define an integer type parameter, `pool`
 with minimum description. This uses Python’s argparse library.
 
     additional_definitions = [{
-        'name':'pool', # 1
-        'nargs':'+', # 2
-        'type': int, # 3
-        'help':'network structure of shared layer' # 4
+        'name':'pool', 
+        'nargs':'+', 
+        'type': int, 
+        'help':'network structure of shared layer' 
     },
     ]
 
--   \# 1: required. Name of parameter.
--   \# 2: optional. The number of command-line arguments.
--   \# 3: required. The type to which the command-line arguments should
-    be converted.
--   \# 4: optional. A brief description of what the argument does.
+-   required. Name of parameter.
+
+-   optional. The number of command-line arguments.
+
+-   required. The type to which the command-line arguments should be
+    converted.
+
+-   optional. A brief description of what the argument does.
 
 #### Mandatory parameters
 
@@ -101,36 +102,37 @@ which sets appropriate parameters in a tensorflow session.
 In the `initialize_parameters()` method, we will instantiate the base
 class, and finally build an argument parser to recognize your customized
 parameters in addition to the default parameters (
-`default_utils.initialize_parameters()`). The `initialize_parameters()`
+`default_utils.initialize_parameters()`). The `initialize_parameters`
 method should return a python dictionary, which will be passed to the
 `run()` method.
 
-``` {.sourceCode .python}
-# this is a part of mnist_mlp_candle.py
+    # this is a part of mnist_mlp_candle.py
 
-import mnist
-import candle_keras as candle
+    import mnist
+    import candle_keras as candle
 
-def initialize_parameters():
-    mnist_common = mnist.MNIST(mnist.file_path,
-        'mnist_params.txt',  # 4
-        'keras',
-        prog='mnist_mlp',
-        desc='MNIST example'
-    )  # 1
+    def initialize_parameters():
+        mnist_common = mnist.MNIST(mnist.file_path,
+            'mnist_params.txt', 
+            'keras',
+            prog='mnist_mlp',
+            desc='MNIST example'
+        )  
 
-    # Initialize parameters
-    gParameters = default_utils.initialize_parameters(mnist_common)  # 2
-    ..
+        # Initialize parameters
+        gParameters = default_utils.initialize_parameters(mnist_common) 
+        ..
 
-    return gParameters  # 3
-```
+        return gParameters   
 
--   \# 1: instantiate base class
--   \# 2: build argument parser
--   \# 3: initialize\_parameters() should return a dictionary
--   \# 4: a file that contains default values for the given parameters.
-    See below for example.
+-   instantiate base class
+
+-   build argument parser
+
+-   initialize\_parameters() should return a dictionary
+
+-   a file that contains default values for the given parameters. See
+    below for example.
 
 <!-- -->
 
@@ -161,43 +163,41 @@ Finally, the `run()` method returns a keras history object. This can be
 omitted for upf workflow, but required for HPO workflow. (see upf and
 mbo explanation below)
 
-``` {.sourceCode .python}
-# this is a part of mnist_mlp_candle.py
+    # this is a part of mnist_mlp_candle.py
 
-def run(gParameters): # 1
-    ##########################################
-    # Your DL start here. See mnist_mlp.py   #
-    ##########################################
+    def run(gParameters): 
+        ##########################################
+        # Your DL start here. See mnist_mlp.py   #
+        ##########################################
 
-    ...
+        ...
 
-    batch_size = gParameters['batch_size']
-    epochs = gParameters['epochs']
+        batch_size = gParameters['batch_size']
+        epochs = gParameters['epochs']
 
-    ...
+        ...
 
-    model.compile(loss='categorical_crossentropy',
-                optimizer=optimizer,
-                metrics=['accuracy'])
+        model.compile(loss='categorical_crossentropy',
+                    optimizer=optimizer,
+                    metrics=['accuracy'])
 
-    history = model.fit(x_train, y_train,
-                        batch_size=batch_size,
-                        epochs=epochs,
-                        verbose=1,
-                        validation_data=(x_test, y_test))
-    ##########################################
-    # End of mnist_mlp.py ####################
-    ##########################################
-  return history # 2
-```
+        history = model.fit(x_train, y_train,
+                            batch_size=batch_size,
+                            epochs=epochs,
+                            verbose=1,
+                            validation_data=(x_test, y_test))
+        ##########################################
+        # End of mnist_mlp.py ####################
+        ##########################################
+      return history  
 
--   \# 1: run method receives parameter dictionary
--   \# 2: returns keras history object or None.
+-   run method receives parameter dictionary
 
-    > -   The mlrMBO workflow requires returning a keras history object
-    >     so that the workflow can evaluate the model. The upf workflow
-    >     does not have the evaluation process, so you can return
-    >     `None`.
+-   returns keras history object or None.
+
+    -   The mlrMBO workflow requires returning a keras history object so
+        that the workflow can evaluate the model. The upf workflow does
+        not have the evaluation process, so you can return `None`.
 
 How to run CANDLE compliant code in Theta
 =========================================
@@ -214,31 +214,28 @@ Running UPF on Theta
 In this tutorial, we will execute an mnist example rewritten for CANDLE.
 The source code is available on [CANDLE github
 repo](https://github.com/ECP-CANDLE/Candle/tree/library/examples/mnist).
-This example assumes that you have access to the Candle\_ECP project on
-theta.
 
 Step 1. Create directory and checkout Supervisor & Candle repos
 
-``` {.sourceCode .bash}
-$ mkdir candle_tutorial
-$ cd candle_tutorial
-$ git clone -b master https://github.com/ECP-CANDLE/Supervisor.git
-$ git clone -b library https://github.com/ECP-CANDLE/Candle.git
-```
+    $ mkdir candle_tutorial
+    $ cd candle_tutorial
+    $ git clone -b master https://github.com/ECP-CANDLE/Supervisor.git
+    $ git clone -b library https://github.com/ECP-CANDLE/Candle.git
 
 Step 2. Move to upf workflow directory
 
-    $ cd Supervisor/workflows/upf
+    $ cd Supervisor/workflow/upf
 
 Step 3. Set Env variables. In `test/cfg-sys-1.sh`, you will need to set
 `BENCHMARK_DIR` to point the directory that holds the example, and
 `MODEL_PYTHON_SCRIPT` to name the script you want to run.
 
-    BENCHMARK_DIR=/home/hsyoo/candle_tutorial/Candle/examples/mnist # 1
-    MODEL_PYTHON_SCRIPT=mnist_mlp_candle # 2
+    BENCHMARK_DIR=/home/hsyoo/candle_tutorial/Candle/examples/mnist 
+    MODEL_PYTHON_SCRIPT=mnist_mlp_candle 
 
--   \# 1: This location should reflect your environment
--   \# 2: Note this requires filename without extension (such as .py)
+-   This location should reflect your environment
+
+-   Note this requires filename without extension (such as .py)
 
 Step 4. Set execution plan. Check `test/upf-1.txt` for parameter
 configuration and modify as needed. This file contains multiple JSON
@@ -271,11 +268,14 @@ arguments (see below).
     queues named `default`, `debug-flat-quad`, and `debug-cache-quad`.
     For more information, please check
     <https://www.alcf.anl.gov/user-guides/job-scheduling-policy-xc40-systems#queues>
+
 -   `PROJECT` refers to your allocated project name. Please check
     <https://www.alcf.anl.gov/user-guides/allocations>, for more detail.
+
 -   `PROCS` is a number of nodes. We recommend adding extra 1 node in
     addition to the number of executions in your plan. In this example,
     we set 3 (1 + 2).
+
 -   `WALLTIME` refers to computing time you are requesting for
     individual node. The production queues are limited by policy. Check
     <https://www.alcf.anl.gov/user-guides/job-scheduling-policy-xc40-systems#queues>
@@ -292,24 +292,24 @@ files are available in the experiments directory.
 will contain files like below,
 
     -rw-r--r-- 1 hsyoo cobalt  2411 Aug 17 19:13 262775.cobaltlog
-    -rw-r--r-- 1 hsyoo users   1179 Aug 17 18:55 cfg-sys-1.sh
+    -rw-r--r-- 1 hsyoo users   1179 Aug 17 18:55 cfg-sys-1.sh 
     -rw-r--r-- 1 hsyoo users      7 Aug 17 18:55 jobid.txt
-    -rw-r--r-- 1 hsyoo users   3310 Aug 17 19:13 output.txt
-    drwxr-xr-x 4 hsyoo users    512 Aug 17 19:07 run
+    -rw-r--r-- 1 hsyoo users   3310 Aug 17 19:13 output.txt 
+    drwxr-xr-x 4 hsyoo users    512 Aug 17 19:07 run 
     -rw------- 1 hsyoo users  10863 Aug 17 18:55 swift-t-workflow.8X4.tic
     -rw-r--r-- 1 hsyoo users    677 Aug 17 18:55 turbine.log
     -rwxr--r-- 1 hsyoo users   5103 Aug 17 18:55 turbine-theta.sh
-    -rw-r--r-- 1 hsyoo users     60 Aug 17 18:55 upf-1.txt
+    -rw-r--r-- 1 hsyoo users     60 Aug 17 18:55 upf-1.txt 
     -rw-r--r-- 1 hsyoo users   4559 Aug 17 18:55 workflow.sh.log
 
-    hsyoo@thetalogin4:~/candle_tutorial/Supervisor/workflows/upf/experiments/X000> ls -al run/
+    hsyoo@thetalogin4:~/candle_tutorial/Supervisor/workflows/upf/experiments/X000> ls -al run/ 
     total 2
     drwxr-xr-x 4 hsyoo users  512 Aug 17 19:07 .
     drwxr-xr-x 3 hsyoo users 1024 Aug 17 20:33 ..
     drwxr-xr-x 3 hsyoo users  512 Aug 17 20:34 test0
     drwxr-xr-x 3 hsyoo users  512 Aug 17 19:13 test1
 
-    hsyoo@thetalogin4:~/candle_tutorial/Supervisor/workflows/upf/experiments/X000> cat run/test0/model.log
+    hsyoo@thetalogin4:~/candle_tutorial/Supervisor/workflows/upf/experiments/X000> cat run/test0/model.log 
     ... many lines omitted ...
     Epoch 10/10
     60000/60000 [==============================] - 12s - loss: 4.3824 - acc: 0.7253 - val_loss: 2.1082 - val_acc: 0.8671
@@ -319,10 +319,13 @@ will contain files like below,
 
 -   `output.txt` contains stdout and stderr of this experiment. This is
     helpful to debug errors.
+
 -   `run` directory contains the output files. You will see two
     directories that are corresponding the IDs configured in upf-1.txt
+
 -   a copy of configuration files are available so that you can trace
     what were passed to this experiment.
+
 -   stdout of test0. After 10 epoches, validation loss was 2.1082.
 
 Running mlrMBO based Hyperparameters Optimization (HPO) on Theta
@@ -338,17 +341,18 @@ skip this step if you already have done it in previous section.
 
 Step 2. Move to mlrMBO workflow directory
 
-    $ cd Supervisor/workflows/mlrMBO
+    $ cd Supervisor/workflow/mlrMBO
 
 Step 3. Set Env variables. In `test/cfg-sys-1.sh`, you will need to set
 `BENCHMARK_DIR` to point the directory that your script locates, and
 `MODEL_PYTHON_SCRIPT` to name the script you want to run
 
-    BENCHMARK_DIR=/home/hsyoo/candle_tutorial/Candle/examples/mnist # 1
-    MODEL_PYTHON_SCRIPT=mnist_mlp_candle # 2
+    BENCHMARK_DIR=/home/hsyoo/candle_tutorial/Candle/examples/mnist 
+    MODEL_PYTHON_SCRIPT=mnist_mlp_candle 
 
--   \# 1: This location should reflect your environment
--   \# 2: Note this requires filename without extension (such as .py)
+-   This location should reflect your environment
+
+-   Note this requires filename without extension (such as .py)
 
 Step 4. Config hyper parameters. In this step, we are configuring
 parameter sets, which we will iteratively evaluate. For example, you can
@@ -393,11 +397,15 @@ You can specify the HPO search strategy. As you can see in
 -   `DESIGN_SIZE` is a number of parameter sets that will evaluate at
     the beginning of HPO search. In this example, CANDLE will select
     random 10 parameter sets out of 45 (see Step 4, for break downs).
+
 -   `MAX_ITERATIONS` is a number of iterations.
+
 -   `PROPOSE_POINTS` is a number of parameter sets that CANDLE will
     evaluate in each iteration. So, if `MAX_ITERATION=3` and
     `PROPOSE_POINTS=5`, CANDLE will be ended up evaluating 25 params
     (10 + 3 x 5).
+
 -   `MAX_BUDGET` should be greater than total evaluations. In this
     example, 45.
+
 
