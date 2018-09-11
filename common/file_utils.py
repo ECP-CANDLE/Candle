@@ -60,9 +60,18 @@ def get_file(fname, origin, untar=False,
     if not os.path.exists(datadir):
         os.makedirs(datadir)
 
-    if untar:
+    #if untar:
+    #    fnamesplit = fname.split('.tar.gz')
+    #    untar_fpath = os.path.join(datadir, fnamesplit[0])
+
+    if fname.endswith('.tar.gz'):
         fnamesplit = fname.split('.tar.gz')
         untar_fpath = os.path.join(datadir, fnamesplit[0])
+        untar = True
+    elif fname.endswith('.tgz'):
+        fnamesplit = fname.split('.tgz')
+        untar_fpath = os.path.join(datadir, fnamesplit[0])
+        untar = True
 
     fpath = os.path.join(datadir, fname)
 

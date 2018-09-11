@@ -5,6 +5,7 @@ from __future__ import absolute_import
 #import from data_utils
 from data_utils import load_csv_data
 from data_utils import load_Xy_one_hot_data2
+from data_utils import load_Xy_data_noheader
 
 #import from file_utils
 from file_utils import get_file
@@ -25,6 +26,10 @@ from default_utils import set_up_logger
 from keras_utils import build_initializer
 from keras_utils import build_optimizer
 from keras_utils import set_seed
+from keras_utils import set_parallelism_threads
+
+from generic_utils import Progbar
+from generic_utils import LoggingCallback
 
 from solr_keras import CandleRemoteMonitor, compute_trainable_params, TerminateOnTimeOut
 
