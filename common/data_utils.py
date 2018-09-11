@@ -28,7 +28,7 @@ def scale_array(mat, scaling=None):
         scaling : 'maxabs', 'minmax', 'std', or None, optional (default 'None')
             type of scaling to apply
     """
-
+    
     if scaling is None or scaling.lower() == 'none':
         return mat
 
@@ -42,7 +42,7 @@ def scale_array(mat, scaling=None):
     else:
         # Standard normalization
         scaler = StandardScaler(copy=False)
-
+    
     return scaler.fit_transform(mat)
 
 
@@ -57,11 +57,11 @@ def impute_and_scale_array(mat, scaling=None):
         scaling : 'maxabs', 'minmax', 'std', or None, optional (default 'None')
             type of scaling to apply
     """
-
+    
     imputer = Imputer(strategy='mean', axis=0, copy=False)
     imputer.fit_transform(mat)
     #mat = imputer.fit_transform(mat)
-
+    
     return scale_array(mat, scaling)
 
 
@@ -72,7 +72,7 @@ def load_X_data(train_file, test_file,
 
     # compensates for the columns to drop if there is a feature subselection
     usecols = list(range(n_cols + len(drop_cols))) if n_cols else None
-
+        
     df_train = pd.read_csv(train_file, engine='c', usecols=usecols)
     df_test = pd.read_csv(test_file, engine='c', usecols=usecols)
 
@@ -143,7 +143,7 @@ def load_Xy_one_hot_data(train_file, test_file,
                         dtype=DEFAULT_DATATYPE, seed=DEFAULT_SEED):
 
     assert class_col != None
-
+    
     # compensates for the columns to drop if there is a feature subselection
     usecols = list(range(n_cols + len(drop_cols))) if n_cols else None
 
@@ -186,12 +186,12 @@ def load_Xy_one_hot_data(train_file, test_file,
 def load_Xy_one_hot_data2(train_file, test_file,
                     class_col=None, drop_cols=None, n_cols=None, shuffle=False, scaling=None,
                     validation_split=0.1, dtype=DEFAULT_DATATYPE, seed=DEFAULT_SEED):
-
+    
     assert class_col != None
-
+    
     # compensates for the columns to drop if there is a feature subselection
     usecols = list(range(n_cols + len(drop_cols))) if n_cols else None
-
+    
     df_train = pd.read_csv(train_file, engine='c', usecols=usecols)
     df_test = pd.read_csv(test_file, engine='c', usecols=usecols)
 
@@ -233,9 +233,9 @@ def load_Xy_one_hot_data2(train_file, test_file,
 
 def load_Xy_data2(train_file, test_file, class_col=None, drop_cols=None, n_cols=None, shuffle=False, scaling=None,
                   validation_split=0.1, dtype=DEFAULT_DATATYPE, seed=DEFAULT_SEED):
-
+    
     assert class_col != None
-
+    
     (X_train, y_train_oh), (X_val, y_val_oh), (X_test, y_test_oh) = load_Xy_one_hot_data2(train_file, test_file,
                                                                                  class_col, drop_cols, n_cols, shuffle, scaling,
                                                                                  validation_split, dtype, seed)
@@ -243,41 +243,49 @@ def load_Xy_data2(train_file, test_file, class_col=None, drop_cols=None, n_cols=
     y_train = convert_to_class(y_train_oh)
     y_val = convert_to_class(y_val_oh)
     y_test = convert_to_class(y_test_oh)
-
+    
 
     return (X_train, y_train), (X_val, y_val), (X_test, y_test)
 
 
+def load_Xy_data_noheader(train_file, test_file, classes, usecols=None, scaling=None, dtype=DEFAULT_DATATYPE):
 
-def load_Xy_data_noheader(train_file, test_file, classes, scaling=None, dtype=DEFAULT_DATATYPE):
+    print('Loading data...')
+    df_train = (pd.read_csv(train_file, header=None, usecols=usecols).values).astype(dtype)
+    df_test = (pd.read_csv(test_file, header=None, usecols=usecols).values).astype(dtype)
+    print('done')
 
-    df_train = pd.read_csv(train_file, header=None)
-    df_test = pd.read_csv(test_file, header=None)
+    print('df_train shape:', df_train.shape)
+    print('df_test shape:', df_test.shape)
 
-    Xy_train = df_train.values.astype(dtype)
-    Xy_test = df_test.values.astype(dtype)
-    
-    seqlen = Xy_train.shape[1]
+    seqlen = df_train.shape[1]
 
-    df_y_train = Xy_train[:,0].astype('int')
-    df_y_test = Xy_test[:,0].astype('int')
+    df_y_train = df_train[:,0].astype('int')
+    df_y_test = df_test[:,0].astype('int')
 
     Y_train = np_utils.to_categorical(df_y_train, classes)
     Y_test = np_utils.to_categorical(df_y_test, classes)
 
-    X_train = Xy_train[:, 1:seqlen].astype(dtype)
-    X_test = Xy_test[:, 1:seqlen].astype(dtype)
-    
+    df_x_train = df_train[:, 1:seqlen].astype(dtype)
+    df_x_test = df_test[:, 1:seqlen].astype(dtype)
+
+#        X_train = df_x_train.as_matrix()
+#        X_test = df_x_test.as_matrix()
+
+    X_train = df_x_train
+    X_test = df_x_test
+
+    scaler = MaxAbsScaler()
     mat = np.concatenate((X_train, X_test), axis=0)
     # Scale data
     if scaling is not None:
-        mat = scale_array(mat, scaling)
+        mat = scaler.fit_transform(mat)
 
-    # Separate training in training and validation splits after scaling
     X_train = mat[:X_train.shape[0], :]
     X_test = mat[X_train.shape[0]:, :]
 
     return X_train, Y_train, X_test, Y_test
+
 
 def load_csv_data(train_path, test_path=None, sep=',', nrows=None,
                   x_cols=None, y_cols=None, drop_cols=None,

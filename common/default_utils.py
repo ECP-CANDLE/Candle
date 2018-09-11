@@ -225,11 +225,23 @@ def initialize_parameters(bmk):
     # Parse parameters that are applicable just to benchmark
     bmk.parse_from_benchmark()
 
-    # Get command-line parameters
-    args = bmk.parser.parse_args()
     #print('Args:', args)
     # Get parameters from configuration file
-    fileParameters = bmk.read_config_file(args.config_file)
+    # Reads parameter subset, just checking if a config_file has been set
+    # by comand line (the parse_known_args() function allows a partial
+    # parsing)
+    aux = bmk.parser.parse_known_args()
+    try : # Try to get the 'config_file' option
+        conffile_txt = aux[0].config_file
+    except AttributeError: # The 'config_file' option was not set by command-line
+        conffile = bmk.conffile # use default file
+    else: # a 'config_file' has been set --> use this file
+        conffile = os.path.join(bmk.file_path, conffile_txt)
+
+    print("Configuration file: ", conffile)
+    fileParameters = bmk.read_config_file(conffile)#aux.config_file)#args.config_file)
+    # Get command-line parameters
+    args = bmk.parser.parse_args()
     #print ('Params:', fileParameters)
     # Consolidate parameter set. Command-line parameters overwrite file configuration
     gParameters = args_overwrite_config(args, fileParameters)
@@ -305,11 +317,15 @@ def get_common_parser(parser):
             parser for command-line options
     """
     
+    # Configuration file
+    parser.add_argument("--config_file", dest='config_file', default=argparse.SUPPRESS,
+        help="specify model configuration file")
+    
     # General behavior
-    parser.add_argument("--train", dest='train_bool', type=str2bool,
+    parser.add_argument("--train_bool", dest='train_bool', type=str2bool,
                         default=True,
                         help="train model")
-    parser.add_argument("--evaluate", dest='eval_bool', type=str2bool,
+    parser.add_argument("--eval_bool", dest='eval_bool', type=str2bool,
                         default=argparse.SUPPRESS,
                         help="evaluate model (use it for inference)")
 
@@ -572,11 +588,7 @@ class Benchmark:
            or they are moved, the calling has to be updated.
         """
         
-        # Set default configuration file
-        self.parser.add_argument("--config_file", dest='config_file', type=str,
-                        default=os.path.join(self.file_path, self.default_model),
-                        help="specify model configuration file")
-                        
+        
         # Parse has been split between arguments that are common with the default neon parser
         # and all the other options
         parser = self.parser
@@ -586,6 +598,8 @@ class Benchmark:
     
         self.parser = parser
 
+        # Set default configuration file
+        self.conffile = os.path.join(self.file_path, self.default_model)
 
 
     def parse_from_benchmark(self):
@@ -629,6 +643,11 @@ class Benchmark:
             ----------
             dictfileparam : python dictionary
                 parameters read from configuration file
+            args : python dictionary
+                parameters read from command-line
+                Most of the time command-line overwrites configuration file
+                except when the command-line is using default values and
+                config file defines those values
            
         """
 
@@ -645,6 +664,9 @@ class Benchmark:
                     if inspect.isclass(d['action']):
                         str_read = dictfileparam[d['name']]
                         configOut[d['name']] = eval_string_as_list_of_lists(str_read, ':', ',', dtype)
+                elif d['default'] != argparse.SUPPRESS:
+                    # default value on benchmark definition cannot overwrite config file
+                    self.parser.add_argument('--' + d['name'], type=d['type'], default=configOut[d['name']], help=d['help'])
 
         return configOut
 
