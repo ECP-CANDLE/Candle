@@ -1,0 +1,277 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>keras_utils module &mdash; Candle  documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="solr_keras module" href="solr_keras.html" />
+    <link rel="prev" title="generic_utils module" href="generic_utils.html" /> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> Candle
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="readme.html">Read about Candle</a></li>
+<li class="toctree-l1"><a class="reference internal" href="user_guide.html">How to write CANDLE compliant deep learning code</a></li>
+<li class="toctree-l1"><a class="reference internal" href="user_guide.html#how-to-run-candle-compliant-code-in-theta">How to run CANDLE compliant code in Theta</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">common</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="candle_keras.html">candle_keras package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="data_utils.html">data_utils module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="default_utils.html">default_utils module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_utils.html">file_utils module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="generic_utils.html">generic_utils module</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">keras_utils module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="solr_keras.html">solr_keras module</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Candle</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="modules.html">common</a> &raquo;</li>
+        
+      <li>keras_utils module</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/keras_utils.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="module-keras_utils">
+<span id="keras-utils-module"></span><h1>keras_utils module<a class="headerlink" href="#module-keras_utils" title="Permalink to this headline">¶</a></h1>
+<dl class="function">
+<dt id="keras_utils.build_initializer">
+<code class="descclassname">keras_utils.</code><code class="descname">build_initializer</code><span class="sig-paren">(</span><em>type</em>, <em>kerasDefaults</em>, <em>seed=None</em>, <em>constant=0.0</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/keras_utils.html#build_initializer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#keras_utils.build_initializer" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="keras_utils.build_optimizer">
+<code class="descclassname">keras_utils.</code><code class="descname">build_optimizer</code><span class="sig-paren">(</span><em>type</em>, <em>lr</em>, <em>kerasDefaults</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/keras_utils.html#build_optimizer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#keras_utils.build_optimizer" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="keras_utils.corr">
+<code class="descclassname">keras_utils.</code><code class="descname">corr</code><span class="sig-paren">(</span><em>y_true</em>, <em>y_pred</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/keras_utils.html#corr"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#keras_utils.corr" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="keras_utils.covariance">
+<code class="descclassname">keras_utils.</code><code class="descname">covariance</code><span class="sig-paren">(</span><em>x</em>, <em>y</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/keras_utils.html#covariance"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#keras_utils.covariance" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="keras_utils.evaluate_autoencoder">
+<code class="descclassname">keras_utils.</code><code class="descname">evaluate_autoencoder</code><span class="sig-paren">(</span><em>y_pred</em>, <em>y_test</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/keras_utils.html#evaluate_autoencoder"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#keras_utils.evaluate_autoencoder" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="keras_utils.get_function">
+<code class="descclassname">keras_utils.</code><code class="descname">get_function</code><span class="sig-paren">(</span><em>name</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/keras_utils.html#get_function"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#keras_utils.get_function" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="keras_utils.mse">
+<code class="descclassname">keras_utils.</code><code class="descname">mse</code><span class="sig-paren">(</span><em>y_true</em>, <em>y_pred</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/keras_utils.html#mse"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#keras_utils.mse" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="keras_utils.set_seed">
+<code class="descclassname">keras_utils.</code><code class="descname">set_seed</code><span class="sig-paren">(</span><em>seed</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/keras_utils.html#set_seed"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#keras_utils.set_seed" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="keras_utils.xent">
+<code class="descclassname">keras_utils.</code><code class="descname">xent</code><span class="sig-paren">(</span><em>y_true</em>, <em>y_pred</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/keras_utils.html#xent"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#keras_utils.xent" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="solr_keras.html" class="btn btn-neutral float-right" title="solr_keras module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="generic_utils.html" class="btn btn-neutral" title="generic_utils module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, ANL.gov.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'',
+            LANGUAGE:'None',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  <script type="text/javascript" src="_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

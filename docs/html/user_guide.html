@@ -1,0 +1,632 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>How to write CANDLE compliant deep learning code &mdash; Candle  documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="common" href="modules.html" />
+    <link rel="prev" title="Read about Candle" href="readme.html" /> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> Candle
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="readme.html">Read about Candle</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">How to write CANDLE compliant deep learning code</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#minimum-requirements">Minimum requirements</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#base-class">Base Class</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#additional-parameters">Additional Parameters</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#mandatory-parameters">Mandatory parameters</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#thread-optimization">Thread Optimization</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#initialize-parameters-method">initialize_parameters Method</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#run-method">Run Method</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="#how-to-run-candle-compliant-code-in-theta">How to run CANDLE compliant code in Theta</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#running-upf-on-theta">Running UPF on Theta</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#running-mlrmbo-based-hyperparameters-optimization-hpo-on-theta">Running mlrMBO based Hyperparameters Optimization (HPO) on Theta</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="modules.html">common</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Candle</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>How to write CANDLE compliant deep learning code</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/user_guide.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <p>The CANDLE library enables users to run their own deep learning code on
+a set of supported high-performance computers. With the current version
+of CANDLE, users will be able to run a hyperparameter optimization task
+(mlrMBO workflow) or a parallel execution task (upf workflow). In order
+to run those workflows, users are required to implement a class and
+methods (will be explained in section 1) and follow some procedures (see
+section 2) for each workflow. This user guide will provide an overview
+of these code structures and an explanation of parameters or variables
+as needed.</p>
+<div class="section" id="how-to-write-candle-compliant-deep-learning-code">
+<h1>How to write CANDLE compliant deep learning code<a class="headerlink" href="#how-to-write-candle-compliant-deep-learning-code" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="minimum-requirements">
+<h2>Minimum requirements<a class="headerlink" href="#minimum-requirements" title="Permalink to this headline">¶</a></h2>
+<p>CANDLE compliant code requires you to create a Python class and
+implement two methods, <code class="docutils literal notranslate"><span class="pre">run()</span></code> and <code class="docutils literal notranslate"><span class="pre">initialize_parameters()</span></code>. The
+base class already provides common parameters such as <code class="docutils literal notranslate"><span class="pre">batch_size</span></code>,
+<code class="docutils literal notranslate"><span class="pre">epoch</span></code>, etc. and enables you to register additional parameters as
+needed. In addition to that, you can mandate that some parameters exist
+and have values, if needed.</p>
+<div class="section" id="base-class">
+<h3>Base Class<a class="headerlink" href="#base-class" title="Permalink to this headline">¶</a></h3>
+<p>The CANDLE library provides a base class (<code class="docutils literal notranslate"><span class="pre">candle.Benchmark</span></code>), which
+you will extend to configure your parameters. If you don’t have any
+additional parameters to define, you can use this code as is (see <a class="reference external" href="https://github.com/ECP-CANDLE/Candle/blob/library/examples/mnist/mnist.py">MNIST
+example</a>).</p>
+<div class="code python highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># mnist.py</span>
+<span class="n">additional_definitions</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="n">required</span> <span class="o">=</span> <span class="kc">None</span>
+
+<span class="k">class</span> <span class="nc">MNIST</span><span class="p">(</span><span class="n">candle</span><span class="o">.</span><span class="n">Benchmark</span><span class="p">):</span>  <span class="c1"># 1</span>
+    <span class="k">def</span> <span class="nf">set_locals</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">required</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">required</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">required</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">additional_definitions</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">additional_definitions</span> <span class="o">=</span> <span class="n">additional_definitions</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li># 1: Create a new class by extending <code class="docutils literal notranslate"><span class="pre">candle.Benchmark</span></code></li>
+</ul>
+<div class="section" id="additional-parameters">
+<h4>Additional Parameters<a class="headerlink" href="#additional-parameters" title="Permalink to this headline">¶</a></h4>
+<p>You can add a parameter like <a class="reference external" href="https://github.com/ECP-CANDLE/Benchmarks/blob/release_01/Pilot1/TC1/tc1.py#L16-L58">this
+example</a>.
+The example illustrates how to define an integer type parameter,
+<code class="docutils literal notranslate"><span class="pre">pool</span></code> with minimum description. This uses Python’s argparse library.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">additional_definitions</span> <span class="o">=</span> <span class="p">[{</span>
+    <span class="s1">&#39;name&#39;</span><span class="p">:</span><span class="s1">&#39;pool&#39;</span><span class="p">,</span> <span class="c1"># 1</span>
+    <span class="s1">&#39;nargs&#39;</span><span class="p">:</span><span class="s1">&#39;+&#39;</span><span class="p">,</span> <span class="c1"># 2</span>
+    <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="c1"># 3</span>
+    <span class="s1">&#39;help&#39;</span><span class="p">:</span><span class="s1">&#39;network structure of shared layer&#39;</span> <span class="c1"># 4</span>
+<span class="p">},</span>
+<span class="p">]</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li># 1: required. Name of parameter.</li>
+<li># 2: optional. The number of command-line arguments.</li>
+<li># 3: required. The type to which the command-line arguments should be converted.</li>
+<li># 4: optional. A brief description of what the argument does.</li>
+</ul>
+</div>
+<div class="section" id="mandatory-parameters">
+<h4>Mandatory parameters<a class="headerlink" href="#mandatory-parameters" title="Permalink to this headline">¶</a></h4>
+<p>If you would like to make some common parameters mandatory, you will
+need to define a <code class="docutils literal notranslate"><span class="pre">required</span></code> variable, a list of parameter names, and
+pass it to the definition of your class.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">required</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s1">&#39;data_url&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;epochs&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;batch_size&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;pool&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;save&#39;</span>
+<span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="thread-optimization">
+<h4>Thread Optimization<a class="headerlink" href="#thread-optimization" title="Permalink to this headline">¶</a></h4>
+<p>On some high-performance computing machines like <code class="docutils literal notranslate"><span class="pre">Theta</span></code>, the
+performance will be greatly improved if we let CANDLE handle threads.
+So, it is generally recommended to have code like lines 14 to 21 in
+<a class="reference external" href="https://github.com/ECP-CANDLE/Candle/blob/library/examples/mnist/mnist.py#L9-L16">this
+example</a>,
+which sets appropriate parameters in a tensorflow session.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># thread optimization</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">from</span> <span class="nn">keras</span> <span class="k">import</span> <span class="n">backend</span> <span class="k">as</span> <span class="n">K</span>
+<span class="k">if</span> <span class="n">K</span><span class="o">.</span><span class="n">backend</span><span class="p">()</span> <span class="o">==</span> <span class="s1">&#39;tensorflow&#39;</span> <span class="ow">and</span> <span class="s1">&#39;NUM_INTRA_THREADS&#39;</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">:</span>
+    <span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="nn">tf</span>
+    <span class="n">sess</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">Session</span><span class="p">(</span><span class="n">config</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">ConfigProto</span><span class="p">(</span><span class="n">inter_op_parallelism_threads</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s1">&#39;NUM_INTER_THREADS&#39;</span><span class="p">]),</span>
+                                            <span class="n">intra_op_parallelism_threads</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s1">&#39;NUM_INTRA_THREADS&#39;</span><span class="p">])))</span>
+    <span class="n">K</span><span class="o">.</span><span class="n">set_session</span><span class="p">(</span><span class="n">sess</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="initialize-parameters-method">
+<h3>initialize_parameters Method<a class="headerlink" href="#initialize-parameters-method" title="Permalink to this headline">¶</a></h3>
+<p>In the <code class="docutils literal notranslate"><span class="pre">initialize_parameters()</span></code> method, we will instantiate the base
+class, and finally build an argument parser to recognize your customized
+parameters in addition to the default parameters (
+<code class="docutils literal notranslate"><span class="pre">default_utils.initialize_parameters()</span></code>). The
+<code class="docutils literal notranslate"><span class="pre">initialize_parameters()</span></code> method should return a python dictionary,
+which will be passed to the <code class="docutils literal notranslate"><span class="pre">run()</span></code> method.</p>
+<div class="code python highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># this is a part of mnist_mlp_candle.py</span>
+
+<span class="kn">import</span> <span class="nn">mnist</span>
+<span class="kn">import</span> <span class="nn">candle_keras</span> <span class="k">as</span> <span class="nn">candle</span>
+
+<span class="k">def</span> <span class="nf">initialize_parameters</span><span class="p">():</span>
+    <span class="n">mnist_common</span> <span class="o">=</span> <span class="n">mnist</span><span class="o">.</span><span class="n">MNIST</span><span class="p">(</span><span class="n">mnist</span><span class="o">.</span><span class="n">file_path</span><span class="p">,</span>
+        <span class="s1">&#39;mnist_params.txt&#39;</span><span class="p">,</span>  <span class="c1"># 4</span>
+        <span class="s1">&#39;keras&#39;</span><span class="p">,</span>
+        <span class="n">prog</span><span class="o">=</span><span class="s1">&#39;mnist_mlp&#39;</span><span class="p">,</span>
+        <span class="n">desc</span><span class="o">=</span><span class="s1">&#39;MNIST example&#39;</span>
+    <span class="p">)</span>  <span class="c1"># 1</span>
+
+    <span class="c1"># Initialize parameters</span>
+    <span class="n">gParameters</span> <span class="o">=</span> <span class="n">default_utils</span><span class="o">.</span><span class="n">initialize_parameters</span><span class="p">(</span><span class="n">mnist_common</span><span class="p">)</span>  <span class="c1"># 2</span>
+    <span class="o">..</span>
+
+    <span class="k">return</span> <span class="n">gParameters</span>  <span class="c1"># 3</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li># 1: instantiate base class</li>
+<li># 2: build argument parser</li>
+<li># 3: initialize_parameters() should return a dictionary</li>
+<li># 4: a file that contains default values for the given parameters. See below for example.</li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">Global_Params</span><span class="p">]</span>
+<span class="n">epochs</span><span class="o">=</span><span class="mi">20</span>
+<span class="n">batch_size</span><span class="o">=</span><span class="mi">128</span>
+<span class="n">activation</span><span class="o">=</span><span class="s1">&#39;relu&#39;</span>
+<span class="n">optimizer</span><span class="o">=</span><span class="s1">&#39;rmsprop&#39;</span>
+</pre></div>
+</div>
+<p>When parameters are not overwritten by workflows, their values will be
+used as defaults.</p>
+</div>
+<div class="section" id="run-method">
+<h3>Run Method<a class="headerlink" href="#run-method" title="Permalink to this headline">¶</a></h3>
+<p>You can place your deep learning code in the <code class="docutils literal notranslate"><span class="pre">run()</span></code> method. Your
+parameters are accessible in the input dictionary like
+<code class="docutils literal notranslate"><span class="pre">gParameters['batch_size']</span></code>.</p>
+<p>We have an
+<a class="reference external" href="https://github.com/ECP-CANDLE/Candle/blob/library/examples/mnist/mnist_mlp_candle.py">example</a>
+that converted a simple MNIST neural net <code class="docutils literal notranslate"><span class="pre">mnist_mlp.py</span></code> provided by
+<a class="reference external" href="https://github.com/keras-team/keras/blob/master/examples/mnist_mlp.py">Keras
+Team</a>
+into CANDLE compliant form. In this example, you will see how the actual
+neural network was transplanted in the <code class="docutils literal notranslate"><span class="pre">run()</span></code> method.</p>
+<p>Finally, the <code class="docutils literal notranslate"><span class="pre">run()</span></code> method returns a keras history object. This can
+be omitted for upf workflow, but required for HPO workflow. (see upf and
+mbo explanation below)</p>
+<div class="code python highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># this is a part of mnist_mlp_candle.py</span>
+
+<span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="n">gParameters</span><span class="p">):</span> <span class="c1"># 1</span>
+    <span class="c1">##########################################</span>
+    <span class="c1"># Your DL start here. See mnist_mlp.py   #</span>
+    <span class="c1">##########################################</span>
+
+    <span class="o">...</span>
+
+    <span class="n">batch_size</span> <span class="o">=</span> <span class="n">gParameters</span><span class="p">[</span><span class="s1">&#39;batch_size&#39;</span><span class="p">]</span>
+    <span class="n">epochs</span> <span class="o">=</span> <span class="n">gParameters</span><span class="p">[</span><span class="s1">&#39;epochs&#39;</span><span class="p">]</span>
+
+    <span class="o">...</span>
+
+    <span class="n">model</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="n">loss</span><span class="o">=</span><span class="s1">&#39;categorical_crossentropy&#39;</span><span class="p">,</span>
+                <span class="n">optimizer</span><span class="o">=</span><span class="n">optimizer</span><span class="p">,</span>
+                <span class="n">metrics</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;accuracy&#39;</span><span class="p">])</span>
+
+    <span class="n">history</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">x_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span>
+                        <span class="n">batch_size</span><span class="o">=</span><span class="n">batch_size</span><span class="p">,</span>
+                        <span class="n">epochs</span><span class="o">=</span><span class="n">epochs</span><span class="p">,</span>
+                        <span class="n">verbose</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+                        <span class="n">validation_data</span><span class="o">=</span><span class="p">(</span><span class="n">x_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">))</span>
+    <span class="c1">##########################################</span>
+    <span class="c1"># End of mnist_mlp.py ####################</span>
+    <span class="c1">##########################################</span>
+  <span class="k">return</span> <span class="n">history</span> <span class="c1"># 2</span>
+</pre></div>
+</div>
+<ul>
+<li><p class="first"># 1: run method receives parameter dictionary</p>
+</li>
+<li><p class="first"># 2: returns keras history object or None.</p>
+<blockquote>
+<div><ul class="simple">
+<li>The mlrMBO workflow requires returning a keras history object so
+that the workflow can evaluate the model. The upf workflow does
+not have the evaluation process, so you can return <code class="docutils literal notranslate"><span class="pre">None</span></code>.</li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="section" id="how-to-run-candle-compliant-code-in-theta">
+<h1>How to run CANDLE compliant code in Theta<a class="headerlink" href="#how-to-run-candle-compliant-code-in-theta" title="Permalink to this headline">¶</a></h1>
+<p>As mentioned above, we offer two different workflows in CANDLE: Unrolled
+Parameter File (UPF) and Hyper Parameter Optimization (HPO). The UPF
+workflow allows you to run parallel multi-node executions with different
+parameters, while the HPO workflow evaluates the best values of the
+hyperparameters based on the mlrMBO algorithm.</p>
+<div class="section" id="running-upf-on-theta">
+<h2>Running UPF on Theta<a class="headerlink" href="#running-upf-on-theta" title="Permalink to this headline">¶</a></h2>
+<p>In this tutorial, we will execute an mnist example rewritten for CANDLE.
+The source code is available on <a class="reference external" href="https://github.com/ECP-CANDLE/Candle/tree/library/examples/mnist">CANDLE github
+repo</a>. This example assumes that you have access to the Candle_ECP project on theta.</p>
+<p>Step 1. Create directory and checkout Supervisor &amp; Candle repos</p>
+<div class="code bash highlight-default notranslate"><div class="highlight"><pre><span></span>$ mkdir candle_tutorial
+$ cd candle_tutorial
+$ git clone -b master https://github.com/ECP-CANDLE/Supervisor.git
+$ git clone -b library https://github.com/ECP-CANDLE/Candle.git
+</pre></div>
+</div>
+<p>Step 2. Move to upf workflow directory</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ cd Supervisor/workflows/upf
+</pre></div>
+</div>
+<p>Step 3. Set Env variables. In <code class="docutils literal notranslate"><span class="pre">test/cfg-sys-1.sh</span></code>, you will need to
+set <code class="docutils literal notranslate"><span class="pre">BENCHMARK_DIR</span></code> to point the directory that holds the example, and
+<code class="docutils literal notranslate"><span class="pre">MODEL_PYTHON_SCRIPT</span></code> to name the script you want to run.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">BENCHMARK_DIR</span><span class="o">=/</span><span class="n">home</span><span class="o">/</span><span class="n">hsyoo</span><span class="o">/</span><span class="n">candle_tutorial</span><span class="o">/</span><span class="n">Candle</span><span class="o">/</span><span class="n">examples</span><span class="o">/</span><span class="n">mnist</span> <span class="c1"># 1</span>
+<span class="n">MODEL_PYTHON_SCRIPT</span><span class="o">=</span><span class="n">mnist_mlp_candle</span> <span class="c1"># 2</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li># 1: This location should reflect your environment</li>
+<li># 2: Note this requires filename without extension (such as .py)</li>
+</ul>
+<p>Step 4. Set execution plan. Check <code class="docutils literal notranslate"><span class="pre">test/upf-1.txt</span></code> for parameter
+configuration and modify as needed. This file contains multiple JSON
+documents. Each JSON document will contain the command line parameters
+for an individual run. For example,</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;test0&quot;</span><span class="p">,</span> <span class="s2">&quot;epochs&quot;</span><span class="p">:</span> <span class="mi">10</span><span class="p">}</span>
+<span class="p">{</span><span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;test1&quot;</span><span class="p">,</span> <span class="s2">&quot;epochs&quot;</span><span class="p">:</span> <span class="mi">20</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>This will invoke two instances, which will run 10 epochs and 20 epochs
+respectively.</p>
+<p>Step 5. Submit your job. You will need to set <code class="docutils literal notranslate"><span class="pre">QUEUE</span></code>, <code class="docutils literal notranslate"><span class="pre">PROJECT</span></code>,
+<code class="docutils literal notranslate"><span class="pre">PROCS</span></code>, and <code class="docutils literal notranslate"><span class="pre">WALLTIME</span></code>. You can configure those in <code class="docutils literal notranslate"><span class="pre">cfg-sys-1.sh</span></code>
+(see Step 3), set them as env variables, or provide them as command line
+arguments (see below).</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ export QUEUE=debug-cache-quad
+$ export PROJECT=myproject
+$ export PROCS=3
+$ export WALLTIME=00:10:00
+
+$ ./test/upf-1.sh theta
+
+// or
+
+$ QUEUE=debug-cache-quad PROJECT=myproject PROCS=3 WALLTIME=00:10:00 ./test/upf-1.sh theta
+</pre></div>
+</div>
+<ul class="simple">
+<li><code class="docutils literal notranslate"><span class="pre">QUEUE</span></code> refers to the system queue name. The Theta machine has
+queues named <code class="docutils literal notranslate"><span class="pre">default</span></code>, <code class="docutils literal notranslate"><span class="pre">debug-flat-quad</span></code>, and
+<code class="docutils literal notranslate"><span class="pre">debug-cache-quad</span></code>. For more information, please check
+<a class="reference external" href="https://www.alcf.anl.gov/user-guides/job-scheduling-policy-xc40-systems#queues">https://www.alcf.anl.gov/user-guides/job-scheduling-policy-xc40-systems#queues</a></li>
+<li><code class="docutils literal notranslate"><span class="pre">PROJECT</span></code> refers to your allocated project name. Please check
+<a class="reference external" href="https://www.alcf.anl.gov/user-guides/allocations">https://www.alcf.anl.gov/user-guides/allocations</a>, for more detail.</li>
+<li><code class="docutils literal notranslate"><span class="pre">PROCS</span></code> is a number of nodes. We recommend adding extra 1 node in
+addition to the number of executions in your plan. In this example,
+we set 3 (1 + 2).</li>
+<li><code class="docutils literal notranslate"><span class="pre">WALLTIME</span></code> refers to computing time you are requesting for
+individual node. The production queues are limited by policy. Check
+<a class="reference external" href="https://www.alcf.anl.gov/user-guides/job-scheduling-policy-xc40-systems#queues">https://www.alcf.anl.gov/user-guides/job-scheduling-policy-xc40-systems#queues</a>
+for more detail.</li>
+</ul>
+<p>Step 6. Check queue status</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ qstat -u user_name -f
+</pre></div>
+</div>
+<p>Step 7. Review output files. After the job is completed, the result
+files are available in the experiments directory.
+(Supervisor/workflow/upf/experiments). For example,
+<code class="docutils literal notranslate"><span class="pre">/home/hsyoo/candle_tutorial/Supervisor/workflows/upf/experiments/X000</span></code>
+will contain files like below,</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">-</span><span class="n">rw</span><span class="o">-</span><span class="n">r</span><span class="o">--</span><span class="n">r</span><span class="o">--</span> <span class="mi">1</span> <span class="n">hsyoo</span> <span class="n">cobalt</span>  <span class="mi">2411</span> <span class="n">Aug</span> <span class="mi">17</span> <span class="mi">19</span><span class="p">:</span><span class="mi">13</span> <span class="mf">262775.</span><span class="n">cobaltlog</span>
+<span class="o">-</span><span class="n">rw</span><span class="o">-</span><span class="n">r</span><span class="o">--</span><span class="n">r</span><span class="o">--</span> <span class="mi">1</span> <span class="n">hsyoo</span> <span class="n">users</span>   <span class="mi">1179</span> <span class="n">Aug</span> <span class="mi">17</span> <span class="mi">18</span><span class="p">:</span><span class="mi">55</span> <span class="n">cfg</span><span class="o">-</span><span class="n">sys</span><span class="o">-</span><span class="mf">1.</span><span class="n">sh</span>
+<span class="o">-</span><span class="n">rw</span><span class="o">-</span><span class="n">r</span><span class="o">--</span><span class="n">r</span><span class="o">--</span> <span class="mi">1</span> <span class="n">hsyoo</span> <span class="n">users</span>      <span class="mi">7</span> <span class="n">Aug</span> <span class="mi">17</span> <span class="mi">18</span><span class="p">:</span><span class="mi">55</span> <span class="n">jobid</span><span class="o">.</span><span class="n">txt</span>
+<span class="o">-</span><span class="n">rw</span><span class="o">-</span><span class="n">r</span><span class="o">--</span><span class="n">r</span><span class="o">--</span> <span class="mi">1</span> <span class="n">hsyoo</span> <span class="n">users</span>   <span class="mi">3310</span> <span class="n">Aug</span> <span class="mi">17</span> <span class="mi">19</span><span class="p">:</span><span class="mi">13</span> <span class="n">output</span><span class="o">.</span><span class="n">txt</span>
+<span class="n">drwxr</span><span class="o">-</span><span class="n">xr</span><span class="o">-</span><span class="n">x</span> <span class="mi">4</span> <span class="n">hsyoo</span> <span class="n">users</span>    <span class="mi">512</span> <span class="n">Aug</span> <span class="mi">17</span> <span class="mi">19</span><span class="p">:</span><span class="mi">07</span> <span class="n">run</span>
+<span class="o">-</span><span class="n">rw</span><span class="o">-------</span> <span class="mi">1</span> <span class="n">hsyoo</span> <span class="n">users</span>  <span class="mi">10863</span> <span class="n">Aug</span> <span class="mi">17</span> <span class="mi">18</span><span class="p">:</span><span class="mi">55</span> <span class="n">swift</span><span class="o">-</span><span class="n">t</span><span class="o">-</span><span class="n">workflow</span><span class="o">.</span><span class="mi">8</span><span class="n">X4</span><span class="o">.</span><span class="n">tic</span>
+<span class="o">-</span><span class="n">rw</span><span class="o">-</span><span class="n">r</span><span class="o">--</span><span class="n">r</span><span class="o">--</span> <span class="mi">1</span> <span class="n">hsyoo</span> <span class="n">users</span>    <span class="mi">677</span> <span class="n">Aug</span> <span class="mi">17</span> <span class="mi">18</span><span class="p">:</span><span class="mi">55</span> <span class="n">turbine</span><span class="o">.</span><span class="n">log</span>
+<span class="o">-</span><span class="n">rwxr</span><span class="o">--</span><span class="n">r</span><span class="o">--</span> <span class="mi">1</span> <span class="n">hsyoo</span> <span class="n">users</span>   <span class="mi">5103</span> <span class="n">Aug</span> <span class="mi">17</span> <span class="mi">18</span><span class="p">:</span><span class="mi">55</span> <span class="n">turbine</span><span class="o">-</span><span class="n">theta</span><span class="o">.</span><span class="n">sh</span>
+<span class="o">-</span><span class="n">rw</span><span class="o">-</span><span class="n">r</span><span class="o">--</span><span class="n">r</span><span class="o">--</span> <span class="mi">1</span> <span class="n">hsyoo</span> <span class="n">users</span>     <span class="mi">60</span> <span class="n">Aug</span> <span class="mi">17</span> <span class="mi">18</span><span class="p">:</span><span class="mi">55</span> <span class="n">upf</span><span class="o">-</span><span class="mf">1.</span><span class="n">txt</span>
+<span class="o">-</span><span class="n">rw</span><span class="o">-</span><span class="n">r</span><span class="o">--</span><span class="n">r</span><span class="o">--</span> <span class="mi">1</span> <span class="n">hsyoo</span> <span class="n">users</span>   <span class="mi">4559</span> <span class="n">Aug</span> <span class="mi">17</span> <span class="mi">18</span><span class="p">:</span><span class="mi">55</span> <span class="n">workflow</span><span class="o">.</span><span class="n">sh</span><span class="o">.</span><span class="n">log</span>
+
+<span class="n">hsyoo</span><span class="nd">@thetalogin4</span><span class="p">:</span><span class="o">~/</span><span class="n">candle_tutorial</span><span class="o">/</span><span class="n">Supervisor</span><span class="o">/</span><span class="n">workflows</span><span class="o">/</span><span class="n">upf</span><span class="o">/</span><span class="n">experiments</span><span class="o">/</span><span class="n">X000</span><span class="o">&gt;</span> <span class="n">ls</span> <span class="o">-</span><span class="n">al</span> <span class="n">run</span><span class="o">/</span>
+<span class="n">total</span> <span class="mi">2</span>
+<span class="n">drwxr</span><span class="o">-</span><span class="n">xr</span><span class="o">-</span><span class="n">x</span> <span class="mi">4</span> <span class="n">hsyoo</span> <span class="n">users</span>  <span class="mi">512</span> <span class="n">Aug</span> <span class="mi">17</span> <span class="mi">19</span><span class="p">:</span><span class="mi">07</span> <span class="o">.</span>
+<span class="n">drwxr</span><span class="o">-</span><span class="n">xr</span><span class="o">-</span><span class="n">x</span> <span class="mi">3</span> <span class="n">hsyoo</span> <span class="n">users</span> <span class="mi">1024</span> <span class="n">Aug</span> <span class="mi">17</span> <span class="mi">20</span><span class="p">:</span><span class="mi">33</span> <span class="o">..</span>
+<span class="n">drwxr</span><span class="o">-</span><span class="n">xr</span><span class="o">-</span><span class="n">x</span> <span class="mi">3</span> <span class="n">hsyoo</span> <span class="n">users</span>  <span class="mi">512</span> <span class="n">Aug</span> <span class="mi">17</span> <span class="mi">20</span><span class="p">:</span><span class="mi">34</span> <span class="n">test0</span>
+<span class="n">drwxr</span><span class="o">-</span><span class="n">xr</span><span class="o">-</span><span class="n">x</span> <span class="mi">3</span> <span class="n">hsyoo</span> <span class="n">users</span>  <span class="mi">512</span> <span class="n">Aug</span> <span class="mi">17</span> <span class="mi">19</span><span class="p">:</span><span class="mi">13</span> <span class="n">test1</span>
+
+<span class="n">hsyoo</span><span class="nd">@thetalogin4</span><span class="p">:</span><span class="o">~/</span><span class="n">candle_tutorial</span><span class="o">/</span><span class="n">Supervisor</span><span class="o">/</span><span class="n">workflows</span><span class="o">/</span><span class="n">upf</span><span class="o">/</span><span class="n">experiments</span><span class="o">/</span><span class="n">X000</span><span class="o">&gt;</span> <span class="n">cat</span> <span class="n">run</span><span class="o">/</span><span class="n">test0</span><span class="o">/</span><span class="n">model</span><span class="o">.</span><span class="n">log</span>
+<span class="o">...</span> <span class="n">many</span> <span class="n">lines</span> <span class="n">omitted</span> <span class="o">...</span>
+<span class="n">Epoch</span> <span class="mi">10</span><span class="o">/</span><span class="mi">10</span>
+<span class="mi">60000</span><span class="o">/</span><span class="mi">60000</span> <span class="p">[</span><span class="o">==============================</span><span class="p">]</span> <span class="o">-</span> <span class="mi">12</span><span class="n">s</span> <span class="o">-</span> <span class="n">loss</span><span class="p">:</span> <span class="mf">4.3824</span> <span class="o">-</span> <span class="n">acc</span><span class="p">:</span> <span class="mf">0.7253</span> <span class="o">-</span> <span class="n">val_loss</span><span class="p">:</span> <span class="mf">2.1082</span> <span class="o">-</span> <span class="n">val_acc</span><span class="p">:</span> <span class="mf">0.8671</span>
+<span class="p">(</span><span class="s1">&#39;Test loss:&#39;</span><span class="p">,</span> <span class="mf">2.1082268813190574</span><span class="p">)</span>
+<span class="p">(</span><span class="s1">&#39;Test accuracy:&#39;</span><span class="p">,</span> <span class="mf">0.86709999999999998</span><span class="p">)</span>
+<span class="n">result</span><span class="p">:</span> <span class="mf">2.10822688904</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><code class="docutils literal notranslate"><span class="pre">output.txt</span></code> contains stdout and stderr of this experiment. This is
+helpful to debug errors.</li>
+<li><code class="docutils literal notranslate"><span class="pre">run</span></code> directory contains the output files. You will see two
+directories that are corresponding the IDs configured in upf-1.txt</li>
+<li>a copy of configuration files are available so that you can trace
+what were passed to this experiment.</li>
+<li>stdout of test0. After 10 epoches, validation loss was 2.1082.</li>
+</ul>
+</div>
+<div class="section" id="running-mlrmbo-based-hyperparameters-optimization-hpo-on-theta">
+<h2>Running mlrMBO based Hyperparameters Optimization (HPO) on Theta<a class="headerlink" href="#running-mlrmbo-based-hyperparameters-optimization-hpo-on-theta" title="Permalink to this headline">¶</a></h2>
+<p>Step 1. Create directory and checkout Supervisor &amp; Candle repos. You can
+skip this step if you already have done it in previous section.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ mkdir candle_tutorial
+$ cd candle_tutorial
+$ git clone -b master https://github.com/ECP-CANDLE/Supervisor.git
+$ git clone -b library https://github.com/ECP-CANDLE/Candle.git
+</pre></div>
+</div>
+<p>Step 2. Move to mlrMBO workflow directory</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ cd Supervisor/workflows/mlrMBO
+</pre></div>
+</div>
+<p>Step 3. Set Env variables. In <code class="docutils literal notranslate"><span class="pre">test/cfg-sys-1.sh</span></code>, you will need to
+set <code class="docutils literal notranslate"><span class="pre">BENCHMARK_DIR</span></code> to point the directory that your script locates,
+and <code class="docutils literal notranslate"><span class="pre">MODEL_PYTHON_SCRIPT</span></code> to name the script you want to run</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">BENCHMARK_DIR</span><span class="o">=/</span><span class="n">home</span><span class="o">/</span><span class="n">hsyoo</span><span class="o">/</span><span class="n">candle_tutorial</span><span class="o">/</span><span class="n">Candle</span><span class="o">/</span><span class="n">examples</span><span class="o">/</span><span class="n">mnist</span> <span class="c1"># 1</span>
+<span class="n">MODEL_PYTHON_SCRIPT</span><span class="o">=</span><span class="n">mnist_mlp_candle</span> <span class="c1"># 2</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li># 1: This location should reflect your environment</li>
+<li># 2: Note this requires filename without extension (such as .py)</li>
+</ul>
+<p>Step 4. Config hyper parameters. In this step, we are configuring
+parameter sets, which we will iteratively evaluate. For example, you can
+create <code class="docutils literal notranslate"><span class="pre">workflow/data/mnist.R</span></code> as below.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">param</span><span class="o">.</span><span class="n">set</span> <span class="o">&lt;-</span> <span class="n">makeParamSet</span><span class="p">(</span>
+  <span class="n">makeDiscreteParam</span><span class="p">(</span><span class="s2">&quot;batch_size&quot;</span><span class="p">,</span> <span class="n">values</span><span class="o">=</span><span class="n">c</span><span class="p">(</span><span class="mi">32</span><span class="p">,</span> <span class="mi">64</span><span class="p">,</span> <span class="mi">128</span><span class="p">,</span> <span class="mi">256</span><span class="p">,</span> <span class="mi">512</span><span class="p">)),</span>
+  <span class="n">makeDiscreteParam</span><span class="p">(</span><span class="s2">&quot;activation&quot;</span><span class="p">,</span> <span class="n">values</span><span class="o">=</span><span class="n">c</span><span class="p">(</span><span class="s2">&quot;relu&quot;</span><span class="p">,</span> <span class="s2">&quot;sigmoid&quot;</span><span class="p">,</span> <span class="s2">&quot;tanh&quot;</span><span class="p">)),</span>
+  <span class="n">makeDiscreteParam</span><span class="p">(</span><span class="s2">&quot;optimizer&quot;</span><span class="p">,</span> <span class="n">values</span><span class="o">=</span><span class="n">c</span><span class="p">(</span><span class="s2">&quot;adam&quot;</span><span class="p">,</span> <span class="s2">&quot;sgd&quot;</span><span class="p">,</span> <span class="s2">&quot;rmsprop&quot;</span><span class="p">)),</span>
+  <span class="n">makeIntegerParam</span><span class="p">(</span><span class="s2">&quot;epochs&quot;</span><span class="p">,</span> <span class="n">lower</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">upper</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>This file should be located under your Supervisor installation. For this
+tutorial, it is
+<code class="docutils literal notranslate"><span class="pre">/home/hsyoo/candle_tutorial/Supervisor/workflows/mlrMBO/data</span></code>, but
+again, this should reflect your environment.</p>
+<p>In this example, we are varying four parameters: <code class="docutils literal notranslate"><span class="pre">batch_size</span></code>,
+<code class="docutils literal notranslate"><span class="pre">activation</span></code>, <code class="docutils literal notranslate"><span class="pre">optimizer</span></code>, <code class="docutils literal notranslate"><span class="pre">epochs</span></code>. For <code class="docutils literal notranslate"><span class="pre">batch</span> <span class="pre">size</span></code>, we are
+trying out 32, 64, 128, 256, and 512. For <code class="docutils literal notranslate"><span class="pre">activation</span></code> method, we are
+exploring <code class="docutils literal notranslate"><span class="pre">relu</span></code>, <code class="docutils literal notranslate"><span class="pre">sigmoid</span></code>, and <code class="docutils literal notranslate"><span class="pre">tanh</span></code>, and so on. Entire
+parameter space will be 45 (5 x 3 x 3 x 1).</p>
+<p>After creating this file, we need to point to this file in an
+environment variable.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ export PARAM_SET_FILE=mnist.R
+</pre></div>
+</div>
+<p>Step 5. Submit your job.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ ./test/test-1.sh mnist theta
+</pre></div>
+</div>
+<p>The first argument is MODEL_NAME. If the name is registered in
+<code class="docutils literal notranslate"><span class="pre">test/cfg-prm-1.sh</span></code>, it will use the pre-configured parameter file.
+Otherwise, CANDLE will use <code class="docutils literal notranslate"><span class="pre">PARAM_SET_FILE</span></code> we configured in step 4.</p>
+<p>You can specify the HPO search strategy. As you can see in
+<code class="docutils literal notranslate"><span class="pre">test/cfg-prm-1.sh</span></code>, you are able to config <code class="docutils literal notranslate"><span class="pre">PROPOSE_POINTS</span></code>,
+<code class="docutils literal notranslate"><span class="pre">MAX_CONCURRENT_EVALUATIONS</span></code>, <code class="docutils literal notranslate"><span class="pre">MAX_ITERATIONS</span></code>, <code class="docutils literal notranslate"><span class="pre">MAX_BUDGE</span></code>,
+<code class="docutils literal notranslate"><span class="pre">DESIGN_SIZE</span></code>.</p>
+<ul class="simple">
+<li><code class="docutils literal notranslate"><span class="pre">DESIGN_SIZE</span></code> is a number of parameter sets that will evaluate at
+the beginning of HPO search. In this example, CANDLE will select
+random 10 parameter sets out of 45 (see Step 4, for break downs).</li>
+<li><code class="docutils literal notranslate"><span class="pre">MAX_ITERATIONS</span></code> is a number of iterations.</li>
+<li><code class="docutils literal notranslate"><span class="pre">PROPOSE_POINTS</span></code> is a number of parameter sets that CANDLE will
+evaluate in each iteration. So, if <code class="docutils literal notranslate"><span class="pre">MAX_ITERATION=3</span></code> and
+<code class="docutils literal notranslate"><span class="pre">PROPOSE_POINTS=5</span></code>, CANDLE will be ended up evaluating 25 params
+(10 + 3 x 5).</li>
+<li><code class="docutils literal notranslate"><span class="pre">MAX_BUDGET</span></code> should be greater than total evaluations. In this
+example, 45.</li>
+</ul>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="modules.html" class="btn btn-neutral float-right" title="common" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="readme.html" class="btn btn-neutral" title="Read about Candle" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, ANL.gov.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'',
+            LANGUAGE:'None',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  <script type="text/javascript" src="_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
