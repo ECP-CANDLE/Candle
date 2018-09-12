@@ -29,7 +29,7 @@
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="CANDLE Library API" href="modules.html" />
-    <link rel="prev" title="What is CANDLE Library?" href="readme.html" /> 
+    <link rel="prev" title="What is CANDLE?" href="readme.html" /> 
 
   
   <script src="_static/js/modernizr.min.js"></script>
@@ -80,7 +80,7 @@
             
               <p class="caption"><span class="caption-text">Contents:</span></p>
 <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="readme.html">What is CANDLE Library?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="readme.html">What is CANDLE?</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">How to write CANDLE compliant deep learning code</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#minimum-requirements">Minimum requirements</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#base-class">Base Class</a><ul>
@@ -188,7 +188,7 @@ and have values, if needed.</p>
 <h3>Base Class<a class="headerlink" href="#base-class" title="Permalink to this headline">¶</a></h3>
 <p>The CANDLE library provides a base class (<code class="docutils literal notranslate"><span class="pre">candle.Benchmark</span></code>), which
 you will extend to configure your parameters. If you don’t have any
-additional parameters to define, you can use this code as is (see <a class="reference external" href="https://github.com/ECP-CANDLE/Candle/blob/library/examples/mnist/mnist.py">MNIST
+additional parameters to define, you can use this code as is (see <a class="reference external" href="https://github.com/ECP-CANDLE/Candle/blob/master/examples/mnist/mnist.py">MNIST
 example</a>).</p>
 <div class="code python highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># mnist.py</span>
 <span class="n">additional_definitions</span> <span class="o">=</span> <span class="kc">None</span>
@@ -247,7 +247,7 @@ pass it to the definition of your class.</p>
 <p>On some high-performance computing machines like <code class="docutils literal notranslate"><span class="pre">Theta</span></code>, the
 performance will be greatly improved if we let CANDLE handle threads.
 So, it is generally recommended to have code like lines 14 to 21 in
-<a class="reference external" href="https://github.com/ECP-CANDLE/Candle/blob/library/examples/mnist/mnist.py#L9-L16">this
+<a class="reference external" href="https://github.com/ECP-CANDLE/Candle/blob/master/examples/mnist/mnist.py#L9-L16">this
 example</a>,
 which sets appropriate parameters in a tensorflow session.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># thread optimization</span>
@@ -312,7 +312,7 @@ used as defaults.</p>
 parameters are accessible in the input dictionary like
 <code class="docutils literal notranslate"><span class="pre">gParameters['batch_size']</span></code>.</p>
 <p>We have an
-<a class="reference external" href="https://github.com/ECP-CANDLE/Candle/blob/library/examples/mnist/mnist_mlp_candle.py">example</a>
+<a class="reference external" href="https://github.com/ECP-CANDLE/Candle/blob/master/examples/mnist/mnist_mlp_candle.py">example</a>
 that converted a simple MNIST neural net <code class="docutils literal notranslate"><span class="pre">mnist_mlp.py</span></code> provided by
 <a class="reference external" href="https://github.com/keras-team/keras/blob/master/examples/mnist_mlp.py">Keras
 Team</a>
@@ -376,13 +376,13 @@ hyperparameters based on the mlrMBO algorithm.</p>
 <div class="section" id="running-upf-on-theta">
 <h2>Running UPF on Theta<a class="headerlink" href="#running-upf-on-theta" title="Permalink to this headline">¶</a></h2>
 <p>In this tutorial, we will execute an mnist example rewritten for CANDLE.
-The source code is available on <a class="reference external" href="https://github.com/ECP-CANDLE/Candle/tree/library/examples/mnist">CANDLE github
+The source code is available on <a class="reference external" href="https://github.com/ECP-CANDLE/Candle/tree/master/examples/mnist">CANDLE github
 repo</a>. This example assumes that you have access to the Candle_ECP project on theta.</p>
 <p>Step 1. Create directory and checkout Supervisor &amp; Candle repos</p>
 <div class="code bash highlight-default notranslate"><div class="highlight"><pre><span></span>$ mkdir candle_tutorial
 $ cd candle_tutorial
 $ git clone -b master https://github.com/ECP-CANDLE/Supervisor.git
-$ git clone -b library https://github.com/ECP-CANDLE/Candle.git
+$ git clone https://github.com/ECP-CANDLE/Candle.git
 </pre></div>
 </div>
 <p>Step 2. Move to upf workflow directory</p>
@@ -574,7 +574,7 @@ example, 45.</li>
         <a href="modules.html" class="btn btn-neutral float-right" title="CANDLE Library API" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="readme.html" class="btn btn-neutral" title="What is CANDLE Library?" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="readme.html" class="btn btn-neutral" title="What is CANDLE?" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

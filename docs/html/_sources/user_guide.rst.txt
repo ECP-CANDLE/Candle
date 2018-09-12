@@ -27,7 +27,7 @@ Base Class
 The CANDLE library provides a base class (``candle.Benchmark``), which
 you will extend to configure your parameters. If you don’t have any
 additional parameters to define, you can use this code as is (see `MNIST
-example <https://github.com/ECP-CANDLE/Candle/blob/library/examples/mnist/mnist.py>`__).
+example <https://github.com/ECP-CANDLE/Candle/blob/master/examples/mnist/mnist.py>`__).
 
 .. code:: python
 
@@ -94,7 +94,7 @@ On some high-performance computing machines like ``Theta``, the
 performance will be greatly improved if we let CANDLE handle threads.
 So, it is generally recommended to have code like lines 14 to 21 in
 `this
-example <https://github.com/ECP-CANDLE/Candle/blob/library/examples/mnist/mnist.py#L9-L16>`__,
+example <https://github.com/ECP-CANDLE/Candle/blob/master/examples/mnist/mnist.py#L9-L16>`__,
 which sets appropriate parameters in a tensorflow session.
 
 ::
@@ -166,7 +166,7 @@ parameters are accessible in the input dictionary like
 ``gParameters['batch_size']``.
 
 We have an
-`example <https://github.com/ECP-CANDLE/Candle/blob/library/examples/mnist/mnist_mlp_candle.py>`__
+`example <https://github.com/ECP-CANDLE/Candle/blob/master/examples/mnist/mnist_mlp_candle.py>`__
 that converted a simple MNIST neural net ``mnist_mlp.py`` provided by
 `Keras
 Team <https://github.com/keras-team/keras/blob/master/examples/mnist_mlp.py>`__
@@ -229,7 +229,7 @@ Running UPF on Theta
 
 In this tutorial, we will execute an mnist example rewritten for CANDLE.
 The source code is available on `CANDLE github
-repo <https://github.com/ECP-CANDLE/Candle/tree/library/examples/mnist>`__. This example assumes that you have access to the Candle_ECP project on theta.
+repo <https://github.com/ECP-CANDLE/Candle/tree/master/examples/mnist>`__. This example assumes that you have access to the Candle_ECP project on theta.
 
 Step 1. Create directory and checkout Supervisor & Candle repos
 
@@ -238,7 +238,7 @@ Step 1. Create directory and checkout Supervisor & Candle repos
     $ mkdir candle_tutorial
     $ cd candle_tutorial
     $ git clone -b master https://github.com/ECP-CANDLE/Supervisor.git
-    $ git clone -b library https://github.com/ECP-CANDLE/Candle.git
+    $ git clone https://github.com/ECP-CANDLE/Candle.git
 
 Step 2. Move to upf workflow directory
 
