@@ -1,11 +1,11 @@
-Read about Candle
-=================
+What is CANDLE?
+===============
 
-Candle
-------
+CANDLE
+---------------
 CANDLE is software for deep learning at scale. In the early stages, the software is being developed for execution on the Department of Energy's leadership computing resources. However, in theory the software can execute on any reasonably configured cluster. This repository serves as a place for top level documents, tests, and other artifacts that span multiple repositories in the ECP-Candle organization.
 
-BACKGROUND
+Background
 ----------
 The code for our cancer work has three main components: deep learning cancer related benchmarks (Benchmarks repository), infrastructure for scaling deep learning onto DOE leadership systems (multiple repositories to which we will generally refer to as Candle), and codes that push the science forward (ModelZoo repository). For the ModelZoo repository, we have not yet started work.
 

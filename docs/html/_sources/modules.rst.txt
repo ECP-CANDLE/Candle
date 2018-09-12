@@ -1,8 +1,8 @@
-CANDLE Lib
-===========
+CANDLE Library API
+===================
 
 .. toctree::
-   :maxdepth: 4
+   :maxdepth: 1
 
    candle_keras
    data_utils
