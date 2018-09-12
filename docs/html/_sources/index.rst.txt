@@ -11,7 +11,7 @@ CANDLE Documentation Home
    :caption: Contents:
 
    readme
-   user_guide
+   tutorials/index
    modules
 
 
