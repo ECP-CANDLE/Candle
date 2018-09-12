@@ -1,0 +1,405 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>uq_utils module &mdash; CANDLE  documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="prev" title="solr_keras module" href="solr_keras.html" /> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> CANDLE
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../readme.html">What is CANDLE?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide.html">How to write CANDLE compliant deep learning code</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide.html#how-to-run-candle-compliant-code-in-theta">How to run CANDLE compliant code in Theta</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../modules.html">CANDLE Library API</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="candle_keras.html">candle_keras package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="data_utils.html">data_utils module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="default_utils.html">default_utils module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_utils.html">file_utils module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="generic_utils.html">generic_utils module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="keras_utils.html">keras_utils module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="solr_keras.html">solr_keras module</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">uq_utils module</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">CANDLE</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../modules.html">CANDLE Library API</a> &raquo;</li>
+        
+      <li>uq_utils module</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/candle_lib/uq_utils.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="module-uq_utils">
+<span id="uq-utils-module"></span><h1>uq_utils module<a class="headerlink" href="#module-uq_utils" title="Permalink to this headline">¶</a></h1>
+<dl class="function">
+<dt id="uq_utils.compute_limits">
+<code class="descclassname">uq_utils.</code><code class="descname">compute_limits</code><span class="sig-paren">(</span><em>numdata</em>, <em>numblocks</em>, <em>blocksize</em>, <em>blockn</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/uq_utils.html#compute_limits"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#uq_utils.compute_limits" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generates the limit of indices corresponding to a 
+specific block. It takes into account the non-exact
+divisibility of numdata into numblocks letting the
+last block to take the extra chunk.</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>numdata <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
+<dd>Total number of data points to distribute</dd>
+<dt>numblocks <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
+<dd>Total number of blocks to distribute into</dd>
+<dt>blocksize <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
+<dd>Size of data per block</dd>
+<dt>blockn <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
+<dd>Index of block, from 0 to numblocks-1</dd>
+</dl>
+<dl class="docutils">
+<dt>start <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
+<dd>Position to start assigning indices</dd>
+<dt>end <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
+<dd>One beyond position to stop assigning indices</dd>
+</dl>
+</div></blockquote>
+</dd></dl>
+
+<dl class="function">
+<dt id="uq_utils.fill_array">
+<code class="descclassname">uq_utils.</code><code class="descname">fill_array</code><span class="sig-paren">(</span><em>blocklist</em>, <em>maxsize</em>, <em>numdata</em>, <em>numblocks</em>, <em>blocksize</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/uq_utils.html#fill_array"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#uq_utils.fill_array" title="Permalink to this definition">¶</a></dt>
+<dd><p>Fills a new array of integers with the indices corresponding
+to the specified block structure.</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>blocklist <span class="classifier-delimiter">:</span> <span class="classifier">list</span></dt>
+<dd>List of integers describen the block indices that
+go into the array</dd>
+<dt>maxsize <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
+<dd>Maximum possible length for the partition (the size of the
+common block size plus the remainder, if any).</dd>
+<dt>numdata <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
+<dd>Total number of data points to distribute</dd>
+<dt>numblocks <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
+<dd>Total number of blocks to distribute into</dd>
+<dt>blocksize <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
+<dd>Size of data per block</dd>
+</dl>
+<dl class="docutils">
+<dt>indexArray <span class="classifier-delimiter">:</span> <span class="classifier">int numpy array</span></dt>
+<dd>Indices for specific data partition. Resizes the array
+to the correct length.</dd>
+</dl>
+</div></blockquote>
+</dd></dl>
+
+<dl class="function">
+<dt id="uq_utils.generate_index_distribution">
+<code class="descclassname">uq_utils.</code><code class="descname">generate_index_distribution</code><span class="sig-paren">(</span><em>numTrain</em>, <em>numTest</em>, <em>numValidation</em>, <em>params</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/uq_utils.html#generate_index_distribution"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#uq_utils.generate_index_distribution" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generates a vector of indices to partition the data for training.
+NO CHECKING IS DONE: it is assumed that the data could be partitioned
+in the specified blocks and that the block indices describe a coherent
+partition.</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>numTrain <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
+<dd>Number of training data points</dd>
+<dt>numTest <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
+<dd>Number of testing data points</dd>
+<dt>numValidation <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
+<dd>Number of validation data points (may be zero)</dd>
+<dt>params <span class="classifier-delimiter">:</span> <span class="classifier">dictionary with parameters</span></dt>
+<dd>Contains the keywords that control the behavior of the function
+(uq_train_fr, uq_valid_fr, uq_test_fr for fraction specification,
+uq_train_vec, uq_valid_vec, uq_test_vec for block list specification, and
+uq_train_bks, uq_valid_bks, uq_test_bks for block number specification)</dd>
+</dl>
+<dl class="docutils">
+<dt>indexTrain <span class="classifier-delimiter">:</span> <span class="classifier">int numpy array</span></dt>
+<dd>Indices for data in training</dd>
+<dt>indexValidation <span class="classifier-delimiter">:</span> <span class="classifier">int numpy array</span></dt>
+<dd>Indices for data in validation (if any)</dd>
+<dt>indexTest <span class="classifier-delimiter">:</span> <span class="classifier">int numpy array</span></dt>
+<dd>Indices for data in testing (if merging)</dd>
+</dl>
+</div></blockquote>
+</dd></dl>
+
+<dl class="function">
+<dt id="uq_utils.generate_index_distribution_from_block_list">
+<code class="descclassname">uq_utils.</code><code class="descname">generate_index_distribution_from_block_list</code><span class="sig-paren">(</span><em>numTrain</em>, <em>numTest</em>, <em>numValidation</em>, <em>params</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/uq_utils.html#generate_index_distribution_from_block_list"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#uq_utils.generate_index_distribution_from_block_list" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generates a vector of indices to partition the data for training.
+NO CHECKING IS DONE: it is assumed that the data could be partitioned
+in the specified list of blocks and that the block indices describe a 
+coherent partition.</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>numTrain <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
+<dd>Number of training data points</dd>
+<dt>numTest <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
+<dd>Number of testing data points</dd>
+<dt>numValidation <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
+<dd>Number of validation data points (may be zero)</dd>
+<dt>params <span class="classifier-delimiter">:</span> <span class="classifier">dictionary with parameters</span></dt>
+<dd>Contains the keywords that control the behavior of the function
+(uq_train_vec, uq_valid_vec, uq_test_vec)</dd>
+</dl>
+<dl class="docutils">
+<dt>indexTrain <span class="classifier-delimiter">:</span> <span class="classifier">int numpy array</span></dt>
+<dd>Indices for data in training</dd>
+<dt>indexValidation <span class="classifier-delimiter">:</span> <span class="classifier">int numpy array</span></dt>
+<dd>Indices for data in validation (if any)</dd>
+<dt>indexTest <span class="classifier-delimiter">:</span> <span class="classifier">int numpy array</span></dt>
+<dd>Indices for data in testing (if merging)</dd>
+</dl>
+</div></blockquote>
+</dd></dl>
+
+<dl class="function">
+<dt id="uq_utils.generate_index_distribution_from_blocks">
+<code class="descclassname">uq_utils.</code><code class="descname">generate_index_distribution_from_blocks</code><span class="sig-paren">(</span><em>numTrain</em>, <em>numTest</em>, <em>numValidation</em>, <em>params</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/uq_utils.html#generate_index_distribution_from_blocks"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#uq_utils.generate_index_distribution_from_blocks" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generates a vector of indices to partition the data for training.
+NO CHECKING IS DONE: it is assumed that the data could be partitioned
+in the specified block quantities and that the block quantities describe a
+coherent partition.</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>numTrain <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
+<dd>Number of training data points</dd>
+<dt>numTest <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
+<dd>Number of testing data points</dd>
+<dt>numValidation <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
+<dd>Number of validation data points (may be zero)</dd>
+<dt>params <span class="classifier-delimiter">:</span> <span class="classifier">dictionary with parameters</span></dt>
+<dd>Contains the keywords that control the behavior of the function
+(uq_train_bks, uq_valid_bks, uq_test_bks)</dd>
+</dl>
+<dl class="docutils">
+<dt>indexTrain <span class="classifier-delimiter">:</span> <span class="classifier">int numpy array</span></dt>
+<dd>Indices for data in training</dd>
+<dt>indexValidation <span class="classifier-delimiter">:</span> <span class="classifier">int numpy array</span></dt>
+<dd>Indices for data in validation (if any)</dd>
+<dt>indexTest <span class="classifier-delimiter">:</span> <span class="classifier">int numpy array</span></dt>
+<dd>Indices for data in testing (if merging)</dd>
+</dl>
+</div></blockquote>
+</dd></dl>
+
+<dl class="function">
+<dt id="uq_utils.generate_index_distribution_from_fraction">
+<code class="descclassname">uq_utils.</code><code class="descname">generate_index_distribution_from_fraction</code><span class="sig-paren">(</span><em>numTrain</em>, <em>numTest</em>, <em>numValidation</em>, <em>params</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/uq_utils.html#generate_index_distribution_from_fraction"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#uq_utils.generate_index_distribution_from_fraction" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generates a vector of indices to partition the data for training.
+It checks that the fractions provided are (0, 1) and add up to 1.</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>numTrain <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
+<dd>Number of training data points</dd>
+<dt>numTest <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
+<dd>Number of testing data points</dd>
+<dt>numValidation <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
+<dd>Number of validation data points (may be zero)</dd>
+<dt>params <span class="classifier-delimiter">:</span> <span class="classifier">dictionary with parameters</span></dt>
+<dd>Contains the keywords that control the behavior of the function
+(uq_train_fr, uq_valid_fr, uq_test_fr)</dd>
+</dl>
+<dl class="docutils">
+<dt>indexTrain <span class="classifier-delimiter">:</span> <span class="classifier">int numpy array</span></dt>
+<dd>Indices for data in training</dd>
+<dt>indexValidation <span class="classifier-delimiter">:</span> <span class="classifier">int numpy array</span></dt>
+<dd>Indices for data in validation (if any)</dd>
+<dt>indexTest <span class="classifier-delimiter">:</span> <span class="classifier">int numpy array</span></dt>
+<dd>Indices for data in testing (if merging)</dd>
+</dl>
+</div></blockquote>
+</dd></dl>
+
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+      
+        <a href="solr_keras.html" class="btn btn-neutral" title="solr_keras module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, ANL.gov.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'',
+            LANGUAGE:'None',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

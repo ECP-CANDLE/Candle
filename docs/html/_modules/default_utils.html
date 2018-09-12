@@ -179,17 +179,17 @@
 
 <span class="c1">#### IO UTILS</span>
 
-<div class="viewcode-block" id="fetch_file"><a class="viewcode-back" href="../default_utils.html#default_utils.fetch_file">[docs]</a><span class="k">def</span> <span class="nf">fetch_file</span><span class="p">(</span><span class="n">link</span><span class="p">,</span> <span class="n">subdir</span><span class="p">,</span> <span class="n">untar</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">md5_hash</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="fetch_file"><a class="viewcode-back" href="../candle_lib/default_utils.html#default_utils.fetch_file">[docs]</a><span class="k">def</span> <span class="nf">fetch_file</span><span class="p">(</span><span class="n">link</span><span class="p">,</span> <span class="n">subdir</span><span class="p">,</span> <span class="n">untar</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">md5_hash</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
     <span class="n">fname</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">link</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">get_file</span><span class="p">(</span><span class="n">fname</span><span class="p">,</span> <span class="n">origin</span><span class="o">=</span><span class="n">link</span><span class="p">,</span> <span class="n">untar</span><span class="o">=</span><span class="n">untar</span><span class="p">,</span> <span class="n">md5_hash</span><span class="o">=</span><span class="n">md5_hash</span><span class="p">,</span> <span class="n">cache_subdir</span><span class="o">=</span><span class="n">subdir</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="verify_path"><a class="viewcode-back" href="../default_utils.html#default_utils.verify_path">[docs]</a><span class="k">def</span> <span class="nf">verify_path</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
+<div class="viewcode-block" id="verify_path"><a class="viewcode-back" href="../candle_lib/default_utils.html#default_utils.verify_path">[docs]</a><span class="k">def</span> <span class="nf">verify_path</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
     <span class="n">folder</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">folder</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">folder</span><span class="p">):</span>
         <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">folder</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="set_up_logger"><a class="viewcode-back" href="../default_utils.html#default_utils.set_up_logger">[docs]</a><span class="k">def</span> <span class="nf">set_up_logger</span><span class="p">(</span><span class="n">logfile</span><span class="p">,</span> <span class="n">logger</span><span class="p">,</span> <span class="n">verbose</span><span class="p">):</span>
+<div class="viewcode-block" id="set_up_logger"><a class="viewcode-back" href="../candle_lib/default_utils.html#default_utils.set_up_logger">[docs]</a><span class="k">def</span> <span class="nf">set_up_logger</span><span class="p">(</span><span class="n">logfile</span><span class="p">,</span> <span class="n">logger</span><span class="p">,</span> <span class="n">verbose</span><span class="p">):</span>
     <span class="n">verify_path</span><span class="p">(</span><span class="n">logfile</span><span class="p">)</span>
     <span class="n">fh</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">FileHandler</span><span class="p">(</span><span class="n">logfile</span><span class="p">)</span>
     <span class="n">fh</span><span class="o">.</span><span class="n">setFormatter</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">Formatter</span><span class="p">(</span><span class="s2">&quot;[</span><span class="si">%(asctime)s</span><span class="s2"> </span><span class="si">%(process)d</span><span class="s2">] </span><span class="si">%(message)s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">datefmt</span><span class="o">=</span><span class="s2">&quot;%Y-%m-</span><span class="si">%d</span><span class="s2"> %H:%M:%S&quot;</span><span class="p">))</span>
@@ -207,7 +207,7 @@
 <span class="c1">#### REFORMATING UTILS</span>
 
 
-<div class="viewcode-block" id="eval_string_as_list"><a class="viewcode-back" href="../default_utils.html#default_utils.eval_string_as_list">[docs]</a><span class="k">def</span> <span class="nf">eval_string_as_list</span><span class="p">(</span><span class="n">str_read</span><span class="p">,</span> <span class="n">separator</span><span class="p">,</span> <span class="n">dtype</span><span class="p">):</span>
+<div class="viewcode-block" id="eval_string_as_list"><a class="viewcode-back" href="../candle_lib/default_utils.html#default_utils.eval_string_as_list">[docs]</a><span class="k">def</span> <span class="nf">eval_string_as_list</span><span class="p">(</span><span class="n">str_read</span><span class="p">,</span> <span class="n">separator</span><span class="p">,</span> <span class="n">dtype</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Parse a string and convert it into a list of lists.</span>
 <span class="sd">        </span>
 <span class="sd">        Parameters</span>
@@ -242,7 +242,7 @@
 
 
 
-<div class="viewcode-block" id="eval_string_as_list_of_lists"><a class="viewcode-back" href="../default_utils.html#default_utils.eval_string_as_list_of_lists">[docs]</a><span class="k">def</span> <span class="nf">eval_string_as_list_of_lists</span><span class="p">(</span><span class="n">str_read</span><span class="p">,</span> <span class="n">separator_out</span><span class="p">,</span> <span class="n">separator_in</span><span class="p">,</span> <span class="n">dtype</span><span class="p">):</span>
+<div class="viewcode-block" id="eval_string_as_list_of_lists"><a class="viewcode-back" href="../candle_lib/default_utils.html#default_utils.eval_string_as_list_of_lists">[docs]</a><span class="k">def</span> <span class="nf">eval_string_as_list_of_lists</span><span class="p">(</span><span class="n">str_read</span><span class="p">,</span> <span class="n">separator_out</span><span class="p">,</span> <span class="n">separator_in</span><span class="p">,</span> <span class="n">dtype</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Parse a string and convert it into a list of lists.</span>
 <span class="sd">        </span>
 <span class="sd">        Parameters</span>
@@ -282,7 +282,7 @@
     <span class="k">return</span> <span class="n">decoded_list</span></div>
 
 
-<div class="viewcode-block" id="str2bool"><a class="viewcode-back" href="../default_utils.html#default_utils.str2bool">[docs]</a><span class="k">def</span> <span class="nf">str2bool</span><span class="p">(</span><span class="n">v</span><span class="p">):</span>
+<div class="viewcode-block" id="str2bool"><a class="viewcode-back" href="../candle_lib/default_utils.html#default_utils.str2bool">[docs]</a><span class="k">def</span> <span class="nf">str2bool</span><span class="p">(</span><span class="n">v</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot; This is taken from:</span>
 <span class="sd">        https://stackoverflow.com/questions/15008758/parsing-boolean-values-with-argparse</span>
 <span class="sd">        Because type=bool is not interpreted as a bool and action=&#39;store_true&#39; cannot be</span>
@@ -297,7 +297,7 @@
 
 <span class="c1">#### CLASS DEFINITIONS</span>
 
-<div class="viewcode-block" id="ArgumentStruct"><a class="viewcode-back" href="../default_utils.html#default_utils.ArgumentStruct">[docs]</a><span class="k">class</span> <span class="nc">ArgumentStruct</span><span class="p">:</span>
+<div class="viewcode-block" id="ArgumentStruct"><a class="viewcode-back" href="../candle_lib/default_utils.html#default_utils.ArgumentStruct">[docs]</a><span class="k">class</span> <span class="nc">ArgumentStruct</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;Structure to keep all the parameters from a </span>
 <span class="sd">       dictionary (corresponding to problem parameters) </span>
 <span class="sd">       under a unified object</span>
@@ -307,7 +307,7 @@
 
 
 
-<div class="viewcode-block" id="ListOfListsAction"><a class="viewcode-back" href="../default_utils.html#default_utils.ListOfListsAction">[docs]</a><span class="k">class</span> <span class="nc">ListOfListsAction</span><span class="p">(</span><span class="n">argparse</span><span class="o">.</span><span class="n">Action</span><span class="p">):</span>
+<div class="viewcode-block" id="ListOfListsAction"><a class="viewcode-back" href="../candle_lib/default_utils.html#default_utils.ListOfListsAction">[docs]</a><span class="k">class</span> <span class="nc">ListOfListsAction</span><span class="p">(</span><span class="n">argparse</span><span class="o">.</span><span class="n">Action</span><span class="p">):</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">option_strings</span><span class="p">,</span> <span class="n">dest</span><span class="p">,</span> <span class="nb">type</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;This action allows to construct a parser from a string</span>
 <span class="sd">           to a list of lists.</span>
@@ -346,14 +346,14 @@
 <span class="c1">#### INITIALIZATION UTILS</span>
 
 
-<div class="viewcode-block" id="set_seed"><a class="viewcode-back" href="../default_utils.html#default_utils.set_seed">[docs]</a><span class="k">def</span> <span class="nf">set_seed</span><span class="p">(</span><span class="n">seed</span><span class="p">):</span>
+<div class="viewcode-block" id="set_seed"><a class="viewcode-back" href="../candle_lib/default_utils.html#default_utils.set_seed">[docs]</a><span class="k">def</span> <span class="nf">set_seed</span><span class="p">(</span><span class="n">seed</span><span class="p">):</span>
     <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s1">&#39;PYTHONHASHSEED&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;0&#39;</span>
     <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="n">seed</span><span class="p">)</span>
 
     <span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="n">seed</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="initialize_parameters"><a class="viewcode-back" href="../default_utils.html#default_utils.initialize_parameters">[docs]</a><span class="k">def</span> <span class="nf">initialize_parameters</span><span class="p">(</span><span class="n">bmk</span><span class="p">):</span>
+<div class="viewcode-block" id="initialize_parameters"><a class="viewcode-back" href="../candle_lib/default_utils.html#default_utils.initialize_parameters">[docs]</a><span class="k">def</span> <span class="nf">initialize_parameters</span><span class="p">(</span><span class="n">bmk</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Parse parameters in common and particular to each benchmark.</span>
 <span class="sd">        </span>
 <span class="sd">        Parameters</span>
@@ -400,7 +400,7 @@
     <span class="k">return</span> <span class="n">gParameters</span></div>
 
 
-<div class="viewcode-block" id="get_default_neon_parser"><a class="viewcode-back" href="../default_utils.html#default_utils.get_default_neon_parser">[docs]</a><span class="k">def</span> <span class="nf">get_default_neon_parser</span><span class="p">(</span><span class="n">parser</span><span class="p">):</span>
+<div class="viewcode-block" id="get_default_neon_parser"><a class="viewcode-back" href="../candle_lib/default_utils.html#default_utils.get_default_neon_parser">[docs]</a><span class="k">def</span> <span class="nf">get_default_neon_parser</span><span class="p">(</span><span class="n">parser</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Parse command-line arguments that are default in neon parser (and are common to all frameworks). </span>
 <span class="sd">        Ignore if not present.</span>
 <span class="sd">        </span>
@@ -455,7 +455,7 @@
     <span class="k">return</span> <span class="n">parser</span></div>
 
 
-<div class="viewcode-block" id="get_common_parser"><a class="viewcode-back" href="../default_utils.html#default_utils.get_common_parser">[docs]</a><span class="k">def</span> <span class="nf">get_common_parser</span><span class="p">(</span><span class="n">parser</span><span class="p">):</span>
+<div class="viewcode-block" id="get_common_parser"><a class="viewcode-back" href="../candle_lib/default_utils.html#default_utils.get_common_parser">[docs]</a><span class="k">def</span> <span class="nf">get_common_parser</span><span class="p">(</span><span class="n">parser</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Parse command-line arguments. Ignore if not present.</span>
 <span class="sd">        </span>
 <span class="sd">        Parameters</span>
@@ -608,7 +608,7 @@
 
 
 
-<div class="viewcode-block" id="args_overwrite_config"><a class="viewcode-back" href="../default_utils.html#default_utils.args_overwrite_config">[docs]</a><span class="k">def</span> <span class="nf">args_overwrite_config</span><span class="p">(</span><span class="n">args</span><span class="p">,</span> <span class="n">config</span><span class="p">):</span>
+<div class="viewcode-block" id="args_overwrite_config"><a class="viewcode-back" href="../candle_lib/default_utils.html#default_utils.args_overwrite_config">[docs]</a><span class="k">def</span> <span class="nf">args_overwrite_config</span><span class="p">(</span><span class="n">args</span><span class="p">,</span> <span class="n">config</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Overwrite configuration parameters with </span>
 <span class="sd">        parameters specified via command-line.</span>
 <span class="sd">        </span>
@@ -650,7 +650,7 @@
 
 
 
-<div class="viewcode-block" id="get_choice"><a class="viewcode-back" href="../default_utils.html#default_utils.get_choice">[docs]</a><span class="k">def</span> <span class="nf">get_choice</span><span class="p">(</span><span class="n">name</span><span class="p">):</span>
+<div class="viewcode-block" id="get_choice"><a class="viewcode-back" href="../candle_lib/default_utils.html#default_utils.get_choice">[docs]</a><span class="k">def</span> <span class="nf">get_choice</span><span class="p">(</span><span class="n">name</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot; Maps name string to the right type of argument</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">mapping</span> <span class="o">=</span> <span class="p">{}</span>
@@ -667,7 +667,7 @@
     <span class="k">return</span> <span class="n">mapped</span></div>
 
 
-<div class="viewcode-block" id="directory_from_parameters"><a class="viewcode-back" href="../default_utils.html#default_utils.directory_from_parameters">[docs]</a><span class="k">def</span> <span class="nf">directory_from_parameters</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">commonroot</span><span class="o">=</span><span class="s1">&#39;Output&#39;</span><span class="p">):</span>
+<div class="viewcode-block" id="directory_from_parameters"><a class="viewcode-back" href="../candle_lib/default_utils.html#default_utils.directory_from_parameters">[docs]</a><span class="k">def</span> <span class="nf">directory_from_parameters</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">commonroot</span><span class="o">=</span><span class="s1">&#39;Output&#39;</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Construct output directory path with unique IDs from parameters&quot;&quot;&quot;</span>
     
     <span class="k">if</span> <span class="n">commonroot</span> <span class="ow">in</span> <span class="nb">set</span><span class="p">([</span><span class="s1">&#39;.&#39;</span><span class="p">,</span> <span class="s1">&#39;./&#39;</span><span class="p">]):</span> <span class="c1"># Same directory --&gt; convert to absolute path</span>
@@ -690,7 +690,7 @@
 
 
 
-<div class="viewcode-block" id="Benchmark"><a class="viewcode-back" href="../default_utils.html#default_utils.Benchmark">[docs]</a><span class="k">class</span> <span class="nc">Benchmark</span><span class="p">:</span>
+<div class="viewcode-block" id="Benchmark"><a class="viewcode-back" href="../candle_lib/default_utils.html#default_utils.Benchmark">[docs]</a><span class="k">class</span> <span class="nc">Benchmark</span><span class="p">:</span>
 
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filepath</span><span class="p">,</span> <span class="n">defmodel</span><span class="p">,</span> <span class="n">framework</span><span class="p">,</span> <span class="n">prog</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">parser</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Initialize benchmark object. Object to group common and </span>
@@ -727,7 +727,7 @@
         
 
 
-<div class="viewcode-block" id="Benchmark.parse_from_common"><a class="viewcode-back" href="../default_utils.html#default_utils.Benchmark.parse_from_common">[docs]</a>    <span class="k">def</span> <span class="nf">parse_from_common</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="Benchmark.parse_from_common"><a class="viewcode-back" href="../candle_lib/default_utils.html#default_utils.Benchmark.parse_from_common">[docs]</a>    <span class="k">def</span> <span class="nf">parse_from_common</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Functionality to parse options common</span>
 <span class="sd">           for all benchmarks.</span>
 <span class="sd">           This functionality is based on methods &#39;get_default_neon_parser&#39; and</span>
@@ -749,7 +749,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">conffile</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">file_path</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">default_model</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="Benchmark.parse_from_benchmark"><a class="viewcode-back" href="../default_utils.html#default_utils.Benchmark.parse_from_benchmark">[docs]</a>    <span class="k">def</span> <span class="nf">parse_from_benchmark</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="Benchmark.parse_from_benchmark"><a class="viewcode-back" href="../candle_lib/default_utils.html#default_utils.Benchmark.parse_from_benchmark">[docs]</a>    <span class="k">def</span> <span class="nf">parse_from_benchmark</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Functionality to parse options specific</span>
 <span class="sd">           specific for each benchmark.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -782,7 +782,7 @@
                 
 
 
-<div class="viewcode-block" id="Benchmark.format_benchmark_config_arguments"><a class="viewcode-back" href="../default_utils.html#default_utils.Benchmark.format_benchmark_config_arguments">[docs]</a>    <span class="k">def</span> <span class="nf">format_benchmark_config_arguments</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dictfileparam</span><span class="p">):</span>
+<div class="viewcode-block" id="Benchmark.format_benchmark_config_arguments"><a class="viewcode-back" href="../candle_lib/default_utils.html#default_utils.Benchmark.format_benchmark_config_arguments">[docs]</a>    <span class="k">def</span> <span class="nf">format_benchmark_config_arguments</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dictfileparam</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Functionality to format the particular parameters of</span>
 <span class="sd">           the benchmark.</span>
 <span class="sd">           </span>
@@ -819,7 +819,7 @@
 
 
 
-<div class="viewcode-block" id="Benchmark.read_config_file"><a class="viewcode-back" href="../default_utils.html#default_utils.Benchmark.read_config_file">[docs]</a>    <span class="k">def</span> <span class="nf">read_config_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">file</span><span class="p">):</span>
+<div class="viewcode-block" id="Benchmark.read_config_file"><a class="viewcode-back" href="../candle_lib/default_utils.html#default_utils.Benchmark.read_config_file">[docs]</a>    <span class="k">def</span> <span class="nf">read_config_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">file</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Functionality to read the configue file</span>
 <span class="sd">           specific for each benchmark.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -844,7 +844,7 @@
 
 
 
-<div class="viewcode-block" id="Benchmark.set_locals"><a class="viewcode-back" href="../default_utils.html#default_utils.Benchmark.set_locals">[docs]</a>    <span class="k">def</span> <span class="nf">set_locals</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="Benchmark.set_locals"><a class="viewcode-back" href="../candle_lib/default_utils.html#default_utils.Benchmark.set_locals">[docs]</a>    <span class="k">def</span> <span class="nf">set_locals</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Functionality to set variables specific for the benchmark</span>
 <span class="sd">        - required: set of required parameters for the benchmark.</span>
 <span class="sd">        - additional_definitions: list of dictionaries describing the additional parameters for the</span>
@@ -855,7 +855,7 @@
 
 
         
-<div class="viewcode-block" id="Benchmark.check_required_exists"><a class="viewcode-back" href="../default_utils.html#default_utils.Benchmark.check_required_exists">[docs]</a>    <span class="k">def</span> <span class="nf">check_required_exists</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">gparam</span><span class="p">):</span>
+<div class="viewcode-block" id="Benchmark.check_required_exists"><a class="viewcode-back" href="../candle_lib/default_utils.html#default_utils.Benchmark.check_required_exists">[docs]</a>    <span class="k">def</span> <span class="nf">check_required_exists</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">gparam</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Functionality to verify that the required </span>
 <span class="sd">           model parameters have been specified.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -871,7 +871,7 @@
 
 
 
-<div class="viewcode-block" id="keras_default_config"><a class="viewcode-back" href="../default_utils.html#default_utils.keras_default_config">[docs]</a><span class="k">def</span> <span class="nf">keras_default_config</span><span class="p">():</span>
+<div class="viewcode-block" id="keras_default_config"><a class="viewcode-back" href="../candle_lib/default_utils.html#default_utils.keras_default_config">[docs]</a><span class="k">def</span> <span class="nf">keras_default_config</span><span class="p">():</span>
     <span class="sd">&quot;&quot;&quot;Defines parameters that intervine in different functions using the keras defaults.</span>
 <span class="sd">        This helps to keep consistency in parameters between frameworks.</span>
 <span class="sd">    &quot;&quot;&quot;</span>

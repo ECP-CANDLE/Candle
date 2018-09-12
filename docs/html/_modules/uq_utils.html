@@ -150,7 +150,7 @@
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 
 
-<div class="viewcode-block" id="generate_index_distribution"><a class="viewcode-back" href="../uq_utils.html#uq_utils.generate_index_distribution">[docs]</a><span class="k">def</span> <span class="nf">generate_index_distribution</span><span class="p">(</span><span class="n">numTrain</span><span class="p">,</span> <span class="n">numTest</span><span class="p">,</span> <span class="n">numValidation</span><span class="p">,</span> <span class="n">params</span><span class="p">):</span>
+<div class="viewcode-block" id="generate_index_distribution"><a class="viewcode-back" href="../candle_lib/uq_utils.html#uq_utils.generate_index_distribution">[docs]</a><span class="k">def</span> <span class="nf">generate_index_distribution</span><span class="p">(</span><span class="n">numTrain</span><span class="p">,</span> <span class="n">numTest</span><span class="p">,</span> <span class="n">numValidation</span><span class="p">,</span> <span class="n">params</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Generates a vector of indices to partition the data for training.</span>
 <span class="sd">       NO CHECKING IS DONE: it is assumed that the data could be partitioned</span>
 <span class="sd">       in the specified blocks and that the block indices describe a coherent</span>
@@ -196,7 +196,7 @@
         <span class="k">raise</span> <span class="ne">KeyError</span><span class="p">(</span><span class="s2">&quot;No valid triplet of (&#39;uq_train_*&#39;, &#39;uq_valid_*&#39;, &#39;uq_test_*&#39;) found. (* is any of fr, vec or bks)&quot;</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="generate_index_distribution_from_fraction"><a class="viewcode-back" href="../uq_utils.html#uq_utils.generate_index_distribution_from_fraction">[docs]</a><span class="k">def</span> <span class="nf">generate_index_distribution_from_fraction</span><span class="p">(</span><span class="n">numTrain</span><span class="p">,</span> <span class="n">numTest</span><span class="p">,</span> <span class="n">numValidation</span><span class="p">,</span> <span class="n">params</span><span class="p">):</span>
+<div class="viewcode-block" id="generate_index_distribution_from_fraction"><a class="viewcode-back" href="../candle_lib/uq_utils.html#uq_utils.generate_index_distribution_from_fraction">[docs]</a><span class="k">def</span> <span class="nf">generate_index_distribution_from_fraction</span><span class="p">(</span><span class="n">numTrain</span><span class="p">,</span> <span class="n">numTest</span><span class="p">,</span> <span class="n">numValidation</span><span class="p">,</span> <span class="n">params</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Generates a vector of indices to partition the data for training.</span>
 <span class="sd">       It checks that the fractions provided are (0, 1) and add up to 1.</span>
 <span class="sd">       </span>
@@ -266,7 +266,7 @@
     <span class="k">return</span> <span class="n">indexTrain</span><span class="p">,</span> <span class="n">indexValidation</span><span class="p">,</span> <span class="n">indexTest</span></div>
 
 
-<div class="viewcode-block" id="generate_index_distribution_from_blocks"><a class="viewcode-back" href="../uq_utils.html#uq_utils.generate_index_distribution_from_blocks">[docs]</a><span class="k">def</span> <span class="nf">generate_index_distribution_from_blocks</span><span class="p">(</span><span class="n">numTrain</span><span class="p">,</span> <span class="n">numTest</span><span class="p">,</span> <span class="n">numValidation</span><span class="p">,</span> <span class="n">params</span><span class="p">):</span>
+<div class="viewcode-block" id="generate_index_distribution_from_blocks"><a class="viewcode-back" href="../candle_lib/uq_utils.html#uq_utils.generate_index_distribution_from_blocks">[docs]</a><span class="k">def</span> <span class="nf">generate_index_distribution_from_blocks</span><span class="p">(</span><span class="n">numTrain</span><span class="p">,</span> <span class="n">numTest</span><span class="p">,</span> <span class="n">numValidation</span><span class="p">,</span> <span class="n">params</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Generates a vector of indices to partition the data for training.</span>
 <span class="sd">       NO CHECKING IS DONE: it is assumed that the data could be partitioned</span>
 <span class="sd">       in the specified block quantities and that the block quantities describe a</span>
@@ -335,7 +335,7 @@
 
 
 
-<div class="viewcode-block" id="generate_index_distribution_from_block_list"><a class="viewcode-back" href="../uq_utils.html#uq_utils.generate_index_distribution_from_block_list">[docs]</a><span class="k">def</span> <span class="nf">generate_index_distribution_from_block_list</span><span class="p">(</span><span class="n">numTrain</span><span class="p">,</span> <span class="n">numTest</span><span class="p">,</span> <span class="n">numValidation</span><span class="p">,</span> <span class="n">params</span><span class="p">):</span>
+<div class="viewcode-block" id="generate_index_distribution_from_block_list"><a class="viewcode-back" href="../candle_lib/uq_utils.html#uq_utils.generate_index_distribution_from_block_list">[docs]</a><span class="k">def</span> <span class="nf">generate_index_distribution_from_block_list</span><span class="p">(</span><span class="n">numTrain</span><span class="p">,</span> <span class="n">numTest</span><span class="p">,</span> <span class="n">numValidation</span><span class="p">,</span> <span class="n">params</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Generates a vector of indices to partition the data for training.</span>
 <span class="sd">       NO CHECKING IS DONE: it is assumed that the data could be partitioned</span>
 <span class="sd">       in the specified list of blocks and that the block indices describe a </span>
@@ -408,7 +408,7 @@
 
 
 
-<div class="viewcode-block" id="compute_limits"><a class="viewcode-back" href="../uq_utils.html#uq_utils.compute_limits">[docs]</a><span class="k">def</span> <span class="nf">compute_limits</span><span class="p">(</span><span class="n">numdata</span><span class="p">,</span> <span class="n">numblocks</span><span class="p">,</span> <span class="n">blocksize</span><span class="p">,</span> <span class="n">blockn</span><span class="p">):</span>
+<div class="viewcode-block" id="compute_limits"><a class="viewcode-back" href="../candle_lib/uq_utils.html#uq_utils.compute_limits">[docs]</a><span class="k">def</span> <span class="nf">compute_limits</span><span class="p">(</span><span class="n">numdata</span><span class="p">,</span> <span class="n">numblocks</span><span class="p">,</span> <span class="n">blocksize</span><span class="p">,</span> <span class="n">blockn</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Generates the limit of indices corresponding to a </span>
 <span class="sd">       specific block. It takes into account the non-exact</span>
 <span class="sd">       divisibility of numdata into numblocks letting the</span>
@@ -440,7 +440,7 @@
     <span class="k">return</span> <span class="n">start</span><span class="p">,</span> <span class="n">end</span></div>
 
 
-<div class="viewcode-block" id="fill_array"><a class="viewcode-back" href="../uq_utils.html#uq_utils.fill_array">[docs]</a><span class="k">def</span> <span class="nf">fill_array</span><span class="p">(</span><span class="n">blocklist</span><span class="p">,</span> <span class="n">maxsize</span><span class="p">,</span> <span class="n">numdata</span><span class="p">,</span> <span class="n">numblocks</span><span class="p">,</span> <span class="n">blocksize</span><span class="p">):</span>
+<div class="viewcode-block" id="fill_array"><a class="viewcode-back" href="../candle_lib/uq_utils.html#uq_utils.fill_array">[docs]</a><span class="k">def</span> <span class="nf">fill_array</span><span class="p">(</span><span class="n">blocklist</span><span class="p">,</span> <span class="n">maxsize</span><span class="p">,</span> <span class="n">numdata</span><span class="p">,</span> <span class="n">numblocks</span><span class="p">,</span> <span class="n">blocksize</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Fills a new array of integers with the indices corresponding</span>
 <span class="sd">       to the specified block structure.</span>
 <span class="sd">        </span>
