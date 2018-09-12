@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>keras_utils &mdash; Candle  documentation</title>
+  <title>keras_utils &mdash; CANDLE  documentation</title>
   
 
   
@@ -46,7 +46,7 @@
           
 
           
-            <a href="../index.html" class="icon icon-home"> Candle
+            <a href="../index.html" class="icon icon-home"> CANDLE
           
 
           
@@ -81,7 +81,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../readme.html">Read about Candle</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../user_guide.html">How to write CANDLE compliant deep learning code</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../user_guide.html#how-to-run-candle-compliant-code-in-theta">How to run CANDLE compliant code in Theta</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../modules.html">common</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../modules.html">CANDLE Lib</a></li>
 </ul>
 
             
@@ -96,7 +96,7 @@
       <nav class="wy-nav-top" aria-label="top navigation">
         
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="../index.html">Candle</a>
+          <a href="../index.html">CANDLE</a>
         
       </nav>
 
@@ -163,6 +163,17 @@
     <span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="s2">&quot;ignore&quot;</span><span class="p">,</span> <span class="n">category</span><span class="o">=</span><span class="ne">DeprecationWarning</span><span class="p">)</span>
     <span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="k">import</span> <span class="n">r2_score</span>
 
+<span class="kn">import</span> <span class="nn">os</span>
+<div class="viewcode-block" id="set_parallelism_threads"><a class="viewcode-back" href="../keras_utils.html#keras_utils.set_parallelism_threads">[docs]</a><span class="k">def</span> <span class="nf">set_parallelism_threads</span><span class="p">():</span>
+    <span class="k">if</span> <span class="n">K</span><span class="o">.</span><span class="n">backend</span><span class="p">()</span> <span class="o">==</span> <span class="s1">&#39;tensorflow&#39;</span> <span class="ow">and</span> <span class="s1">&#39;NUM_INTRA_THREADS&#39;</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span> <span class="ow">and</span> <span class="s1">&#39;NUM_INTER_THREADS&#39;</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">:</span>
+        <span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="nn">tf</span>
+        <span class="c1"># print(&#39;Using Thread Parallelism: {} NUM_INTRA_THREADS, {} NUM_INTER_THREADS&#39;.format(os.environ[&#39;NUM_INTRA_THREADS&#39;], os.environ[&#39;NUM_INTER_THREADS&#39;]))</span>
+        <span class="n">session_conf</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">ConfigProto</span><span class="p">(</span><span class="n">inter_op_parallelism_threads</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s1">&#39;NUM_INTER_THREADS&#39;</span><span class="p">]),</span>
+            <span class="n">intra_op_parallelism_threads</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s1">&#39;NUM_INTRA_THREADS&#39;</span><span class="p">]))</span>
+        <span class="n">sess</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">Session</span><span class="p">(</span><span class="n">graph</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">get_default_graph</span><span class="p">(),</span> <span class="n">config</span><span class="o">=</span><span class="n">session_conf</span><span class="p">)</span>
+        <span class="n">K</span><span class="o">.</span><span class="n">set_session</span><span class="p">(</span><span class="n">sess</span><span class="p">)</span></div>
+
+
 
 <div class="viewcode-block" id="set_seed"><a class="viewcode-back" href="../keras_utils.html#keras_utils.set_seed">[docs]</a><span class="k">def</span> <span class="nf">set_seed</span><span class="p">(</span><span class="n">seed</span><span class="p">):</span>
     <span class="n">set_seed_defaultUtils</span><span class="p">(</span><span class="n">seed</span><span class="p">)</span>
@@ -170,25 +181,15 @@
     <span class="k">if</span> <span class="n">K</span><span class="o">.</span><span class="n">backend</span><span class="p">()</span> <span class="o">==</span> <span class="s1">&#39;tensorflow&#39;</span><span class="p">:</span>
         <span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="nn">tf</span>
         <span class="n">tf</span><span class="o">.</span><span class="n">set_random_seed</span><span class="p">(</span><span class="n">seed</span><span class="p">)</span></div>
-        <span class="c1"># session_conf = tf.ConfigProto(intra_op_parallelism_threads=1, inter_op_parallelism_threads=1)</span>
-        <span class="c1"># sess = tf.Session(graph=tf.get_default_graph(), config=session_conf)</span>
-        <span class="c1"># K.set_session(sess)</span>
-
-        <span class="c1"># Uncommit when running on an optimized tensorflow where NUM_INTER_THREADS and</span>
-        <span class="c1"># NUM_INTRA_THREADS env vars are set.</span>
-        <span class="c1"># session_conf = tf.ConfigProto(inter_op_parallelism_threads=int(os.environ[&#39;NUM_INTER_THREADS&#39;]),</span>
-        <span class="c1">#	intra_op_parallelism_threads=int(os.environ[&#39;NUM_INTRA_THREADS&#39;]))</span>
-        <span class="c1"># sess = tf.Session(graph=tf.get_default_graph(), config=session_conf)</span>
-        <span class="c1"># K.set_session(sess)</span>
 
 
 <div class="viewcode-block" id="get_function"><a class="viewcode-back" href="../keras_utils.html#keras_utils.get_function">[docs]</a><span class="k">def</span> <span class="nf">get_function</span><span class="p">(</span><span class="n">name</span><span class="p">):</span>
     <span class="n">mapping</span> <span class="o">=</span> <span class="p">{}</span>
-
+    
     <span class="n">mapped</span> <span class="o">=</span> <span class="n">mapping</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="n">mapped</span><span class="p">:</span>
         <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s1">&#39;No keras function found for &quot;</span><span class="si">{}</span><span class="s1">&quot;&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">name</span><span class="p">))</span>
-
+    
     <span class="k">return</span> <span class="n">mapped</span></div>
 
 
@@ -201,7 +202,7 @@
                               <span class="n">nesterov</span><span class="o">=</span><span class="n">kerasDefaults</span><span class="p">[</span><span class="s1">&#39;nesterov_sgd&#39;</span><span class="p">])</span><span class="c1">#,</span>
             <span class="c1">#clipnorm=kerasDefaults[&#39;clipnorm&#39;],</span>
             <span class="c1">#clipvalue=kerasDefaults[&#39;clipvalue&#39;])</span>
-
+    
     <span class="k">elif</span> <span class="nb">type</span> <span class="o">==</span> <span class="s1">&#39;rmsprop&#39;</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">optimizers</span><span class="o">.</span><span class="n">RMSprop</span><span class="p">(</span><span class="n">lr</span><span class="o">=</span><span class="n">lr</span><span class="p">,</span> <span class="n">rho</span><span class="o">=</span><span class="n">kerasDefaults</span><span class="p">[</span><span class="s1">&#39;rho&#39;</span><span class="p">],</span>
                                   <span class="n">epsilon</span><span class="o">=</span><span class="n">kerasDefaults</span><span class="p">[</span><span class="s1">&#39;epsilon&#39;</span><span class="p">],</span>
@@ -247,10 +248,10 @@
 
 
 <div class="viewcode-block" id="build_initializer"><a class="viewcode-back" href="../keras_utils.html#keras_utils.build_initializer">[docs]</a><span class="k">def</span> <span class="nf">build_initializer</span><span class="p">(</span><span class="nb">type</span><span class="p">,</span> <span class="n">kerasDefaults</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">constant</span><span class="o">=</span><span class="mf">0.</span><span class="p">):</span>
-
+    
     <span class="k">if</span> <span class="nb">type</span> <span class="o">==</span> <span class="s1">&#39;constant&#39;</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">initializers</span><span class="o">.</span><span class="n">Constant</span><span class="p">(</span><span class="n">value</span><span class="o">=</span><span class="n">constant</span><span class="p">)</span>
-
+    
     <span class="k">elif</span> <span class="nb">type</span> <span class="o">==</span> <span class="s1">&#39;uniform&#39;</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">initializers</span><span class="o">.</span><span class="n">RandomUniform</span><span class="p">(</span><span class="n">minval</span><span class="o">=</span><span class="n">kerasDefaults</span><span class="p">[</span><span class="s1">&#39;minval_uniform&#39;</span><span class="p">],</span>
                                   <span class="n">maxval</span><span class="o">=</span><span class="n">kerasDefaults</span><span class="p">[</span><span class="s1">&#39;maxval_uniform&#39;</span><span class="p">],</span>

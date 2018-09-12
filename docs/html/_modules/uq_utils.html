@@ -1,0 +1,546 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>uq_utils &mdash; CANDLE  documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> CANDLE
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../readme.html">Read about Candle</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide.html">How to write CANDLE compliant deep learning code</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide.html#how-to-run-candle-compliant-code-in-theta">How to run CANDLE compliant code in Theta</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../modules.html">CANDLE Lib</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">CANDLE</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="index.html">Module code</a> &raquo;</li>
+        
+      <li>uq_utils</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for uq_utils</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">absolute_import</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+
+<div class="viewcode-block" id="generate_index_distribution"><a class="viewcode-back" href="../uq_utils.html#uq_utils.generate_index_distribution">[docs]</a><span class="k">def</span> <span class="nf">generate_index_distribution</span><span class="p">(</span><span class="n">numTrain</span><span class="p">,</span> <span class="n">numTest</span><span class="p">,</span> <span class="n">numValidation</span><span class="p">,</span> <span class="n">params</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Generates a vector of indices to partition the data for training.</span>
+<span class="sd">       NO CHECKING IS DONE: it is assumed that the data could be partitioned</span>
+<span class="sd">       in the specified blocks and that the block indices describe a coherent</span>
+<span class="sd">       partition.</span>
+<span class="sd">        </span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        numTrain : int</span>
+<span class="sd">            Number of training data points</span>
+<span class="sd">        numTest : int</span>
+<span class="sd">            Number of testing data points</span>
+<span class="sd">        numValidation : int</span>
+<span class="sd">            Number of validation data points (may be zero)</span>
+<span class="sd">        params : dictionary with parameters</span>
+<span class="sd">            Contains the keywords that control the behavior of the function</span>
+<span class="sd">            (uq_train_fr, uq_valid_fr, uq_test_fr for fraction specification,</span>
+<span class="sd">            uq_train_vec, uq_valid_vec, uq_test_vec for block list specification, and</span>
+<span class="sd">            uq_train_bks, uq_valid_bks, uq_test_bks for block number specification)</span>
+<span class="sd">            </span>
+<span class="sd">        Return</span>
+<span class="sd">        ----------</span>
+<span class="sd">        indexTrain : int numpy array</span>
+<span class="sd">            Indices for data in training</span>
+<span class="sd">        indexValidation : int numpy array</span>
+<span class="sd">            Indices for data in validation (if any)</span>
+<span class="sd">        indexTest : int numpy array</span>
+<span class="sd">            Indices for data in testing (if merging)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="nb">all</span> <span class="p">(</span><span class="n">k</span> <span class="ow">in</span> <span class="n">params</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">&#39;uq_train_fr&#39;</span><span class="p">,</span> <span class="s1">&#39;uq_valid_fr&#39;</span><span class="p">,</span> <span class="s1">&#39;uq_test_fr&#39;</span><span class="p">)):</span>
+        <span class="c1"># specification by fraction</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Computing UQ cross-validation - Distributing by FRACTION&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">generate_index_distribution_from_fraction</span><span class="p">(</span><span class="n">numTrain</span><span class="p">,</span> <span class="n">numTest</span><span class="p">,</span> <span class="n">numValidation</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="nb">all</span> <span class="p">(</span><span class="n">k</span> <span class="ow">in</span> <span class="n">params</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">&#39;uq_train_vec&#39;</span><span class="p">,</span> <span class="s1">&#39;uq_valid_vec&#39;</span><span class="p">,</span> <span class="s1">&#39;uq_test_vec&#39;</span><span class="p">)):</span>
+        <span class="c1"># specification by block list</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Computing UQ cross-validation - Distributing by BLOCK LIST&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">generate_index_distribution_from_block_list</span><span class="p">(</span><span class="n">numTrain</span><span class="p">,</span> <span class="n">numTest</span><span class="p">,</span> <span class="n">numValidation</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="nb">all</span> <span class="p">(</span><span class="n">k</span> <span class="ow">in</span> <span class="n">params</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">&#39;uq_train_bks&#39;</span><span class="p">,</span> <span class="s1">&#39;uq_valid_bks&#39;</span><span class="p">,</span> <span class="s1">&#39;uq_test_bks&#39;</span><span class="p">)):</span>
+        <span class="c1"># specification by block size</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Computing UQ cross-validation - Distributing by BLOCK NUMBER&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">generate_index_distribution_from_blocks</span><span class="p">(</span><span class="n">numTrain</span><span class="p">,</span> <span class="n">numTest</span><span class="p">,</span> <span class="n">numValidation</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;ERROR !! No consistent UQ parameter specification found !! ... exiting &quot;</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="ne">KeyError</span><span class="p">(</span><span class="s2">&quot;No valid triplet of (&#39;uq_train_*&#39;, &#39;uq_valid_*&#39;, &#39;uq_test_*&#39;) found. (* is any of fr, vec or bks)&quot;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="generate_index_distribution_from_fraction"><a class="viewcode-back" href="../uq_utils.html#uq_utils.generate_index_distribution_from_fraction">[docs]</a><span class="k">def</span> <span class="nf">generate_index_distribution_from_fraction</span><span class="p">(</span><span class="n">numTrain</span><span class="p">,</span> <span class="n">numTest</span><span class="p">,</span> <span class="n">numValidation</span><span class="p">,</span> <span class="n">params</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Generates a vector of indices to partition the data for training.</span>
+<span class="sd">       It checks that the fractions provided are (0, 1) and add up to 1.</span>
+<span class="sd">       </span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        numTrain : int</span>
+<span class="sd">            Number of training data points</span>
+<span class="sd">        numTest : int</span>
+<span class="sd">            Number of testing data points</span>
+<span class="sd">        numValidation : int</span>
+<span class="sd">            Number of validation data points (may be zero)</span>
+<span class="sd">        params : dictionary with parameters</span>
+<span class="sd">            Contains the keywords that control the behavior of the function</span>
+<span class="sd">            (uq_train_fr, uq_valid_fr, uq_test_fr)</span>
+<span class="sd">            </span>
+<span class="sd">        Return</span>
+<span class="sd">        ----------</span>
+<span class="sd">        indexTrain : int numpy array</span>
+<span class="sd">            Indices for data in training</span>
+<span class="sd">        indexValidation : int numpy array</span>
+<span class="sd">            Indices for data in validation (if any)</span>
+<span class="sd">        indexTest : int numpy array</span>
+<span class="sd">            Indices for data in testing (if merging)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1"># Extract required parameters</span>
+    <span class="n">fractionTrain</span> <span class="o">=</span> <span class="n">params</span><span class="p">[</span><span class="s1">&#39;uq_train_fr&#39;</span><span class="p">]</span>
+    <span class="n">fractionValidation</span> <span class="o">=</span> <span class="n">params</span><span class="p">[</span><span class="s1">&#39;uq_valid_fr&#39;</span><span class="p">]</span>
+    <span class="n">fractionTest</span> <span class="o">=</span> <span class="n">params</span><span class="p">[</span><span class="s1">&#39;uq_test_fr&#39;</span><span class="p">]</span>
+    
+    <span class="k">if</span> <span class="p">(</span><span class="n">fractionTrain</span> <span class="o">&lt;</span> <span class="mf">0.</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span><span class="n">fractionTrain</span> <span class="o">&gt;</span> <span class="mf">1.</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;uq_train_fr is not in (0, 1) range. uq_train_fr: &#39;</span><span class="p">,</span> <span class="n">fractionTrain</span><span class="p">)</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">fractionValidation</span> <span class="o">&lt;</span> <span class="mf">0.</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span><span class="n">fractionValidation</span> <span class="o">&gt;</span> <span class="mf">1.</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;uq_valid_fr is not in (0, 1) range. uq_valid_fr: &#39;</span><span class="p">,</span> <span class="n">fractionValidation</span><span class="p">)</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">fractionTest</span> <span class="o">&lt;</span> <span class="mf">0.</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span><span class="n">fractionTest</span> <span class="o">&gt;</span> <span class="mf">1.</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;uq_test_fr is not in (0, 1) range. uq_test_fr: &#39;</span><span class="p">,</span> <span class="n">fractionTest</span><span class="p">)</span>
+
+    <span class="n">fractionSum</span> <span class="o">=</span> <span class="n">fractionTrain</span> <span class="o">+</span> <span class="n">fractionValidation</span> <span class="o">+</span> <span class="n">fractionTest</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">fractionSum</span> <span class="o">&gt;</span> <span class="mf">1.</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span><span class="n">fractionSum</span> <span class="o">&lt;</span> <span class="mf">1.</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Specified UQ fractions (uq_train_fr, uq_valid_fr, uq_test_fr) do not add up to 1. No cross-validation partition is computed ! sum:&#39;</span><span class="p">,</span> <span class="n">fractionSum</span><span class="p">)</span>
+
+    <span class="c1"># Determine data size and block size</span>
+    <span class="k">if</span> <span class="n">fractionTest</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="c1"># Use all data and re-distribute the partitions</span>
+        <span class="n">numData</span> <span class="o">=</span> <span class="n">numTrain</span> <span class="o">+</span> <span class="n">numValidation</span> <span class="o">+</span> <span class="n">numTest</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="c1"># Preserve test partition</span>
+        <span class="n">numData</span> <span class="o">=</span> <span class="n">numTrain</span> <span class="o">+</span> <span class="n">numValidation</span>
+    
+    <span class="n">sizeTraining</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">numData</span> <span class="o">*</span> <span class="n">fractionTrain</span><span class="p">))</span>
+    <span class="n">sizeValidation</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">numData</span> <span class="o">*</span> <span class="n">fractionValidation</span><span class="p">))</span>
+
+    <span class="c1"># Fill partition indices</span>
+    <span class="c1"># Fill train partition    </span>
+    <span class="n">Folds</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">numData</span><span class="p">)</span>
+    <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">shuffle</span><span class="p">(</span><span class="n">Folds</span><span class="p">)</span>
+    <span class="n">indexTrain</span> <span class="o">=</span> <span class="n">Folds</span><span class="p">[:</span><span class="n">sizeTraining</span><span class="p">]</span>
+    <span class="c1"># Fill validation partition</span>
+    <span class="n">indexValidation</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="k">if</span> <span class="n">fractionValidation</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">indexValidation</span> <span class="o">=</span> <span class="n">Folds</span><span class="p">[</span><span class="n">sizeTraining</span><span class="p">:</span><span class="n">sizeTraining</span><span class="o">+</span><span class="n">sizeValidation</span><span class="p">]</span>
+    <span class="c1"># Fill test partition</span>
+    <span class="n">indexTest</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="k">if</span> <span class="n">fractionTest</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">indexTest</span> <span class="o">=</span> <span class="n">Folds</span><span class="p">[</span><span class="n">sizeTraining</span><span class="o">+</span><span class="n">sizeValidation</span><span class="p">:]</span>
+    
+    <span class="k">return</span> <span class="n">indexTrain</span><span class="p">,</span> <span class="n">indexValidation</span><span class="p">,</span> <span class="n">indexTest</span></div>
+
+
+<div class="viewcode-block" id="generate_index_distribution_from_blocks"><a class="viewcode-back" href="../uq_utils.html#uq_utils.generate_index_distribution_from_blocks">[docs]</a><span class="k">def</span> <span class="nf">generate_index_distribution_from_blocks</span><span class="p">(</span><span class="n">numTrain</span><span class="p">,</span> <span class="n">numTest</span><span class="p">,</span> <span class="n">numValidation</span><span class="p">,</span> <span class="n">params</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Generates a vector of indices to partition the data for training.</span>
+<span class="sd">       NO CHECKING IS DONE: it is assumed that the data could be partitioned</span>
+<span class="sd">       in the specified block quantities and that the block quantities describe a</span>
+<span class="sd">       coherent partition.</span>
+<span class="sd">        </span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        numTrain : int</span>
+<span class="sd">            Number of training data points</span>
+<span class="sd">        numTest : int</span>
+<span class="sd">            Number of testing data points</span>
+<span class="sd">        numValidation : int</span>
+<span class="sd">            Number of validation data points (may be zero)</span>
+<span class="sd">        params : dictionary with parameters</span>
+<span class="sd">            Contains the keywords that control the behavior of the function</span>
+<span class="sd">            (uq_train_bks, uq_valid_bks, uq_test_bks)</span>
+<span class="sd">            </span>
+<span class="sd">        Return</span>
+<span class="sd">        ----------</span>
+<span class="sd">        indexTrain : int numpy array</span>
+<span class="sd">            Indices for data in training</span>
+<span class="sd">        indexValidation : int numpy array</span>
+<span class="sd">            Indices for data in validation (if any)</span>
+<span class="sd">        indexTest : int numpy array</span>
+<span class="sd">            Indices for data in testing (if merging)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1"># Extract required parameters</span>
+    <span class="n">numBlocksTrain</span> <span class="o">=</span> <span class="n">params</span><span class="p">[</span><span class="s1">&#39;uq_train_bks&#39;</span><span class="p">]</span>
+    <span class="n">numBlocksValidation</span> <span class="o">=</span> <span class="n">params</span><span class="p">[</span><span class="s1">&#39;uq_valid_bks&#39;</span><span class="p">]</span>
+    <span class="n">numBlocksTest</span> <span class="o">=</span> <span class="n">params</span><span class="p">[</span><span class="s1">&#39;uq_test_bks&#39;</span><span class="p">]</span>
+    <span class="n">numBlocksTotal</span> <span class="o">=</span> <span class="n">numBlocksTrain</span> <span class="o">+</span> <span class="n">numBlocksValidation</span> <span class="o">+</span> <span class="n">numBlocksTest</span>
+
+    <span class="c1"># Determine data size and block size</span>
+    <span class="k">if</span> <span class="n">numBlocksTest</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="c1"># Use all data and re-distribute the partitions</span>
+        <span class="n">numData</span> <span class="o">=</span> <span class="n">numTrain</span> <span class="o">+</span> <span class="n">numValidation</span> <span class="o">+</span> <span class="n">numTest</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="c1"># Preserve test partition</span>
+        <span class="n">numData</span> <span class="o">=</span> <span class="n">numTrain</span> <span class="o">+</span> <span class="n">numValidation</span>
+    
+    <span class="n">blockSize</span> <span class="o">=</span> <span class="p">(</span><span class="n">numData</span> <span class="o">+</span> <span class="n">numBlocksTotal</span> <span class="o">//</span> <span class="mi">2</span><span class="p">)</span> <span class="o">//</span> <span class="n">numBlocksTotal</span> <span class="c1"># integer division with rounding</span>
+    <span class="n">remainder</span> <span class="o">=</span> <span class="n">numData</span> <span class="o">-</span> <span class="n">blockSize</span> <span class="o">*</span> <span class="n">numBlocksTotal</span>
+    <span class="k">if</span> <span class="n">remainder</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Warning ! Requested partition does not distribute data evenly between blocks. &quot;</span>
+              <span class="s2">&quot;Testing (if specified) or Validation (if specified) will use different block size.&quot;</span><span class="p">)</span>
+
+    <span class="n">sizeTraining</span> <span class="o">=</span> <span class="n">numBlocksTrain</span> <span class="o">*</span> <span class="n">blockSize</span>
+    <span class="n">sizeValidation</span> <span class="o">=</span> <span class="n">numBlocksValidation</span> <span class="o">*</span> <span class="n">blockSize</span>
+
+    <span class="c1"># Fill partition indices</span>
+    <span class="c1"># Fill train partition    </span>
+    <span class="n">Folds</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">numData</span><span class="p">)</span>
+    <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">shuffle</span><span class="p">(</span><span class="n">Folds</span><span class="p">)</span>
+    <span class="n">indexTrain</span> <span class="o">=</span> <span class="n">Folds</span><span class="p">[:</span><span class="n">sizeTraining</span><span class="p">]</span>
+    <span class="c1"># Fill validation partition</span>
+    <span class="n">indexValidation</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="k">if</span> <span class="n">numBlocksValidation</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">indexValidation</span> <span class="o">=</span> <span class="n">Folds</span><span class="p">[</span><span class="n">sizeTraining</span><span class="p">:</span><span class="n">sizeTraining</span><span class="o">+</span><span class="n">sizeValidation</span><span class="p">]</span>
+    <span class="c1"># Fill test partition</span>
+    <span class="n">indexTest</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="k">if</span> <span class="n">numBlocksTest</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">indexTest</span> <span class="o">=</span> <span class="n">Folds</span><span class="p">[</span><span class="n">sizeTraining</span><span class="o">+</span><span class="n">sizeValidation</span><span class="p">:]</span>
+    
+    <span class="k">return</span> <span class="n">indexTrain</span><span class="p">,</span> <span class="n">indexValidation</span><span class="p">,</span> <span class="n">indexTest</span></div>
+
+
+
+<div class="viewcode-block" id="generate_index_distribution_from_block_list"><a class="viewcode-back" href="../uq_utils.html#uq_utils.generate_index_distribution_from_block_list">[docs]</a><span class="k">def</span> <span class="nf">generate_index_distribution_from_block_list</span><span class="p">(</span><span class="n">numTrain</span><span class="p">,</span> <span class="n">numTest</span><span class="p">,</span> <span class="n">numValidation</span><span class="p">,</span> <span class="n">params</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Generates a vector of indices to partition the data for training.</span>
+<span class="sd">       NO CHECKING IS DONE: it is assumed that the data could be partitioned</span>
+<span class="sd">       in the specified list of blocks and that the block indices describe a </span>
+<span class="sd">       coherent partition.</span>
+<span class="sd">        </span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        numTrain : int</span>
+<span class="sd">            Number of training data points</span>
+<span class="sd">        numTest : int</span>
+<span class="sd">            Number of testing data points</span>
+<span class="sd">        numValidation : int</span>
+<span class="sd">            Number of validation data points (may be zero)</span>
+<span class="sd">        params : dictionary with parameters</span>
+<span class="sd">            Contains the keywords that control the behavior of the function</span>
+<span class="sd">            (uq_train_vec, uq_valid_vec, uq_test_vec)</span>
+<span class="sd">            </span>
+<span class="sd">        Return</span>
+<span class="sd">        ----------</span>
+<span class="sd">        indexTrain : int numpy array</span>
+<span class="sd">            Indices for data in training</span>
+<span class="sd">        indexValidation : int numpy array</span>
+<span class="sd">            Indices for data in validation (if any)</span>
+<span class="sd">        indexTest : int numpy array</span>
+<span class="sd">            Indices for data in testing (if merging)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1"># Extract required parameters</span>
+    <span class="n">blocksTrain</span> <span class="o">=</span> <span class="n">params</span><span class="p">[</span><span class="s1">&#39;uq_train_vec&#39;</span><span class="p">]</span>
+    <span class="n">blocksValidation</span> <span class="o">=</span> <span class="n">params</span><span class="p">[</span><span class="s1">&#39;uq_valid_vec&#39;</span><span class="p">]</span>
+    <span class="n">blocksTest</span> <span class="o">=</span> <span class="n">params</span><span class="p">[</span><span class="s1">&#39;uq_test_vec&#39;</span><span class="p">]</span>
+    
+    <span class="c1"># Determine data size and block size</span>
+    <span class="n">numBlocksTrain</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">blocksTrain</span><span class="p">)</span>
+    <span class="n">numBlocksValidation</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">blocksValidation</span><span class="p">)</span>
+    <span class="n">numBlocksTest</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">blocksTest</span><span class="p">)</span>
+    <span class="n">numBlocksTotal</span> <span class="o">=</span> <span class="n">numBlocksTrain</span> <span class="o">+</span> <span class="n">numBlocksValidation</span> <span class="o">+</span> <span class="n">numBlocksTest</span>
+
+    <span class="k">if</span> <span class="n">numBlocksTest</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="c1"># Use all data and re-distribute the partitions</span>
+        <span class="n">numData</span> <span class="o">=</span> <span class="n">numTrain</span> <span class="o">+</span> <span class="n">numValidation</span> <span class="o">+</span> <span class="n">numTest</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="c1"># Preserve test partition</span>
+        <span class="n">numData</span> <span class="o">=</span> <span class="n">numTrain</span> <span class="o">+</span> <span class="n">numValidation</span>
+    
+    <span class="n">blockSize</span> <span class="o">=</span> <span class="p">(</span><span class="n">numData</span> <span class="o">+</span> <span class="n">numBlocksTotal</span> <span class="o">//</span> <span class="mi">2</span><span class="p">)</span> <span class="o">//</span> <span class="n">numBlocksTotal</span> <span class="c1"># integer division with rounding</span>
+    <span class="n">remainder</span> <span class="o">=</span> <span class="n">numData</span> <span class="o">-</span> <span class="n">blockSize</span> <span class="o">*</span> <span class="n">numBlocksTotal</span>
+    <span class="k">if</span> <span class="n">remainder</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Warning ! Requested partition does not distribute data evenly between blocks. &quot;</span>
+              <span class="s2">&quot;Last block will have different size.&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">remainder</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">remainder</span> <span class="o">=</span> <span class="mi">0</span>
+
+    <span class="c1"># Fill partition indices</span>
+    <span class="c1"># Fill train partition</span>
+    <span class="n">maxSizeTrain</span> <span class="o">=</span> <span class="n">blockSize</span> <span class="o">*</span> <span class="n">numBlocksTrain</span> <span class="o">+</span> <span class="n">remainder</span>
+    <span class="n">indexTrain</span> <span class="o">=</span> <span class="n">fill_array</span><span class="p">(</span><span class="n">blocksTrain</span><span class="p">,</span> <span class="n">maxSizeTrain</span><span class="p">,</span> <span class="n">numData</span><span class="p">,</span> <span class="n">numBlocksTotal</span><span class="p">,</span> <span class="n">blockSize</span><span class="p">)</span>
+    <span class="c1"># Fill validation partition</span>
+    <span class="n">indexValidation</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="k">if</span> <span class="n">numBlocksValidation</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">maxSizeValidation</span> <span class="o">=</span> <span class="n">blockSize</span> <span class="o">*</span> <span class="n">numBlocksValidation</span>  <span class="o">+</span> <span class="n">remainder</span>
+        <span class="n">indexValidation</span> <span class="o">=</span> <span class="n">fill_array</span><span class="p">(</span><span class="n">blocksValidation</span><span class="p">,</span> <span class="n">maxSizeValidation</span><span class="p">,</span> <span class="n">numData</span><span class="p">,</span> <span class="n">numBlocksTotal</span><span class="p">,</span> <span class="n">blockSize</span><span class="p">)</span>
+    <span class="c1"># Fill test partition</span>
+    <span class="n">indexTest</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="k">if</span> <span class="n">numBlocksTest</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">maxSizeTest</span> <span class="o">=</span> <span class="n">blockSize</span> <span class="o">*</span> <span class="n">numBlocksTest</span> <span class="o">+</span> <span class="n">remainder</span>
+        <span class="n">indexTest</span> <span class="o">=</span> <span class="n">fill_array</span><span class="p">(</span><span class="n">blocksTest</span><span class="p">,</span> <span class="n">maxSizeTest</span><span class="p">,</span> <span class="n">numData</span><span class="p">,</span> <span class="n">numBlocksTotal</span><span class="p">,</span> <span class="n">blockSize</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">indexTrain</span><span class="p">,</span> <span class="n">indexValidation</span><span class="p">,</span> <span class="n">indexTest</span></div>
+
+
+
+<div class="viewcode-block" id="compute_limits"><a class="viewcode-back" href="../uq_utils.html#uq_utils.compute_limits">[docs]</a><span class="k">def</span> <span class="nf">compute_limits</span><span class="p">(</span><span class="n">numdata</span><span class="p">,</span> <span class="n">numblocks</span><span class="p">,</span> <span class="n">blocksize</span><span class="p">,</span> <span class="n">blockn</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Generates the limit of indices corresponding to a </span>
+<span class="sd">       specific block. It takes into account the non-exact</span>
+<span class="sd">       divisibility of numdata into numblocks letting the</span>
+<span class="sd">       last block to take the extra chunk.</span>
+<span class="sd">        </span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        numdata : int</span>
+<span class="sd">            Total number of data points to distribute</span>
+<span class="sd">        numblocks : int</span>
+<span class="sd">            Total number of blocks to distribute into</span>
+<span class="sd">        blocksize : int</span>
+<span class="sd">            Size of data per block</span>
+<span class="sd">        blockn : int</span>
+<span class="sd">            Index of block, from 0 to numblocks-1</span>
+<span class="sd">            </span>
+<span class="sd">        Return</span>
+<span class="sd">        ----------</span>
+<span class="sd">        start : int</span>
+<span class="sd">            Position to start assigning indices</span>
+<span class="sd">        end : int</span>
+<span class="sd">            One beyond position to stop assigning indices</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">start</span> <span class="o">=</span> <span class="n">blockn</span> <span class="o">*</span> <span class="n">blocksize</span>
+    <span class="n">end</span> <span class="o">=</span> <span class="n">start</span> <span class="o">+</span> <span class="n">blocksize</span>
+    <span class="k">if</span> <span class="n">blockn</span> <span class="o">==</span> <span class="p">(</span><span class="n">numblocks</span><span class="o">-</span><span class="mi">1</span><span class="p">):</span> <span class="c1"># last block gets the extra</span>
+        <span class="n">end</span> <span class="o">=</span> <span class="n">numdata</span>
+
+    <span class="k">return</span> <span class="n">start</span><span class="p">,</span> <span class="n">end</span></div>
+
+
+<div class="viewcode-block" id="fill_array"><a class="viewcode-back" href="../uq_utils.html#uq_utils.fill_array">[docs]</a><span class="k">def</span> <span class="nf">fill_array</span><span class="p">(</span><span class="n">blocklist</span><span class="p">,</span> <span class="n">maxsize</span><span class="p">,</span> <span class="n">numdata</span><span class="p">,</span> <span class="n">numblocks</span><span class="p">,</span> <span class="n">blocksize</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Fills a new array of integers with the indices corresponding</span>
+<span class="sd">       to the specified block structure.</span>
+<span class="sd">        </span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        blocklist : list</span>
+<span class="sd">            List of integers describen the block indices that</span>
+<span class="sd">            go into the array</span>
+<span class="sd">        maxsize : int</span>
+<span class="sd">            Maximum possible length for the partition (the size of the</span>
+<span class="sd">            common block size plus the remainder, if any).</span>
+<span class="sd">        numdata : int</span>
+<span class="sd">            Total number of data points to distribute</span>
+<span class="sd">        numblocks : int</span>
+<span class="sd">            Total number of blocks to distribute into</span>
+<span class="sd">        blocksize : int</span>
+<span class="sd">            Size of data per block</span>
+<span class="sd">            </span>
+<span class="sd">        Return</span>
+<span class="sd">        ----------</span>
+<span class="sd">        indexArray : int numpy array</span>
+<span class="sd">            Indices for specific data partition. Resizes the array</span>
+<span class="sd">            to the correct length.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">indexArray</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">maxsize</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">int</span><span class="p">)</span>
+
+    <span class="n">offset</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">blocklist</span><span class="p">:</span>
+        <span class="n">start</span><span class="p">,</span> <span class="n">end</span> <span class="o">=</span> <span class="n">compute_limits</span><span class="p">(</span><span class="n">numdata</span><span class="p">,</span> <span class="n">numblocks</span><span class="p">,</span> <span class="n">blocksize</span><span class="p">,</span> <span class="n">i</span><span class="p">)</span>
+        <span class="n">length</span> <span class="o">=</span> <span class="n">end</span> <span class="o">-</span> <span class="n">start</span>
+        <span class="n">indexArray</span><span class="p">[</span><span class="n">offset</span><span class="p">:</span><span class="n">offset</span><span class="o">+</span><span class="n">length</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="p">)</span>
+        <span class="n">offset</span> <span class="o">+=</span> <span class="n">length</span>
+
+    <span class="k">return</span> <span class="n">indexArray</span><span class="p">[:</span><span class="n">offset</span><span class="p">]</span></div>
+
+
+
+
+
+
+
+
+
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, ANL.gov.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'',
+            LANGUAGE:'None',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

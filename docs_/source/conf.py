@@ -21,9 +21,9 @@ sys.path.insert(0, os.path.abspath('../../examples/mnist'))
 
 # -- Project information -----------------------------------------------------
 
-project = 'Candle'
+project = 'CANDLE'
 copyright = '2018, ANL.gov'
-author = 'Candle Team'
+author = 'CANDLE Team'
 
 # The short X.Y version
 version = ''
@@ -117,7 +117,7 @@ html_static_path = ['_static']
 # -- Options for HTMLHelp output ---------------------------------------------
 
 # Output file base name for HTML help builder.
-htmlhelp_basename = 'test_candledoc'
+htmlhelp_basename = 'candledoc'
 
 
 # -- Options for LaTeX output ------------------------------------------------

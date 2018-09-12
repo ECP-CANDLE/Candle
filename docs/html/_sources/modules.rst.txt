@@ -1,5 +1,5 @@
-common
-======
+CANDLE Lib
+===========
 
 .. toctree::
    :maxdepth: 4
@@ -11,3 +11,4 @@ common
    generic_utils
    keras_utils
    solr_keras
+   uq_utils

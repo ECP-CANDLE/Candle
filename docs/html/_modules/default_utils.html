@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>default_utils &mdash; Candle  documentation</title>
+  <title>default_utils &mdash; CANDLE  documentation</title>
   
 
   
@@ -46,7 +46,7 @@
           
 
           
-            <a href="../index.html" class="icon icon-home"> Candle
+            <a href="../index.html" class="icon icon-home"> CANDLE
           
 
           
@@ -81,7 +81,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../readme.html">Read about Candle</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../user_guide.html">How to write CANDLE compliant deep learning code</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../user_guide.html#how-to-run-candle-compliant-code-in-theta">How to run CANDLE compliant code in Theta</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../modules.html">common</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../modules.html">CANDLE Lib</a></li>
 </ul>
 
             
@@ -96,7 +96,7 @@
       <nav class="wy-nav-top" aria-label="top navigation">
         
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="../index.html">Candle</a>
+          <a href="../index.html">CANDLE</a>
         
       </nav>
 
@@ -372,11 +372,23 @@
     <span class="c1"># Parse parameters that are applicable just to benchmark</span>
     <span class="n">bmk</span><span class="o">.</span><span class="n">parse_from_benchmark</span><span class="p">()</span>
 
-    <span class="c1"># Get command-line parameters</span>
-    <span class="n">args</span> <span class="o">=</span> <span class="n">bmk</span><span class="o">.</span><span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">()</span>
     <span class="c1">#print(&#39;Args:&#39;, args)</span>
     <span class="c1"># Get parameters from configuration file</span>
-    <span class="n">fileParameters</span> <span class="o">=</span> <span class="n">bmk</span><span class="o">.</span><span class="n">read_config_file</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">config_file</span><span class="p">)</span>
+    <span class="c1"># Reads parameter subset, just checking if a config_file has been set</span>
+    <span class="c1"># by comand line (the parse_known_args() function allows a partial</span>
+    <span class="c1"># parsing)</span>
+    <span class="n">aux</span> <span class="o">=</span> <span class="n">bmk</span><span class="o">.</span><span class="n">parser</span><span class="o">.</span><span class="n">parse_known_args</span><span class="p">()</span>
+    <span class="k">try</span> <span class="p">:</span> <span class="c1"># Try to get the &#39;config_file&#39; option</span>
+        <span class="n">conffile_txt</span> <span class="o">=</span> <span class="n">aux</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">config_file</span>
+    <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span> <span class="c1"># The &#39;config_file&#39; option was not set by command-line</span>
+        <span class="n">conffile</span> <span class="o">=</span> <span class="n">bmk</span><span class="o">.</span><span class="n">conffile</span> <span class="c1"># use default file</span>
+    <span class="k">else</span><span class="p">:</span> <span class="c1"># a &#39;config_file&#39; has been set --&gt; use this file</span>
+        <span class="n">conffile</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">bmk</span><span class="o">.</span><span class="n">file_path</span><span class="p">,</span> <span class="n">conffile_txt</span><span class="p">)</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Configuration file: &quot;</span><span class="p">,</span> <span class="n">conffile</span><span class="p">)</span>
+    <span class="n">fileParameters</span> <span class="o">=</span> <span class="n">bmk</span><span class="o">.</span><span class="n">read_config_file</span><span class="p">(</span><span class="n">conffile</span><span class="p">)</span><span class="c1">#aux.config_file)#args.config_file)</span>
+    <span class="c1"># Get command-line parameters</span>
+    <span class="n">args</span> <span class="o">=</span> <span class="n">bmk</span><span class="o">.</span><span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">()</span>
     <span class="c1">#print (&#39;Params:&#39;, fileParameters)</span>
     <span class="c1"># Consolidate parameter set. Command-line parameters overwrite file configuration</span>
     <span class="n">gParameters</span> <span class="o">=</span> <span class="n">args_overwrite_config</span><span class="p">(</span><span class="n">args</span><span class="p">,</span> <span class="n">fileParameters</span><span class="p">)</span>
@@ -452,11 +464,15 @@
 <span class="sd">            parser for command-line options</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     
+    <span class="c1"># Configuration file</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--config_file&quot;</span><span class="p">,</span> <span class="n">dest</span><span class="o">=</span><span class="s1">&#39;config_file&#39;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="n">argparse</span><span class="o">.</span><span class="n">SUPPRESS</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;specify model configuration file&quot;</span><span class="p">)</span>
+    
     <span class="c1"># General behavior</span>
-    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--train&quot;</span><span class="p">,</span> <span class="n">dest</span><span class="o">=</span><span class="s1">&#39;train_bool&#39;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="n">str2bool</span><span class="p">,</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--train_bool&quot;</span><span class="p">,</span> <span class="n">dest</span><span class="o">=</span><span class="s1">&#39;train_bool&#39;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="n">str2bool</span><span class="p">,</span>
                         <span class="n">default</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
                         <span class="n">help</span><span class="o">=</span><span class="s2">&quot;train model&quot;</span><span class="p">)</span>
-    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--evaluate&quot;</span><span class="p">,</span> <span class="n">dest</span><span class="o">=</span><span class="s1">&#39;eval_bool&#39;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="n">str2bool</span><span class="p">,</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--eval_bool&quot;</span><span class="p">,</span> <span class="n">dest</span><span class="o">=</span><span class="s1">&#39;eval_bool&#39;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="n">str2bool</span><span class="p">,</span>
                         <span class="n">default</span><span class="o">=</span><span class="n">argparse</span><span class="o">.</span><span class="n">SUPPRESS</span><span class="p">,</span>
                         <span class="n">help</span><span class="o">=</span><span class="s2">&quot;evaluate model (use it for inference)&quot;</span><span class="p">)</span>
 
@@ -719,11 +735,7 @@
 <span class="sd">           or they are moved, the calling has to be updated.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         
-        <span class="c1"># Set default configuration file</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--config_file&quot;</span><span class="p">,</span> <span class="n">dest</span><span class="o">=</span><span class="s1">&#39;config_file&#39;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span>
-                        <span class="n">default</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">file_path</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">default_model</span><span class="p">),</span>
-                        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;specify model configuration file&quot;</span><span class="p">)</span>
-                        
+        
         <span class="c1"># Parse has been split between arguments that are common with the default neon parser</span>
         <span class="c1"># and all the other options</span>
         <span class="n">parser</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parser</span>
@@ -731,8 +743,10 @@
             <span class="n">parser</span> <span class="o">=</span> <span class="n">get_default_neon_parser</span><span class="p">(</span><span class="n">parser</span><span class="p">)</span>
         <span class="n">parser</span> <span class="o">=</span> <span class="n">get_common_parser</span><span class="p">(</span><span class="n">parser</span><span class="p">)</span>
     
-        <span class="bp">self</span><span class="o">.</span><span class="n">parser</span> <span class="o">=</span> <span class="n">parser</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">parser</span> <span class="o">=</span> <span class="n">parser</span>
 
+        <span class="c1"># Set default configuration file</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">conffile</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">file_path</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">default_model</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="Benchmark.parse_from_benchmark"><a class="viewcode-back" href="../default_utils.html#default_utils.Benchmark.parse_from_benchmark">[docs]</a>    <span class="k">def</span> <span class="nf">parse_from_benchmark</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -776,6 +790,11 @@
 <span class="sd">            ----------</span>
 <span class="sd">            dictfileparam : python dictionary</span>
 <span class="sd">                parameters read from configuration file</span>
+<span class="sd">            args : python dictionary</span>
+<span class="sd">                parameters read from command-line</span>
+<span class="sd">                Most of the time command-line overwrites configuration file</span>
+<span class="sd">                except when the command-line is using default values and</span>
+<span class="sd">                config file defines those values</span>
 <span class="sd">           </span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
@@ -792,6 +811,9 @@
                     <span class="k">if</span> <span class="n">inspect</span><span class="o">.</span><span class="n">isclass</span><span class="p">(</span><span class="n">d</span><span class="p">[</span><span class="s1">&#39;action&#39;</span><span class="p">]):</span>
                         <span class="n">str_read</span> <span class="o">=</span> <span class="n">dictfileparam</span><span class="p">[</span><span class="n">d</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]]</span>
                         <span class="n">configOut</span><span class="p">[</span><span class="n">d</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]]</span> <span class="o">=</span> <span class="n">eval_string_as_list_of_lists</span><span class="p">(</span><span class="n">str_read</span><span class="p">,</span> <span class="s1">&#39;:&#39;</span><span class="p">,</span> <span class="s1">&#39;,&#39;</span><span class="p">,</span> <span class="n">dtype</span><span class="p">)</span>
+                <span class="k">elif</span> <span class="n">d</span><span class="p">[</span><span class="s1">&#39;default&#39;</span><span class="p">]</span> <span class="o">!=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">SUPPRESS</span><span class="p">:</span>
+                    <span class="c1"># default value on benchmark definition cannot overwrite config file</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;--&#39;</span> <span class="o">+</span> <span class="n">d</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">],</span> <span class="nb">type</span><span class="o">=</span><span class="n">d</span><span class="p">[</span><span class="s1">&#39;type&#39;</span><span class="p">],</span> <span class="n">default</span><span class="o">=</span><span class="n">configOut</span><span class="p">[</span><span class="n">d</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]],</span> <span class="n">help</span><span class="o">=</span><span class="n">d</span><span class="p">[</span><span class="s1">&#39;help&#39;</span><span class="p">])</span>
 
         <span class="k">return</span> <span class="n">configOut</span></div>
 

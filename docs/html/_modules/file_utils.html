@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>file_utils &mdash; Candle  documentation</title>
+  <title>file_utils &mdash; CANDLE  documentation</title>
   
 
   
@@ -46,7 +46,7 @@
           
 
           
-            <a href="../index.html" class="icon icon-home"> Candle
+            <a href="../index.html" class="icon icon-home"> CANDLE
           
 
           
@@ -81,7 +81,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../readme.html">Read about Candle</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../user_guide.html">How to write CANDLE compliant deep learning code</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../user_guide.html#how-to-run-candle-compliant-code-in-theta">How to run CANDLE compliant code in Theta</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../modules.html">common</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../modules.html">CANDLE Lib</a></li>
 </ul>
 
             
@@ -96,7 +96,7 @@
       <nav class="wy-nav-top" aria-label="top navigation">
         
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="../index.html">Candle</a>
+          <a href="../index.html">CANDLE</a>
         
       </nav>
 
@@ -207,9 +207,18 @@
     <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">datadir</span><span class="p">):</span>
         <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">datadir</span><span class="p">)</span>
 
-    <span class="k">if</span> <span class="n">untar</span><span class="p">:</span>
+    <span class="c1">#if untar:</span>
+    <span class="c1">#    fnamesplit = fname.split(&#39;.tar.gz&#39;)</span>
+    <span class="c1">#    untar_fpath = os.path.join(datadir, fnamesplit[0])</span>
+
+    <span class="k">if</span> <span class="n">fname</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s1">&#39;.tar.gz&#39;</span><span class="p">):</span>
         <span class="n">fnamesplit</span> <span class="o">=</span> <span class="n">fname</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;.tar.gz&#39;</span><span class="p">)</span>
         <span class="n">untar_fpath</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">datadir</span><span class="p">,</span> <span class="n">fnamesplit</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="n">untar</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="k">elif</span> <span class="n">fname</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s1">&#39;.tgz&#39;</span><span class="p">):</span>
+        <span class="n">fnamesplit</span> <span class="o">=</span> <span class="n">fname</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;.tgz&#39;</span><span class="p">)</span>
+        <span class="n">untar_fpath</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">datadir</span><span class="p">,</span> <span class="n">fnamesplit</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="n">untar</span> <span class="o">=</span> <span class="kc">True</span>
 
     <span class="n">fpath</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">datadir</span><span class="p">,</span> <span class="n">fname</span><span class="p">)</span>
 
