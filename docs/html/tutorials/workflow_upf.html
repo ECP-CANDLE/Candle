@@ -1,0 +1,327 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Evaluate an Unrolled Parameter File (UPF) &mdash; CANDLE  documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../genindex.html"/>
+        <link rel="search" title="Search" href="../search.html"/>
+    <link rel="top" title="CANDLE  documentation" href="../index.html"/>
+        <link rel="up" title="Tutorials" href="index.html"/>
+        <link rel="next" title="CANDLE Library API" href="../modules.html"/>
+        <link rel="prev" title="PBT Workflow" href="workflow_pbt.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> CANDLE
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../readme.html">What is CANDLE?</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Tutorials</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="writing_candle_code.html">How to write CANDLE compliant deep learning code</a></li>
+<li class="toctree-l2"><a class="reference internal" href="running_on_theta.html">How to run CANDLE compliant code in Theta</a></li>
+<li class="toctree-l2"><a class="reference internal" href="workflow_genetic_algorithm.html">GA (genetic algorithm) based based hyperparameter optimization on CANDLE Benchmarks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="workflow_async_search.html">Run Asynchronous Search based hyperparameter optimization on CANDLE Benchmarks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="workflow_mlrMBO.html">Run mlrMBO based hyperparameter optimization on CANDLE Benchmarks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="workflow_pbt.html">PBT Workflow</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Evaluate an Unrolled Parameter File (UPF)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#running">Running</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#user-requirements">User requirements</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#calling-sequence">Calling sequence</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#infer-workflow">Infer workflow</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#quick-start">Quick start</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#file-index">File index</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../modules.html">CANDLE Library API</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">CANDLE</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="index.html">Tutorials</a> &raquo;</li>
+        
+      <li>Evaluate an Unrolled Parameter File (UPF)</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/tutorials/workflow_upf.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="evaluate-an-unrolled-parameter-file-upf">
+<h1>Evaluate an Unrolled Parameter File (UPF)<a class="headerlink" href="#evaluate-an-unrolled-parameter-file-upf" title="Permalink to this headline">¶</a></h1>
+<p>This workflow evaluates ensembles of “Benchmark” available here:
+<code class="docutils literal notranslate"><span class="pre">git&#64;github.com:ECP-CANDLE/Benchmarks.git</span></code> for a given set of
+parameters.</p>
+<div class="section" id="running">
+<h2>Running<a class="headerlink" href="#running" title="Permalink to this headline">¶</a></h2>
+<ol class="arabic simple">
+<li>cd into the <em>~/Supervisor/workflows/upf/test</em> directory</li>
+<li>Specify the MODEL_NAME in <em>upf-1.sh</em> file, hyperparameters in
+<em>upf-1.txt</em></li>
+<li>Specify the #procs, queue etc. in <em>cfg-sys-1.sh</em> file</li>
+<li>Launch the test by invoking <a href="#id1"><span class="problematic" id="id2">*</span></a>./upf-1.sh * where machine_name can be
+cori, theta, titan etc.</li>
+<li>The benchmark will be run for the number of processors specified</li>
+<li>Final objective function value will be available in the experiments
+directory and also printed</li>
+</ol>
+</div>
+<div class="section" id="user-requirements">
+<h2>User requirements<a class="headerlink" href="#user-requirements" title="Permalink to this headline">¶</a></h2>
+<p>What you need to install to run the workflow:</p>
+<ul class="simple">
+<li>This workflow - <code class="docutils literal notranslate"><span class="pre">git&#64;github.com:ECP-CANDLE/Supervisor.git</span></code> . Clone
+and <code class="docutils literal notranslate"><span class="pre">cd</span></code> to <code class="docutils literal notranslate"><span class="pre">workflows/nt3_mlrMBO</span></code> (the directory containing this
+README).</li>
+<li>NT3 benchmark - <code class="docutils literal notranslate"><span class="pre">git&#64;github.com:ECP-CANDLE/Benchmarks.git</span></code> . Clone
+and switch to the <code class="docutils literal notranslate"><span class="pre">frameworks</span></code> branch.</li>
+<li>benchmark data - See the individual benchmarks README for obtaining
+the initial data</li>
+<li>Swift/T with the recently implemented JSON module,
+cf.&nbsp;<a class="reference external" href="https://github.com/swift-lang/swift-t/issues/121">https://github.com/swift-lang/swift-t/issues/121</a></li>
+</ul>
+</div>
+<div class="section" id="calling-sequence">
+<h2>Calling sequence<a class="headerlink" href="#calling-sequence" title="Permalink to this headline">¶</a></h2>
+<p>Script call stack :- * upf-1.sh -&gt; swift/workflow.sh -&gt;
+swift/workflow.swift -&gt; common/swift/obj_app.swift -&gt; common/sh/model.sh
+-&gt; common/python/model_runner.py -&gt; ‘calls the benchmark’</p>
+<p>Scheduling scripts :- * upf-1.sh -&gt; cfg-sys-1.sh -&gt; common/sh/ -
+module, scheduling, langs .sh files</p>
+</div>
+<div class="section" id="infer-workflow">
+<h2>Infer workflow<a class="headerlink" href="#infer-workflow" title="Permalink to this headline">¶</a></h2>
+<p>This workflow assumes you have a data directory (called, say, DATA)
+containing run directories for processing with the new infer.py script</p>
+<div class="section" id="quick-start">
+<h3>Quick start<a class="headerlink" href="#quick-start" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ cd workflows/upf/test
+# Edit upf-infer.sh to set the output EXPERIMENTS directory-
+#   this will contain large output files
+# Create upf-DATA.txt with the JSON fragments for the matching uq directories
+#   Other glob patterns are fine too, this is handled by the shell
+#   The output of this command is upf-DATA.txt, which could have any name
+#   See mk-upf-infer.sh for full usage information
+$ ./mk-infer-upf.sh upf-DATA.txt /path/to/DATA/uq.{40..100}
+# Inspect upf-DATA.txt for sanity checking
+# Run it:
+$ ./upf-infer.sh cori upf-DATA.txt
+</pre></div>
+</div>
+</div>
+<div class="section" id="file-index">
+<h3>File index<a class="headerlink" href="#file-index" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>mk-infer-upf.sh: Assembles the JSON fragments into the UPF</li>
+<li>infer-template.json: M4 template for JSON fragments. Populated by
+environment variables set in mk-infer-upf.sh</li>
+<li>swift/workflow.{sh,swift}: Normal UPF workflow but newly extracts id
+from JSON template. The id is used as the run output directory</li>
+</ul>
+</div>
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../modules.html" class="btn btn-neutral float-right" title="CANDLE Library API" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="workflow_pbt.html" class="btn btn-neutral" title="PBT Workflow" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, ANL.gov.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

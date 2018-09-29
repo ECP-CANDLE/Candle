@@ -1,0 +1,580 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>PBT Workflow &mdash; CANDLE  documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../genindex.html"/>
+        <link rel="search" title="Search" href="../search.html"/>
+    <link rel="top" title="CANDLE  documentation" href="../index.html"/>
+        <link rel="up" title="Tutorials" href="index.html"/>
+        <link rel="next" title="Evaluate an Unrolled Parameter File (UPF)" href="workflow_upf.html"/>
+        <link rel="prev" title="Run mlrMBO based hyperparameter optimization on CANDLE Benchmarks" href="workflow_mlrMBO.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> CANDLE
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../readme.html">What is CANDLE?</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Tutorials</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="writing_candle_code.html">How to write CANDLE compliant deep learning code</a></li>
+<li class="toctree-l2"><a class="reference internal" href="running_on_theta.html">How to run CANDLE compliant code in Theta</a></li>
+<li class="toctree-l2"><a class="reference internal" href="workflow_genetic_algorithm.html">GA (genetic algorithm) based based hyperparameter optimization on CANDLE Benchmarks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="workflow_async_search.html">Run Asynchronous Search based hyperparameter optimization on CANDLE Benchmarks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="workflow_mlrMBO.html">Run mlrMBO based hyperparameter optimization on CANDLE Benchmarks</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">PBT Workflow</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#requirements">Requirements</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#running-the-workflow">Running the Workflow</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#local-run-pbt-sh">local_run_pbt.sh</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#sbatch-run-pbt-sh">sbatch_run_pbt.sh</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#hyperparameter-configuration-file">Hyperparameter Configuration File</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#workflow-explained">Workflow Explained</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#tc1">tc1</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#python-pbt-py"><code class="docutils literal notranslate"><span class="pre">python/pbt.py</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#python-tc1-pbt-py"><code class="docutils literal notranslate"><span class="pre">python/tc1_pbt.py</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#adapting-the-workflow-to-a-different-model">Adapting the Workflow to a Different Model</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="workflow_upf.html">Evaluate an Unrolled Parameter File (UPF)</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../modules.html">CANDLE Library API</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">CANDLE</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="index.html">Tutorials</a> &raquo;</li>
+        
+      <li>PBT Workflow</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/tutorials/workflow_pbt.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="pbt-workflow">
+<h1>PBT Workflow<a class="headerlink" href="#pbt-workflow" title="Permalink to this headline">¶</a></h1>
+<p>PBT is an asynchronous optimization algorithm for jointly optimizing a
+population of models and their hyperparameters while effectively using a
+fixed computational budget. Like a simple parallel grid search, PBT
+begins by randomly sampling selected hyperparameters and initial weights
+and training multiple models in parallel using these hyperparameters and
+weights. However, unlike a parallel search, each training run
+periodically and asynchronously runs an <em>evaluate</em> method when a model
+is considered <em>ready</em>, comparing its performance against that of other
+models. If it is under-performing, PBT uses two additional methods to
+improve performance: <em>exploit</em> and <em>explore</em>. Exploit leverages the work
+of the population as a whole by replacing an underperforming model with
+a better one, i.e., by replacing a model’s current weights with those of
+the better performing model. Explore attempts to find new better
+performing hyperparameters by perturbing those of the better performing
+model. Training then continues with the new weights and the new
+hyperparameters. Evaluate, exploit, and explore are performed
+asynchronously and independently by each model for some specified number
+of steps. In this way the hyperparameters are optimized online and
+computational resources are focused on better performing hyperparameters
+and weights, quickly discarding unpromising solutions.</p>
+<p>This PBT example is written in Python using the MPI for Python (mpi4py)
+package. It consists of model agnostic framework code for creating PBT
+workflows (<code class="docutils literal notranslate"><span class="pre">python/pbt.py</span></code>) and an example workflow
+(<code class="docutils literal notranslate"><span class="pre">python/tc1_pbt.py</span></code>). This example workflow trains a variant of our
+tc1 benchmark (<code class="docutils literal notranslate"><span class="pre">models/tc1</span></code>). In this example, a tc1 model run is
+considered underperforming if its validation loss is in the lower 20% of
+the population, at which time it will perform an exploit and explore.
+During exploit a model loads the weights of a model randomly selected
+from the top 20%. (Loading and storing of weights is file-based, where
+weights are serialized every epoch and then loaded as necessary.) During
+the explore, a model perturbs the learning rate of the selected better
+performing model, and then continues training with the new weights and
+learning rate.</p>
+<div class="section" id="requirements">
+<h2>Requirements<a class="headerlink" href="#requirements" title="Permalink to this headline">¶</a></h2>
+<ul>
+<li><p class="first">This workflow: <a class="reference external" href="mailto:git&#37;&#52;&#48;github&#46;com">git<span>&#64;</span>github<span>&#46;</span>com</a>:ECP-CANDLE/Supervisor.git. Clone and cd
+to workflows/pbt (the directory containing this README).</p>
+</li>
+<li><p class="first">Python: the PBT workflow has been tested under Python 2.7.</p>
+</li>
+<li><p class="first">MPI for Python (mpi4py): <a class="reference external" href="http://mpi4py.scipy.org/docs/">http://mpi4py.scipy.org/docs/</a></p>
+</li>
+<li><p class="first">Keras: <a class="reference external" href="https://keras.io">https://keras.io</a></p>
+</li>
+<li><p class="first">CANDLE Benchmark Code: <a class="reference external" href="mailto:git&#37;&#52;&#48;github&#46;com">git<span>&#64;</span>github<span>&#46;</span>com</a>:ECP-CANDLE/Benchmarks.git.
+Clone and switch to the frameworks branch.</p>
+</li>
+<li><p class="first">TC1 benchmark data:
+<code class="docutils literal notranslate"><span class="pre">ftp://ftp.mcs.anl.gov/pub/candle/public/benchmarks/Pilot1/type-class/type_18_300_test.csv</span> <span class="pre">ftp://ftp.mcs.anl.gov/pub/candle/public/benchmarks/Pilot1/type-class/type_18_300_train.csv</span></code></p>
+<p><code class="docutils literal notranslate"><span class="pre">type_18_300_train.csv</span></code> and <code class="docutils literal notranslate"><span class="pre">type_18_300_test.csv</span></code> should be
+copied into <code class="docutils literal notranslate"><span class="pre">X/Benchmarks/Data/Pilot1</span></code>, where X is wherever you
+cloned the Benchmark repository. For example, from within
+X/Benchmarks</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mkdir</span> <span class="o">-</span><span class="n">p</span> <span class="n">Data</span><span class="o">/</span><span class="n">Pilot1</span>
+<span class="n">cd</span> <span class="n">Data</span><span class="o">/</span><span class="n">Pilot1</span>
+<span class="n">wget</span> <span class="n">ftp</span><span class="p">:</span><span class="o">//</span><span class="n">ftp</span><span class="o">.</span><span class="n">mcs</span><span class="o">.</span><span class="n">anl</span><span class="o">.</span><span class="n">gov</span><span class="o">/</span><span class="n">pub</span><span class="o">/</span><span class="n">candle</span><span class="o">/</span><span class="n">public</span><span class="o">/</span><span class="n">benchmarks</span><span class="o">/</span><span class="n">Pilot1</span><span class="o">/</span><span class="nb">type</span><span class="o">-</span><span class="n">class</span><span class="o">/</span><span class="n">type_18_300_test</span><span class="o">.</span><span class="n">csv</span>
+<span class="n">wget</span> <span class="n">ftp</span><span class="p">:</span><span class="o">//</span><span class="n">ftp</span><span class="o">.</span><span class="n">mcs</span><span class="o">.</span><span class="n">anl</span><span class="o">.</span><span class="n">gov</span><span class="o">/</span><span class="n">pub</span><span class="o">/</span><span class="n">candle</span><span class="o">/</span><span class="n">public</span><span class="o">/</span><span class="n">benchmarks</span><span class="o">/</span><span class="n">Pilot1</span><span class="o">/</span><span class="nb">type</span><span class="o">-</span><span class="n">class</span><span class="o">/</span><span class="n">type_18_300_train</span><span class="o">.</span><span class="n">csv</span>
+</pre></div>
+</div>
+</li>
+</ul>
+</div>
+<div class="section" id="running-the-workflow">
+<h2>Running the Workflow<a class="headerlink" href="#running-the-workflow" title="Permalink to this headline">¶</a></h2>
+<p>The PBT workflow is an MPI application that when given N number of
+processes, runs N - 1 tc1 models, and uses the remaining process to run
+a datastore into which the models can put and get model peformance data.
+The workflow can be run using the scripts in the <code class="docutils literal notranslate"><span class="pre">scripts</span></code> directory.
+Two scripts are provided: <code class="docutils literal notranslate"><span class="pre">local_run_pbt.sh</span></code> and
+<code class="docutils literal notranslate"><span class="pre">sbatch_run_pbt.sh</span></code>. The former can be used to run on a local desktop
+or laptop. The latter can be used to submit the PBT workflow on hpc
+resources that use the slurm scheduler. In either case, main application
+file is <code class="docutils literal notranslate"><span class="pre">python/tc1_pbt.py</span></code>.</p>
+<p>When run the PBT workflow will create an experiments directory in which
+the output will be written. The output consists of a <code class="docutils literal notranslate"><span class="pre">weights</span></code>
+directory into which each tc1 instance writes is model weights every
+epoch, and an output.csv file that records the accuracy, loss, learning
+rate, validation accuracy, and validation loss for each model
+(identified by MPI rank) each epoch. Additionally each tc1 model run
+will execute within its own <code class="docutils literal notranslate"><span class="pre">run_N</span></code> instance directory (e.g.
+<code class="docutils literal notranslate"><span class="pre">run_1</span></code>, <code class="docutils literal notranslate"><span class="pre">run_2</span></code> and so forth) within the output directory.</p>
+<div class="section" id="local-run-pbt-sh">
+<h3>local_run_pbt.sh<a class="headerlink" href="#local-run-pbt-sh" title="Permalink to this headline">¶</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">local_run_pbt.sh</span></code> takes 3 arguments</p>
+<ol class="arabic simple">
+<li>The number of processes to use</li>
+<li>An experiment id</li>
+<li>The path to a pbt parameter file (see below) that defines the tc1
+hyperparameters</li>
+</ol>
+<p>The experiment id is used to as the name of the experiments directory
+into which the model output will be written as mentioned above. For
+example, given the location of the <code class="docutils literal notranslate"><span class="pre">scripts</span></code> directory as
+<code class="docutils literal notranslate"><span class="pre">workflows/pbt/scripts</span></code> and an experiment id of <code class="docutils literal notranslate"><span class="pre">r1</span></code>, the
+experiments directory will be <code class="docutils literal notranslate"><span class="pre">workflows/pbt/experiments/r1</span></code>.</p>
+</div>
+<div class="section" id="sbatch-run-pbt-sh">
+<h3>sbatch_run_pbt.sh<a class="headerlink" href="#sbatch-run-pbt-sh" title="Permalink to this headline">¶</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">sbatch_run_pbt.sh</span></code> takes 2 arguments:</p>
+<ol class="arabic simple">
+<li>An experiment id</li>
+<li>The path to a pbt parameter file (see below) that defines the tc1
+hyperparameters</li>
+</ol>
+<p>The experiment id is again used as the name of the experiments directory
+into which the model output will be written, as mentioned above. For
+example, given the location of the <code class="docutils literal notranslate"><span class="pre">scripts</span></code> directory as
+<code class="docutils literal notranslate"><span class="pre">workflows/pbt/scripts</span></code> and an experiment id of <code class="docutils literal notranslate"><span class="pre">r1</span></code>, the
+experiments directory will be <code class="docutils literal notranslate"><span class="pre">workflows/pbt/experiments/r1</span></code>.</p>
+<p><code class="docutils literal notranslate"><span class="pre">sbatch_run_pbt.sh</span></code> ultimately calls <code class="docutils literal notranslate"><span class="pre">sbatch</span></code> to submit the job
+defined in <code class="docutils literal notranslate"><span class="pre">scripts/pbt.sbatch</span></code>. That file can be copied and edited as
+appropriate, setting the queue, walltime, python, etc. for your HPC
+machine. It is currently configured for NERSC’s Cori system.</p>
+</div>
+<div class="section" id="hyperparameter-configuration-file">
+<h3>Hyperparameter Configuration File<a class="headerlink" href="#hyperparameter-configuration-file" title="Permalink to this headline">¶</a></h3>
+<p>The PBT workflow uses a json format file for defining the hyperparameter
+space used by the PBT algorithm. The PBT workflow includes 2 sample
+hyperparameter configuration files for the tc1 model.</p>
+<ul class="simple">
+<li><code class="docutils literal notranslate"><span class="pre">data/tc1_params_full.json</span></code>: runs the full tc1 model, including the
+default convolution layer and no feature subsampling.</li>
+<li><code class="docutils literal notranslate"><span class="pre">data/tc1_params_small.json</span></code>: runs a faster version of the tc1
+model by ommitting the convolution layer and subsampling the
+features.</li>
+</ul>
+<p>The hyperparameter configuration file has a json format consisting of a
+list of json dictionaries, each one of which defines a hyperparameter.
+Each dictionary has the following required keys:</p>
+<ul class="simple">
+<li>name: the name of the hyperparameter (e.g.&nbsp;epochs)</li>
+<li>type: determines how the models are initialized from the named
+parameter - one of <code class="docutils literal notranslate"><span class="pre">constant</span></code>, <code class="docutils literal notranslate"><span class="pre">int</span></code>, <code class="docutils literal notranslate"><span class="pre">float</span></code>, <code class="docutils literal notranslate"><span class="pre">logical</span></code>, or
+<code class="docutils literal notranslate"><span class="pre">categorical</span></code>.<ul>
+<li><code class="docutils literal notranslate"><span class="pre">constant</span></code>: all the tc1 models are initialized with the specifed
+value</li>
+<li><code class="docutils literal notranslate"><span class="pre">int</span></code>: each tc1 model is initialized with an int randomly drawn
+from the range defined by <code class="docutils literal notranslate"><span class="pre">lower</span></code> and <code class="docutils literal notranslate"><span class="pre">upper</span></code> bounds</li>
+<li><code class="docutils literal notranslate"><span class="pre">float</span></code>: each tc1 model is initialized with a float randomly
+drawn from the range defined by <code class="docutils literal notranslate"><span class="pre">lower</span></code> and <code class="docutils literal notranslate"><span class="pre">upper</span></code> bounds</li>
+<li><code class="docutils literal notranslate"><span class="pre">logical</span></code>: each tc1 model is initialized with a random boolean.</li>
+<li><code class="docutils literal notranslate"><span class="pre">categorical</span></code>: each tc1 model is initialized with an element
+chosen at random from the list of elements in <code class="docutils literal notranslate"><span class="pre">values</span></code>.</li>
+</ul>
+</li>
+</ul>
+<p>The following keys are required depending on value of the <code class="docutils literal notranslate"><span class="pre">type</span></code> key.</p>
+<p>If the <code class="docutils literal notranslate"><span class="pre">type</span></code> is <code class="docutils literal notranslate"><span class="pre">constant</span></code>: * <code class="docutils literal notranslate"><span class="pre">value</span></code>: the constant value</p>
+<p>If the <code class="docutils literal notranslate"><span class="pre">type</span></code> is <code class="docutils literal notranslate"><span class="pre">int</span></code>, or <code class="docutils literal notranslate"><span class="pre">float</span></code>: * <code class="docutils literal notranslate"><span class="pre">lower</span></code>: the lower bound
+of the range to randomly draw from * <code class="docutils literal notranslate"><span class="pre">upper</span></code>: the upper bound of the
+range to randomly draw from</p>
+<p>If the <code class="docutils literal notranslate"><span class="pre">type</span></code> is <code class="docutils literal notranslate"><span class="pre">categorical</span></code>: * <code class="docutils literal notranslate"><span class="pre">values</span></code>: the list of elements
+to randomly choose from * <code class="docutils literal notranslate"><span class="pre">element_type</span></code>: the type of the elements to
+choose from. One of <code class="docutils literal notranslate"><span class="pre">int</span></code>, <code class="docutils literal notranslate"><span class="pre">float</span></code>, <code class="docutils literal notranslate"><span class="pre">string</span></code>, or <code class="docutils literal notranslate"><span class="pre">logical</span></code></p>
+<p>A sample hyperparameter definition file:</p>
+<div class="code javascript highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span>
+  <span class="p">{</span>
+    <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;epochs&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;constant&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;value&quot;</span><span class="p">:</span> <span class="mi">5</span>
+  <span class="p">},</span>
+
+  <span class="p">{</span>
+    <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;activation&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;categorical&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;element_type&quot;</span><span class="p">:</span> <span class="s2">&quot;string&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;values&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;softmax&quot;</span><span class="p">,</span> <span class="s2">&quot;elu&quot;</span><span class="p">,</span> <span class="s2">&quot;softplus&quot;</span><span class="p">,</span> <span class="s2">&quot;softsign&quot;</span><span class="p">,</span> <span class="s2">&quot;relu&quot;</span><span class="p">,</span> <span class="s2">&quot;tanh&quot;</span><span class="p">,</span> <span class="s2">&quot;sigmoid&quot;</span><span class="p">,</span> <span class="s2">&quot;hard_sigmoid&quot;</span><span class="p">,</span> <span class="s2">&quot;linear&quot;</span><span class="p">]</span>
+  <span class="p">},</span>
+
+  <span class="p">{</span>
+    <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;batch_size&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;categorical&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;element_type&quot;</span><span class="p">:</span> <span class="s2">&quot;int&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;values&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">32</span><span class="p">,</span> <span class="mi">64</span><span class="p">]</span>
+  <span class="p">},</span>
+
+  <span class="p">{</span>
+    <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;lr&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;float&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;lower&quot;</span><span class="p">:</span> <span class="mf">0.0001</span><span class="p">,</span>
+    <span class="s2">&quot;upper&quot;</span><span class="p">:</span> <span class="mf">0.01</span>
+  <span class="p">}</span>
+<span class="p">]</span>
+</pre></div>
+</div>
+<p>Note that any other keys are ignored by the workflow but can be used to
+add additional information about the hyperparameter. For example, the
+sample files contain a <code class="docutils literal notranslate"><span class="pre">comment</span></code> entry that contains additional
+information about that hyperparameter.</p>
+</div>
+</div>
+<div class="section" id="workflow-explained">
+<h2>Workflow Explained<a class="headerlink" href="#workflow-explained" title="Permalink to this headline">¶</a></h2>
+<p>The workflow consists of 3 parts. The DNN tc1 model in <code class="docutils literal notranslate"><span class="pre">models/tc1</span></code>,
+the PBT python code in <code class="docutils literal notranslate"><span class="pre">python/pbt.py</span></code> and the python code that runs
+the tc1 model using PBT, <code class="docutils literal notranslate"><span class="pre">python/tc1_pbt.py</span></code>.</p>
+<div class="section" id="tc1">
+<h3>tc1<a class="headerlink" href="#tc1" title="Permalink to this headline">¶</a></h3>
+<p>The tc1 model is a lightly modified version of the CANDLE tc1 benchmark.
+The code has been updated so that an external Keras callback can be
+passed through <code class="docutils literal notranslate"><span class="pre">models/tc1/tc1_runner.run()</span></code> and attached to the
+model. The PBT algorithnm is run via this callback.</p>
+</div>
+<div class="section" id="python-pbt-py">
+<h3><code class="docutils literal notranslate"><span class="pre">python/pbt.py</span></code><a class="headerlink" href="#python-pbt-py" title="Permalink to this headline">¶</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">pbt.py</span></code> provides the model-agnostic framework code for implementing a
+PBT workflow. It has 4 main components.</p>
+<ol class="arabic simple">
+<li>A PBTMetaDataStore class. This implements an in-memory datastore for
+the model run performance and hyperparamter data. It also manages a
+locking scheme for model weight file IO in order to prevent issues
+with concurrent file access.</li>
+<li>A PBTClient class. This allows an individual instance of a model to
+communicate with the PBTMetaDataStore, sending it peformance data,
+querying performance data for a better performing model, requesting
+read and write locks for reading other model weights and writing its
+own. The PBTClient and PBTMetaDataStore communicate via MPI.</li>
+<li>A PBTCallback class. This is a Keras callback that given
+model-specific <em>ready</em>, <em>exploit</em>, and <em>explore</em> implementations will
+pass its current performance data to the data store and write its
+model’s weights every epoch. Then when <em>ready</em>, it will perform an an
+<em>evaluate</em> to find a better performing model. Assuming one is found,
+an <em>exploit</em> and <em>explore</em> be peformed to update its model’s weights
+and hyperparameters appropriately. A PBTCallback uses a PBTClient to
+ommunicate with a PBTMetaDataStore.</li>
+<li>A PBTWorker interface. This interface defines the API for PBT’s
+<em>ready</em>, <em>exploit</em> and <em>explore</em> steps. Client code implements this
+interface, supplying implementations appropriate to that particular
+workflow.</li>
+</ol>
+</div>
+<div class="section" id="python-tc1-pbt-py">
+<h3><code class="docutils literal notranslate"><span class="pre">python/tc1_pbt.py</span></code><a class="headerlink" href="#python-tc1-pbt-py" title="Permalink to this headline">¶</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">tc1_pbt.py</span></code> implements PBT for the tc1 model using the classes and
+functions in <code class="docutils literal notranslate"><span class="pre">pbt.py</span></code>. In <code class="docutils literal notranslate"><span class="pre">tc1_pbt.py</span></code>, rank 0 first generates and
+distribute the hyperparameters to the models running on the other ranks.
+The ga_utils package is used to read the hyperparameter definition file
+(see above) and generate, a set of hyperparameters for each model. Once
+the hyperparameters are distributed, a PBTMetaDataStore is started, also
+on rank 0.</p>
+<p>PBTMetaDataStore’s constructor is passed the path of the output
+directory where the <code class="docutils literal notranslate"><span class="pre">output.csv</span></code> file will be written together with a
+the path to a log file in which user customizable log messages are
+written. PBTMetaDataStore also takes a reference to an <em>evaluate</em>
+function that is used to evaluate a model’s current performance and
+select a better performing model. That function must have the following
+arguments: a list of dictionaries that contains the metadata for all the
+models, and a <em>score</em> against which model performance is determined.
+Exactly what the score represents (e.g.&nbsp;the validation loss) is domain
+specific and is provided in the <code class="docutils literal notranslate"><span class="pre">PBTWorker.pack_data</span></code> method described
+below.</p>
+<p>In <code class="docutils literal notranslate"><span class="pre">tc1_pbt.py</span></code>, <code class="docutils literal notranslate"><span class="pre">truncation_select</span></code> implements this <em>evaluate</em>
+function and is passed to the PBTMetaDataStore. In
+<code class="docutils literal notranslate"><span class="pre">truncation_select</span></code>, if the specified score is in the top 80% of
+scores, then an empty dictionary is returned. This empty dictionary
+indicates that a better performing model was not found and thus
+<em>exploit</em> and <em>explore</em> should not occur. If the specified score is in
+the bottom 20% then the data for a model in the top 20% is random
+selected and returned in a python dictionary. The data in this
+dictionary, the rank of the better performing model and its relevant
+hyperparameters can then be used in <em>exploit</em> and <em>explore</em>.</p>
+<p>With the PBTMetaDataStore initialized on rank 0, all the remaining
+processes run the tc1 model. A PBTCallback is added to each one of these
+models. The PBTCallback constructor requires a instance of a class that
+implements the PBTWorker interface. A PBTCallback calls the 3 methods of
+a PBTWorkder to:</p>
+<ol class="arabic simple">
+<li>Retrieve a model’s metadata and hyperparameters in order put them in
+the PBTMetaDataStore (<code class="docutils literal notranslate"><span class="pre">PBTWorker.pack_data</span></code>),</li>
+<li>Specifies which performance metric to use as the ‘score’ for model
+performance (also in <code class="docutils literal notranslate"><span class="pre">PBTWorker.pack_data</span></code>) in an <em>evaluate</em>.</li>
+<li>Determine when a model is <em>ready</em> for a potential exploit and explore
+(<code class="docutils literal notranslate"><span class="pre">PBTWorker.ready</span></code>),</li>
+<li>Perform the <em>exploit</em> and <em>explore</em> update (<code class="docutils literal notranslate"><span class="pre">PBTWorker.update</span></code>).</li>
+</ol>
+<p>In the tc1 PBT workflow, <code class="docutils literal notranslate"><span class="pre">tc1_pbt.TC1PBTWorker</span></code> implements the
+<code class="docutils literal notranslate"><span class="pre">PBTWorker</span></code> interface. <code class="docutils literal notranslate"><span class="pre">TC1PBTWorker.pack_data</span></code> retrieves a model’s
+current learning rate, and specifies the validation loss as the
+performance score. <code class="docutils literal notranslate"><span class="pre">TC1PBTWorker.ready</span></code> specifies that the model is
+<em>ready</em> every 5 epochs. (5 is too soon to begin sharing weights, but it
+serves as an example and does exercise the workflow code within a
+reasonable amount of time.) <code class="docutils literal notranslate"><span class="pre">TC1PBTWorker.update</span></code> updates the model
+with a better performing learning rate after having perturbed it. Note
+that <code class="docutils literal notranslate"><span class="pre">update</span></code> does not need to load the better performing model’s
+weights. That is done automatically in PBTCallback.</p>
+<p>In sum then, in a PBTCallback at the end of every epoch:</p>
+<ol class="arabic simple">
+<li><code class="docutils literal notranslate"><span class="pre">pack_data</span></code> is called to put every model’s performance data and
+selected hyperparameters into the PBTMetaDataStore.</li>
+<li><code class="docutils literal notranslate"><span class="pre">ready</span></code> is called to determine if a model is ready for an exploit /
+explore update.</li>
+<li>If <code class="docutils literal notranslate"><span class="pre">ready</span></code> returns true, then the PBTCallback queries the
+PBTMetaDataStore for a better performing model using the supplied
+evaluate function (e.g. <code class="docutils literal notranslate"><span class="pre">truncation_select</span></code>).</li>
+<li>If the selection function returns data from a better performing
+model, then <code class="docutils literal notranslate"><span class="pre">update</span></code> is called to update the under performing model
+with the better performing hyperparameters, and the PBTCallback loads
+the better performing model’s weights into the under performing
+model.</li>
+</ol>
+</div>
+</div>
+<div class="section" id="adapting-the-workflow-to-a-different-model">
+<h2>Adapting the Workflow to a Different Model<a class="headerlink" href="#adapting-the-workflow-to-a-different-model" title="Permalink to this headline">¶</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">tc1_pbt.py</span></code> can easily be adapted to work with a different model. The
+following changes will need to be made:</p>
+<ul class="simple">
+<li>A new hyperparameter definition file. The rank 0 code that reads this
+file can be re-used.</li>
+<li>A new <em>evaluate</em> function. This can be passed to the PBTMetaDataStore
+constructor in place of <code class="docutils literal notranslate"><span class="pre">truncation_select</span></code></li>
+<li>A new PBTWorker implementation, implementing <code class="docutils literal notranslate"><span class="pre">ready</span></code>,
+<code class="docutils literal notranslate"><span class="pre">pack_data</span></code>, and <code class="docutils literal notranslate"><span class="pre">update</span></code> as appropriate for the new model and
+workflow. This can be passed to the PBTCallback in place of
+<code class="docutils literal notranslate"><span class="pre">TC1PBTWorker</span></code>.</li>
+</ul>
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="workflow_upf.html" class="btn btn-neutral float-right" title="Evaluate an Unrolled Parameter File (UPF)" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="workflow_mlrMBO.html" class="btn btn-neutral" title="Run mlrMBO based hyperparameter optimization on CANDLE Benchmarks" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, ANL.gov.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>
