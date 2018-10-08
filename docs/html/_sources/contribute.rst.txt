@@ -26,7 +26,7 @@ in your git commit. After pushing those changes, please allow a couple of minute
 
   .. code-block:: shell
 
-    $ cd docs\_
+    $ cd docs_
 
     // triggers sphinx to generate html in ../docs/ folder
     $ make html
