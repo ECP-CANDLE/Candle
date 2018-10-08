@@ -36,7 +36,7 @@
               href="../genindex.html"/>
         <link rel="search" title="Search" href="../search.html"/>
     <link rel="top" title="CANDLE  documentation" href="../index.html"/>
-        <link rel="up" title="CANDLE Library API" href="../modules.html"/>
+        <link rel="up" title="CANDLE Library API" href="../candle_lib.html"/>
         <link rel="next" title="generic_utils module" href="generic_utils.html"/>
         <link rel="prev" title="default_utils module" href="default_utils.html"/> 
 
@@ -91,7 +91,7 @@
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../readme.html">What is CANDLE?</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../tutorials/index.html">Tutorials</a></li>
-<li class="toctree-l1 current"><a class="reference internal" href="../modules.html">CANDLE Library API</a><ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../candle_lib.html">CANDLE Library API</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="candle_keras.html">candle_keras package</a></li>
 <li class="toctree-l2"><a class="reference internal" href="data_utils.html">data_utils module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="default_utils.html">default_utils module</a></li>
@@ -102,6 +102,7 @@
 <li class="toctree-l2"><a class="reference internal" href="uq_utils.html">uq_utils module</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="../contribute.html">How to Contribute this Documents</a></li>
 </ul>
 
             
@@ -146,7 +147,7 @@
     
       <li><a href="../index.html">Docs</a> &raquo;</li>
         
-          <li><a href="../modules.html">CANDLE Library API</a> &raquo;</li>
+          <li><a href="../candle_lib.html">CANDLE Library API</a> &raquo;</li>
         
       <li>file_utils module</li>
     
@@ -167,38 +168,8 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="module-file_utils">
-<span id="file-utils-module"></span><h1>file_utils module<a class="headerlink" href="#module-file_utils" title="Permalink to this headline">¶</a></h1>
-<dl class="function">
-<dt id="file_utils.get_file">
-<code class="descclassname">file_utils.</code><code class="descname">get_file</code><span class="sig-paren">(</span><em>fname</em>, <em>origin</em>, <em>untar=False</em>, <em>md5_hash=None</em>, <em>cache_subdir='common'</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/file_utils.html#get_file"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#file_utils.get_file" title="Permalink to this definition">¶</a></dt>
-<dd><p>Downloads a file from a URL if it not already in the cache.</p>
-<p>Passing the MD5 hash will verify the file after download as well as if it is already present in the cache.</p>
-<dl class="docutils">
-<dt># Arguments</dt>
-<dd>fname: name of the file
-origin: original URL of the file
-untar: boolean, whether the file should be decompressed
-md5_hash: MD5 hash of the file for verification
-cache_subdir: directory being used as the cache</dd>
-<dt># Returns</dt>
-<dd>Path to the downloaded file</dd>
-</dl>
-</dd></dl>
-
-<dl class="function">
-<dt id="file_utils.validate_file">
-<code class="descclassname">file_utils.</code><code class="descname">validate_file</code><span class="sig-paren">(</span><em>fpath</em>, <em>md5_hash</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/file_utils.html#validate_file"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#file_utils.validate_file" title="Permalink to this definition">¶</a></dt>
-<dd><p>Validates a file against a MD5 hash</p>
-<dl class="docutils">
-<dt># Arguments</dt>
-<dd>fpath: path to the file being validated
-md5_hash: the MD5 hash being validated against</dd>
-<dt># Returns</dt>
-<dd>Whether the file is valid</dd>
-</dl>
-</dd></dl>
-
+  <div class="section" id="file-utils-module">
+<h1>file_utils module<a class="headerlink" href="#file-utils-module" title="Permalink to this headline">¶</a></h1>
 </div>
 
 

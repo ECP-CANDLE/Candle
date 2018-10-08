@@ -7,20 +7,12 @@ CANDLE Documentation Home
 =======================================
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 1
    :caption: Contents:
 
    readme
    tutorials/index
-   modules
+   candle_lib
+   contribute
 
 
-
-
-
-Indices and tables
-==================
-
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`
