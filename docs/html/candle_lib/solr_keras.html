@@ -24,28 +24,19 @@
 
   
 
-  
-  
-    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
-  
-
-  
-
-  
-        <link rel="index" title="Index"
-              href="../genindex.html"/>
-        <link rel="search" title="Search" href="../search.html"/>
-    <link rel="top" title="CANDLE  documentation" href="../index.html"/>
-        <link rel="up" title="CANDLE Library API" href="../candle_lib.html"/>
-        <link rel="next" title="uq_utils module" href="uq_utils.html"/>
-        <link rel="prev" title="keras_utils module" href="keras_utils.html"/> 
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="uq_utils module" href="uq_utils.html" />
+    <link rel="prev" title="keras_utils module" href="keras_utils.html" /> 
 
   
   <script src="../_static/js/modernizr.min.js"></script>
 
 </head>
 
-<body class="wy-body-for-nav" role="document">
+<body class="wy-body-for-nav">
 
    
   <div class="wy-grid-for-nav">
@@ -114,7 +105,7 @@
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
 
       
-      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+      <nav class="wy-nav-top" aria-label="top navigation">
         
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="../index.html">CANDLE</a>
@@ -122,9 +113,10 @@
       </nav>
 
 
-      
       <div class="wy-nav-content">
+        
         <div class="rst-content">
+        
           
 
 
@@ -168,15 +160,75 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="solr-keras-module">
-<h1>solr_keras module<a class="headerlink" href="#solr-keras-module" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="module-solr_keras">
+<span id="solr-keras-module"></span><h1>solr_keras module<a class="headerlink" href="#module-solr_keras" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="solr_keras.CandleRemoteMonitor">
+<em class="property">class </em><code class="descclassname">solr_keras.</code><code class="descname">CandleRemoteMonitor</code><span class="sig-paren">(</span><em>params=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/solr_keras.html#CandleRemoteMonitor"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#solr_keras.CandleRemoteMonitor" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">keras.callbacks.Callback</span></code></p>
+<p>Capture Run level output and store/send for monitoring</p>
+<dl class="method">
+<dt id="solr_keras.CandleRemoteMonitor.on_epoch_begin">
+<code class="descname">on_epoch_begin</code><span class="sig-paren">(</span><em>epoch</em>, <em>logs=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/solr_keras.html#CandleRemoteMonitor.on_epoch_begin"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#solr_keras.CandleRemoteMonitor.on_epoch_begin" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="solr_keras.CandleRemoteMonitor.on_epoch_end">
+<code class="descname">on_epoch_end</code><span class="sig-paren">(</span><em>epoch</em>, <em>logs=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/solr_keras.html#CandleRemoteMonitor.on_epoch_end"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#solr_keras.CandleRemoteMonitor.on_epoch_end" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="solr_keras.CandleRemoteMonitor.on_train_begin">
+<code class="descname">on_train_begin</code><span class="sig-paren">(</span><em>logs=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/solr_keras.html#CandleRemoteMonitor.on_train_begin"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#solr_keras.CandleRemoteMonitor.on_train_begin" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="solr_keras.CandleRemoteMonitor.on_train_end">
+<code class="descname">on_train_end</code><span class="sig-paren">(</span><em>logs=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/solr_keras.html#CandleRemoteMonitor.on_train_end"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#solr_keras.CandleRemoteMonitor.on_train_end" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="solr_keras.CandleRemoteMonitor.save">
+<code class="descname">save</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/solr_keras.html#CandleRemoteMonitor.save"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#solr_keras.CandleRemoteMonitor.save" title="Permalink to this definition">¶</a></dt>
+<dd><p>Save log_messages to file</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="solr_keras.CandleRemoteMonitor.submit">
+<code class="descname">submit</code><span class="sig-paren">(</span><em>send</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/solr_keras.html#CandleRemoteMonitor.submit"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#solr_keras.CandleRemoteMonitor.submit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Send json to solr</p>
+<p>Arguments:
+send – json object</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="solr_keras.TerminateOnTimeOut">
+<em class="property">class </em><code class="descclassname">solr_keras.</code><code class="descname">TerminateOnTimeOut</code><span class="sig-paren">(</span><em>timeout_in_sec=10</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/solr_keras.html#TerminateOnTimeOut"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#solr_keras.TerminateOnTimeOut" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">keras.callbacks.Callback</span></code></p>
+<dl class="method">
+<dt id="solr_keras.TerminateOnTimeOut.on_epoch_end">
+<code class="descname">on_epoch_end</code><span class="sig-paren">(</span><em>epoch</em>, <em>logs={}</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/solr_keras.html#TerminateOnTimeOut.on_epoch_end"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#solr_keras.TerminateOnTimeOut.on_epoch_end" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="solr_keras.TerminateOnTimeOut.on_train_begin">
+<code class="descname">on_train_begin</code><span class="sig-paren">(</span><em>logs={}</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/solr_keras.html#TerminateOnTimeOut.on_train_begin"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#solr_keras.TerminateOnTimeOut.on_train_begin" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="solr_keras.compute_trainable_params">
+<code class="descclassname">solr_keras.</code><code class="descname">compute_trainable_params</code><span class="sig-paren">(</span><em>model</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/solr_keras.html#compute_trainable_params"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#solr_keras.compute_trainable_params" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
 </div>
 
 
            </div>
-           <div class="articleComments">
-            
-           </div>
+           
           </div>
           <footer>
   
@@ -198,7 +250,7 @@
 
     </p>
   </div>
-  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
 </footer>
 
@@ -217,6 +269,7 @@
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../',
             VERSION:'',
+            LANGUAGE:'None',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true,
@@ -230,19 +283,13 @@
 
   
 
-  
-  
-    <script type="text/javascript" src="../_static/js/theme.js"></script>
-  
+  <script type="text/javascript" src="../_static/js/theme.js"></script>
 
-  
-  
   <script type="text/javascript">
       jQuery(function () {
-          SphinxRtdTheme.StickyNav.enable();
+          SphinxRtdTheme.Navigation.enable(true);
       });
-  </script>
-   
+  </script> 
 
 </body>
 </html>
