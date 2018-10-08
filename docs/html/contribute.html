@@ -173,16 +173,23 @@ install <a class="reference external" href="http://www.sphinx-doc.org/en/master/
 This will start generate multiple html files in <code class="docutils literal notranslate"><span class="pre">docs</span></code> directory. You need to include them as well as the source file
 in your git commit. After pushing those changes, please allow a couple of minutes to see in the website.</p>
 <blockquote>
-<div><p>$ cd docs_</p>
-<p>// triggers sphinx to generate html in ../docs/ folder</p>
-<p>$ make html</p>
-<p>// add changed source doc files</p>
-<p>$ git add [source files]</p>
-<p>// add all built html</p>
-<p>$ git add ../docs/</p>
-<p>$ git commit -m ‘[commit message]’</p>
-<p>// The documentation site will be refreshed after a couple of minutes</p>
-<p>$ git push</p>
+<div><div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>$ <span class="nb">cd</span> docs<span class="se">\_</span>
+
+// triggers sphinx to generate html in ../docs/ folder
+$ make html
+
+// add changed <span class="nb">source</span> doc files
+$ git add <span class="o">[</span><span class="nb">source</span> files<span class="o">]</span>
+
+// add all built html
+$ git add ../docs/
+
+$ git commit -m <span class="s1">&#39;[commit message]&#39;</span>
+
+// The documentation site will be refreshed after a couple of minutes
+$ git push
+</pre></div>
+</div>
 </div></blockquote>
 </div>
 <div class="section" id="how-to-install-sphinx">
@@ -190,8 +197,11 @@ in your git commit. After pushing those changes, please allow a couple of minute
 <p>Both Sphinx and the theme package are available in pip.
 You will also need <code class="docutils literal notranslate"><span class="pre">keras</span></code> package because we reads <code class="docutils literal notranslate"><span class="pre">CANDLE</span> <span class="pre">Library</span></code> python package and build API documents.</p>
 <blockquote>
-<div><p>$ pip install Sphinx sphinx-rtd-theme</p>
-<p># also need keras to build module docs</p>
+<div><div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>$ pip install Sphinx sphinx-rtd-theme
+
+<span class="c1"># also need keras to build module docs</span>
+</pre></div>
+</div>
 </div></blockquote>
 </div>
 <div class="section" id="how-to-convert-asciidoc-format-to-rst">
@@ -199,11 +209,15 @@ You will also need <code class="docutils literal notranslate"><span class="pre">
 <p>Sphinx by default does not support Asciidoc and do not have plan to support in near future (check this <a class="reference external" href="https://github.com/rtfd/readthedocs.org/issues/17">issue</a> for detail).
 However, <a class="reference external" href="https://pandoc.org/">Pandoc</a>, a univeral document convert, can be used to convert rst format. For example,</p>
 <blockquote>
-<div><p># install pandoc first. Refer the pandoc website for installation.</p>
-<p># target format rst (-t), output file (-o)</p>
-<p>$ pandoc -t rst -o new_rst_file.rst input_asciidoc_file.adoc</p>
-<p># convert markdown to rst</p>
-<p>$ pandoc -t rst -o new_rst_file.rst input_markdown_file.md</p>
+<div><div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="c1"># install pandoc first. Refer the pandoc website for installation.</span>
+
+<span class="c1"># target format rst (-t), output file (-o)</span>
+$ pandoc -t rst -o new_rst_file.rst input_asciidoc_file.adoc
+
+<span class="c1"># convert markdown to rst</span>
+$ pandoc -t rst -o new_rst_file.rst input_markdown_file.md
+</pre></div>
+</div>
 </div></blockquote>
 </div>
 </div>

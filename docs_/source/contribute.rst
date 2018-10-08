@@ -24,29 +24,24 @@ After you have Sphinx requirements, go to ``docs_`` direcotory and run ``make ht
 This will start generate multiple html files in ``docs`` directory. You need to include them as well as the source file
 in your git commit. After pushing those changes, please allow a couple of minutes to see in the website.
 
-..
+  .. code-block:: shell
 
-  $ cd docs\_
+    $ cd docs\_
 
-  // triggers sphinx to generate html in ../docs/ folder
+    // triggers sphinx to generate html in ../docs/ folder
+    $ make html
 
-  $ make html
+    // add changed source doc files
+    $ git add [source files]
 
-  // add changed source doc files
+    // add all built html
+    $ git add ../docs/
 
-  $ git add [source files]
+    $ git commit -m '[commit message]'
 
-  // add all built html
-
-  $ git add ../docs/
-
-  $ git commit -m '[commit message]'
-
-  // The documentation site will be refreshed after a couple of minutes
-
-  $ git push
-
-..
+    // The documentation site will be refreshed after a couple of minutes
+    $ git push
+  ..
 
 
 How to install Sphinx
@@ -54,13 +49,12 @@ How to install Sphinx
 Both Sphinx and the theme package are available in pip.
 You will also need ``keras`` package because we reads ``CANDLE Library`` python package and build API documents.
 
-..
+  .. code-block:: shell
 
-  $ pip install Sphinx sphinx-rtd-theme
+    $ pip install Sphinx sphinx-rtd-theme
 
-  # also need keras to build module docs
-
-..
+    # also need keras to build module docs
+  ..
 
 
 How to convert asciidoc format to rst
@@ -68,19 +62,16 @@ How to convert asciidoc format to rst
 Sphinx by default does not support Asciidoc and do not have plan to support in near future (check this issue_ for detail).
 However, Pandoc_, a univeral document convert, can be used to convert rst format. For example,
 
-..
+  .. code-block:: shell
 
-  # install pandoc first. Refer the pandoc website for installation.
+    # install pandoc first. Refer the pandoc website for installation.
 
-  # target format rst (-t), output file (-o)
+    # target format rst (-t), output file (-o)
+    $ pandoc -t rst -o new_rst_file.rst input_asciidoc_file.adoc
 
-  $ pandoc -t rst -o new_rst_file.rst input_asciidoc_file.adoc
-
-  # convert markdown to rst
-
-  $ pandoc -t rst -o new_rst_file.rst input_markdown_file.md
-
-..
+    # convert markdown to rst
+    $ pandoc -t rst -o new_rst_file.rst input_markdown_file.md
+  ..
 
 
 .. _issue: https://github.com/rtfd/readthedocs.org/issues/17
