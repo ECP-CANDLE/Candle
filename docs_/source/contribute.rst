@@ -1,4 +1,4 @@
-How to Contribute this Documents
+How to Contribute
 =================================
 Current documentation site is built with a python documentation generator, Sphinx_, and hosted in Github.
 In order to make modifications, the changes need to be built with Sphinx, and the generated html files must be
@@ -9,7 +9,7 @@ How to add a new document
 --------------------------
 The Sphinx reads rst (ReStructuredText) files. For a quick reference, please checkout `here <http://docutils.sourceforge.net/docs/user/rst/quickref.html>`_.
 
-Clone our repo ``https://github.com/ECP-CANDLE/Benchmarks.git`` and create a new file inside ``docs_/source/`` directory.
+Clone our repo ``https://github.com/ECP-CANDLE/Candle.git`` and create a new file inside ``docs_/source/`` directory.
 You can start a directory structure under the source directory, if you want to organize files. Just make sure your changes are reflected in the index file.
 
 Don't forget to **link** the new document in the index file. If you want to link from the top level, please add in ``docs_/source/index.rst``.

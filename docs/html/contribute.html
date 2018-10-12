@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>How to Contribute this Documents &mdash; CANDLE  documentation</title>
+  <title>How to Contribute &mdash; CANDLE  documentation</title>
   
 
   
@@ -24,18 +24,26 @@
 
   
 
-  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    <link rel="index" title="Index" href="genindex.html" />
-    <link rel="search" title="Search" href="search.html" />
-    <link rel="prev" title="uq_utils module" href="candle_lib/uq_utils.html" /> 
+  
+  
+    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="genindex.html"/>
+        <link rel="search" title="Search" href="search.html"/>
+    <link rel="top" title="CANDLE  documentation" href="index.html"/>
+        <link rel="prev" title="uq_utils module" href="candle_lib/uq_utils.html"/> 
 
   
   <script src="_static/js/modernizr.min.js"></script>
 
 </head>
 
-<body class="wy-body-for-nav">
+<body class="wy-body-for-nav" role="document">
 
    
   <div class="wy-grid-for-nav">
@@ -82,7 +90,7 @@
 <li class="toctree-l1"><a class="reference internal" href="readme.html">What is CANDLE?</a></li>
 <li class="toctree-l1"><a class="reference internal" href="tutorials/index.html">Tutorials</a></li>
 <li class="toctree-l1"><a class="reference internal" href="candle_lib.html">CANDLE Library API</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">How to Contribute this Documents</a><ul>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">How to Contribute</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#how-to-add-a-new-document">How to add a new document</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#how-to-build-html">How to build html</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#how-to-install-sphinx">How to install Sphinx</a></li>
@@ -100,7 +108,7 @@
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
 
       
-      <nav class="wy-nav-top" aria-label="top navigation">
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
         
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="index.html">CANDLE</a>
@@ -108,10 +116,9 @@
       </nav>
 
 
+      
       <div class="wy-nav-content">
-        
         <div class="rst-content">
-        
           
 
 
@@ -134,7 +141,7 @@
     
       <li><a href="index.html">Docs</a> &raquo;</li>
         
-      <li>How to Contribute this Documents</li>
+      <li>How to Contribute</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -153,15 +160,15 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="how-to-contribute-this-documents">
-<h1>How to Contribute this Documents<a class="headerlink" href="#how-to-contribute-this-documents" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="how-to-contribute">
+<h1>How to Contribute<a class="headerlink" href="#how-to-contribute" title="Permalink to this headline">¶</a></h1>
 <p>Current documentation site is built with a python documentation generator, <a class="reference external" href="http://www.sphinx-doc.org/en/master/">Sphinx</a>, and hosted in Github.
 In order to make modifications, the changes need to be built with Sphinx, and the generated html files must be
 committed to the Github repository.</p>
 <div class="section" id="how-to-add-a-new-document">
 <h2>How to add a new document<a class="headerlink" href="#how-to-add-a-new-document" title="Permalink to this headline">¶</a></h2>
 <p>The Sphinx reads rst (ReStructuredText) files. For a quick reference, please checkout <a class="reference external" href="http://docutils.sourceforge.net/docs/user/rst/quickref.html">here</a>.</p>
-<p>Clone our repo <code class="docutils literal notranslate"><span class="pre">https://github.com/ECP-CANDLE/Benchmarks.git</span></code> and create a new file inside <code class="docutils literal notranslate"><span class="pre">docs_/source/</span></code> directory.
+<p>Clone our repo <code class="docutils literal notranslate"><span class="pre">https://github.com/ECP-CANDLE/Candle.git</span></code> and create a new file inside <code class="docutils literal notranslate"><span class="pre">docs_/source/</span></code> directory.
 You can start a directory structure under the source directory, if you want to organize files. Just make sure your changes are reflected in the index file.</p>
 <p>Don’t forget to <strong>link</strong> the new document in the index file. If you want to link from the top level, please add in <code class="docutils literal notranslate"><span class="pre">docs_/source/index.rst</span></code>.</p>
 </div>
@@ -224,7 +231,9 @@ $ pandoc -t rst -o new_rst_file.rst input_markdown_file.md
 
 
            </div>
-           
+           <div class="articleComments">
+            
+           </div>
           </div>
           <footer>
   
@@ -244,7 +253,7 @@ $ pandoc -t rst -o new_rst_file.rst input_markdown_file.md
 
     </p>
   </div>
-  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
 </footer>
 
@@ -263,7 +272,6 @@ $ pandoc -t rst -o new_rst_file.rst input_markdown_file.md
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'./',
             VERSION:'',
-            LANGUAGE:'None',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true,
@@ -277,13 +285,19 @@ $ pandoc -t rst -o new_rst_file.rst input_markdown_file.md
 
   
 
-  <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
 
+  
+  
   <script type="text/javascript">
       jQuery(function () {
-          SphinxRtdTheme.Navigation.enable(true);
+          SphinxRtdTheme.StickyNav.enable();
       });
-  </script> 
+  </script>
+   
 
 </body>
 </html>
