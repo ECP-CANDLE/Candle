@@ -25,25 +25,17 @@
 
   
 
-  
-  
-    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
-  
-
-  
-
-  
-        <link rel="index" title="Index"
-              href="#"/>
-        <link rel="search" title="Search" href="search.html"/>
-    <link rel="top" title="CANDLE  documentation" href="index.html"/> 
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="#" />
+    <link rel="search" title="Search" href="search.html" /> 
 
   
   <script src="_static/js/modernizr.min.js"></script>
 
 </head>
 
-<body class="wy-body-for-nav" role="document">
+<body class="wy-body-for-nav">
 
    
   <div class="wy-grid-for-nav">
@@ -102,7 +94,7 @@
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
 
       
-      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+      <nav class="wy-nav-top" aria-label="top navigation">
         
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="index.html">CANDLE</a>
@@ -110,9 +102,10 @@
       </nav>
 
 
-      
       <div class="wy-nav-content">
+        
         <div class="rst-content">
+        
           
 
 
@@ -208,16 +201,18 @@
 <h2 id="C">C</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="candle_lib/keras_utils.html#keras_utils.PermanentDropout.call">call() (keras_utils.PermanentDropout method)</a>
+</li>
       <li><a href="candle_lib/candle_keras.html#module-candle_keras">candle_keras (module)</a>
 </li>
       <li><a href="candle_lib/solr_keras.html#solr_keras.CandleRemoteMonitor">CandleRemoteMonitor (class in solr_keras)</a>
 </li>
       <li><a href="candle_lib/default_utils.html#default_utils.Benchmark.check_required_exists">check_required_exists() (default_utils.Benchmark method)</a>
 </li>
-      <li><a href="candle_lib/uq_utils.html#uq_utils.compute_limits">compute_limits() (in module uq_utils)</a>
-</li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="candle_lib/uq_utils.html#uq_utils.compute_limits">compute_limits() (in module uq_utils)</a>
+</li>
       <li><a href="candle_lib/solr_keras.html#solr_keras.compute_trainable_params">compute_trainable_params() (in module solr_keras)</a>
 </li>
       <li><a href="candle_lib/data_utils.html#data_utils.convert_to_class">convert_to_class() (in module data_utils)</a>
@@ -404,9 +399,11 @@
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="candle_lib/default_utils.html#default_utils.Benchmark.parse_from_benchmark">parse_from_benchmark() (default_utils.Benchmark method)</a>
 </li>
+      <li><a href="candle_lib/default_utils.html#default_utils.Benchmark.parse_from_common">parse_from_common() (default_utils.Benchmark method)</a>
+</li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="candle_lib/default_utils.html#default_utils.Benchmark.parse_from_common">parse_from_common() (default_utils.Benchmark method)</a>
+      <li><a href="candle_lib/keras_utils.html#keras_utils.PermanentDropout">PermanentDropout (class in keras_utils)</a>
 </li>
       <li><a href="candle_lib/generic_utils.html#generic_utils.Progbar">Progbar (class in generic_utils)</a>
 </li>
@@ -417,6 +414,10 @@
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="candle_lib/default_utils.html#default_utils.Benchmark.read_config_file">read_config_file() (default_utils.Benchmark method)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="candle_lib/keras_utils.html#keras_utils.register_permanent_dropout">register_permanent_dropout() (in module keras_utils)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -494,9 +495,7 @@
 
 
            </div>
-           <div class="articleComments">
-            
-           </div>
+           
           </div>
           <footer>
   
@@ -509,7 +508,7 @@
 
     </p>
   </div>
-  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
 </footer>
 
@@ -528,6 +527,7 @@
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'./',
             VERSION:'',
+            LANGUAGE:'None',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true,
@@ -541,19 +541,13 @@
 
   
 
-  
-  
-    <script type="text/javascript" src="_static/js/theme.js"></script>
-  
+  <script type="text/javascript" src="_static/js/theme.js"></script>
 
-  
-  
   <script type="text/javascript">
       jQuery(function () {
-          SphinxRtdTheme.StickyNav.enable();
+          SphinxRtdTheme.Navigation.enable(true);
       });
-  </script>
-   
+  </script> 
 
 </body>
 </html>

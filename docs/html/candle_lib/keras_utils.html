@@ -24,28 +24,19 @@
 
   
 
-  
-  
-    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
-  
-
-  
-
-  
-        <link rel="index" title="Index"
-              href="../genindex.html"/>
-        <link rel="search" title="Search" href="../search.html"/>
-    <link rel="top" title="CANDLE  documentation" href="../index.html"/>
-        <link rel="up" title="CANDLE Library API" href="../candle_lib.html"/>
-        <link rel="next" title="solr_keras module" href="solr_keras.html"/>
-        <link rel="prev" title="generic_utils module" href="generic_utils.html"/> 
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="solr_keras module" href="solr_keras.html" />
+    <link rel="prev" title="generic_utils module" href="generic_utils.html" /> 
 
   
   <script src="../_static/js/modernizr.min.js"></script>
 
 </head>
 
-<body class="wy-body-for-nav" role="document">
+<body class="wy-body-for-nav">
 
    
   <div class="wy-grid-for-nav">
@@ -114,7 +105,7 @@
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
 
       
-      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+      <nav class="wy-nav-top" aria-label="top navigation">
         
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="../index.html">CANDLE</a>
@@ -122,9 +113,10 @@
       </nav>
 
 
-      
       <div class="wy-nav-content">
+        
         <div class="rst-content">
+        
           
 
 
@@ -170,6 +162,25 @@
             
   <div class="section" id="module-keras_utils">
 <span id="keras-utils-module"></span><h1>keras_utils module<a class="headerlink" href="#module-keras_utils" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="keras_utils.PermanentDropout">
+<em class="property">class </em><code class="descclassname">keras_utils.</code><code class="descname">PermanentDropout</code><span class="sig-paren">(</span><em>rate</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/keras_utils.html#PermanentDropout"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#keras_utils.PermanentDropout" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">keras.layers.core.Dropout</span></code></p>
+<dl class="method">
+<dt id="keras_utils.PermanentDropout.call">
+<code class="descname">call</code><span class="sig-paren">(</span><em>x</em>, <em>mask=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/keras_utils.html#PermanentDropout.call"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#keras_utils.PermanentDropout.call" title="Permalink to this definition">¶</a></dt>
+<dd><p>This is where the layer’s logic lives.</p>
+<dl class="docutils">
+<dt># Arguments</dt>
+<dd>inputs: Input tensor, or list/tuple of input tensors.
+<a href="#id1"><span class="problematic" id="id2">**</span></a>kwargs: Additional keyword arguments.</dd>
+<dt># Returns</dt>
+<dd>A tensor or list/tuple of tensors.</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
 <dl class="function">
 <dt id="keras_utils.build_initializer">
 <code class="descclassname">keras_utils.</code><code class="descname">build_initializer</code><span class="sig-paren">(</span><em>type</em>, <em>kerasDefaults</em>, <em>seed=None</em>, <em>constant=0.0</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/keras_utils.html#build_initializer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#keras_utils.build_initializer" title="Permalink to this definition">¶</a></dt>
@@ -206,6 +217,11 @@
 <dd></dd></dl>
 
 <dl class="function">
+<dt id="keras_utils.register_permanent_dropout">
+<code class="descclassname">keras_utils.</code><code class="descname">register_permanent_dropout</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/keras_utils.html#register_permanent_dropout"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#keras_utils.register_permanent_dropout" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
 <dt id="keras_utils.set_parallelism_threads">
 <code class="descclassname">keras_utils.</code><code class="descname">set_parallelism_threads</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/keras_utils.html#set_parallelism_threads"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#keras_utils.set_parallelism_threads" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
@@ -224,9 +240,7 @@
 
 
            </div>
-           <div class="articleComments">
-            
-           </div>
+           
           </div>
           <footer>
   
@@ -248,7 +262,7 @@
 
     </p>
   </div>
-  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
 </footer>
 
@@ -267,6 +281,7 @@
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../',
             VERSION:'',
+            LANGUAGE:'None',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true,
@@ -280,19 +295,13 @@
 
   
 
-  
-  
-    <script type="text/javascript" src="../_static/js/theme.js"></script>
-  
+  <script type="text/javascript" src="../_static/js/theme.js"></script>
 
-  
-  
   <script type="text/javascript">
       jQuery(function () {
-          SphinxRtdTheme.StickyNav.enable();
+          SphinxRtdTheme.Navigation.enable(true);
       });
-  </script>
-   
+  </script> 
 
 </body>
 </html>
