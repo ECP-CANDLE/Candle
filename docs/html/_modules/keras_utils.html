@@ -167,6 +167,9 @@
 
 <span class="kn">import</span> <span class="nn">os</span>
 <div class="viewcode-block" id="set_parallelism_threads"><a class="viewcode-back" href="../candle_lib/keras_utils.html#keras_utils.set_parallelism_threads">[docs]</a><span class="k">def</span> <span class="nf">set_parallelism_threads</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot; Set the number of parallel threads according to the number available on the hardware</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
     <span class="k">if</span> <span class="n">K</span><span class="o">.</span><span class="n">backend</span><span class="p">()</span> <span class="o">==</span> <span class="s1">&#39;tensorflow&#39;</span> <span class="ow">and</span> <span class="s1">&#39;NUM_INTRA_THREADS&#39;</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span> <span class="ow">and</span> <span class="s1">&#39;NUM_INTER_THREADS&#39;</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">:</span>
         <span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="nn">tf</span>
         <span class="c1"># print(&#39;Using Thread Parallelism: {} NUM_INTRA_THREADS, {} NUM_INTER_THREADS&#39;.format(os.environ[&#39;NUM_INTRA_THREADS&#39;], os.environ[&#39;NUM_INTER_THREADS&#39;]))</span>
@@ -178,6 +181,9 @@
 
 
 <div class="viewcode-block" id="set_seed"><a class="viewcode-back" href="../candle_lib/keras_utils.html#keras_utils.set_seed">[docs]</a><span class="k">def</span> <span class="nf">set_seed</span><span class="p">(</span><span class="n">seed</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; Set the random number seed to the desired value</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
     <span class="n">set_seed_defaultUtils</span><span class="p">(</span><span class="n">seed</span><span class="p">)</span>
 
     <span class="k">if</span> <span class="n">K</span><span class="o">.</span><span class="n">backend</span><span class="p">()</span> <span class="o">==</span> <span class="s1">&#39;tensorflow&#39;</span><span class="p">:</span>
@@ -197,6 +203,21 @@
 
 
 <div class="viewcode-block" id="build_optimizer"><a class="viewcode-back" href="../candle_lib/keras_utils.html#keras_utils.build_optimizer">[docs]</a><span class="k">def</span> <span class="nf">build_optimizer</span><span class="p">(</span><span class="nb">type</span><span class="p">,</span> <span class="n">lr</span><span class="p">,</span> <span class="n">kerasDefaults</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; Set the optimizer to the appropriate Keras optimizer function </span>
+<span class="sd">        based on the input string and learning rate. Other required values </span>
+<span class="sd">        are set to the Keras default values</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        type : string</span>
+<span class="sd">            String to choose the optimizer</span>
+<span class="sd">            Options recognized: &#39;sgd&#39;, &#39;rmsprop&#39;, &#39;adagrad&#39;, adadelta&#39;, &#39;adam&#39;</span>
+<span class="sd">            See the Keras documentation for a full description of the options</span>
+
+<span class="sd">        Return</span>
+<span class="sd">        ----------</span>
+<span class="sd">        Returns the appropriate Keras optimizer function</span>
+<span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">if</span> <span class="nb">type</span> <span class="o">==</span> <span class="s1">&#39;sgd&#39;</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">optimizers</span><span class="o">.</span><span class="n">SGD</span><span class="p">(</span><span class="n">lr</span><span class="o">=</span><span class="n">lr</span><span class="p">,</span> <span class="n">decay</span><span class="o">=</span><span class="n">kerasDefaults</span><span class="p">[</span><span class="s1">&#39;decay_lr&#39;</span><span class="p">],</span>
@@ -250,6 +271,22 @@
 
 
 <div class="viewcode-block" id="build_initializer"><a class="viewcode-back" href="../candle_lib/keras_utils.html#keras_utils.build_initializer">[docs]</a><span class="k">def</span> <span class="nf">build_initializer</span><span class="p">(</span><span class="nb">type</span><span class="p">,</span> <span class="n">kerasDefaults</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">constant</span><span class="o">=</span><span class="mf">0.</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; Set the initializer to the appropriate Keras initializer function </span>
+<span class="sd">        based on the input string and learning rate. Other required values </span>
+<span class="sd">        are set to the Keras default values</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        type : string</span>
+<span class="sd">            String to choose the initializer</span>
+<span class="sd">            Options recognized: &#39;constant&#39;, &#39;uniform&#39;, &#39;normal&#39;, </span>
+<span class="sd">                &#39;glorot_uniform&#39;, &#39;lecun_uniform&#39;, &#39;he_normal&#39; </span>
+<span class="sd">            See the Keras documentation for a full description of the options</span>
+
+<span class="sd">        Return</span>
+<span class="sd">        ----------</span>
+<span class="sd">        Returns the appropriate Keras initializer function</span>
+<span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">if</span> <span class="nb">type</span> <span class="o">==</span> <span class="s1">&#39;constant&#39;</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">initializers</span><span class="o">.</span><span class="n">Constant</span><span class="p">(</span><span class="n">value</span><span class="o">=</span><span class="n">constant</span><span class="p">)</span>

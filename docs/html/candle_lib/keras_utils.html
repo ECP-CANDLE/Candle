@@ -184,12 +184,35 @@
 <dl class="function">
 <dt id="keras_utils.build_initializer">
 <code class="descclassname">keras_utils.</code><code class="descname">build_initializer</code><span class="sig-paren">(</span><em>type</em>, <em>kerasDefaults</em>, <em>seed=None</em>, <em>constant=0.0</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/keras_utils.html#build_initializer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#keras_utils.build_initializer" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Set the initializer to the appropriate Keras initializer function 
+based on the input string and learning rate. Other required values 
+are set to the Keras default values</p>
+<dl class="docutils">
+<dt>type <span class="classifier-delimiter">:</span> <span class="classifier">string</span></dt>
+<dd><p class="first">String to choose the initializer
+Options recognized: ‘constant’, ‘uniform’, ‘normal’,</p>
+<blockquote>
+<div>‘glorot_uniform’, ‘lecun_uniform’, ‘he_normal’</div></blockquote>
+<p class="last">See the Keras documentation for a full description of the options</p>
+</dd>
+</dl>
+<p>Returns the appropriate Keras initializer function</p>
+</dd></dl>
 
 <dl class="function">
 <dt id="keras_utils.build_optimizer">
 <code class="descclassname">keras_utils.</code><code class="descname">build_optimizer</code><span class="sig-paren">(</span><em>type</em>, <em>lr</em>, <em>kerasDefaults</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/keras_utils.html#build_optimizer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#keras_utils.build_optimizer" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Set the optimizer to the appropriate Keras optimizer function 
+based on the input string and learning rate. Other required values 
+are set to the Keras default values</p>
+<dl class="docutils">
+<dt>type <span class="classifier-delimiter">:</span> <span class="classifier">string</span></dt>
+<dd>String to choose the optimizer
+Options recognized: ‘sgd’, ‘rmsprop’, ‘adagrad’, adadelta’, ‘adam’
+See the Keras documentation for a full description of the options</dd>
+</dl>
+<p>Returns the appropriate Keras optimizer function</p>
+</dd></dl>
 
 <dl class="function">
 <dt id="keras_utils.corr">
@@ -224,12 +247,14 @@
 <dl class="function">
 <dt id="keras_utils.set_parallelism_threads">
 <code class="descclassname">keras_utils.</code><code class="descname">set_parallelism_threads</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/keras_utils.html#set_parallelism_threads"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#keras_utils.set_parallelism_threads" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Set the number of parallel threads according to the number available on the hardware</p>
+</dd></dl>
 
 <dl class="function">
 <dt id="keras_utils.set_seed">
 <code class="descclassname">keras_utils.</code><code class="descname">set_seed</code><span class="sig-paren">(</span><em>seed</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/keras_utils.html#set_seed"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#keras_utils.set_seed" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Set the random number seed to the desired value</p>
+</dd></dl>
 
 <dl class="function">
 <dt id="keras_utils.xent">

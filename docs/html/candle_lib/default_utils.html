@@ -166,15 +166,26 @@
 <dt id="default_utils.ArgumentStruct">
 <em class="property">class </em><code class="descclassname">default_utils.</code><code class="descname">ArgumentStruct</code><span class="sig-paren">(</span><em>**entries</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/default_utils.html#ArgumentStruct"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#default_utils.ArgumentStruct" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
-<p>Structure to keep all the parameters from a 
-dictionary (corresponding to problem parameters) 
-under a unified object</p>
+<p>Class that converts a python dictionary into an object with
+named entries given by the dictionary keys.
+This structure simplifies the calling convention for accessing
+the dictionary values (corresponding to problem parameters).
+After the object instantiation both modes of access (dictionary
+or object entries) can be used.</p>
 </dd></dl>
 
 <dl class="class">
 <dt id="default_utils.Benchmark">
 <em class="property">class </em><code class="descclassname">default_utils.</code><code class="descname">Benchmark</code><span class="sig-paren">(</span><em>filepath</em>, <em>defmodel</em>, <em>framework</em>, <em>prog=None</em>, <em>desc=None</em>, <em>parser=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/default_utils.html#Benchmark"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#default_utils.Benchmark" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Class that implements an interface to handle configuration options for the
+different CANDLE benchmarks.
+It provides access to all the common configuration
+options and configuration options particular to each individual benchmark.
+It describes what minimum requirements should be specified to instantiate
+the corresponding benchmark.
+It interacts with the argparser to extract command-line options and arguments
+from the benchmark’s configuration files.</p>
 <dl class="method">
 <dt id="default_utils.Benchmark.check_required_exists">
 <code class="descname">check_required_exists</code><span class="sig-paren">(</span><em>gparam</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/default_utils.html#Benchmark.check_required_exists"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#default_utils.Benchmark.check_required_exists" title="Permalink to this definition">¶</a></dt>
@@ -239,6 +250,9 @@ benchmark.</p>
 <dt id="default_utils.ListOfListsAction">
 <em class="property">class </em><code class="descclassname">default_utils.</code><code class="descname">ListOfListsAction</code><span class="sig-paren">(</span><em>option_strings</em>, <em>dest</em>, <em>type</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/default_utils.html#ListOfListsAction"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#default_utils.ListOfListsAction" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">argparse.Action</span></code></p>
+<p>This class extends the argparse.Action class by instantiating
+an argparser that constructs a list-of-lists from an input
+(command-line option or argument) given as a string.</p>
 </dd></dl>
 
 <dl class="function">
@@ -247,17 +261,26 @@ benchmark.</p>
 <dd><p>Overwrite configuration parameters with 
 parameters specified via command-line.</p>
 <dl class="docutils">
-<dt>args <span class="classifier-delimiter">:</span> <span class="classifier">python argparse</span></dt>
-<dd>parameters specified via command-line</dd>
+<dt>args <span class="classifier-delimiter">:</span> <span class="classifier">ArgumentParser object</span></dt>
+<dd>Parameters specified via command-line</dd>
 <dt>config <span class="classifier-delimiter">:</span> <span class="classifier">python dictionary</span></dt>
-<dd>parameters read from configuration file</dd>
+<dd>Parameters read from configuration file</dd>
 </dl>
 </dd></dl>
 
 <dl class="function">
 <dt id="default_utils.directory_from_parameters">
 <code class="descclassname">default_utils.</code><code class="descname">directory_from_parameters</code><span class="sig-paren">(</span><em>params</em>, <em>commonroot='Output'</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/default_utils.html#directory_from_parameters"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#default_utils.directory_from_parameters" title="Permalink to this definition">¶</a></dt>
-<dd><p>Construct output directory path with unique IDs from parameters</p>
+<dd><p>Construct output directory path with unique IDs from parameters
+Parameters
+———-
+params : python dictionary</p>
+<blockquote>
+<div>Dictionary of parameters read</div></blockquote>
+<dl class="docutils">
+<dt>commonroot <span class="classifier-delimiter">:</span> <span class="classifier">string</span></dt>
+<dd>String to specify the common folder to store results.</dd>
+</dl>
 </dd></dl>
 
 <dl class="function">
@@ -266,15 +289,16 @@ parameters specified via command-line.</p>
 <dd><p>Parse a string and convert it into a list of lists.</p>
 <dl class="docutils">
 <dt>str_read <span class="classifier-delimiter">:</span> <span class="classifier">string</span></dt>
-<dd>string read (from configuration file or command line, for example)</dd>
+<dd>String read (from configuration file or command line, for example)</dd>
 <dt>separator <span class="classifier-delimiter">:</span> <span class="classifier">character</span></dt>
-<dd>character that specifies the separation between the lists</dd>
+<dd>Character that specifies the separation between the lists</dd>
 <dt>dtype <span class="classifier-delimiter">:</span> <span class="classifier">data type</span></dt>
-<dd>data type to decode the elements of the list</dd>
+<dd>Data type to decode the elements of the list</dd>
 </dl>
 <dl class="docutils">
-<dt>decoded_list <span class="classifier-delimiter">:</span> <span class="classifier">list extracted from string and with elements of the</span></dt>
-<dd>specified type.</dd>
+<dt>decoded_list <span class="classifier-delimiter">:</span> <span class="classifier">list</span></dt>
+<dd>List extracted from string and with elements of the
+specified type.</dd>
 </dl>
 </dd></dl>
 
@@ -284,24 +308,41 @@ parameters specified via command-line.</p>
 <dd><p>Parse a string and convert it into a list of lists.</p>
 <dl class="docutils">
 <dt>str_read <span class="classifier-delimiter">:</span> <span class="classifier">string</span></dt>
-<dd>string read (from configuration file or command line, for example)</dd>
+<dd>String read (from configuration file or command line, for example)</dd>
 <dt>separator_out <span class="classifier-delimiter">:</span> <span class="classifier">character</span></dt>
-<dd>character that specifies the separation between the outer level lists</dd>
+<dd>Character that specifies the separation between the outer level lists</dd>
 <dt>separator_in <span class="classifier-delimiter">:</span> <span class="classifier">character</span></dt>
-<dd>character that specifies the separation between the inner level lists</dd>
+<dd>Character that specifies the separation between the inner level lists</dd>
 <dt>dtype <span class="classifier-delimiter">:</span> <span class="classifier">data type</span></dt>
-<dd>data type to decode the elements of the lists</dd>
+<dd>Data type to decode the elements of the lists</dd>
 </dl>
 <dl class="docutils">
-<dt>decoded_list <span class="classifier-delimiter">:</span> <span class="classifier">list of lists extracted from string and with elements</span></dt>
-<dd>of the specified type.</dd>
+<dt>decoded_list <span class="classifier-delimiter">:</span> <span class="classifier">list</span></dt>
+<dd>List of lists extracted from string and with elements of the specified type.</dd>
 </dl>
 </dd></dl>
 
 <dl class="function">
 <dt id="default_utils.fetch_file">
 <code class="descclassname">default_utils.</code><code class="descname">fetch_file</code><span class="sig-paren">(</span><em>link</em>, <em>subdir</em>, <em>untar=False</em>, <em>md5_hash=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/default_utils.html#fetch_file"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#default_utils.fetch_file" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Convert URL to file path and download the file
+if it is not already present in spedified cache.</p>
+<dl class="docutils">
+<dt>link <span class="classifier-delimiter">:</span> <span class="classifier">link path</span></dt>
+<dd>URL of the file to download</dd>
+<dt>subdir <span class="classifier-delimiter">:</span> <span class="classifier">directory path</span></dt>
+<dd>Local path to check for cached file.</dd>
+<dt>untar <span class="classifier-delimiter">:</span> <span class="classifier">boolean</span></dt>
+<dd>Flag to specify if the file to download should
+be decompressed too.
+(default: False, no decompression)</dd>
+<dt>md5_hash <span class="classifier-delimiter">:</span> <span class="classifier">MD5 hash</span></dt>
+<dd>Hash used as a checksum to verify data integrity.
+Verification is carried out if a hash is provided.
+(default: None, no verification)</dd>
+</dl>
+<p>local path to the downloaded, or cached, file.</p>
+</dd></dl>
 
 <dl class="function">
 <dt id="default_utils.get_choice">
@@ -314,8 +355,8 @@ parameters specified via command-line.</p>
 <code class="descclassname">default_utils.</code><code class="descname">get_common_parser</code><span class="sig-paren">(</span><em>parser</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/default_utils.html#get_common_parser"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#default_utils.get_common_parser" title="Permalink to this definition">¶</a></dt>
 <dd><p>Parse command-line arguments. Ignore if not present.</p>
 <dl class="docutils">
-<dt>parser <span class="classifier-delimiter">:</span> <span class="classifier">python argparse</span></dt>
-<dd>parser for command-line options</dd>
+<dt>parser <span class="classifier-delimiter">:</span> <span class="classifier">ArgumentParser object</span></dt>
+<dd>Parser for command-line options</dd>
 </dl>
 </dd></dl>
 
@@ -325,22 +366,24 @@ parameters specified via command-line.</p>
 <dd><p>Parse command-line arguments that are default in neon parser (and are common to all frameworks). 
 Ignore if not present.</p>
 <dl class="docutils">
-<dt>parser <span class="classifier-delimiter">:</span> <span class="classifier">python argparse</span></dt>
-<dd>parser for neon default command-line options</dd>
+<dt>parser <span class="classifier-delimiter">:</span> <span class="classifier">ArgumentParser object</span></dt>
+<dd>Parser for neon default command-line options</dd>
 </dl>
 </dd></dl>
 
 <dl class="function">
 <dt id="default_utils.initialize_parameters">
 <code class="descclassname">default_utils.</code><code class="descname">initialize_parameters</code><span class="sig-paren">(</span><em>bmk</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/default_utils.html#initialize_parameters"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#default_utils.initialize_parameters" title="Permalink to this definition">¶</a></dt>
-<dd><p>Parse parameters in common and particular to each benchmark.</p>
+<dd><p>Utility to parse parameters in common as well as parmeters
+particular to each benchmark.</p>
 <dl class="docutils">
 <dt>bmk <span class="classifier-delimiter">:</span> <span class="classifier">benchmark object</span></dt>
-<dd>Object that has benchmark filepaths and especifications</dd>
+<dd>Object that has benchmark filepaths and specifications</dd>
 </dl>
 <dl class="docutils">
-<dt>gParameters <span class="classifier-delimiter">:</span> <span class="classifier">dictionary with all the parameters necessary to run the benchmark.</span></dt>
-<dd>Command line overwrites config file especifications</dd>
+<dt>gParameters <span class="classifier-delimiter">:</span> <span class="classifier">python dictionary</span></dt>
+<dd>Dictionary with all the parameters necessary to run the benchmark.
+Command line overwrites config file especifications</dd>
 </dl>
 </dd></dl>
 
@@ -354,12 +397,36 @@ This helps to keep consistency in parameters between frameworks.</p>
 <dl class="function">
 <dt id="default_utils.set_seed">
 <code class="descclassname">default_utils.</code><code class="descname">set_seed</code><span class="sig-paren">(</span><em>seed</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/default_utils.html#set_seed"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#default_utils.set_seed" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Set the seed of the pseudo-random generator to the specified value.</p>
+<dl class="docutils">
+<dt>seed <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
+<dd>Value to intialize or re-seed the generator.</dd>
+</dl>
+</dd></dl>
 
 <dl class="function">
 <dt id="default_utils.set_up_logger">
 <code class="descclassname">default_utils.</code><code class="descname">set_up_logger</code><span class="sig-paren">(</span><em>logfile</em>, <em>logger</em>, <em>verbose</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/default_utils.html#set_up_logger"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#default_utils.set_up_logger" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Set up the event logging system. Two handlers are created.
+One to send log records to a specified file and 
+one to send log records to the (defaulf) sys.stderr stream.
+The logger and the file handler are set to DEBUG logging level.
+The stream handler is set to INFO logging level, or to DEBUG
+logging level if the verbose flag is specified.
+Logging messages which are less severe than the level set will
+be ignored.</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>logfile <span class="classifier-delimiter">:</span> <span class="classifier">filename</span></dt>
+<dd>File to store the log records</dd>
+<dt>logger <span class="classifier-delimiter">:</span> <span class="classifier">logger object</span></dt>
+<dd>Python object for the logging interface</dd>
+<dt>verbose <span class="classifier-delimiter">:</span> <span class="classifier">boolean</span></dt>
+<dd>Flag to increase the logging level from INFO to DEBUG. It 
+only applies to the stream handler.</dd>
+</dl>
+</div></blockquote>
+</dd></dl>
 
 <dl class="function">
 <dt id="default_utils.str2bool">
@@ -368,12 +435,29 @@ This helps to keep consistency in parameters between frameworks.</p>
 <a class="reference external" href="https://stackoverflow.com/questions/15008758/parsing-boolean-values-with-argparse">https://stackoverflow.com/questions/15008758/parsing-boolean-values-with-argparse</a>
 Because type=bool is not interpreted as a bool and action=’store_true’ cannot be
 undone.</p>
+<dl class="docutils">
+<dt>v <span class="classifier-delimiter">:</span> <span class="classifier">string</span></dt>
+<dd>String to interpret</dd>
+</dl>
+<p>Boolean value. It raises and exception if the provided string cannot
+be interpreted as a boolean type.</p>
+<p>Strings recognized as boolean True:
+‘yes’, ‘true’, ‘t’, ‘y’, ‘1’ and uppercase versions (where applicable).
+Strings recognized as boolean False:
+‘no’, ‘false’, ‘f’, ‘n’, ‘0’ and uppercase versions (where applicable).</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="default_utils.verify_path">
 <code class="descclassname">default_utils.</code><code class="descname">verify_path</code><span class="sig-paren">(</span><em>path</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/default_utils.html#verify_path"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#default_utils.verify_path" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Verify if a directory path exists locally. If the path
+does not exist, but is a valid path, it recursivelly creates
+the specified directory path structure.</p>
+<dl class="docutils">
+<dt>path <span class="classifier-delimiter">:</span> <span class="classifier">directory path</span></dt>
+<dd>Description of local directory path</dd>
+</dl>
+</dd></dl>
 
 </div>
 

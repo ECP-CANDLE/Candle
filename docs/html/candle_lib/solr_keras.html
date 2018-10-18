@@ -207,22 +207,29 @@ send – json object</p>
 <dt id="solr_keras.TerminateOnTimeOut">
 <em class="property">class </em><code class="descclassname">solr_keras.</code><code class="descname">TerminateOnTimeOut</code><span class="sig-paren">(</span><em>timeout_in_sec=10</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/solr_keras.html#TerminateOnTimeOut"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#solr_keras.TerminateOnTimeOut" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">keras.callbacks.Callback</span></code></p>
+<p>This class implements timeout on model training. When the script reaches timeout,
+this class sets model.stop_training = True</p>
 <dl class="method">
 <dt id="solr_keras.TerminateOnTimeOut.on_epoch_end">
 <code class="descname">on_epoch_end</code><span class="sig-paren">(</span><em>epoch</em>, <em>logs={}</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/solr_keras.html#TerminateOnTimeOut.on_epoch_end"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#solr_keras.TerminateOnTimeOut.on_epoch_end" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>On every epoch end, check whether it exceeded timeout and terminate training if necessary</p>
+</dd></dl>
 
 <dl class="method">
 <dt id="solr_keras.TerminateOnTimeOut.on_train_begin">
 <code class="descname">on_train_begin</code><span class="sig-paren">(</span><em>logs={}</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/solr_keras.html#TerminateOnTimeOut.on_train_begin"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#solr_keras.TerminateOnTimeOut.on_train_begin" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Start clock to calculate timeout</p>
+</dd></dl>
 
 </dd></dl>
 
 <dl class="function">
 <dt id="solr_keras.compute_trainable_params">
 <code class="descclassname">solr_keras.</code><code class="descname">compute_trainable_params</code><span class="sig-paren">(</span><em>model</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/solr_keras.html#compute_trainable_params"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#solr_keras.compute_trainable_params" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Extract number of parameters from the given Keras model</p>
+<p>model : Keras model</p>
+<p>python dictionary that contains trainable_params, non_trainable_params and total_params</p>
+</dd></dl>
 
 </div>
 
