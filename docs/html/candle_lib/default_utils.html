@@ -189,7 +189,7 @@ from the benchmark’s configuration files.</p>
 <dl class="method">
 <dt id="default_utils.Benchmark.check_required_exists">
 <code class="descname">check_required_exists</code><span class="sig-paren">(</span><em>gparam</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/default_utils.html#Benchmark.check_required_exists"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#default_utils.Benchmark.check_required_exists" title="Permalink to this definition">¶</a></dt>
-<dd><p>Functionality to verify that the required 
+<dd><p>Functionality to verify that the required
 model parameters have been specified.</p>
 </dd></dl>
 
@@ -258,68 +258,82 @@ an argparser that constructs a list-of-lists from an input
 <dl class="function">
 <dt id="default_utils.args_overwrite_config">
 <code class="descclassname">default_utils.</code><code class="descname">args_overwrite_config</code><span class="sig-paren">(</span><em>args</em>, <em>config</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/default_utils.html#args_overwrite_config"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#default_utils.args_overwrite_config" title="Permalink to this definition">¶</a></dt>
-<dd><p>Overwrite configuration parameters with 
+<dd><p>Overwrite configuration parameters with
 parameters specified via command-line.</p>
-<dl class="docutils">
-<dt>args <span class="classifier-delimiter">:</span> <span class="classifier">ArgumentParser object</span></dt>
-<dd>Parameters specified via command-line</dd>
-<dt>config <span class="classifier-delimiter">:</span> <span class="classifier">python dictionary</span></dt>
-<dd>Parameters read from configuration file</dd>
-</dl>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>args</strong> (<em>ArgumentParser object</em>) – Parameters specified via command-line</li>
+<li><strong>config</strong> (<em>python dictionary</em>) – Parameters read from configuration file</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="function">
 <dt id="default_utils.directory_from_parameters">
 <code class="descclassname">default_utils.</code><code class="descname">directory_from_parameters</code><span class="sig-paren">(</span><em>params</em>, <em>commonroot='Output'</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/default_utils.html#directory_from_parameters"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#default_utils.directory_from_parameters" title="Permalink to this definition">¶</a></dt>
 <dd><p>Construct output directory path with unique IDs from parameters
-Parameters
-———-
-params : python dictionary</p>
-<blockquote>
-<div>Dictionary of parameters read</div></blockquote>
-<dl class="docutils">
-<dt>commonroot <span class="classifier-delimiter">:</span> <span class="classifier">string</span></dt>
-<dd>String to specify the common folder to store results.</dd>
-</dl>
+:param params: Dictionary of parameters read
+:type params: python dictionary
+:param commonroot: String to specify the common folder to store results.
+:type commonroot: string</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="default_utils.eval_string_as_list">
 <code class="descclassname">default_utils.</code><code class="descname">eval_string_as_list</code><span class="sig-paren">(</span><em>str_read</em>, <em>separator</em>, <em>dtype</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/default_utils.html#eval_string_as_list"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#default_utils.eval_string_as_list" title="Permalink to this definition">¶</a></dt>
 <dd><p>Parse a string and convert it into a list of lists.</p>
-<dl class="docutils">
-<dt>str_read <span class="classifier-delimiter">:</span> <span class="classifier">string</span></dt>
-<dd>String read (from configuration file or command line, for example)</dd>
-<dt>separator <span class="classifier-delimiter">:</span> <span class="classifier">character</span></dt>
-<dd>Character that specifies the separation between the lists</dd>
-<dt>dtype <span class="classifier-delimiter">:</span> <span class="classifier">data type</span></dt>
-<dd>Data type to decode the elements of the list</dd>
-</dl>
-<dl class="docutils">
-<dt>decoded_list <span class="classifier-delimiter">:</span> <span class="classifier">list</span></dt>
-<dd>List extracted from string and with elements of the
-specified type.</dd>
-</dl>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>str_read</strong> (<em>string</em>) – String read (from configuration file or command line, for example)</li>
+<li><strong>separator</strong> (<em>character</em>) – Character that specifies the separation between the lists</li>
+<li><strong>dtype</strong> (<em>data type</em>) – Data type to decode the elements of the list</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>decoded_list</strong> – List extracted from string and with elements of the
+specified type.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">list</p>
+</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="function">
 <dt id="default_utils.eval_string_as_list_of_lists">
 <code class="descclassname">default_utils.</code><code class="descname">eval_string_as_list_of_lists</code><span class="sig-paren">(</span><em>str_read</em>, <em>separator_out</em>, <em>separator_in</em>, <em>dtype</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/default_utils.html#eval_string_as_list_of_lists"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#default_utils.eval_string_as_list_of_lists" title="Permalink to this definition">¶</a></dt>
 <dd><p>Parse a string and convert it into a list of lists.</p>
-<dl class="docutils">
-<dt>str_read <span class="classifier-delimiter">:</span> <span class="classifier">string</span></dt>
-<dd>String read (from configuration file or command line, for example)</dd>
-<dt>separator_out <span class="classifier-delimiter">:</span> <span class="classifier">character</span></dt>
-<dd>Character that specifies the separation between the outer level lists</dd>
-<dt>separator_in <span class="classifier-delimiter">:</span> <span class="classifier">character</span></dt>
-<dd>Character that specifies the separation between the inner level lists</dd>
-<dt>dtype <span class="classifier-delimiter">:</span> <span class="classifier">data type</span></dt>
-<dd>Data type to decode the elements of the lists</dd>
-</dl>
-<dl class="docutils">
-<dt>decoded_list <span class="classifier-delimiter">:</span> <span class="classifier">list</span></dt>
-<dd>List of lists extracted from string and with elements of the specified type.</dd>
-</dl>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>str_read</strong> (<em>string</em>) – String read (from configuration file or command line, for example)</li>
+<li><strong>separator_out</strong> (<em>character</em>) – Character that specifies the separation between the outer level lists</li>
+<li><strong>separator_in</strong> (<em>character</em>) – Character that specifies the separation between the inner level lists</li>
+<li><strong>dtype</strong> (<em>data type</em>) – Data type to decode the elements of the lists</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>decoded_list</strong> – List of lists extracted from string and with elements of the specified type.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">list</p>
+</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="function">
@@ -327,21 +341,30 @@ specified type.</dd>
 <code class="descclassname">default_utils.</code><code class="descname">fetch_file</code><span class="sig-paren">(</span><em>link</em>, <em>subdir</em>, <em>untar=False</em>, <em>md5_hash=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/default_utils.html#fetch_file"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#default_utils.fetch_file" title="Permalink to this definition">¶</a></dt>
 <dd><p>Convert URL to file path and download the file
 if it is not already present in spedified cache.</p>
-<dl class="docutils">
-<dt>link <span class="classifier-delimiter">:</span> <span class="classifier">link path</span></dt>
-<dd>URL of the file to download</dd>
-<dt>subdir <span class="classifier-delimiter">:</span> <span class="classifier">directory path</span></dt>
-<dd>Local path to check for cached file.</dd>
-<dt>untar <span class="classifier-delimiter">:</span> <span class="classifier">boolean</span></dt>
-<dd>Flag to specify if the file to download should
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>link</strong> (<em>link path</em>) – URL of the file to download</li>
+<li><strong>subdir</strong> (<em>directory path</em>) – Local path to check for cached file.</li>
+<li><strong>untar</strong> (<em>boolean</em>) – Flag to specify if the file to download should
 be decompressed too.
-(default: False, no decompression)</dd>
-<dt>md5_hash <span class="classifier-delimiter">:</span> <span class="classifier">MD5 hash</span></dt>
-<dd>Hash used as a checksum to verify data integrity.
+(default: False, no decompression)</li>
+<li><strong>md5_hash</strong> (<em>MD5 hash</em>) – Hash used as a checksum to verify data integrity.
 Verification is carried out if a hash is provided.
-(default: None, no verification)</dd>
-</dl>
-<p>local path to the downloaded, or cached, file.</p>
+(default: None, no verification)</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"></p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">local path to the downloaded, or cached, file.</p>
+</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="function">
@@ -354,21 +377,29 @@ Verification is carried out if a hash is provided.
 <dt id="default_utils.get_common_parser">
 <code class="descclassname">default_utils.</code><code class="descname">get_common_parser</code><span class="sig-paren">(</span><em>parser</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/default_utils.html#get_common_parser"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#default_utils.get_common_parser" title="Permalink to this definition">¶</a></dt>
 <dd><p>Parse command-line arguments. Ignore if not present.</p>
-<dl class="docutils">
-<dt>parser <span class="classifier-delimiter">:</span> <span class="classifier">ArgumentParser object</span></dt>
-<dd>Parser for command-line options</dd>
-</dl>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>parser</strong> (<em>ArgumentParser object</em>) – Parser for command-line options</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="function">
 <dt id="default_utils.get_default_neon_parser">
 <code class="descclassname">default_utils.</code><code class="descname">get_default_neon_parser</code><span class="sig-paren">(</span><em>parser</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/default_utils.html#get_default_neon_parser"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#default_utils.get_default_neon_parser" title="Permalink to this definition">¶</a></dt>
-<dd><p>Parse command-line arguments that are default in neon parser (and are common to all frameworks). 
+<dd><p>Parse command-line arguments that are default in neon parser (and are common to all frameworks).
 Ignore if not present.</p>
-<dl class="docutils">
-<dt>parser <span class="classifier-delimiter">:</span> <span class="classifier">ArgumentParser object</span></dt>
-<dd>Parser for neon default command-line options</dd>
-</dl>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>parser</strong> (<em>ArgumentParser object</em>) – Parser for neon default command-line options</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="function">
@@ -376,15 +407,19 @@ Ignore if not present.</p>
 <code class="descclassname">default_utils.</code><code class="descname">initialize_parameters</code><span class="sig-paren">(</span><em>bmk</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/default_utils.html#initialize_parameters"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#default_utils.initialize_parameters" title="Permalink to this definition">¶</a></dt>
 <dd><p>Utility to parse parameters in common as well as parmeters
 particular to each benchmark.</p>
-<dl class="docutils">
-<dt>bmk <span class="classifier-delimiter">:</span> <span class="classifier">benchmark object</span></dt>
-<dd>Object that has benchmark filepaths and specifications</dd>
-</dl>
-<dl class="docutils">
-<dt>gParameters <span class="classifier-delimiter">:</span> <span class="classifier">python dictionary</span></dt>
-<dd>Dictionary with all the parameters necessary to run the benchmark.
-Command line overwrites config file especifications</dd>
-</dl>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>bmk</strong> (<em>benchmark object</em>) – Object that has benchmark filepaths and specifications</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><strong>gParameters</strong> – Dictionary with all the parameters necessary to run the benchmark.
+Command line overwrites config file especifications</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">python dictionary</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="function">
@@ -398,17 +433,21 @@ This helps to keep consistency in parameters between frameworks.</p>
 <dt id="default_utils.set_seed">
 <code class="descclassname">default_utils.</code><code class="descname">set_seed</code><span class="sig-paren">(</span><em>seed</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/default_utils.html#set_seed"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#default_utils.set_seed" title="Permalink to this definition">¶</a></dt>
 <dd><p>Set the seed of the pseudo-random generator to the specified value.</p>
-<dl class="docutils">
-<dt>seed <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
-<dd>Value to intialize or re-seed the generator.</dd>
-</dl>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>seed</strong> (<em>int</em>) – Value to intialize or re-seed the generator.</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="function">
 <dt id="default_utils.set_up_logger">
 <code class="descclassname">default_utils.</code><code class="descname">set_up_logger</code><span class="sig-paren">(</span><em>logfile</em>, <em>logger</em>, <em>verbose</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/default_utils.html#set_up_logger"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#default_utils.set_up_logger" title="Permalink to this definition">¶</a></dt>
 <dd><p>Set up the event logging system. Two handlers are created.
-One to send log records to a specified file and 
+One to send log records to a specified file and
 one to send log records to the (defaulf) sys.stderr stream.
 The logger and the file handler are set to DEBUG logging level.
 The stream handler is set to INFO logging level, or to DEBUG
@@ -422,7 +461,7 @@ be ignored.</p>
 <dt>logger <span class="classifier-delimiter">:</span> <span class="classifier">logger object</span></dt>
 <dd>Python object for the logging interface</dd>
 <dt>verbose <span class="classifier-delimiter">:</span> <span class="classifier">boolean</span></dt>
-<dd>Flag to increase the logging level from INFO to DEBUG. It 
+<dd>Flag to increase the logging level from INFO to DEBUG. It
 only applies to the stream handler.</dd>
 </dl>
 </div></blockquote>
@@ -435,16 +474,24 @@ only applies to the stream handler.</dd>
 <a class="reference external" href="https://stackoverflow.com/questions/15008758/parsing-boolean-values-with-argparse">https://stackoverflow.com/questions/15008758/parsing-boolean-values-with-argparse</a>
 Because type=bool is not interpreted as a bool and action=’store_true’ cannot be
 undone.</p>
-<dl class="docutils">
-<dt>v <span class="classifier-delimiter">:</span> <span class="classifier">string</span></dt>
-<dd>String to interpret</dd>
-</dl>
-<p>Boolean value. It raises and exception if the provided string cannot
-be interpreted as a boolean type.</p>
-<p>Strings recognized as boolean True:
-‘yes’, ‘true’, ‘t’, ‘y’, ‘1’ and uppercase versions (where applicable).
-Strings recognized as boolean False:
-‘no’, ‘false’, ‘f’, ‘n’, ‘0’ and uppercase versions (where applicable).</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>v</strong> (<em>string</em>) – String to interpret</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><ul class="simple">
+<li><em>Boolean value. It raises and exception if the provided string cannot</em></li>
+<li><em>be interpreted as a boolean type.</em></li>
+<li><em>Strings recognized as boolean True</em></li>
+<li><em>’yes’, ‘true’, ‘t’, ‘y’, ‘1’ and uppercase versions (where applicable).</em></li>
+<li><em>Strings recognized as boolean False</em></li>
+<li><em>’no’, ‘false’, ‘f’, ‘n’, ‘0’ and uppercase versions (where applicable).</em></li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="function">
@@ -453,10 +500,14 @@ Strings recognized as boolean False:
 <dd><p>Verify if a directory path exists locally. If the path
 does not exist, but is a valid path, it recursivelly creates
 the specified directory path structure.</p>
-<dl class="docutils">
-<dt>path <span class="classifier-delimiter">:</span> <span class="classifier">directory path</span></dt>
-<dd>Description of local directory path</dd>
-</dl>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>path</strong> (<em>directory path</em>) – Description of local directory path</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 </div>

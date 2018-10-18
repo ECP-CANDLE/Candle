@@ -187,23 +187,34 @@ class membership).</dd>
 <dt id="data_utils.impute_and_scale_array">
 <code class="descclassname">data_utils.</code><code class="descname">impute_and_scale_array</code><span class="sig-paren">(</span><em>mat</em>, <em>scaling=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/data_utils.html#impute_and_scale_array"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#data_utils.impute_and_scale_array" title="Permalink to this definition">¶</a></dt>
 <dd><p>Impute missing values with mean and scale data included in numpy array.</p>
-<dl class="docutils">
-<dt>mat <span class="classifier-delimiter">:</span> <span class="classifier">numpy array</span></dt>
-<dd>Array to scale</dd>
-<dt>scaling <span class="classifier-delimiter">:</span> <span class="classifier">string</span></dt>
-<dd><p class="first">String describing type of scaling to apply.
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>mat</strong> (<em>numpy array</em>) – Array to scale</li>
+<li><strong>scaling</strong> (<em>string</em>) – <p>String describing type of scaling to apply.
 Options recognized: ‘maxabs’, ‘minmax’, ‘std’.
 ‘maxabs’ : scales data to range [-1 to 1].
 ‘minmax’ : scales data to range [-1 to 1].
 ‘std’    : scales data to normal variable with</p>
 <blockquote>
 <div>mean 0 and standard deviation 1.</div></blockquote>
-<p class="last">(Default: None, no scaling).</p>
-</dd>
-</dl>
-<p>Returns the numpy array imputed with the mean value of the
-column and scaled by the method specified. If no scaling method is specified,
-it returns the imputed numpy array.</p>
+<p>(Default: None, no scaling).</p>
+</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><ul class="simple">
+<li><em>Returns the numpy array imputed with the mean value of the</em></li>
+<li><em>column and scaled by the method specified. If no scaling method is specified,</em></li>
+<li><em>it returns the imputed numpy array.</em></li>
+</ul>
+</p>
+</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="function">
@@ -688,23 +699,34 @@ on the options selected.</p>
 <dt id="data_utils.scale_array">
 <code class="descclassname">data_utils.</code><code class="descname">scale_array</code><span class="sig-paren">(</span><em>mat</em>, <em>scaling=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/data_utils.html#scale_array"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#data_utils.scale_array" title="Permalink to this definition">¶</a></dt>
 <dd><p>Scale data included in numpy array.</p>
-<dl class="docutils">
-<dt>mat <span class="classifier-delimiter">:</span> <span class="classifier">numpy array</span></dt>
-<dd>Array to scale</dd>
-<dt>scaling <span class="classifier-delimiter">:</span> <span class="classifier">string</span></dt>
-<dd><p class="first">String describing type of scaling to apply.
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>mat</strong> (<em>numpy array</em>) – Array to scale</li>
+<li><strong>scaling</strong> (<em>string</em>) – <p>String describing type of scaling to apply.
 Options recognized: ‘maxabs’, ‘minmax’, ‘std’.
 ‘maxabs’ : scales data to range [-1 to 1].
 ‘minmax’ : scales data to range [-1 to 1].
 ‘std’    : scales data to normal variable with</p>
 <blockquote>
 <div>mean 0 and standard deviation 1.</div></blockquote>
-<p class="last">(Default: None, no scaling).</p>
-</dd>
-</dl>
-<p>Returns the numpy array scaled by the method specified.
-If no scaling method is specified, it returns the numpy
-array unmodified.</p>
+<p>(Default: None, no scaling).</p>
+</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><ul class="simple">
+<li><em>Returns the numpy array scaled by the method specified.</em></li>
+<li><em>If no scaling method is specified, it returns the numpy</em></li>
+<li><em>array unmodified.</em></li>
+</ul>
+</p>
+</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 </div>

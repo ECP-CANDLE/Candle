@@ -184,34 +184,48 @@
 <dl class="function">
 <dt id="keras_utils.build_initializer">
 <code class="descclassname">keras_utils.</code><code class="descname">build_initializer</code><span class="sig-paren">(</span><em>type</em>, <em>kerasDefaults</em>, <em>seed=None</em>, <em>constant=0.0</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/keras_utils.html#build_initializer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#keras_utils.build_initializer" title="Permalink to this definition">¶</a></dt>
-<dd><p>Set the initializer to the appropriate Keras initializer function 
-based on the input string and learning rate. Other required values 
+<dd><p>Set the initializer to the appropriate Keras initializer function
+based on the input string and learning rate. Other required values
 are set to the Keras default values</p>
-<dl class="docutils">
-<dt>type <span class="classifier-delimiter">:</span> <span class="classifier">string</span></dt>
-<dd><p class="first">String to choose the initializer
-Options recognized: ‘constant’, ‘uniform’, ‘normal’,</p>
-<blockquote>
-<div>‘glorot_uniform’, ‘lecun_uniform’, ‘he_normal’</div></blockquote>
-<p class="last">See the Keras documentation for a full description of the options</p>
-</dd>
-</dl>
-<p>Returns the appropriate Keras initializer function</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>type</strong> (<em>string</em>) – <p>String to choose the initializer</p>
+<p>Options recognized: ‘constant’, ‘uniform’, ‘normal’,
+‘glorot_uniform’, ‘lecun_uniform’, ‘he_normal’</p>
+<p>See the Keras documentation for a full description of the options</p>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"></td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">Returns the appropriate Keras initializer function</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="function">
 <dt id="keras_utils.build_optimizer">
 <code class="descclassname">keras_utils.</code><code class="descname">build_optimizer</code><span class="sig-paren">(</span><em>type</em>, <em>lr</em>, <em>kerasDefaults</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/keras_utils.html#build_optimizer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#keras_utils.build_optimizer" title="Permalink to this definition">¶</a></dt>
-<dd><p>Set the optimizer to the appropriate Keras optimizer function 
-based on the input string and learning rate. Other required values 
+<dd><p>Set the optimizer to the appropriate Keras optimizer function
+based on the input string and learning rate. Other required values
 are set to the Keras default values</p>
-<dl class="docutils">
-<dt>type <span class="classifier-delimiter">:</span> <span class="classifier">string</span></dt>
-<dd>String to choose the optimizer
-Options recognized: ‘sgd’, ‘rmsprop’, ‘adagrad’, adadelta’, ‘adam’
-See the Keras documentation for a full description of the options</dd>
-</dl>
-<p>Returns the appropriate Keras optimizer function</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>type</strong> (<em>string</em>) – <p>String to choose the optimizer</p>
+<p>Options recognized: ‘sgd’, ‘rmsprop’, ‘adagrad’, adadelta’, ‘adam’
+See the Keras documentation for a full description of the options</p>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"></td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">Returns the appropriate Keras optimizer function</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="function">
