@@ -8,12 +8,11 @@ values of hyperparameters for CANDLE “Benchmarks” available here:
 Running
 -------
 
-1. cd into the *~/Supervisor/workflows/mlrMBO/test* directory
-2. Specify the MODEL_NAME in *test-1.sh* file, hyperparameters in
-   *cfg-prm-1.txt*
-3. Specify the #procs, queue etc. in *cfg-sys-1.sh* file
-4. Launch the test by invoking *./upf-1.sh * where machine_name can be
-   cori, theta, titan etc.
+1. cd into the ``~/Supervisor/workflows/mlrMBO/test`` directory
+2. Specify the ``MODEL_NAME`` in the ``test-1.sh`` file, hyperparameters in
+   ``cfg-prm-1.txt``
+3. Specify the number or processes, queue etc., in ``cfg-sys-1.sh`` file
+4. Launch the test by invoking ``./test-1.sh benchmark machine`` where the machine can be ``cori``, ``theta``, ``titan`` etc.
 5. The benchmark will be run for the number of processors specified
 6. Final objective function value will be available in the experiments
    directory and also printed
@@ -34,12 +33,20 @@ What you need to install to run the workflow:
 Calling sequence
 ----------------
 
-Function calls :- \* test-1.sh -> swift/workflow.sh ->
-swift/workflow.swift -> common/swift/obj_app.swift -> common/sh/model.sh
--> common/python/model_runner.py -> ‘calls the benchmark’
+Script call stack :-
+- user shell ->
+- test-1.sh ->
+- swift/workflow.sh -> (submits to compute nodes)
+- swift/workflow.swift ->
+- common/swift/obj_app.swift ->
+- common/sh/model.sh ->
+- common/python/model_runner.py ->
+- the benchmark/model
 
-Scheduling scripts :- \* upf-1.sh -> cfg-sys-1.sh -> common/sh/ -
-module, scheduling, langs .sh files
+Environment settings :-
+- upf-1.sh ->
+- cfg-sys-1.sh ->
+-> common/sh/ - env, langs .sh files
 
 Making Changes
 --------------
@@ -48,9 +55,9 @@ Structure
 ~~~~~~~~~
 
 The point of the script structure is that it is easy to make copy and
-modify the ``test-\*.sh`` script, and the ``cfg-\*.sh`` scripts. These
-can be checked back into the repo for use by others. The ``test-\*.sh``
-script and the ``cfg-\*.sh`` scripts should simply contain environment
+modify the ``test-*.sh`` script, and the ``cfg-*.sh`` scripts. These
+can be checked back into the repo for use by others. The ``test-*.sh``
+script and the ``cfg-*.sh`` scripts should simply contain environment
 variables that control how ``workflow.sh`` and ``workflow.swift``
 operate.
 
@@ -66,7 +73,7 @@ To call a different objective function:
    name.
 2. Edit the ``app`` function body to run your code and return the
    result.
-3. Edit a ``test-\*.sh`` script to set environment variables:
+3. Edit a ``test-*.sh`` script to set environment variables:
 
    -  ``OBJ_DIR``: Set this to the new directory (If changed. Otherwise,
       ``OBJ_DIR`` defaults to the absolute path to common/swift .)

@@ -223,13 +223,13 @@
 
 <div class="viewcode-block" id="set_up_logger"><a class="viewcode-back" href="../candle_lib/default_utils.html#default_utils.set_up_logger">[docs]</a><span class="k">def</span> <span class="nf">set_up_logger</span><span class="p">(</span><span class="n">logfile</span><span class="p">,</span> <span class="n">logger</span><span class="p">,</span> <span class="n">verbose</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Set up the event logging system. Two handlers are created.</span>
-<span class="sd">       One to send log records to a specified file and </span>
-<span class="sd">       one to send log records to the (defaulf) sys.stderr stream.</span>
-<span class="sd">       The logger and the file handler are set to DEBUG logging level.</span>
-<span class="sd">       The stream handler is set to INFO logging level, or to DEBUG</span>
-<span class="sd">       logging level if the verbose flag is specified.</span>
-<span class="sd">       Logging messages which are less severe than the level set will</span>
-<span class="sd">       be ignored.</span>
+<span class="sd">        One to send log records to a specified file and</span>
+<span class="sd">        one to send log records to the (defaulf) sys.stderr stream.</span>
+<span class="sd">        The logger and the file handler are set to DEBUG logging level.</span>
+<span class="sd">        The stream handler is set to INFO logging level, or to DEBUG</span>
+<span class="sd">        logging level if the verbose flag is specified.</span>
+<span class="sd">        Logging messages which are less severe than the level set will</span>
+<span class="sd">        be ignored.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
@@ -914,8 +914,8 @@
 
 <div class="viewcode-block" id="Benchmark.format_benchmark_config_arguments"><a class="viewcode-back" href="../candle_lib/default_utils.html#default_utils.Benchmark.format_benchmark_config_arguments">[docs]</a>    <span class="k">def</span> <span class="nf">format_benchmark_config_arguments</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dictfileparam</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Functionality to format the particular parameters of</span>
-<span class="sd">           the benchmark.</span>
-<span class="sd">           </span>
+<span class="sd">            the benchmark.</span>
+
 <span class="sd">            Parameters</span>
 <span class="sd">            ----------</span>
 <span class="sd">            dictfileparam : python dictionary</span>
@@ -925,7 +925,6 @@
 <span class="sd">                Most of the time command-line overwrites configuration file</span>
 <span class="sd">                except when the command-line is using default values and</span>
 <span class="sd">                config file defines those values</span>
-<span class="sd">           </span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="n">configOut</span> <span class="o">=</span> <span class="n">dictfileparam</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
