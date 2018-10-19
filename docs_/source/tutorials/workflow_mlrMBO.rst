@@ -33,12 +33,20 @@ What you need to install to run the workflow:
 Calling sequence
 ----------------
 
-Function calls :- \* test-1.sh -> swift/workflow.sh ->
-swift/workflow.swift -> common/swift/obj_app.swift -> common/sh/model.sh
--> common/python/model_runner.py -> ‘calls the benchmark’
+Script call stack :-
+- user shell ->
+- test-1.sh ->
+- swift/workflow.sh -> (submits to compute nodes)
+- swift/workflow.swift ->
+- common/swift/obj_app.swift ->
+- common/sh/model.sh ->
+- common/python/model_runner.py ->
+- the benchmark/model
 
-Scheduling scripts :- \* upf-1.sh -> cfg-sys-1.sh -> common/sh/ -
-module, scheduling, langs .sh files
+Environment settings :-
+- upf-1.sh ->
+- cfg-sys-1.sh ->
+-> common/sh/ - env, langs .sh files
 
 Making Changes
 --------------
@@ -47,9 +55,9 @@ Structure
 ~~~~~~~~~
 
 The point of the script structure is that it is easy to make copy and
-modify the ``test-\*.sh`` script, and the ``cfg-\*.sh`` scripts. These
-can be checked back into the repo for use by others. The ``test-\*.sh``
-script and the ``cfg-\*.sh`` scripts should simply contain environment
+modify the ``test-*.sh`` script, and the ``cfg-*.sh`` scripts. These
+can be checked back into the repo for use by others. The ``test-*.sh``
+script and the ``cfg-*.sh`` scripts should simply contain environment
 variables that control how ``workflow.sh`` and ``workflow.swift``
 operate.
 
@@ -65,7 +73,7 @@ To call a different objective function:
    name.
 2. Edit the ``app`` function body to run your code and return the
    result.
-3. Edit a ``test-\*.sh`` script to set environment variables:
+3. Edit a ``test-*.sh`` script to set environment variables:
 
    -  ``OBJ_DIR``: Set this to the new directory (If changed. Otherwise,
       ``OBJ_DIR`` defaults to the absolute path to common/swift .)
