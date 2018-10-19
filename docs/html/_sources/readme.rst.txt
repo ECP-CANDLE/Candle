@@ -26,8 +26,3 @@ Benchmarks may also be included as the examples in CANDLE releases, but not nece
 The Benchmarks releases will change over time. For example, in pilot one we are investigating changes the P1B1 and P1B2 codes. NT3 might end up replacing P1B2 and the variational autoencoder might end up replacing P1B1.
 
 We will continue to add things to the benchmarks as each pilot project develops codes that are pushing the science. These codes will not necessarily be the codes in the benchmarks or used as examples for CANDLE releases, however could reside in the Zoo.
-
-Model Zoo
----------
-The Model Zoo is where codes that are designed to solve research problems in cancer reside, along with pre-trained models and references to training and validation data. Some of these pre-trained models may have been optimized from large-scale runs using Candle. These codes are not by design benchmarks, they go beyond the benchmarks, though a few of them might manifest as benchmarks.
-
