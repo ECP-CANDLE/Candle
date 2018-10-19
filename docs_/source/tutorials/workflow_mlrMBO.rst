@@ -8,12 +8,11 @@ values of hyperparameters for CANDLE “Benchmarks” available here:
 Running
 -------
 
-1. cd into the *~/Supervisor/workflows/mlrMBO/test* directory
-2. Specify the MODEL_NAME in *test-1.sh* file, hyperparameters in
-   *cfg-prm-1.txt*
-3. Specify the #procs, queue etc. in *cfg-sys-1.sh* file
-4. Launch the test by invoking *./upf-1.sh * where machine_name can be
-   cori, theta, titan etc.
+1. cd into the ``~/Supervisor/workflows/mlrMBO/test`` directory
+2. Specify the ``MODEL_NAME`` in the ``test-1.sh`` file, hyperparameters in
+   ``cfg-prm-1.txt``
+3. Specify the number or processes, queue etc., in ``cfg-sys-1.sh`` file
+4. Launch the test by invoking ``./test-1.sh benchmark machine`` where the machine can be ``cori``, ``theta``, ``titan`` etc.
 5. The benchmark will be run for the number of processors specified
 6. Final objective function value will be available in the experiments
    directory and also printed
