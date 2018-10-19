@@ -181,7 +181,7 @@ parameters.</p>
 <li>Specify the MODEL_NAME in <em>upf-1.sh</em> file, hyperparameters in
 <em>upf-1.txt</em></li>
 <li>Specify the #procs, queue etc. in <em>cfg-sys-1.sh</em> file</li>
-<li>Launch the test by invoking <a href="#id1"><span class="problematic" id="id2">*</span></a>./upf-1.sh * where machine_name can be
+<li>Launch the test by invoking *./upf-1.sh * where machine_name can be
 cori, theta, titan etc.</li>
 <li>The benchmark will be run for the number of processors specified</li>
 <li>Final objective function value will be available in the experiments
@@ -205,11 +205,26 @@ cf.&nbsp;<a class="reference external" href="https://github.com/swift-lang/swift
 </div>
 <div class="section" id="calling-sequence">
 <h2>Calling sequence<a class="headerlink" href="#calling-sequence" title="Permalink to this headline">¶</a></h2>
-<p>Script call stack :- * upf-1.sh -&gt; swift/workflow.sh -&gt;
-swift/workflow.swift -&gt; common/swift/obj_app.swift -&gt; common/sh/model.sh
--&gt; common/python/model_runner.py -&gt; ‘calls the benchmark’</p>
-<p>Scheduling scripts :- * upf-1.sh -&gt; cfg-sys-1.sh -&gt; common/sh/ -
-module, scheduling, langs .sh files</p>
+<dl class="docutils">
+<dt>Script call stack</dt>
+<dd><ul class="first last simple">
+<li>upf-1.sh -&gt;</li>
+<li>swift/workflow.sh -&gt;</li>
+<li>swift/workflow.swift -&gt;</li>
+<li>common/swift/obj_app.swift -&gt;</li>
+<li>common/sh/model.sh -&gt;</li>
+<li>common/python/model_runner.py -&gt; ‘calls the benchmark’</li>
+</ul>
+</dd>
+<dt>Scheduling scripts</dt>
+<dd><ul class="first last simple">
+<li>upf-1.sh -&gt;</li>
+<li>cfg-sys-1.sh -&gt;</li>
+<li>common/sh/</li>
+<li>module, scheduling, langs .sh files</li>
+</ul>
+</dd>
+</dl>
 </div>
 <div class="section" id="infer-workflow">
 <h2>Infer workflow<a class="headerlink" href="#infer-workflow" title="Permalink to this headline">¶</a></h2>

@@ -12,7 +12,7 @@ Running
 2. Specify the MODEL_NAME in *upf-1.sh* file, hyperparameters in
    *upf-1.txt*
 3. Specify the #procs, queue etc. in *cfg-sys-1.sh* file
-4. Launch the test by invoking *./upf-1.sh * where machine_name can be
+4. Launch the test by invoking \*./upf-1.sh * where machine_name can be
    cori, theta, titan etc.
 5. The benchmark will be run for the number of processors specified
 6. Final objective function value will be available in the experiments
@@ -36,12 +36,19 @@ What you need to install to run the workflow:
 Calling sequence
 ----------------
 
-Script call stack :- \* upf-1.sh -> swift/workflow.sh ->
-swift/workflow.swift -> common/swift/obj_app.swift -> common/sh/model.sh
--> common/python/model_runner.py -> ‘calls the benchmark’
+Script call stack
+    - upf-1.sh ->
+    - swift/workflow.sh ->
+    - swift/workflow.swift ->
+    - common/swift/obj_app.swift ->
+    - common/sh/model.sh ->
+    - common/python/model_runner.py -> ‘calls the benchmark’
 
-Scheduling scripts :- \* upf-1.sh -> cfg-sys-1.sh -> common/sh/ -
-module, scheduling, langs .sh files
+Scheduling scripts
+    - upf-1.sh ->
+    - cfg-sys-1.sh ->
+    - common/sh/
+    - module, scheduling, langs .sh files
 
 Infer workflow
 --------------

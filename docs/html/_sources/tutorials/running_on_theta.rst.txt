@@ -30,12 +30,12 @@ Step 2. Move to upf workflow directory
     $ cd Supervisor/workflows/upf
 
 Step 3. Set Env variables. In ``test/cfg-sys-1.sh``, you will need to
-set ``BENCHMARK_DIR`` to point the directory that holds the example, and
+set ``MODEL_PYTHON_DIR`` to point the directory that holds the example, and
 ``MODEL_PYTHON_SCRIPT`` to name the script you want to run.
 
 ::
 
-    BENCHMARK_DIR=/home/hsyoo/candle_tutorial/Candle/examples/mnist # 1
+    MODEL_PYTHON_DIR=/home/hsyoo/candle_tutorial/Candle/examples/mnist # 1
     MODEL_PYTHON_SCRIPT=mnist_mlp_candle # 2
 
 - # 1: This location should reflect your environment
@@ -161,12 +161,12 @@ Step 2. Move to mlrMBO workflow directory
     $ cd Supervisor/workflows/mlrMBO
 
 Step 3. Set Env variables. In ``test/cfg-sys-1.sh``, you will need to
-set ``BENCHMARK_DIR`` to point the directory that your script locates,
+set ``MODEL_PYTHON_DIR`` to point the directory that your script locates,
 and ``MODEL_PYTHON_SCRIPT`` to name the script you want to run
 
 ::
 
-    BENCHMARK_DIR=/home/hsyoo/candle_tutorial/Candle/examples/mnist # 1
+    MODEL_PYTHON_DIR=/home/hsyoo/candle_tutorial/Candle/examples/mnist # 1
     MODEL_PYTHON_SCRIPT=mnist_mlp_candle # 2
 
 - # 1: This location should reflect your environment

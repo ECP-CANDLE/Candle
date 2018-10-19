@@ -33,20 +33,21 @@ What you need to install to run the workflow:
 Calling sequence
 ----------------
 
-Script call stack :-
-- user shell ->
-- test-1.sh ->
-- swift/workflow.sh -> (submits to compute nodes)
-- swift/workflow.swift ->
-- common/swift/obj_app.swift ->
-- common/sh/model.sh ->
-- common/python/model_runner.py ->
-- the benchmark/model
+Script call stack
+    - user shell ->
+    - test-1.sh ->
+    - swift/workflow.sh -> (submits to compute nodes)
+    - swift/workflow.swift ->
+    - common/swift/obj_app.swift ->
+    - common/sh/model.sh ->
+    - common/python/model_runner.py ->
+    - the benchmark/model
 
-Environment settings :-
-- upf-1.sh ->
-- cfg-sys-1.sh ->
--> common/sh/ - env, langs .sh files
+Environment settings
+    - upf-1.sh ->
+    - cfg-sys-1.sh ->
+    - common/sh/
+    - env, langs .sh files
 
 Making Changes
 --------------

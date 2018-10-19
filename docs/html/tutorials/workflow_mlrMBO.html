@@ -203,19 +203,28 @@ the initial data</li>
 </div>
 <div class="section" id="calling-sequence">
 <h2>Calling sequence<a class="headerlink" href="#calling-sequence" title="Permalink to this headline">¶</a></h2>
-<p>Script call stack :-
-- user shell -&gt;
-- test-1.sh -&gt;
-- swift/workflow.sh -&gt; (submits to compute nodes)
-- swift/workflow.swift -&gt;
-- common/swift/obj_app.swift -&gt;
-- common/sh/model.sh -&gt;
-- common/python/model_runner.py -&gt;
-- the benchmark/model</p>
-<p>Environment settings :-
-- upf-1.sh -&gt;
-- cfg-sys-1.sh -&gt;
--&gt; common/sh/ - env, langs .sh files</p>
+<dl class="docutils">
+<dt>Script call stack</dt>
+<dd><ul class="first last simple">
+<li>user shell -&gt;</li>
+<li>test-1.sh -&gt;</li>
+<li>swift/workflow.sh -&gt; (submits to compute nodes)</li>
+<li>swift/workflow.swift -&gt;</li>
+<li>common/swift/obj_app.swift -&gt;</li>
+<li>common/sh/model.sh -&gt;</li>
+<li>common/python/model_runner.py -&gt;</li>
+<li>the benchmark/model</li>
+</ul>
+</dd>
+<dt>Environment settings</dt>
+<dd><ul class="first last simple">
+<li>upf-1.sh -&gt;</li>
+<li>cfg-sys-1.sh -&gt;</li>
+<li>common/sh/</li>
+<li>env, langs .sh files</li>
+</ul>
+</dd>
+</dl>
 </div>
 <div class="section" id="making-changes">
 <h2>Making Changes<a class="headerlink" href="#making-changes" title="Permalink to this headline">¶</a></h2>
