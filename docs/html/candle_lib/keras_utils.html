@@ -191,13 +191,20 @@ are set to the Keras default values</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>type</strong> (<em>string</em>) – <p>String to choose the initializer</p>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>type</strong> (<em>string</em>) – <p>String to choose the initializer</p>
 <p>Options recognized: ‘constant’, ‘uniform’, ‘normal’,
 ‘glorot_uniform’, ‘lecun_uniform’, ‘he_normal’</p>
 <p>See the Keras documentation for a full description of the options</p>
+</li>
+<li><strong>kerasDefaults</strong> (<em>list</em>) – List of default parameter values to ensure consistency between frameworks</li>
+<li><strong>seed</strong> (<em>integer</em>) – Random number seed</li>
+<li><strong>constant</strong> (<em>float</em>) – Constant value (for the constant initializer only)</li>
+</ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><em>The appropriate Keras initializer function</em></td>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><em>The appropriate Keras initializer function</em></p>
+</td>
 </tr>
 </tbody>
 </table>
@@ -213,12 +220,18 @@ are set to the Keras default values</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>type</strong> (<em>string</em>) – <p>String to choose the optimizer</p>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>type</strong> (<em>string</em>) – <p>String to choose the optimizer</p>
 <p>Options recognized: ‘sgd’, ‘rmsprop’, ‘adagrad’, adadelta’, ‘adam’
 See the Keras documentation for a full description of the options</p>
+</li>
+<li><strong>lr</strong> (<em>float</em>) – Learning rate</li>
+<li><strong>kerasDefaults</strong> (<em>list</em>) – List of default parameter values to ensure consistency between frameworks</li>
+</ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><em>The appropriate Keras optimizer function</em></td>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><em>The appropriate Keras optimizer function</em></p>
+</td>
 </tr>
 </tbody>
 </table>
@@ -264,6 +277,14 @@ See the Keras documentation for a full description of the options</p>
 <dt id="keras_utils.set_seed">
 <code class="descclassname">keras_utils.</code><code class="descname">set_seed</code><span class="sig-paren">(</span><em>seed</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/keras_utils.html#set_seed"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#keras_utils.set_seed" title="Permalink to this definition">¶</a></dt>
 <dd><p>Set the random number seed to the desired value</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>seed</strong> (<em>integer</em>) – Random number seed.</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="function">

@@ -182,6 +182,11 @@
 
 <div class="viewcode-block" id="set_seed"><a class="viewcode-back" href="../candle_lib/keras_utils.html#keras_utils.set_seed">[docs]</a><span class="k">def</span> <span class="nf">set_seed</span><span class="p">(</span><span class="n">seed</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot; Set the random number seed to the desired value</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        seed : integer</span>
+<span class="sd">            Random number seed. </span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="n">set_seed_defaultUtils</span><span class="p">(</span><span class="n">seed</span><span class="p">)</span>
@@ -214,6 +219,12 @@
 
 <span class="sd">            Options recognized: &#39;sgd&#39;, &#39;rmsprop&#39;, &#39;adagrad&#39;, adadelta&#39;, &#39;adam&#39;</span>
 <span class="sd">            See the Keras documentation for a full description of the options</span>
+
+<span class="sd">        lr : float</span>
+<span class="sd">            Learning rate</span>
+
+<span class="sd">        kerasDefaults : list</span>
+<span class="sd">            List of default parameter values to ensure consistency between frameworks</span>
 
 <span class="sd">        Returns</span>
 <span class="sd">        ----------</span>
@@ -286,7 +297,16 @@
 
 <span class="sd">            See the Keras documentation for a full description of the options</span>
 
-<span class="sd">        Returns</span>
+<span class="sd">        kerasDefaults : list</span>
+<span class="sd">            List of default parameter values to ensure consistency between frameworks</span>
+
+<span class="sd">        seed : integer</span>
+<span class="sd">            Random number seed</span>
+
+<span class="sd">        constant : float</span>
+<span class="sd">            Constant value (for the constant initializer only)</span>
+
+<span class="sd">        Return</span>
 <span class="sd">        ----------</span>
 <span class="sd">        The appropriate Keras initializer function</span>
 <span class="sd">    &quot;&quot;&quot;</span>
