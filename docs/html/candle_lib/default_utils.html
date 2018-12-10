@@ -24,19 +24,28 @@
 
   
 
-  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    <link rel="index" title="Index" href="../genindex.html" />
-    <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="file_utils module" href="file_utils.html" />
-    <link rel="prev" title="data_utils module" href="data_utils.html" /> 
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../genindex.html"/>
+        <link rel="search" title="Search" href="../search.html"/>
+    <link rel="top" title="CANDLE  documentation" href="../index.html"/>
+        <link rel="up" title="CANDLE Library API" href="../candle_lib.html"/>
+        <link rel="next" title="file_utils module" href="file_utils.html"/>
+        <link rel="prev" title="data_utils module" href="data_utils.html"/> 
 
   
   <script src="../_static/js/modernizr.min.js"></script>
 
 </head>
 
-<body class="wy-body-for-nav">
+<body class="wy-body-for-nav" role="document">
 
    
   <div class="wy-grid-for-nav">
@@ -105,7 +114,7 @@
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
 
       
-      <nav class="wy-nav-top" aria-label="top navigation">
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
         
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="../index.html">CANDLE</a>
@@ -113,10 +122,9 @@
       </nav>
 
 
+      
       <div class="wy-nav-content">
-        
         <div class="rst-content">
-        
           
 
 
@@ -198,21 +206,17 @@ model parameters have been specified.</p>
 <code class="descname">format_benchmark_config_arguments</code><span class="sig-paren">(</span><em>dictfileparam</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/default_utils.html#Benchmark.format_benchmark_config_arguments"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#default_utils.Benchmark.format_benchmark_config_arguments" title="Permalink to this definition">¶</a></dt>
 <dd><p>Functionality to format the particular parameters of
 the benchmark.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>dictfileparam</strong> (<em>python dictionary</em>) – parameters read from configuration file</li>
-<li><strong>args</strong> (<em>python dictionary</em>) – parameters read from command-line
+<blockquote>
+<div><dl class="docutils">
+<dt>dictfileparam <span class="classifier-delimiter">:</span> <span class="classifier">python dictionary</span></dt>
+<dd>parameters read from configuration file</dd>
+<dt>args <span class="classifier-delimiter">:</span> <span class="classifier">python dictionary</span></dt>
+<dd>parameters read from command-line
 Most of the time command-line overwrites configuration file
 except when the command-line is using default values and
-config file defines those values</li>
-</ul>
-</td>
-</tr>
-</tbody>
-</table>
+config file defines those values</dd>
+</dl>
+</div></blockquote>
 </dd></dl>
 
 <dl class="method">
@@ -447,20 +451,17 @@ The stream handler is set to INFO logging level, or to DEBUG
 logging level if the verbose flag is specified.
 Logging messages which are less severe than the level set will
 be ignored.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>logfile</strong> (<em>filename</em>) – File to store the log records</li>
-<li><strong>logger</strong> (<em>logger object</em>) – Python object for the logging interface</li>
-<li><strong>verbose</strong> (<em>boolean</em>) – Flag to increase the logging level from INFO to DEBUG. It
-only applies to the stream handler.</li>
-</ul>
-</td>
-</tr>
-</tbody>
-</table>
+<blockquote>
+<div><dl class="docutils">
+<dt>logfile <span class="classifier-delimiter">:</span> <span class="classifier">filename</span></dt>
+<dd>File to store the log records</dd>
+<dt>logger <span class="classifier-delimiter">:</span> <span class="classifier">logger object</span></dt>
+<dd>Python object for the logging interface</dd>
+<dt>verbose <span class="classifier-delimiter">:</span> <span class="classifier">boolean</span></dt>
+<dd>Flag to increase the logging level from INFO to DEBUG. It
+only applies to the stream handler.</dd>
+</dl>
+</div></blockquote>
 </dd></dl>
 
 <dl class="function">
@@ -510,7 +511,9 @@ the specified directory path structure.</p>
 
 
            </div>
-           
+           <div class="articleComments">
+            
+           </div>
           </div>
           <footer>
   
@@ -532,7 +535,7 @@ the specified directory path structure.</p>
 
     </p>
   </div>
-  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
 </footer>
 
@@ -551,7 +554,6 @@ the specified directory path structure.</p>
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../',
             VERSION:'',
-            LANGUAGE:'None',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true,
@@ -565,13 +567,19 @@ the specified directory path structure.</p>
 
   
 
-  <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
 
+  
+  
   <script type="text/javascript">
       jQuery(function () {
-          SphinxRtdTheme.Navigation.enable(true);
+          SphinxRtdTheme.StickyNav.enable();
       });
-  </script> 
+  </script>
+   
 
 </body>
 </html>

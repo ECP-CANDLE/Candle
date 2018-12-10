@@ -24,17 +24,26 @@
 
   
 
-  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    <link rel="index" title="Index" href="../genindex.html" />
-    <link rel="search" title="Search" href="../search.html" /> 
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../genindex.html"/>
+        <link rel="search" title="Search" href="../search.html"/>
+    <link rel="top" title="CANDLE  documentation" href="../index.html"/>
+        <link rel="up" title="Module code" href="index.html"/> 
 
   
   <script src="../_static/js/modernizr.min.js"></script>
 
 </head>
 
-<body class="wy-body-for-nav">
+<body class="wy-body-for-nav" role="document">
 
    
   <div class="wy-grid-for-nav">
@@ -93,7 +102,7 @@
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
 
       
-      <nav class="wy-nav-top" aria-label="top navigation">
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
         
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="../index.html">CANDLE</a>
@@ -101,10 +110,9 @@
       </nav>
 
 
+      
       <div class="wy-nav-content">
-        
         <div class="rst-content">
-        
           
 
 
@@ -133,6 +141,8 @@
     
     
       <li class="wy-breadcrumbs-aside">
+        
+            
         
       </li>
     
@@ -223,13 +233,13 @@
 
 <div class="viewcode-block" id="set_up_logger"><a class="viewcode-back" href="../candle_lib/default_utils.html#default_utils.set_up_logger">[docs]</a><span class="k">def</span> <span class="nf">set_up_logger</span><span class="p">(</span><span class="n">logfile</span><span class="p">,</span> <span class="n">logger</span><span class="p">,</span> <span class="n">verbose</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Set up the event logging system. Two handlers are created.</span>
-<span class="sd">        One to send log records to a specified file and</span>
-<span class="sd">        one to send log records to the (defaulf) sys.stderr stream.</span>
-<span class="sd">        The logger and the file handler are set to DEBUG logging level.</span>
-<span class="sd">        The stream handler is set to INFO logging level, or to DEBUG</span>
-<span class="sd">        logging level if the verbose flag is specified.</span>
-<span class="sd">        Logging messages which are less severe than the level set will</span>
-<span class="sd">        be ignored.</span>
+<span class="sd">       One to send log records to a specified file and </span>
+<span class="sd">       one to send log records to the (defaulf) sys.stderr stream.</span>
+<span class="sd">       The logger and the file handler are set to DEBUG logging level.</span>
+<span class="sd">       The stream handler is set to INFO logging level, or to DEBUG</span>
+<span class="sd">       logging level if the verbose flag is specified.</span>
+<span class="sd">       Logging messages which are less severe than the level set will</span>
+<span class="sd">       be ignored.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
@@ -914,8 +924,8 @@
 
 <div class="viewcode-block" id="Benchmark.format_benchmark_config_arguments"><a class="viewcode-back" href="../candle_lib/default_utils.html#default_utils.Benchmark.format_benchmark_config_arguments">[docs]</a>    <span class="k">def</span> <span class="nf">format_benchmark_config_arguments</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dictfileparam</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Functionality to format the particular parameters of</span>
-<span class="sd">            the benchmark.</span>
-
+<span class="sd">           the benchmark.</span>
+<span class="sd">           </span>
 <span class="sd">            Parameters</span>
 <span class="sd">            ----------</span>
 <span class="sd">            dictfileparam : python dictionary</span>
@@ -925,6 +935,7 @@
 <span class="sd">                Most of the time command-line overwrites configuration file</span>
 <span class="sd">                except when the command-line is using default values and</span>
 <span class="sd">                config file defines those values</span>
+<span class="sd">           </span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="n">configOut</span> <span class="o">=</span> <span class="n">dictfileparam</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
@@ -1031,7 +1042,9 @@
 </pre></div>
 
            </div>
-           
+           <div class="articleComments">
+            
+           </div>
           </div>
           <footer>
   
@@ -1044,7 +1057,7 @@
 
     </p>
   </div>
-  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
 </footer>
 
@@ -1063,7 +1076,6 @@
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../',
             VERSION:'',
-            LANGUAGE:'None',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true,
@@ -1077,13 +1089,19 @@
 
   
 
-  <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
 
+  
+  
   <script type="text/javascript">
       jQuery(function () {
-          SphinxRtdTheme.Navigation.enable(true);
+          SphinxRtdTheme.StickyNav.enable();
       });
-  </script> 
+  </script>
+   
 
 </body>
 </html>
