@@ -169,24 +169,27 @@
 specific block. It takes into account the non-exact
 divisibility of numdata into numblocks letting the
 last block to take the extra chunk.</p>
-<blockquote>
-<div><dl class="docutils">
-<dt>numdata <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
-<dd>Total number of data points to distribute</dd>
-<dt>numblocks <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
-<dd>Total number of blocks to distribute into</dd>
-<dt>blocksize <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
-<dd>Size of data per block</dd>
-<dt>blockn <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
-<dd>Index of block, from 0 to numblocks-1</dd>
-</dl>
-<dl class="docutils">
-<dt>start <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
-<dd>Position to start assigning indices</dd>
-<dt>end <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
-<dd>One beyond position to stop assigning indices</dd>
-</dl>
-</div></blockquote>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>numdata</strong> (<em>int</em>) – Total number of data points to distribute</li>
+<li><strong>numblocks</strong> (<em>int</em>) – Total number of blocks to distribute into</li>
+<li><strong>blocksize</strong> (<em>int</em>) – Size of data per block</li>
+<li><strong>blockn</strong> (<em>int</em>) – Index of block, from 0 to numblocks-1</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><ul class="simple">
+<li><strong>start</strong> (<em>int</em>) – Position to start assigning indices</li>
+<li><strong>end</strong> (<em>int</em>) – One beyond position to stop assigning indices</li>
+</ul>
+</p>
+</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="function">
@@ -194,27 +197,27 @@ last block to take the extra chunk.</p>
 <code class="descclassname">uq_utils.</code><code class="descname">fill_array</code><span class="sig-paren">(</span><em>blocklist</em>, <em>maxsize</em>, <em>numdata</em>, <em>numblocks</em>, <em>blocksize</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/uq_utils.html#fill_array"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#uq_utils.fill_array" title="Permalink to this definition">¶</a></dt>
 <dd><p>Fills a new array of integers with the indices corresponding
 to the specified block structure.</p>
-<blockquote>
-<div><dl class="docutils">
-<dt>blocklist <span class="classifier-delimiter">:</span> <span class="classifier">list</span></dt>
-<dd>List of integers describen the block indices that
-go into the array</dd>
-<dt>maxsize <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
-<dd>Maximum possible length for the partition (the size of the
-common block size plus the remainder, if any).</dd>
-<dt>numdata <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
-<dd>Total number of data points to distribute</dd>
-<dt>numblocks <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
-<dd>Total number of blocks to distribute into</dd>
-<dt>blocksize <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
-<dd>Size of data per block</dd>
-</dl>
-<dl class="docutils">
-<dt>indexArray <span class="classifier-delimiter">:</span> <span class="classifier">int numpy array</span></dt>
-<dd>Indices for specific data partition. Resizes the array
-to the correct length.</dd>
-</dl>
-</div></blockquote>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>blocklist</strong> (<em>list</em>) – List of integers describen the block indices that
+go into the array</li>
+<li><strong>maxsize</strong> (<em>int</em>) – Maximum possible length for the partition (the size of the
+common block size plus the remainder, if any).</li>
+<li><strong>numdata</strong> (<em>int</em>) – Total number of data points to distribute</li>
+<li><strong>numblocks</strong> (<em>int</em>) – Total number of blocks to distribute into</li>
+<li><strong>blocksize</strong> (<em>int</em>) – Size of data per block</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><strong>indexArray</strong> (<em>int numpy array</em>) – Indices for specific data partition. Resizes the array
+to the correct length.</p>
+</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="function">
@@ -224,29 +227,31 @@ to the correct length.</dd>
 NO CHECKING IS DONE: it is assumed that the data could be partitioned
 in the specified blocks and that the block indices describe a coherent
 partition.</p>
-<blockquote>
-<div><dl class="docutils">
-<dt>numTrain <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
-<dd>Number of training data points</dd>
-<dt>numTest <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
-<dd>Number of testing data points</dd>
-<dt>numValidation <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
-<dd>Number of validation data points (may be zero)</dd>
-<dt>params <span class="classifier-delimiter">:</span> <span class="classifier">dictionary with parameters</span></dt>
-<dd>Contains the keywords that control the behavior of the function
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>numTrain</strong> (<em>int</em>) – Number of training data points</li>
+<li><strong>numTest</strong> (<em>int</em>) – Number of testing data points</li>
+<li><strong>numValidation</strong> (<em>int</em>) – Number of validation data points (may be zero)</li>
+<li><strong>params</strong> (<em>dictionary with parameters</em>) – Contains the keywords that control the behavior of the function
 (uq_train_fr, uq_valid_fr, uq_test_fr for fraction specification,
 uq_train_vec, uq_valid_vec, uq_test_vec for block list specification, and
-uq_train_bks, uq_valid_bks, uq_test_bks for block number specification)</dd>
-</dl>
-<dl class="docutils">
-<dt>indexTrain <span class="classifier-delimiter">:</span> <span class="classifier">int numpy array</span></dt>
-<dd>Indices for data in training</dd>
-<dt>indexValidation <span class="classifier-delimiter">:</span> <span class="classifier">int numpy array</span></dt>
-<dd>Indices for data in validation (if any)</dd>
-<dt>indexTest <span class="classifier-delimiter">:</span> <span class="classifier">int numpy array</span></dt>
-<dd>Indices for data in testing (if merging)</dd>
-</dl>
-</div></blockquote>
+uq_train_bks, uq_valid_bks, uq_test_bks for block number specification)</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><ul class="simple">
+<li><strong>indexTrain</strong> (<em>int numpy array</em>) – Indices for data in training</li>
+<li><strong>indexValidation</strong> (<em>int numpy array</em>) – Indices for data in validation (if any)</li>
+<li><strong>indexTest</strong> (<em>int numpy array</em>) – Indices for data in testing (if merging)</li>
+</ul>
+</p>
+</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="function">
@@ -256,27 +261,29 @@ uq_train_bks, uq_valid_bks, uq_test_bks for block number specification)</dd>
 NO CHECKING IS DONE: it is assumed that the data could be partitioned
 in the specified list of blocks and that the block indices describe a
 coherent partition.</p>
-<blockquote>
-<div><dl class="docutils">
-<dt>numTrain <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
-<dd>Number of training data points</dd>
-<dt>numTest <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
-<dd>Number of testing data points</dd>
-<dt>numValidation <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
-<dd>Number of validation data points (may be zero)</dd>
-<dt>params <span class="classifier-delimiter">:</span> <span class="classifier">dictionary with parameters</span></dt>
-<dd>Contains the keywords that control the behavior of the function
-(uq_train_vec, uq_valid_vec, uq_test_vec)</dd>
-</dl>
-<dl class="docutils">
-<dt>indexTrain <span class="classifier-delimiter">:</span> <span class="classifier">int numpy array</span></dt>
-<dd>Indices for data in training</dd>
-<dt>indexValidation <span class="classifier-delimiter">:</span> <span class="classifier">int numpy array</span></dt>
-<dd>Indices for data in validation (if any)</dd>
-<dt>indexTest <span class="classifier-delimiter">:</span> <span class="classifier">int numpy array</span></dt>
-<dd>Indices for data in testing (if merging)</dd>
-</dl>
-</div></blockquote>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>numTrain</strong> (<em>int</em>) – Number of training data points</li>
+<li><strong>numTest</strong> (<em>int</em>) – Number of testing data points</li>
+<li><strong>numValidation</strong> (<em>int</em>) – Number of validation data points (may be zero)</li>
+<li><strong>params</strong> (<em>dictionary with parameters</em>) – Contains the keywords that control the behavior of the function
+(uq_train_vec, uq_valid_vec, uq_test_vec)</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><ul class="simple">
+<li><strong>indexTrain</strong> (<em>int numpy array</em>) – Indices for data in training</li>
+<li><strong>indexValidation</strong> (<em>int numpy array</em>) – Indices for data in validation (if any)</li>
+<li><strong>indexTest</strong> (<em>int numpy array</em>) – Indices for data in testing (if merging)</li>
+</ul>
+</p>
+</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="function">
@@ -286,27 +293,29 @@ coherent partition.</p>
 NO CHECKING IS DONE: it is assumed that the data could be partitioned
 in the specified block quantities and that the block quantities describe a
 coherent partition.</p>
-<blockquote>
-<div><dl class="docutils">
-<dt>numTrain <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
-<dd>Number of training data points</dd>
-<dt>numTest <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
-<dd>Number of testing data points</dd>
-<dt>numValidation <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
-<dd>Number of validation data points (may be zero)</dd>
-<dt>params <span class="classifier-delimiter">:</span> <span class="classifier">dictionary with parameters</span></dt>
-<dd>Contains the keywords that control the behavior of the function
-(uq_train_bks, uq_valid_bks, uq_test_bks)</dd>
-</dl>
-<dl class="docutils">
-<dt>indexTrain <span class="classifier-delimiter">:</span> <span class="classifier">int numpy array</span></dt>
-<dd>Indices for data in training</dd>
-<dt>indexValidation <span class="classifier-delimiter">:</span> <span class="classifier">int numpy array</span></dt>
-<dd>Indices for data in validation (if any)</dd>
-<dt>indexTest <span class="classifier-delimiter">:</span> <span class="classifier">int numpy array</span></dt>
-<dd>Indices for data in testing (if merging)</dd>
-</dl>
-</div></blockquote>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>numTrain</strong> (<em>int</em>) – Number of training data points</li>
+<li><strong>numTest</strong> (<em>int</em>) – Number of testing data points</li>
+<li><strong>numValidation</strong> (<em>int</em>) – Number of validation data points (may be zero)</li>
+<li><strong>params</strong> (<em>dictionary with parameters</em>) – Contains the keywords that control the behavior of the function
+(uq_train_bks, uq_valid_bks, uq_test_bks)</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><ul class="simple">
+<li><strong>indexTrain</strong> (<em>int numpy array</em>) – Indices for data in training</li>
+<li><strong>indexValidation</strong> (<em>int numpy array</em>) – Indices for data in validation (if any)</li>
+<li><strong>indexTest</strong> (<em>int numpy array</em>) – Indices for data in testing (if merging)</li>
+</ul>
+</p>
+</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="function">
@@ -314,27 +323,29 @@ coherent partition.</p>
 <code class="descclassname">uq_utils.</code><code class="descname">generate_index_distribution_from_fraction</code><span class="sig-paren">(</span><em>numTrain</em>, <em>numTest</em>, <em>numValidation</em>, <em>params</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/uq_utils.html#generate_index_distribution_from_fraction"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#uq_utils.generate_index_distribution_from_fraction" title="Permalink to this definition">¶</a></dt>
 <dd><p>Generates a vector of indices to partition the data for training.
 It checks that the fractions provided are (0, 1) and add up to 1.</p>
-<blockquote>
-<div><dl class="docutils">
-<dt>numTrain <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
-<dd>Number of training data points</dd>
-<dt>numTest <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
-<dd>Number of testing data points</dd>
-<dt>numValidation <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
-<dd>Number of validation data points (may be zero)</dd>
-<dt>params <span class="classifier-delimiter">:</span> <span class="classifier">dictionary with parameters</span></dt>
-<dd>Contains the keywords that control the behavior of the function
-(uq_train_fr, uq_valid_fr, uq_test_fr)</dd>
-</dl>
-<dl class="docutils">
-<dt>indexTrain <span class="classifier-delimiter">:</span> <span class="classifier">int numpy array</span></dt>
-<dd>Indices for data in training</dd>
-<dt>indexValidation <span class="classifier-delimiter">:</span> <span class="classifier">int numpy array</span></dt>
-<dd>Indices for data in validation (if any)</dd>
-<dt>indexTest <span class="classifier-delimiter">:</span> <span class="classifier">int numpy array</span></dt>
-<dd>Indices for data in testing (if merging)</dd>
-</dl>
-</div></blockquote>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>numTrain</strong> (<em>int</em>) – Number of training data points</li>
+<li><strong>numTest</strong> (<em>int</em>) – Number of testing data points</li>
+<li><strong>numValidation</strong> (<em>int</em>) – Number of validation data points (may be zero)</li>
+<li><strong>params</strong> (<em>dictionary with parameters</em>) – Contains the keywords that control the behavior of the function
+(uq_train_fr, uq_valid_fr, uq_test_fr)</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><ul class="simple">
+<li><strong>indexTrain</strong> (<em>int numpy array</em>) – Indices for data in training</li>
+<li><strong>indexValidation</strong> (<em>int numpy array</em>) – Indices for data in validation (if any)</li>
+<li><strong>indexTest</strong> (<em>int numpy array</em>) – Indices for data in testing (if merging)</li>
+</ul>
+</p>
+</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 </div>

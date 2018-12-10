@@ -186,7 +186,7 @@
 
 
 <div class="viewcode-block" id="func_dump"><a class="viewcode-back" href="../candle_lib/generic_utils.html#generic_utils.func_dump">[docs]</a><span class="k">def</span> <span class="nf">func_dump</span><span class="p">(</span><span class="n">func</span><span class="p">):</span>
-    <span class="sd">&#39;&#39;&#39;Serialize user defined function.&#39;&#39;&#39;</span>
+    <span class="sd">&quot;&quot;&quot; Serialize user defined function. &quot;&quot;&quot;</span>
     <span class="n">code</span> <span class="o">=</span> <span class="n">marshal</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">func</span><span class="o">.</span><span class="vm">__code__</span><span class="p">)</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s1">&#39;raw_unicode_escape&#39;</span><span class="p">)</span>
     <span class="n">defaults</span> <span class="o">=</span> <span class="n">func</span><span class="o">.</span><span class="vm">__defaults__</span>
     <span class="k">if</span> <span class="n">func</span><span class="o">.</span><span class="vm">__closure__</span><span class="p">:</span>
@@ -197,7 +197,7 @@
 
 
 <div class="viewcode-block" id="func_load"><a class="viewcode-back" href="../candle_lib/generic_utils.html#generic_utils.func_load">[docs]</a><span class="k">def</span> <span class="nf">func_load</span><span class="p">(</span><span class="n">code</span><span class="p">,</span> <span class="n">defaults</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">closure</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">globs</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-    <span class="sd">&#39;&#39;&#39;Deserialize user defined function.&#39;&#39;&#39;</span>
+    <span class="sd">&quot;&quot;&quot; Deserialize user defined function. &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">code</span><span class="p">,</span> <span class="p">(</span><span class="nb">tuple</span><span class="p">,</span> <span class="nb">list</span><span class="p">)):</span>  <span class="c1"># unpack previous dump</span>
         <span class="n">code</span><span class="p">,</span> <span class="n">defaults</span><span class="p">,</span> <span class="n">closure</span> <span class="o">=</span> <span class="n">code</span>
     <span class="n">code</span> <span class="o">=</span> <span class="n">marshal</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">code</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s1">&#39;raw_unicode_escape&#39;</span><span class="p">))</span>
@@ -209,7 +209,7 @@
 
 
 <div class="viewcode-block" id="func_reconstruct_closure"><a class="viewcode-back" href="../candle_lib/generic_utils.html#generic_utils.func_reconstruct_closure">[docs]</a><span class="k">def</span> <span class="nf">func_reconstruct_closure</span><span class="p">(</span><span class="n">values</span><span class="p">):</span>
-    <span class="sd">&#39;&#39;&#39;Deserialization helper that reconstructs a closure.&#39;&#39;&#39;</span>
+    <span class="sd">&quot;&quot;&quot; Deserialization helper that reconstructs a closure. &quot;&quot;&quot;</span>
     <span class="n">nums</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">values</span><span class="p">))</span>
     <span class="n">src</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;def func(arg):&quot;</span><span class="p">]</span>
     <span class="n">src</span> <span class="o">+=</span> <span class="p">[</span><span class="s2">&quot;  _</span><span class="si">%d</span><span class="s2"> = arg[</span><span class="si">%d</span><span class="s2">]&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span> <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="n">nums</span><span class="p">]</span>
@@ -224,10 +224,14 @@
 
 <div class="viewcode-block" id="Progbar"><a class="viewcode-back" href="../candle_lib/generic_utils.html#generic_utils.Progbar">[docs]</a><span class="k">class</span> <span class="nc">Progbar</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">interval</span><span class="o">=</span><span class="mf">0.01</span><span class="p">):</span>
-        <span class="sd">&#39;&#39;&#39;</span>
-<span class="sd">            @param target: total number of steps expected</span>
-<span class="sd">            @param interval: minimum visual progress update interval (in seconds)</span>
-<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            Parameters</span>
+<span class="sd">            ------------</span>
+<span class="sd">            target: int</span>
+<span class="sd">                total number of steps expected</span>
+<span class="sd">            interval: float</span>
+<span class="sd">                minimum visual progress update interval (in seconds)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">width</span> <span class="o">=</span> <span class="n">width</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">target</span> <span class="o">=</span> <span class="n">target</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">sum_values</span> <span class="o">=</span> <span class="p">{}</span>
@@ -240,12 +244,16 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">verbose</span> <span class="o">=</span> <span class="n">verbose</span>
 
 <div class="viewcode-block" id="Progbar.update"><a class="viewcode-back" href="../candle_lib/generic_utils.html#generic_utils.Progbar.update">[docs]</a>    <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">current</span><span class="p">,</span> <span class="n">values</span><span class="o">=</span><span class="p">[],</span> <span class="n">force</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
-        <span class="sd">&#39;&#39;&#39;</span>
-<span class="sd">            @param current: index of current step</span>
-<span class="sd">            @param values: list of tuples (name, value_for_last_step).</span>
-<span class="sd">            The progress bar will display averages for these values.</span>
-<span class="sd">            @param force: force visual progress update</span>
-<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            Parameters</span>
+<span class="sd">            ------------</span>
+<span class="sd">            current : int</span>
+<span class="sd">                index of current step</span>
+<span class="sd">            values : list of tuples (name, value_for_last_step).</span>
+<span class="sd">                The progress bar will display averages for these values.</span>
+<span class="sd">            force : boolean</span>
+<span class="sd">                force visual progress update</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">values</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">k</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">sum_values</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">sum_values</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">v</span> <span class="o">*</span> <span class="p">(</span><span class="n">current</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">seen_so_far</span><span class="p">),</span> <span class="n">current</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">seen_so_far</span><span class="p">]</span>

@@ -187,20 +187,28 @@
 
 <div class="viewcode-block" id="get_file"><a class="viewcode-back" href="../candle_lib/file_utils.html#file_utils.get_file">[docs]</a><span class="k">def</span> <span class="nf">get_file</span><span class="p">(</span><span class="n">fname</span><span class="p">,</span> <span class="n">origin</span><span class="p">,</span> <span class="n">untar</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
              <span class="n">md5_hash</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">cache_subdir</span><span class="o">=</span><span class="s1">&#39;common&#39;</span><span class="p">):</span>
-    <span class="sd">&#39;&#39;&#39;Downloads a file from a URL if it not already in the cache.</span>
+    <span class="sd">&quot;&quot;&quot; Downloads a file from a URL if it not already in the cache.</span>
+<span class="sd">        Passing the MD5 hash will verify the file after download as well</span>
+<span class="sd">        as if it is already present in the cache.</span>
 
-<span class="sd">    Passing the MD5 hash will verify the file after download as well as if it is already present in the cache.</span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        fname : string</span>
+<span class="sd">            name of the file</span>
+<span class="sd">        origin : string</span>
+<span class="sd">            original URL of the file</span>
+<span class="sd">        untar : boolean</span>
+<span class="sd">            whether the file should be decompressed</span>
+<span class="sd">        md5_hash : string</span>
+<span class="sd">            MD5 hash of the file for verification</span>
+<span class="sd">        cache_subdir : string</span>
+<span class="sd">            directory being used as the cache</span>
 
-<span class="sd">    # Arguments</span>
-<span class="sd">        fname: name of the file</span>
-<span class="sd">        origin: original URL of the file</span>
-<span class="sd">        untar: boolean, whether the file should be decompressed</span>
-<span class="sd">        md5_hash: MD5 hash of the file for verification</span>
-<span class="sd">        cache_subdir: directory being used as the cache</span>
-
-<span class="sd">    # Returns</span>
+<span class="sd">        Returns</span>
+<span class="sd">        ----------</span>
 <span class="sd">        Path to the downloaded file</span>
-<span class="sd">    &#39;&#39;&#39;</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
     <span class="n">file_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">realpath</span><span class="p">(</span><span class="vm">__file__</span><span class="p">))</span>
     <span class="n">datadir_base</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">expanduser</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">file_path</span><span class="p">,</span> <span class="s1">&#39;..&#39;</span><span class="p">,</span> <span class="s1">&#39;Data&#39;</span><span class="p">))</span>
     <span class="n">datadir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">datadir_base</span><span class="p">,</span> <span class="n">cache_subdir</span><span class="p">)</span>
@@ -281,15 +289,20 @@
 
 
 <div class="viewcode-block" id="validate_file"><a class="viewcode-back" href="../candle_lib/file_utils.html#file_utils.validate_file">[docs]</a><span class="k">def</span> <span class="nf">validate_file</span><span class="p">(</span><span class="n">fpath</span><span class="p">,</span> <span class="n">md5_hash</span><span class="p">):</span>
-    <span class="sd">&#39;&#39;&#39;Validates a file against a MD5 hash</span>
+    <span class="sd">&quot;&quot;&quot; Validates a file against a MD5 hash</span>
 
-<span class="sd">    # Arguments</span>
-<span class="sd">        fpath: path to the file being validated</span>
-<span class="sd">        md5_hash: the MD5 hash being validated against</span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        fpath : string</span>
+<span class="sd">            path to the file being validated</span>
+<span class="sd">        md5_hash : string</span>
+<span class="sd">            the MD5 hash being validated against</span>
 
-<span class="sd">    # Returns</span>
-<span class="sd">        Whether the file is valid</span>
-<span class="sd">    &#39;&#39;&#39;</span>
+<span class="sd">        Returns</span>
+<span class="sd">        ----------</span>
+<span class="sd">        boolean</span>
+<span class="sd">            Whether the file is valid</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">hasher</span> <span class="o">=</span> <span class="n">hashlib</span><span class="o">.</span><span class="n">md5</span><span class="p">()</span>
     <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">fpath</span><span class="p">,</span> <span class="s1">&#39;rb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
         <span class="n">buf</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>

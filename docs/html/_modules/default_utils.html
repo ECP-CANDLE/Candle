@@ -180,7 +180,7 @@
 <span class="c1">#### IO UTILS</span>
 
 <div class="viewcode-block" id="fetch_file"><a class="viewcode-back" href="../candle_lib/default_utils.html#default_utils.fetch_file">[docs]</a><span class="k">def</span> <span class="nf">fetch_file</span><span class="p">(</span><span class="n">link</span><span class="p">,</span> <span class="n">subdir</span><span class="p">,</span> <span class="n">untar</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">md5_hash</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Convert URL to file path and download the file</span>
+    <span class="sd">&quot;&quot;&quot; Convert URL to file path and download the file</span>
 <span class="sd">        if it is not already present in spedified cache.</span>
 
 <span class="sd">        Parameters</span>
@@ -207,7 +207,7 @@
     <span class="k">return</span> <span class="n">get_file</span><span class="p">(</span><span class="n">fname</span><span class="p">,</span> <span class="n">origin</span><span class="o">=</span><span class="n">link</span><span class="p">,</span> <span class="n">untar</span><span class="o">=</span><span class="n">untar</span><span class="p">,</span> <span class="n">md5_hash</span><span class="o">=</span><span class="n">md5_hash</span><span class="p">,</span> <span class="n">cache_subdir</span><span class="o">=</span><span class="n">subdir</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="verify_path"><a class="viewcode-back" href="../candle_lib/default_utils.html#default_utils.verify_path">[docs]</a><span class="k">def</span> <span class="nf">verify_path</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Verify if a directory path exists locally. If the path</span>
+    <span class="sd">&quot;&quot;&quot; Verify if a directory path exists locally. If the path</span>
 <span class="sd">        does not exist, but is a valid path, it recursivelly creates</span>
 <span class="sd">        the specified directory path structure.</span>
 
@@ -222,14 +222,14 @@
 
 
 <div class="viewcode-block" id="set_up_logger"><a class="viewcode-back" href="../candle_lib/default_utils.html#default_utils.set_up_logger">[docs]</a><span class="k">def</span> <span class="nf">set_up_logger</span><span class="p">(</span><span class="n">logfile</span><span class="p">,</span> <span class="n">logger</span><span class="p">,</span> <span class="n">verbose</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Set up the event logging system. Two handlers are created.</span>
-<span class="sd">       One to send log records to a specified file and </span>
-<span class="sd">       one to send log records to the (defaulf) sys.stderr stream.</span>
-<span class="sd">       The logger and the file handler are set to DEBUG logging level.</span>
-<span class="sd">       The stream handler is set to INFO logging level, or to DEBUG</span>
-<span class="sd">       logging level if the verbose flag is specified.</span>
-<span class="sd">       Logging messages which are less severe than the level set will</span>
-<span class="sd">       be ignored.</span>
+    <span class="sd">&quot;&quot;&quot; Set up the event logging system. Two handlers are created.</span>
+<span class="sd">        One to send log records to a specified file and</span>
+<span class="sd">        one to send log records to the (defaulf) sys.stderr stream.</span>
+<span class="sd">        The logger and the file handler are set to DEBUG logging level.</span>
+<span class="sd">        The stream handler is set to INFO logging level, or to DEBUG</span>
+<span class="sd">        logging level if the verbose flag is specified.</span>
+<span class="sd">        Logging messages which are less severe than the level set will</span>
+<span class="sd">        be ignored.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
@@ -259,7 +259,7 @@
 
 
 <div class="viewcode-block" id="eval_string_as_list"><a class="viewcode-back" href="../candle_lib/default_utils.html#default_utils.eval_string_as_list">[docs]</a><span class="k">def</span> <span class="nf">eval_string_as_list</span><span class="p">(</span><span class="n">str_read</span><span class="p">,</span> <span class="n">separator</span><span class="p">,</span> <span class="n">dtype</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Parse a string and convert it into a list of lists.</span>
+    <span class="sd">&quot;&quot;&quot; Parse a string and convert it into a list of lists.</span>
 <span class="sd">        </span>
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
@@ -295,7 +295,7 @@
 
 
 <div class="viewcode-block" id="eval_string_as_list_of_lists"><a class="viewcode-back" href="../candle_lib/default_utils.html#default_utils.eval_string_as_list_of_lists">[docs]</a><span class="k">def</span> <span class="nf">eval_string_as_list_of_lists</span><span class="p">(</span><span class="n">str_read</span><span class="p">,</span> <span class="n">separator_out</span><span class="p">,</span> <span class="n">separator_in</span><span class="p">,</span> <span class="n">dtype</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Parse a string and convert it into a list of lists.</span>
+    <span class="sd">&quot;&quot;&quot; Parse a string and convert it into a list of lists.</span>
 <span class="sd">        </span>
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
@@ -347,13 +347,12 @@
 
 <span class="sd">        Return</span>
 <span class="sd">        ----------</span>
-<span class="sd">        Boolean value. It raises and exception if the provided string cannot</span>
-<span class="sd">        be interpreted as a boolean type. </span>
-
-<span class="sd">        Strings recognized as boolean True:</span>
-<span class="sd">        &#39;yes&#39;, &#39;true&#39;, &#39;t&#39;, &#39;y&#39;, &#39;1&#39; and uppercase versions (where applicable).</span>
-<span class="sd">        Strings recognized as boolean False:</span>
-<span class="sd">        &#39;no&#39;, &#39;false&#39;, &#39;f&#39;, &#39;n&#39;, &#39;0&#39; and uppercase versions (where applicable).</span>
+<span class="sd">        Boolean value. It raises and exception if the provided string cannot \</span>
+<span class="sd">        be interpreted as a boolean type.</span>
+<span class="sd">        Strings recognized as boolean True : </span>
+<span class="sd">            &#39;yes&#39;, &#39;true&#39;, &#39;t&#39;, &#39;y&#39;, &#39;1&#39; and uppercase versions (where applicable).</span>
+<span class="sd">        Strings recognized as boolean False : </span>
+<span class="sd">            &#39;no&#39;, &#39;false&#39;, &#39;f&#39;, &#39;n&#39;, &#39;0&#39; and uppercase versions (where applicable).</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="n">v</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">&#39;yes&#39;</span><span class="p">,</span> <span class="s1">&#39;true&#39;</span><span class="p">,</span> <span class="s1">&#39;t&#39;</span><span class="p">,</span> <span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="s1">&#39;1&#39;</span><span class="p">):</span>
         <span class="k">return</span> <span class="kc">True</span>
@@ -783,7 +782,8 @@
 
 
 <div class="viewcode-block" id="directory_from_parameters"><a class="viewcode-back" href="../candle_lib/default_utils.html#default_utils.directory_from_parameters">[docs]</a><span class="k">def</span> <span class="nf">directory_from_parameters</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">commonroot</span><span class="o">=</span><span class="s1">&#39;Output&#39;</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Construct output directory path with unique IDs from parameters</span>
+    <span class="sd">&quot;&quot;&quot; Construct output directory path with unique IDs from parameters</span>
+
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
 <span class="sd">        params : python dictionary</span>
@@ -823,8 +823,9 @@
 <span class="sd">        It interacts with the argparser to extract command-line options and arguments</span>
 <span class="sd">        from the benchmark&#39;s configuration files.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
+
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filepath</span><span class="p">,</span> <span class="n">defmodel</span><span class="p">,</span> <span class="n">framework</span><span class="p">,</span> <span class="n">prog</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">parser</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Initialize Benchmark object.</span>
+        <span class="sd">&quot;&quot;&quot; Initialize Benchmark object.</span>
 
 <span class="sd">            Parameters</span>
 <span class="sd">            ----------</span>
@@ -913,8 +914,8 @@
 
 
 <div class="viewcode-block" id="Benchmark.format_benchmark_config_arguments"><a class="viewcode-back" href="../candle_lib/default_utils.html#default_utils.Benchmark.format_benchmark_config_arguments">[docs]</a>    <span class="k">def</span> <span class="nf">format_benchmark_config_arguments</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dictfileparam</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Functionality to format the particular parameters of</span>
-<span class="sd">           the benchmark.</span>
+        <span class="sd">&quot;&quot;&quot; Functionality to format the particular parameters of</span>
+<span class="sd">            the benchmark.</span>
 <span class="sd">           </span>
 <span class="sd">            Parameters</span>
 <span class="sd">            ----------</span>
@@ -969,16 +970,16 @@
     
         <span class="n">fileParams</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">format_benchmark_config_arguments</span><span class="p">(</span><span class="n">fileParams</span><span class="p">)</span>
         <span class="n">pprint</span><span class="p">(</span><span class="n">fileParams</span><span class="p">)</span>
-    
+
         <span class="k">return</span> <span class="n">fileParams</span></div>
 
 
 
 <div class="viewcode-block" id="Benchmark.set_locals"><a class="viewcode-back" href="../candle_lib/default_utils.html#default_utils.Benchmark.set_locals">[docs]</a>    <span class="k">def</span> <span class="nf">set_locals</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Functionality to set variables specific for the benchmark</span>
-<span class="sd">        - required: set of required parameters for the benchmark.</span>
-<span class="sd">        - additional_definitions: list of dictionaries describing the additional parameters for the</span>
-<span class="sd">        benchmark.</span>
+        <span class="sd">&quot;&quot;&quot; Functionality to set variables specific for the benchmark</span>
+<span class="sd">            - required: set of required parameters for the benchmark.</span>
+<span class="sd">            - additional_definitions: list of dictionaries describing \</span>
+<span class="sd">                the additional parameters for the benchmark.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
     
         <span class="k">pass</span></div>

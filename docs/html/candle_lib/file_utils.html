@@ -165,31 +165,48 @@
 <dl class="function">
 <dt id="file_utils.get_file">
 <code class="descclassname">file_utils.</code><code class="descname">get_file</code><span class="sig-paren">(</span><em>fname</em>, <em>origin</em>, <em>untar=False</em>, <em>md5_hash=None</em>, <em>cache_subdir='common'</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/file_utils.html#get_file"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#file_utils.get_file" title="Permalink to this definition">¶</a></dt>
-<dd><p>Downloads a file from a URL if it not already in the cache.</p>
-<p>Passing the MD5 hash will verify the file after download as well as if it is already present in the cache.</p>
-<dl class="docutils">
-<dt># Arguments</dt>
-<dd>fname: name of the file
-origin: original URL of the file
-untar: boolean, whether the file should be decompressed
-md5_hash: MD5 hash of the file for verification
-cache_subdir: directory being used as the cache</dd>
-<dt># Returns</dt>
-<dd>Path to the downloaded file</dd>
-</dl>
+<dd><p>Downloads a file from a URL if it not already in the cache.
+Passing the MD5 hash will verify the file after download as well
+as if it is already present in the cache.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>fname</strong> (<em>string</em>) – name of the file</li>
+<li><strong>origin</strong> (<em>string</em>) – original URL of the file</li>
+<li><strong>untar</strong> (<em>boolean</em>) – whether the file should be decompressed</li>
+<li><strong>md5_hash</strong> (<em>string</em>) – MD5 hash of the file for verification</li>
+<li><strong>cache_subdir</strong> (<em>string</em>) – directory being used as the cache</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><em>Path to the downloaded file</em></p>
+</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="function">
 <dt id="file_utils.validate_file">
 <code class="descclassname">file_utils.</code><code class="descname">validate_file</code><span class="sig-paren">(</span><em>fpath</em>, <em>md5_hash</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/file_utils.html#validate_file"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#file_utils.validate_file" title="Permalink to this definition">¶</a></dt>
 <dd><p>Validates a file against a MD5 hash</p>
-<dl class="docutils">
-<dt># Arguments</dt>
-<dd>fpath: path to the file being validated
-md5_hash: the MD5 hash being validated against</dd>
-<dt># Returns</dt>
-<dd>Whether the file is valid</dd>
-</dl>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>fpath</strong> (<em>string</em>) – path to the file being validated</li>
+<li><strong>md5_hash</strong> (<em>string</em>) – the MD5 hash being validated against</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><em>boolean</em> – Whether the file is valid</p>
+</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 </div>

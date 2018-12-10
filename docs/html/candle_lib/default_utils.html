@@ -198,17 +198,21 @@ model parameters have been specified.</p>
 <code class="descname">format_benchmark_config_arguments</code><span class="sig-paren">(</span><em>dictfileparam</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/default_utils.html#Benchmark.format_benchmark_config_arguments"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#default_utils.Benchmark.format_benchmark_config_arguments" title="Permalink to this definition">¶</a></dt>
 <dd><p>Functionality to format the particular parameters of
 the benchmark.</p>
-<blockquote>
-<div><dl class="docutils">
-<dt>dictfileparam <span class="classifier-delimiter">:</span> <span class="classifier">python dictionary</span></dt>
-<dd>parameters read from configuration file</dd>
-<dt>args <span class="classifier-delimiter">:</span> <span class="classifier">python dictionary</span></dt>
-<dd>parameters read from command-line
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>dictfileparam</strong> (<em>python dictionary</em>) – parameters read from configuration file</li>
+<li><strong>args</strong> (<em>python dictionary</em>) – parameters read from command-line
 Most of the time command-line overwrites configuration file
 except when the command-line is using default values and
-config file defines those values</dd>
-</dl>
-</div></blockquote>
+config file defines those values</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="method">
@@ -240,8 +244,7 @@ specific for each benchmark.</p>
 <code class="descname">set_locals</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/default_utils.html#Benchmark.set_locals"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#default_utils.Benchmark.set_locals" title="Permalink to this definition">¶</a></dt>
 <dd><p>Functionality to set variables specific for the benchmark
 - required: set of required parameters for the benchmark.
-- additional_definitions: list of dictionaries describing the additional parameters for the
-benchmark.</p>
+- additional_definitions: list of dictionaries describing                 the additional parameters for the benchmark.</p>
 </dd></dl>
 
 </dd></dl>
@@ -277,11 +280,19 @@ parameters specified via command-line.</p>
 <dl class="function">
 <dt id="default_utils.directory_from_parameters">
 <code class="descclassname">default_utils.</code><code class="descname">directory_from_parameters</code><span class="sig-paren">(</span><em>params</em>, <em>commonroot='Output'</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/default_utils.html#directory_from_parameters"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#default_utils.directory_from_parameters" title="Permalink to this definition">¶</a></dt>
-<dd><p>Construct output directory path with unique IDs from parameters
-:param params: Dictionary of parameters read
-:type params: python dictionary
-:param commonroot: String to specify the common folder to store results.
-:type commonroot: string</p>
+<dd><p>Construct output directory path with unique IDs from parameters</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>params</strong> (<em>python dictionary</em>) – Dictionary of parameters read</li>
+<li><strong>commonroot</strong> (<em>string</em>) – String to specify the common folder to store results.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="function">
@@ -443,17 +454,20 @@ The stream handler is set to INFO logging level, or to DEBUG
 logging level if the verbose flag is specified.
 Logging messages which are less severe than the level set will
 be ignored.</p>
-<blockquote>
-<div><dl class="docutils">
-<dt>logfile <span class="classifier-delimiter">:</span> <span class="classifier">filename</span></dt>
-<dd>File to store the log records</dd>
-<dt>logger <span class="classifier-delimiter">:</span> <span class="classifier">logger object</span></dt>
-<dd>Python object for the logging interface</dd>
-<dt>verbose <span class="classifier-delimiter">:</span> <span class="classifier">boolean</span></dt>
-<dd>Flag to increase the logging level from INFO to DEBUG. It
-only applies to the stream handler.</dd>
-</dl>
-</div></blockquote>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>logfile</strong> (<em>filename</em>) – File to store the log records</li>
+<li><strong>logger</strong> (<em>logger object</em>) – Python object for the logging interface</li>
+<li><strong>verbose</strong> (<em>boolean</em>) – Flag to increase the logging level from INFO to DEBUG. It
+only applies to the stream handler.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="function">
@@ -470,12 +484,9 @@ undone.</p>
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>v</strong> (<em>string</em>) – String to interpret</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><ul class="simple">
-<li><em>Boolean value. It raises and exception if the provided string cannot</em></li>
-<li><em>be interpreted as a boolean type.</em></li>
-<li><em>Strings recognized as boolean True</em></li>
-<li><em>’yes’, ‘true’, ‘t’, ‘y’, ‘1’ and uppercase versions (where applicable).</em></li>
-<li><em>Strings recognized as boolean False</em></li>
-<li><em>’no’, ‘false’, ‘f’, ‘n’, ‘0’ and uppercase versions (where applicable).</em></li>
+<li><em>Boolean value. It raises and exception if the provided string cannot         be interpreted as a boolean type.</em></li>
+<li><em>Strings recognized as boolean True</em> – ‘yes’, ‘true’, ‘t’, ‘y’, ‘1’ and uppercase versions (where applicable).</li>
+<li><em>Strings recognized as boolean False</em> – ‘no’, ‘false’, ‘f’, ‘n’, ‘0’ and uppercase versions (where applicable).</li>
 </ul>
 </td>
 </tr>

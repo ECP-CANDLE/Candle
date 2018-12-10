@@ -159,11 +159,11 @@
 <span class="kn">from</span> <span class="nn">default_utils</span> <span class="k">import</span> <span class="n">DEFAULT_DATATYPE</span>
 
 <div class="viewcode-block" id="convert_to_class"><a class="viewcode-back" href="../candle_lib/data_utils.html#data_utils.convert_to_class">[docs]</a><span class="k">def</span> <span class="nf">convert_to_class</span><span class="p">(</span><span class="n">y_one_hot</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Converts a one-hot class encoding (array with as many positions as total</span>
-<span class="sd">       classes, with 1 in the corresponding class position, 0 in the other positions),</span>
-<span class="sd">       or soft-max class encoding (array with as many positions as total</span>
-<span class="sd">       classes, whose largest valued position is used as class membership)</span>
-<span class="sd">       to an integer class encoding.</span>
+    <span class="sd">&quot;&quot;&quot; Converts a one-hot class encoding (array with as many positions as total</span>
+<span class="sd">        classes, with 1 in the corresponding class position, 0 in the other positions),</span>
+<span class="sd">        or soft-max class encoding (array with as many positions as total</span>
+<span class="sd">        classes, whose largest valued position is used as class membership)</span>
+<span class="sd">        to an integer class encoding.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
@@ -185,7 +185,7 @@
 
 
 <div class="viewcode-block" id="scale_array"><a class="viewcode-back" href="../candle_lib/data_utils.html#data_utils.scale_array">[docs]</a><span class="k">def</span> <span class="nf">scale_array</span><span class="p">(</span><span class="n">mat</span><span class="p">,</span> <span class="n">scaling</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Scale data included in numpy array.</span>
+    <span class="sd">&quot;&quot;&quot; Scale data included in numpy array.</span>
 <span class="sd">        </span>
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
@@ -196,14 +196,13 @@
 <span class="sd">            Options recognized: &#39;maxabs&#39;, &#39;minmax&#39;, &#39;std&#39;.</span>
 <span class="sd">            &#39;maxabs&#39; : scales data to range [-1 to 1].</span>
 <span class="sd">            &#39;minmax&#39; : scales data to range [-1 to 1].</span>
-<span class="sd">            &#39;std&#39;    : scales data to normal variable with</span>
-<span class="sd">                       mean 0 and standard deviation 1.</span>
+<span class="sd">            &#39;std&#39;    : scales data to normal variable with mean 0 and standard deviation 1.</span>
 <span class="sd">            (Default: None, no scaling).</span>
 
 <span class="sd">        Return</span>
 <span class="sd">        ----------</span>
-<span class="sd">        Returns the numpy array scaled by the method specified.</span>
-<span class="sd">        If no scaling method is specified, it returns the numpy</span>
+<span class="sd">        Returns the numpy array scaled by the method specified. \</span>
+<span class="sd">        If no scaling method is specified, it returns the numpy \</span>
 <span class="sd">        array unmodified.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     
@@ -226,8 +225,8 @@
 
 
 <div class="viewcode-block" id="impute_and_scale_array"><a class="viewcode-back" href="../candle_lib/data_utils.html#data_utils.impute_and_scale_array">[docs]</a><span class="k">def</span> <span class="nf">impute_and_scale_array</span><span class="p">(</span><span class="n">mat</span><span class="p">,</span> <span class="n">scaling</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Impute missing values with mean and scale data included in numpy array.</span>
-<span class="sd">        </span>
+    <span class="sd">&quot;&quot;&quot; Impute missing values with mean and scale data included in numpy array.</span>
+
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
 <span class="sd">        mat : numpy array</span>
@@ -237,14 +236,13 @@
 <span class="sd">            Options recognized: &#39;maxabs&#39;, &#39;minmax&#39;, &#39;std&#39;.</span>
 <span class="sd">            &#39;maxabs&#39; : scales data to range [-1 to 1].</span>
 <span class="sd">            &#39;minmax&#39; : scales data to range [-1 to 1].</span>
-<span class="sd">            &#39;std&#39;    : scales data to normal variable with</span>
-<span class="sd">                       mean 0 and standard deviation 1.</span>
+<span class="sd">            &#39;std&#39;    : scales data to normal variable with mean 0 and standard deviation 1.</span>
 <span class="sd">            (Default: None, no scaling).</span>
 
 <span class="sd">        Return</span>
 <span class="sd">        ----------</span>
-<span class="sd">        Returns the numpy array imputed with the mean value of the</span>
-<span class="sd">        column and scaled by the method specified. If no scaling method is specified,</span>
+<span class="sd">        Returns the numpy array imputed with the mean value of the \</span>
+<span class="sd">        column and scaled by the method specified. If no scaling method is specified, \</span>
 <span class="sd">        it returns the imputed numpy array.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     
@@ -259,13 +257,13 @@
 <div class="viewcode-block" id="load_X_data"><a class="viewcode-back" href="../candle_lib/data_utils.html#data_utils.load_X_data">[docs]</a><span class="k">def</span> <span class="nf">load_X_data</span><span class="p">(</span><span class="n">train_file</span><span class="p">,</span> <span class="n">test_file</span><span class="p">,</span>
                 <span class="n">drop_cols</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">n_cols</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">scaling</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
                 <span class="n">dtype</span><span class="o">=</span><span class="n">DEFAULT_DATATYPE</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="n">DEFAULT_SEED</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Load training and testing unlabeleled data from the files specified</span>
-<span class="sd">       and construct corresponding training and testing pandas DataFrames.</span>
-<span class="sd">       Columns to load can be selected or dropped. Order of rows</span>
-<span class="sd">       can be shuffled. Data can be rescaled.</span>
-<span class="sd">       Training and testing partitions (coming from the respective files)</span>
-<span class="sd">       are preserved.</span>
-<span class="sd">       This function assumes that the files contain a header with column names.</span>
+    <span class="sd">&quot;&quot;&quot; Load training and testing unlabeleled data from the files specified</span>
+<span class="sd">        and construct corresponding training and testing pandas DataFrames.</span>
+<span class="sd">        Columns to load can be selected or dropped. Order of rows</span>
+<span class="sd">        can be shuffled. Data can be rescaled.</span>
+<span class="sd">        Training and testing partitions (coming from the respective files)</span>
+<span class="sd">        are preserved.</span>
+<span class="sd">        This function assumes that the files contain a header with column names.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
@@ -289,7 +287,7 @@
 <span class="sd">            Options recognized: &#39;maxabs&#39;, &#39;minmax&#39;, &#39;std&#39;.</span>
 <span class="sd">            &#39;maxabs&#39; : scales data to range [-1 to 1].</span>
 <span class="sd">            &#39;minmax&#39; : scales data to range [-1 to 1].</span>
-<span class="sd">            &#39;std&#39;    : scales data to normal variable with</span>
+<span class="sd">            &#39;std&#39;    : scales data to normal variable with \</span>
 <span class="sd">                       mean 0 and standard deviation 1.</span>
 <span class="sd">            (Default: None, no scaling).</span>
 <span class="sd">        dtype : data type</span>
@@ -299,15 +297,12 @@
 <span class="sd">            Value to intialize or re-seed the generator.</span>
 <span class="sd">            (Default: DEFAULT_SEED defined in default_utils).</span>
 
-
 <span class="sd">        Return</span>
 <span class="sd">        ----------</span>
 <span class="sd">        X_train : pandas DataFrame</span>
-<span class="sd">            Data for training loaded in a pandas DataFrame and</span>
-<span class="sd">            pre-processed as specified.</span>
+<span class="sd">            Data for training loaded in a pandas DataFrame and pre-processed as specified.</span>
 <span class="sd">        X_test : pandas DataFrame</span>
-<span class="sd">            Data for testing loaded in a pandas DataFrame and</span>
-<span class="sd">            pre-processed as specified.</span>
+<span class="sd">            Data for testing loaded in a pandas DataFrame and pre-processed as specified.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="c1"># compensates for the columns to drop if there is a feature subselection</span>
@@ -343,14 +338,14 @@
 <div class="viewcode-block" id="load_X_data2"><a class="viewcode-back" href="../candle_lib/data_utils.html#data_utils.load_X_data2">[docs]</a><span class="k">def</span> <span class="nf">load_X_data2</span><span class="p">(</span><span class="n">train_file</span><span class="p">,</span> <span class="n">test_file</span><span class="p">,</span>
                 <span class="n">drop_cols</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">n_cols</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">scaling</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
                 <span class="n">validation_split</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">DEFAULT_DATATYPE</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="n">DEFAULT_SEED</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Load training and testing unlabeleled data from the files specified.</span>
-<span class="sd">       Further split trainig data into training and validation partitions,</span>
-<span class="sd">       and construct corresponding training, validation and testing pandas DataFrames.</span>
-<span class="sd">       Columns to load can be selected or dropped. Order of rows</span>
-<span class="sd">       can be shuffled. Data can be rescaled.</span>
-<span class="sd">       Training and testing partitions (coming from the respective files)</span>
-<span class="sd">       are preserved, but training is split into training and validation partitions.</span>
-<span class="sd">       This function assumes that the files contain a header with column names.</span>
+    <span class="sd">&quot;&quot;&quot; Load training and testing unlabeleled data from the files specified.</span>
+<span class="sd">        Further split trainig data into training and validation partitions,</span>
+<span class="sd">        and construct corresponding training, validation and testing pandas DataFrames.</span>
+<span class="sd">        Columns to load can be selected or dropped. Order of rows</span>
+<span class="sd">        can be shuffled. Data can be rescaled.</span>
+<span class="sd">        Training and testing partitions (coming from the respective files)</span>
+<span class="sd">        are preserved, but training is split into training and validation partitions.</span>
+<span class="sd">        This function assumes that the files contain a header with column names.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
@@ -374,8 +369,7 @@
 <span class="sd">            Options recognized: &#39;maxabs&#39;, &#39;minmax&#39;, &#39;std&#39;.</span>
 <span class="sd">            &#39;maxabs&#39; : scales data to range [-1 to 1].</span>
 <span class="sd">            &#39;minmax&#39; : scales data to range [-1 to 1].</span>
-<span class="sd">            &#39;std&#39;    : scales data to normal variable with</span>
-<span class="sd">                       mean 0 and standard deviation 1.</span>
+<span class="sd">            &#39;std&#39;    : scales data to normal variable with mean 0 and standard deviation 1.</span>
 <span class="sd">            (Default: None, no scaling).</span>
 <span class="sd">        validation_split : float</span>
 <span class="sd">            Fraction of training data to set aside for validation.</span>
@@ -439,14 +433,14 @@
 <div class="viewcode-block" id="load_Xy_one_hot_data"><a class="viewcode-back" href="../candle_lib/data_utils.html#data_utils.load_Xy_one_hot_data">[docs]</a><span class="k">def</span> <span class="nf">load_Xy_one_hot_data</span><span class="p">(</span><span class="n">train_file</span><span class="p">,</span> <span class="n">test_file</span><span class="p">,</span>
                         <span class="n">class_col</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">drop_cols</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">n_cols</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">scaling</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
                         <span class="n">dtype</span><span class="o">=</span><span class="n">DEFAULT_DATATYPE</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="n">DEFAULT_SEED</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Load training and testing data from the files specified, with a column indicated to use as label.</span>
-<span class="sd">       Construct corresponding training and testing pandas DataFrames,</span>
-<span class="sd">       separated into data (i.e. features) and labels. Labels to output are one-hot encoded (categorical).</span>
-<span class="sd">       Columns to load can be selected or dropped. Order of rows</span>
-<span class="sd">       can be shuffled. Data can be rescaled.</span>
-<span class="sd">       Training and testing partitions (coming from the respective files)</span>
-<span class="sd">       are preserved.</span>
-<span class="sd">       This function assumes that the files contain a header with column names.</span>
+    <span class="sd">&quot;&quot;&quot; Load training and testing data from the files specified, with a column indicated to use as label.</span>
+<span class="sd">        Construct corresponding training and testing pandas DataFrames,</span>
+<span class="sd">        separated into data (i.e. features) and labels. Labels to output are one-hot encoded (categorical).</span>
+<span class="sd">        Columns to load can be selected or dropped. Order of rows</span>
+<span class="sd">        can be shuffled. Data can be rescaled.</span>
+<span class="sd">        Training and testing partitions (coming from the respective files)</span>
+<span class="sd">        are preserved.</span>
+<span class="sd">        This function assumes that the files contain a header with column names.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
@@ -474,8 +468,7 @@
 <span class="sd">            Options recognized: &#39;maxabs&#39;, &#39;minmax&#39;, &#39;std&#39;.</span>
 <span class="sd">            &#39;maxabs&#39; : scales data to range [-1 to 1].</span>
 <span class="sd">            &#39;minmax&#39; : scales data to range [-1 to 1].</span>
-<span class="sd">            &#39;std&#39;    : scales data to normal variable with</span>
-<span class="sd">                       mean 0 and standard deviation 1.</span>
+<span class="sd">            &#39;std&#39;    : scales data to normal variable with mean 0 and standard deviation 1.</span>
 <span class="sd">            (Default: None, no scaling).</span>
 <span class="sd">        dtype : data type</span>
 <span class="sd">            Data type to use for the output pandas DataFrames.</span>
@@ -545,15 +538,15 @@
 <div class="viewcode-block" id="load_Xy_one_hot_data2"><a class="viewcode-back" href="../candle_lib/data_utils.html#data_utils.load_Xy_one_hot_data2">[docs]</a><span class="k">def</span> <span class="nf">load_Xy_one_hot_data2</span><span class="p">(</span><span class="n">train_file</span><span class="p">,</span> <span class="n">test_file</span><span class="p">,</span>
                     <span class="n">class_col</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">drop_cols</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">n_cols</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">scaling</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
                     <span class="n">validation_split</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">DEFAULT_DATATYPE</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="n">DEFAULT_SEED</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Load training and testing data from the files specified, with a column indicated to use as label.</span>
-<span class="sd">       Further split trainig data into training and validation partitions,</span>
-<span class="sd">       and construct corresponding training, validation and testing pandas DataFrames,</span>
-<span class="sd">       separated into data (i.e. features) and labels. Labels to output are one-hot encoded (categorical).</span>
-<span class="sd">       Columns to load can be selected or dropped. Order of rows</span>
-<span class="sd">       can be shuffled. Data can be rescaled.</span>
-<span class="sd">       Training and testing partitions (coming from the respective files)</span>
-<span class="sd">       are preserved, but training is split into training and validation partitions.</span>
-<span class="sd">       This function assumes that the files contain a header with column names.</span>
+    <span class="sd">&quot;&quot;&quot; Load training and testing data from the files specified, with a column indicated to use as label.</span>
+<span class="sd">        Further split trainig data into training and validation partitions,</span>
+<span class="sd">        and construct corresponding training, validation and testing pandas DataFrames,</span>
+<span class="sd">        separated into data (i.e. features) and labels. Labels to output are one-hot encoded (categorical).</span>
+<span class="sd">        Columns to load can be selected or dropped. Order of rows</span>
+<span class="sd">        can be shuffled. Data can be rescaled.</span>
+<span class="sd">        Training and testing partitions (coming from the respective files)</span>
+<span class="sd">        are preserved, but training is split into training and validation partitions.</span>
+<span class="sd">        This function assumes that the files contain a header with column names.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
@@ -581,8 +574,7 @@
 <span class="sd">            Options recognized: &#39;maxabs&#39;, &#39;minmax&#39;, &#39;std&#39;.</span>
 <span class="sd">            &#39;maxabs&#39; : scales data to range [-1 to 1].</span>
 <span class="sd">            &#39;minmax&#39; : scales data to range [-1 to 1].</span>
-<span class="sd">            &#39;std&#39;    : scales data to normal variable with</span>
-<span class="sd">                       mean 0 and standard deviation 1.</span>
+<span class="sd">            &#39;std&#39;    : scales data to normal variable with mean 0 and standard deviation 1.</span>
 <span class="sd">            (Default: None, no scaling).</span>
 <span class="sd">        validation_split : float</span>
 <span class="sd">            Fraction of training data to set aside for validation.</span>
@@ -664,17 +656,17 @@
 
 <div class="viewcode-block" id="load_Xy_data2"><a class="viewcode-back" href="../candle_lib/data_utils.html#data_utils.load_Xy_data2">[docs]</a><span class="k">def</span> <span class="nf">load_Xy_data2</span><span class="p">(</span><span class="n">train_file</span><span class="p">,</span> <span class="n">test_file</span><span class="p">,</span> <span class="n">class_col</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">drop_cols</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">n_cols</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">scaling</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
                   <span class="n">validation_split</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">DEFAULT_DATATYPE</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="n">DEFAULT_SEED</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Load training and testing data from the files specified, with a column indicated to use as label.</span>
-<span class="sd">       Further split trainig data into training and validation partitions,</span>
-<span class="sd">       and construct corresponding training, validation and testing pandas DataFrames,</span>
-<span class="sd">       separated into data (i.e. features) and labels.</span>
-<span class="sd">       Labels to output can be integer labels (for classification) or</span>
-<span class="sd">       continuous labels (for regression).</span>
-<span class="sd">       Columns to load can be selected or dropped. Order of rows</span>
-<span class="sd">       can be shuffled. Data can be rescaled.</span>
-<span class="sd">       Training and testing partitions (coming from the respective files)</span>
-<span class="sd">       are preserved, but training is split into training and validation partitions.</span>
-<span class="sd">       This function assumes that the files contain a header with column names.</span>
+    <span class="sd">&quot;&quot;&quot; Load training and testing data from the files specified, with a column indicated to use as label.</span>
+<span class="sd">        Further split trainig data into training and validation partitions,</span>
+<span class="sd">        and construct corresponding training, validation and testing pandas DataFrames,</span>
+<span class="sd">        separated into data (i.e. features) and labels.</span>
+<span class="sd">        Labels to output can be integer labels (for classification) or</span>
+<span class="sd">        continuous labels (for regression).</span>
+<span class="sd">        Columns to load can be selected or dropped. Order of rows</span>
+<span class="sd">        can be shuffled. Data can be rescaled.</span>
+<span class="sd">        Training and testing partitions (coming from the respective files)</span>
+<span class="sd">        are preserved, but training is split into training and validation partitions.</span>
+<span class="sd">        This function assumes that the files contain a header with column names.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
@@ -702,8 +694,7 @@
 <span class="sd">            Options recognized: &#39;maxabs&#39;, &#39;minmax&#39;, &#39;std&#39;.</span>
 <span class="sd">            &#39;maxabs&#39; : scales data to range [-1 to 1].</span>
 <span class="sd">            &#39;minmax&#39; : scales data to range [-1 to 1].</span>
-<span class="sd">            &#39;std&#39;    : scales data to normal variable with</span>
-<span class="sd">                       mean 0 and standard deviation 1.</span>
+<span class="sd">            &#39;std&#39;    : scales data to normal variable with mean 0 and standard deviation 1.</span>
 <span class="sd">            (Default: None, no scaling).</span>
 <span class="sd">        validation_split : float</span>
 <span class="sd">            Fraction of training data to set aside for validation.</span>
@@ -751,14 +742,14 @@
 
 
 <div class="viewcode-block" id="load_Xy_data_noheader"><a class="viewcode-back" href="../candle_lib/data_utils.html#data_utils.load_Xy_data_noheader">[docs]</a><span class="k">def</span> <span class="nf">load_Xy_data_noheader</span><span class="p">(</span><span class="n">train_file</span><span class="p">,</span> <span class="n">test_file</span><span class="p">,</span> <span class="n">classes</span><span class="p">,</span> <span class="n">usecols</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">scaling</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">DEFAULT_DATATYPE</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Load training and testing data from the files specified, with the first column to use as label.</span>
-<span class="sd">       Construct corresponding training and testing pandas DataFrames,</span>
-<span class="sd">       separated into data (i.e. features) and labels.</span>
-<span class="sd">       Labels to output are one-hot encoded (categorical).</span>
-<span class="sd">       Columns to load can be selected. Data can be rescaled.</span>
-<span class="sd">       Training and testing partitions (coming from the respective files)</span>
-<span class="sd">       are preserved.</span>
-<span class="sd">       This function assumes that the files do not contain a header.</span>
+    <span class="sd">&quot;&quot;&quot; Load training and testing data from the files specified, with the first column to use as label.</span>
+<span class="sd">        Construct corresponding training and testing pandas DataFrames,</span>
+<span class="sd">        separated into data (i.e. features) and labels.</span>
+<span class="sd">        Labels to output are one-hot encoded (categorical).</span>
+<span class="sd">        Columns to load can be selected. Data can be rescaled.</span>
+<span class="sd">        Training and testing partitions (coming from the respective files)</span>
+<span class="sd">        are preserved.</span>
+<span class="sd">        This function assumes that the files do not contain a header.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
@@ -777,8 +768,7 @@
 <span class="sd">            Options recognized: &#39;maxabs&#39;, &#39;minmax&#39;, &#39;std&#39;.</span>
 <span class="sd">            &#39;maxabs&#39; : scales data to range [-1 to 1].</span>
 <span class="sd">            &#39;minmax&#39; : scales data to range [-1 to 1].</span>
-<span class="sd">            &#39;std&#39;    : scales data to normal variable with</span>
-<span class="sd">                       mean 0 and standard deviation 1.</span>
+<span class="sd">            &#39;std&#39;    : scales data to normal variable with mean 0 and standard deviation 1.</span>
 <span class="sd">            (Default: None, no scaling).</span>
 <span class="sd">        dtype : data type</span>
 <span class="sd">            Data type to use for the output pandas DataFrames.</span>
@@ -842,18 +832,18 @@
                   <span class="n">validation_split</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">return_dataframe</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
                   <span class="n">return_header</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="n">DEFAULT_SEED</span><span class="p">):</span>
 
-    <span class="sd">&quot;&quot;&quot;Load data from the files specified.</span>
-<span class="sd">       Columns corresponding to data features and labels can be specified. A one-hot</span>
-<span class="sd">       encoding can be used for either features or labels.</span>
-<span class="sd">       If validation_split is specified, trainig data is further split into training</span>
-<span class="sd">       and validation partitions.</span>
-<span class="sd">       pandas DataFrames are used to load and pre-process the data. If specified,</span>
-<span class="sd">       those DataFrames are returned. Otherwise just values are returned.</span>
-<span class="sd">       Labels to output can be integer labels (for classification) or</span>
-<span class="sd">       continuous labels (for regression).</span>
-<span class="sd">       Columns to load can be specified, randomly selected or a subset can be dropped.</span>
-<span class="sd">       Order of rows can be shuffled. Data can be rescaled.</span>
-<span class="sd">       This function assumes that the files contain a header with column names.</span>
+    <span class="sd">&quot;&quot;&quot; Load data from the files specified.</span>
+<span class="sd">        Columns corresponding to data features and labels can be specified. A one-hot</span>
+<span class="sd">        encoding can be used for either features or labels.</span>
+<span class="sd">        If validation_split is specified, trainig data is further split into training</span>
+<span class="sd">        and validation partitions.</span>
+<span class="sd">        pandas DataFrames are used to load and pre-process the data. If specified,</span>
+<span class="sd">        those DataFrames are returned. Otherwise just values are returned.</span>
+<span class="sd">        Labels to output can be integer labels (for classification) or</span>
+<span class="sd">        continuous labels (for regression).</span>
+<span class="sd">        Columns to load can be specified, randomly selected or a subset can be dropped.</span>
+<span class="sd">        Order of rows can be shuffled. Data can be rescaled.</span>
+<span class="sd">        This function assumes that the files contain a header with column names.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
@@ -897,8 +887,7 @@
 <span class="sd">            Options recognized: &#39;maxabs&#39;, &#39;minmax&#39;, &#39;std&#39;.</span>
 <span class="sd">            &#39;maxabs&#39; : scales data to range [-1 to 1].</span>
 <span class="sd">            &#39;minmax&#39; : scales data to range [-1 to 1].</span>
-<span class="sd">            &#39;std&#39;    : scales data to normal variable with</span>
-<span class="sd">                       mean 0 and standard deviation 1.</span>
+<span class="sd">            &#39;std&#39;    : scales data to normal variable with mean 0 and standard deviation 1.</span>
 <span class="sd">            (Default: None, no scaling).</span>
 <span class="sd">        dtype : data type</span>
 <span class="sd">            Data type to use for the output pandas DataFrames.</span>
@@ -921,9 +910,9 @@
 
 <span class="sd">        Return</span>
 <span class="sd">        ----------</span>
-<span class="sd">        Tuples of data features and labels are returned, for</span>
-<span class="sd">        train, validation and testing partitions, together with the column</span>
-<span class="sd">        names (headers). The specific objects to return depend</span>
+<span class="sd">        Tuples of data features and labels are returned, for \</span>
+<span class="sd">        train, validation and testing partitions, together with the column \</span>
+<span class="sd">        names (headers). The specific objects to return depend \</span>
 <span class="sd">        on the options selected.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
