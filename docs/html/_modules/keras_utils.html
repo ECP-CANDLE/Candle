@@ -24,26 +24,17 @@
 
   
 
-  
-  
-    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
-  
-
-  
-
-  
-        <link rel="index" title="Index"
-              href="../genindex.html"/>
-        <link rel="search" title="Search" href="../search.html"/>
-    <link rel="top" title="CANDLE  documentation" href="../index.html"/>
-        <link rel="up" title="Module code" href="index.html"/> 
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
 
   
   <script src="../_static/js/modernizr.min.js"></script>
 
 </head>
 
-<body class="wy-body-for-nav" role="document">
+<body class="wy-body-for-nav">
 
    
   <div class="wy-grid-for-nav">
@@ -102,7 +93,7 @@
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
 
       
-      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+      <nav class="wy-nav-top" aria-label="top navigation">
         
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="../index.html">CANDLE</a>
@@ -110,9 +101,10 @@
       </nav>
 
 
-      
       <div class="wy-nav-content">
+        
         <div class="rst-content">
+        
           
 
 
@@ -142,8 +134,6 @@
     
       <li class="wy-breadcrumbs-aside">
         
-            
-        
       </li>
     
   </ul>
@@ -163,6 +153,7 @@
 <span class="kn">from</span> <span class="nn">keras</span> <span class="k">import</span> <span class="n">initializers</span>
 
 <span class="kn">from</span> <span class="nn">keras.layers</span> <span class="k">import</span> <span class="n">Dropout</span>
+<span class="kn">from</span> <span class="nn">keras.callbacks</span> <span class="k">import</span> <span class="n">Callback</span>
 <span class="kn">from</span> <span class="nn">keras.utils</span> <span class="k">import</span> <span class="n">get_custom_objects</span>
 <span class="kn">from</span> <span class="nn">keras.metrics</span> <span class="k">import</span> <span class="n">binary_crossentropy</span><span class="p">,</span> <span class="n">mean_squared_error</span>
 
@@ -196,7 +187,7 @@
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
 <span class="sd">        seed : integer</span>
-<span class="sd">            Random number seed. </span>
+<span class="sd">            Random number seed.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="n">set_seed_defaultUtils</span><span class="p">(</span><span class="n">seed</span><span class="p">)</span>
@@ -293,8 +284,8 @@
 
 
 <div class="viewcode-block" id="build_initializer"><a class="viewcode-back" href="../candle_lib/keras_utils.html#keras_utils.build_initializer">[docs]</a><span class="k">def</span> <span class="nf">build_initializer</span><span class="p">(</span><span class="nb">type</span><span class="p">,</span> <span class="n">kerasDefaults</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">constant</span><span class="o">=</span><span class="mf">0.</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot; Set the initializer to the appropriate Keras initializer function </span>
-<span class="sd">        based on the input string and learning rate. Other required values </span>
+    <span class="sd">&quot;&quot;&quot; Set the initializer to the appropriate Keras initializer function</span>
+<span class="sd">        based on the input string and learning rate. Other required values</span>
 <span class="sd">        are set to the Keras default values</span>
 
 <span class="sd">        Parameters</span>
@@ -302,7 +293,7 @@
 <span class="sd">        type : string</span>
 <span class="sd">            String to choose the initializer</span>
 
-<span class="sd">            Options recognized: &#39;constant&#39;, &#39;uniform&#39;, &#39;normal&#39;, </span>
+<span class="sd">            Options recognized: &#39;constant&#39;, &#39;uniform&#39;, &#39;normal&#39;,</span>
 <span class="sd">            &#39;glorot_uniform&#39;, &#39;lecun_uniform&#39;, &#39;he_normal&#39;</span>
 
 <span class="sd">            See the Keras documentation for a full description of the options</span>
@@ -389,12 +380,20 @@
 
 <div class="viewcode-block" id="register_permanent_dropout"><a class="viewcode-back" href="../candle_lib/keras_utils.html#keras_utils.register_permanent_dropout">[docs]</a><span class="k">def</span> <span class="nf">register_permanent_dropout</span><span class="p">():</span>
     <span class="n">get_custom_objects</span><span class="p">()[</span><span class="s1">&#39;PermanentDropout&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">PermanentDropout</span></div>
+
+
+<div class="viewcode-block" id="LoggingCallback"><a class="viewcode-back" href="../candle_lib/keras_utils.html#keras_utils.LoggingCallback">[docs]</a><span class="k">class</span> <span class="nc">LoggingCallback</span><span class="p">(</span><span class="n">Callback</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">print_fcn</span><span class="o">=</span><span class="nb">print</span><span class="p">):</span>
+        <span class="n">Callback</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">print_fcn</span> <span class="o">=</span> <span class="n">print_fcn</span>
+
+<div class="viewcode-block" id="LoggingCallback.on_epoch_end"><a class="viewcode-back" href="../candle_lib/keras_utils.html#keras_utils.LoggingCallback.on_epoch_end">[docs]</a>    <span class="k">def</span> <span class="nf">on_epoch_end</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">epoch</span><span class="p">,</span> <span class="n">logs</span><span class="o">=</span><span class="p">{}):</span>
+        <span class="n">msg</span> <span class="o">=</span> <span class="s2">&quot;[Epoch: </span><span class="si">%i</span><span class="s2">] </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">epoch</span><span class="p">,</span> <span class="s2">&quot;, &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%s</span><span class="s2">: </span><span class="si">%f</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">logs</span><span class="o">.</span><span class="n">items</span><span class="p">())))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">print_fcn</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span></div></div>
 </pre></div>
 
            </div>
-           <div class="articleComments">
-            
-           </div>
+           
           </div>
           <footer>
   
@@ -407,7 +406,7 @@
 
     </p>
   </div>
-  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
 </footer>
 
@@ -426,6 +425,7 @@
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../',
             VERSION:'',
+            LANGUAGE:'None',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true,
@@ -439,19 +439,13 @@
 
   
 
-  
-  
-    <script type="text/javascript" src="../_static/js/theme.js"></script>
-  
+  <script type="text/javascript" src="../_static/js/theme.js"></script>
 
-  
-  
   <script type="text/javascript">
       jQuery(function () {
-          SphinxRtdTheme.StickyNav.enable();
+          SphinxRtdTheme.Navigation.enable(true);
       });
-  </script>
-   
+  </script> 
 
 </body>
 </html>

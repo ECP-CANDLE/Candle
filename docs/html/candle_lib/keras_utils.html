@@ -24,28 +24,19 @@
 
   
 
-  
-  
-    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
-  
-
-  
-
-  
-        <link rel="index" title="Index"
-              href="../genindex.html"/>
-        <link rel="search" title="Search" href="../search.html"/>
-    <link rel="top" title="CANDLE  documentation" href="../index.html"/>
-        <link rel="up" title="CANDLE Library API" href="../candle_lib.html"/>
-        <link rel="next" title="solr_keras module" href="solr_keras.html"/>
-        <link rel="prev" title="generic_utils module" href="generic_utils.html"/> 
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="solr_keras module" href="solr_keras.html" />
+    <link rel="prev" title="generic_utils module" href="generic_utils.html" /> 
 
   
   <script src="../_static/js/modernizr.min.js"></script>
 
 </head>
 
-<body class="wy-body-for-nav" role="document">
+<body class="wy-body-for-nav">
 
    
   <div class="wy-grid-for-nav">
@@ -114,7 +105,7 @@
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
 
       
-      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+      <nav class="wy-nav-top" aria-label="top navigation">
         
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="../index.html">CANDLE</a>
@@ -122,9 +113,10 @@
       </nav>
 
 
-      
       <div class="wy-nav-content">
+        
         <div class="rst-content">
+        
           
 
 
@@ -168,15 +160,154 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="keras-utils-module">
-<h1>keras_utils module<a class="headerlink" href="#keras-utils-module" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="module-keras_utils">
+<span id="keras-utils-module"></span><h1>keras_utils module<a class="headerlink" href="#module-keras_utils" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="keras_utils.LoggingCallback">
+<em class="property">class </em><code class="descclassname">keras_utils.</code><code class="descname">LoggingCallback</code><span class="sig-paren">(</span><em>print_fcn=&lt;built-in function print&gt;</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/keras_utils.html#LoggingCallback"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#keras_utils.LoggingCallback" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">keras.callbacks.Callback</span></code></p>
+<dl class="method">
+<dt id="keras_utils.LoggingCallback.on_epoch_end">
+<code class="descname">on_epoch_end</code><span class="sig-paren">(</span><em>epoch</em>, <em>logs={}</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/keras_utils.html#LoggingCallback.on_epoch_end"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#keras_utils.LoggingCallback.on_epoch_end" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="keras_utils.PermanentDropout">
+<em class="property">class </em><code class="descclassname">keras_utils.</code><code class="descname">PermanentDropout</code><span class="sig-paren">(</span><em>rate</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/keras_utils.html#PermanentDropout"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#keras_utils.PermanentDropout" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">keras.layers.core.Dropout</span></code></p>
+<dl class="method">
+<dt id="keras_utils.PermanentDropout.call">
+<code class="descname">call</code><span class="sig-paren">(</span><em>x</em>, <em>mask=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/keras_utils.html#PermanentDropout.call"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#keras_utils.PermanentDropout.call" title="Permalink to this definition">¶</a></dt>
+<dd><p>This is where the layer’s logic lives.</p>
+<dl class="docutils">
+<dt># Arguments</dt>
+<dd>inputs: Input tensor, or list/tuple of input tensors.
+<a href="#id1"><span class="problematic" id="id2">**</span></a>kwargs: Additional keyword arguments.</dd>
+<dt># Returns</dt>
+<dd>A tensor or list/tuple of tensors.</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="keras_utils.build_initializer">
+<code class="descclassname">keras_utils.</code><code class="descname">build_initializer</code><span class="sig-paren">(</span><em>type</em>, <em>kerasDefaults</em>, <em>seed=None</em>, <em>constant=0.0</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/keras_utils.html#build_initializer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#keras_utils.build_initializer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the initializer to the appropriate Keras initializer function
+based on the input string and learning rate. Other required values
+are set to the Keras default values</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>type</strong> (<em>string</em>) – <p>String to choose the initializer</p>
+<p>Options recognized: ‘constant’, ‘uniform’, ‘normal’,
+‘glorot_uniform’, ‘lecun_uniform’, ‘he_normal’</p>
+<p>See the Keras documentation for a full description of the options</p>
+</li>
+<li><strong>kerasDefaults</strong> (<em>list</em>) – List of default parameter values to ensure consistency between frameworks</li>
+<li><strong>seed</strong> (<em>integer</em>) – Random number seed</li>
+<li><strong>constant</strong> (<em>float</em>) – Constant value (for the constant initializer only)</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><em>The appropriate Keras initializer function</em></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="keras_utils.build_optimizer">
+<code class="descclassname">keras_utils.</code><code class="descname">build_optimizer</code><span class="sig-paren">(</span><em>type</em>, <em>lr</em>, <em>kerasDefaults</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/keras_utils.html#build_optimizer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#keras_utils.build_optimizer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the optimizer to the appropriate Keras optimizer function
+based on the input string and learning rate. Other required values
+are set to the Keras default values</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>type</strong> (<em>string</em>) – <p>String to choose the optimizer</p>
+<p>Options recognized: ‘sgd’, ‘rmsprop’, ‘adagrad’, adadelta’, ‘adam’
+See the Keras documentation for a full description of the options</p>
+</li>
+<li><strong>lr</strong> (<em>float</em>) – Learning rate</li>
+<li><strong>kerasDefaults</strong> (<em>list</em>) – List of default parameter values to ensure consistency between frameworks</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><em>The appropriate Keras optimizer function</em></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="keras_utils.corr">
+<code class="descclassname">keras_utils.</code><code class="descname">corr</code><span class="sig-paren">(</span><em>y_true</em>, <em>y_pred</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/keras_utils.html#corr"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#keras_utils.corr" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="keras_utils.covariance">
+<code class="descclassname">keras_utils.</code><code class="descname">covariance</code><span class="sig-paren">(</span><em>x</em>, <em>y</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/keras_utils.html#covariance"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#keras_utils.covariance" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="keras_utils.evaluate_autoencoder">
+<code class="descclassname">keras_utils.</code><code class="descname">evaluate_autoencoder</code><span class="sig-paren">(</span><em>y_pred</em>, <em>y_test</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/keras_utils.html#evaluate_autoencoder"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#keras_utils.evaluate_autoencoder" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="keras_utils.get_function">
+<code class="descclassname">keras_utils.</code><code class="descname">get_function</code><span class="sig-paren">(</span><em>name</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/keras_utils.html#get_function"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#keras_utils.get_function" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="keras_utils.mse">
+<code class="descclassname">keras_utils.</code><code class="descname">mse</code><span class="sig-paren">(</span><em>y_true</em>, <em>y_pred</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/keras_utils.html#mse"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#keras_utils.mse" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="keras_utils.register_permanent_dropout">
+<code class="descclassname">keras_utils.</code><code class="descname">register_permanent_dropout</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/keras_utils.html#register_permanent_dropout"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#keras_utils.register_permanent_dropout" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="keras_utils.set_parallelism_threads">
+<code class="descclassname">keras_utils.</code><code class="descname">set_parallelism_threads</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/keras_utils.html#set_parallelism_threads"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#keras_utils.set_parallelism_threads" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the number of parallel threads according to the number available on the hardware</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="keras_utils.set_seed">
+<code class="descclassname">keras_utils.</code><code class="descname">set_seed</code><span class="sig-paren">(</span><em>seed</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/keras_utils.html#set_seed"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#keras_utils.set_seed" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the random number seed to the desired value</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>seed</strong> (<em>integer</em>) – Random number seed.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="keras_utils.xent">
+<code class="descclassname">keras_utils.</code><code class="descname">xent</code><span class="sig-paren">(</span><em>y_true</em>, <em>y_pred</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/keras_utils.html#xent"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#keras_utils.xent" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
 </div>
 
 
            </div>
-           <div class="articleComments">
-            
-           </div>
+           
           </div>
           <footer>
   
@@ -198,7 +329,7 @@
 
     </p>
   </div>
-  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
 </footer>
 
@@ -217,6 +348,7 @@
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../',
             VERSION:'',
+            LANGUAGE:'None',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true,
@@ -230,19 +362,13 @@
 
   
 
-  
-  
-    <script type="text/javascript" src="../_static/js/theme.js"></script>
-  
+  <script type="text/javascript" src="../_static/js/theme.js"></script>
 
-  
-  
   <script type="text/javascript">
       jQuery(function () {
-          SphinxRtdTheme.StickyNav.enable();
+          SphinxRtdTheme.Navigation.enable(true);
       });
-  </script>
-   
+  </script> 
 
 </body>
 </html>

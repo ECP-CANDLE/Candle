@@ -24,28 +24,19 @@
 
   
 
-  
-  
-    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
-  
-
-  
-
-  
-        <link rel="index" title="Index"
-              href="../genindex.html"/>
-        <link rel="search" title="Search" href="../search.html"/>
-    <link rel="top" title="CANDLE  documentation" href="../index.html"/>
-        <link rel="up" title="CANDLE Library API" href="../candle_lib.html"/>
-        <link rel="next" title="default_utils module" href="default_utils.html"/>
-        <link rel="prev" title="candle_keras package" href="candle_keras.html"/> 
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="default_utils module" href="default_utils.html" />
+    <link rel="prev" title="candle_keras package" href="candle_keras.html" /> 
 
   
   <script src="../_static/js/modernizr.min.js"></script>
 
 </head>
 
-<body class="wy-body-for-nav" role="document">
+<body class="wy-body-for-nav">
 
    
   <div class="wy-grid-for-nav">
@@ -114,7 +105,7 @@
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
 
       
-      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+      <nav class="wy-nav-top" aria-label="top navigation">
         
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="../index.html">CANDLE</a>
@@ -122,9 +113,10 @@
       </nav>
 
 
-      
       <div class="wy-nav-content">
+        
         <div class="rst-content">
+        
           
 
 
@@ -168,15 +160,580 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="data-utils-module">
-<h1>data_utils module<a class="headerlink" href="#data-utils-module" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="module-data_utils">
+<span id="data-utils-module"></span><h1>data_utils module<a class="headerlink" href="#module-data_utils" title="Permalink to this headline">¶</a></h1>
+<dl class="function">
+<dt id="data_utils.convert_to_class">
+<code class="descclassname">data_utils.</code><code class="descname">convert_to_class</code><span class="sig-paren">(</span><em>y_one_hot</em>, <em>dtype=&lt;class 'int'&gt;</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/data_utils.html#convert_to_class"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#data_utils.convert_to_class" title="Permalink to this definition">¶</a></dt>
+<dd><p>Converts a one-hot class encoding (array with as many positions as total
+classes, with 1 in the corresponding class position, 0 in the other positions),
+or soft-max class encoding (array with as many positions as total
+classes, whose largest valued position is used as class membership)
+to an integer class encoding.</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>y_one_hot <span class="classifier-delimiter">:</span> <span class="classifier">numpy array</span></dt>
+<dd>Input array with one-hot or soft-max class encoding.</dd>
+<dt>dtype <span class="classifier-delimiter">:</span> <span class="classifier">data type</span></dt>
+<dd>Data type to use for the output numpy array.
+(Default: int, integer data is used to represent the
+class membership).</dd>
+</dl>
+<p>Returns a numpy array with an integer class encoding.</p>
+</div></blockquote>
+</dd></dl>
+
+<dl class="function">
+<dt id="data_utils.impute_and_scale_array">
+<code class="descclassname">data_utils.</code><code class="descname">impute_and_scale_array</code><span class="sig-paren">(</span><em>mat</em>, <em>scaling=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/data_utils.html#impute_and_scale_array"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#data_utils.impute_and_scale_array" title="Permalink to this definition">¶</a></dt>
+<dd><p>Impute missing values with mean and scale data included in numpy array.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>mat</strong> (<em>numpy array</em>) – Array to scale</li>
+<li><strong>scaling</strong> (<em>string</em>) – <p>String describing type of scaling to apply.
+Options recognized: ‘maxabs’, ‘minmax’, ‘std’.
+‘maxabs’ : scales data to range [-1 to 1].
+‘minmax’ : scales data to range [-1 to 1].
+‘std’    : scales data to normal variable with</p>
+<blockquote>
+<div>mean 0 and standard deviation 1.</div></blockquote>
+<p>(Default: None, no scaling).</p>
+</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><ul class="simple">
+<li><em>Returns the numpy array imputed with the mean value of the</em></li>
+<li><em>column and scaled by the method specified. If no scaling method is specified,</em></li>
+<li><em>it returns the imputed numpy array.</em></li>
+</ul>
+</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="data_utils.load_X_data">
+<code class="descclassname">data_utils.</code><code class="descname">load_X_data</code><span class="sig-paren">(</span><em>train_file</em>, <em>test_file</em>, <em>drop_cols=None</em>, <em>n_cols=None</em>, <em>shuffle=False</em>, <em>scaling=None</em>, <em>dtype=&lt;class 'numpy.float32'&gt;</em>, <em>seed=7102</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/data_utils.html#load_X_data"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#data_utils.load_X_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Load training and testing unlabeleled data from the files specified
+and construct corresponding training and testing pandas DataFrames.
+Columns to load can be selected or dropped. Order of rows
+can be shuffled. Data can be rescaled.
+Training and testing partitions (coming from the respective files)
+are preserved.
+This function assumes that the files contain a header with column names.</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>train_file <span class="classifier-delimiter">:</span> <span class="classifier">filename</span></dt>
+<dd>Name of the file to load the training data.</dd>
+<dt>test_file <span class="classifier-delimiter">:</span> <span class="classifier">filename</span></dt>
+<dd>Name of the file to load the testing data.</dd>
+<dt>drop_cols <span class="classifier-delimiter">:</span> <span class="classifier">list</span></dt>
+<dd>List of column names to drop from the files being loaded.
+(Default: None, all the columns are used).</dd>
+<dt>n_cols <span class="classifier-delimiter">:</span> <span class="classifier">integer</span></dt>
+<dd>Number of columns to load from the files.
+(Default: None, all the columns are used).</dd>
+<dt>shuffle <span class="classifier-delimiter">:</span> <span class="classifier">boolean</span></dt>
+<dd>Boolean flag to indicate row shuffling. If True the rows are
+re-ordered, if False the order in which rows are read is
+preserved.
+(Default: False, no permutation of the loading row order).</dd>
+<dt>scaling <span class="classifier-delimiter">:</span> <span class="classifier">string</span></dt>
+<dd><p class="first">String describing type of scaling to apply.
+Options recognized: ‘maxabs’, ‘minmax’, ‘std’.
+‘maxabs’ : scales data to range [-1 to 1].
+‘minmax’ : scales data to range [-1 to 1].
+‘std’    : scales data to normal variable with</p>
+<blockquote>
+<div>mean 0 and standard deviation 1.</div></blockquote>
+<p class="last">(Default: None, no scaling).</p>
+</dd>
+<dt>dtype <span class="classifier-delimiter">:</span> <span class="classifier">data type</span></dt>
+<dd>Data type to use for the output pandas DataFrames.
+(Default: DEFAULT_DATATYPE defined in default_utils).</dd>
+<dt>seed <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
+<dd>Value to intialize or re-seed the generator.
+(Default: DEFAULT_SEED defined in default_utils).</dd>
+</dl>
+<dl class="docutils">
+<dt>X_train <span class="classifier-delimiter">:</span> <span class="classifier">pandas DataFrame</span></dt>
+<dd>Data for training loaded in a pandas DataFrame and
+pre-processed as specified.</dd>
+<dt>X_test <span class="classifier-delimiter">:</span> <span class="classifier">pandas DataFrame</span></dt>
+<dd>Data for testing loaded in a pandas DataFrame and
+pre-processed as specified.</dd>
+</dl>
+</div></blockquote>
+</dd></dl>
+
+<dl class="function">
+<dt id="data_utils.load_X_data2">
+<code class="descclassname">data_utils.</code><code class="descname">load_X_data2</code><span class="sig-paren">(</span><em>train_file</em>, <em>test_file</em>, <em>drop_cols=None</em>, <em>n_cols=None</em>, <em>shuffle=False</em>, <em>scaling=None</em>, <em>validation_split=0.1</em>, <em>dtype=&lt;class 'numpy.float32'&gt;</em>, <em>seed=7102</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/data_utils.html#load_X_data2"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#data_utils.load_X_data2" title="Permalink to this definition">¶</a></dt>
+<dd><p>Load training and testing unlabeleled data from the files specified.
+Further split trainig data into training and validation partitions,
+and construct corresponding training, validation and testing pandas DataFrames.
+Columns to load can be selected or dropped. Order of rows
+can be shuffled. Data can be rescaled.
+Training and testing partitions (coming from the respective files)
+are preserved, but training is split into training and validation partitions.
+This function assumes that the files contain a header with column names.</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>train_file <span class="classifier-delimiter">:</span> <span class="classifier">filename</span></dt>
+<dd>Name of the file to load the training data.</dd>
+<dt>test_file <span class="classifier-delimiter">:</span> <span class="classifier">filename</span></dt>
+<dd>Name of the file to load the testing data.</dd>
+<dt>drop_cols <span class="classifier-delimiter">:</span> <span class="classifier">list</span></dt>
+<dd>List of column names to drop from the files being loaded.
+(Default: None, all the columns are used).</dd>
+<dt>n_cols <span class="classifier-delimiter">:</span> <span class="classifier">integer</span></dt>
+<dd>Number of columns to load from the files.
+(Default: None, all the columns are used).</dd>
+<dt>shuffle <span class="classifier-delimiter">:</span> <span class="classifier">boolean</span></dt>
+<dd>Boolean flag to indicate row shuffling. If True the rows are
+re-ordered, if False the order in which rows are read is
+preserved.
+(Default: False, no permutation of the loading row order).</dd>
+<dt>scaling <span class="classifier-delimiter">:</span> <span class="classifier">string</span></dt>
+<dd><p class="first">String describing type of scaling to apply.
+Options recognized: ‘maxabs’, ‘minmax’, ‘std’.
+‘maxabs’ : scales data to range [-1 to 1].
+‘minmax’ : scales data to range [-1 to 1].
+‘std’    : scales data to normal variable with</p>
+<blockquote>
+<div>mean 0 and standard deviation 1.</div></blockquote>
+<p class="last">(Default: None, no scaling).</p>
+</dd>
+<dt>validation_split <span class="classifier-delimiter">:</span> <span class="classifier">float</span></dt>
+<dd>Fraction of training data to set aside for validation.
+(Default: 0.1, ten percent of the training data is
+used for the validation partition).</dd>
+<dt>dtype <span class="classifier-delimiter">:</span> <span class="classifier">data type</span></dt>
+<dd>Data type to use for the output pandas DataFrames.
+(Default: DEFAULT_DATATYPE defined in default_utils).</dd>
+<dt>seed <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
+<dd>Value to intialize or re-seed the generator.
+(Default: DEFAULT_SEED defined in default_utils).</dd>
+</dl>
+<dl class="docutils">
+<dt>X_train <span class="classifier-delimiter">:</span> <span class="classifier">pandas DataFrame</span></dt>
+<dd>Data for training loaded in a pandas DataFrame and
+pre-processed as specified.</dd>
+<dt>X_val <span class="classifier-delimiter">:</span> <span class="classifier">pandas DataFrame</span></dt>
+<dd>Data for validation loaded in a pandas DataFrame and
+pre-processed as specified.</dd>
+<dt>X_test <span class="classifier-delimiter">:</span> <span class="classifier">pandas DataFrame</span></dt>
+<dd>Data for testing loaded in a pandas DataFrame and
+pre-processed as specified.</dd>
+</dl>
+</div></blockquote>
+</dd></dl>
+
+<dl class="function">
+<dt id="data_utils.load_Xy_data2">
+<code class="descclassname">data_utils.</code><code class="descname">load_Xy_data2</code><span class="sig-paren">(</span><em>train_file</em>, <em>test_file</em>, <em>class_col=None</em>, <em>drop_cols=None</em>, <em>n_cols=None</em>, <em>shuffle=False</em>, <em>scaling=None</em>, <em>validation_split=0.1</em>, <em>dtype=&lt;class 'numpy.float32'&gt;</em>, <em>seed=7102</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/data_utils.html#load_Xy_data2"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#data_utils.load_Xy_data2" title="Permalink to this definition">¶</a></dt>
+<dd><p>Load training and testing data from the files specified, with a column indicated to use as label.
+Further split trainig data into training and validation partitions,
+and construct corresponding training, validation and testing pandas DataFrames,
+separated into data (i.e. features) and labels.
+Labels to output can be integer labels (for classification) or
+continuous labels (for regression).
+Columns to load can be selected or dropped. Order of rows
+can be shuffled. Data can be rescaled.
+Training and testing partitions (coming from the respective files)
+are preserved, but training is split into training and validation partitions.
+This function assumes that the files contain a header with column names.</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>train_file <span class="classifier-delimiter">:</span> <span class="classifier">filename</span></dt>
+<dd>Name of the file to load the training data.</dd>
+<dt>test_file <span class="classifier-delimiter">:</span> <span class="classifier">filename</span></dt>
+<dd>Name of the file to load the testing data.</dd>
+<dt>class_col <span class="classifier-delimiter">:</span> <span class="classifier">integer</span></dt>
+<dd>Index of the column to use as the label.
+(Default: None, this would cause the function to fail, a label
+has to be indicated at calling).</dd>
+<dt>drop_cols <span class="classifier-delimiter">:</span> <span class="classifier">list</span></dt>
+<dd>List of column names to drop from the files being loaded.
+(Default: None, all the columns are used).</dd>
+<dt>n_cols <span class="classifier-delimiter">:</span> <span class="classifier">integer</span></dt>
+<dd>Number of columns to load from the files.
+(Default: None, all the columns are used).</dd>
+<dt>shuffle <span class="classifier-delimiter">:</span> <span class="classifier">boolean</span></dt>
+<dd>Boolean flag to indicate row shuffling. If True the rows are
+re-ordered, if False the order in which rows are loaded is
+preserved.
+(Default: False, no permutation of the loading row order).</dd>
+<dt>scaling <span class="classifier-delimiter">:</span> <span class="classifier">string</span></dt>
+<dd><p class="first">String describing type of scaling to apply.
+Options recognized: ‘maxabs’, ‘minmax’, ‘std’.
+‘maxabs’ : scales data to range [-1 to 1].
+‘minmax’ : scales data to range [-1 to 1].
+‘std’    : scales data to normal variable with</p>
+<blockquote>
+<div>mean 0 and standard deviation 1.</div></blockquote>
+<p class="last">(Default: None, no scaling).</p>
+</dd>
+<dt>validation_split <span class="classifier-delimiter">:</span> <span class="classifier">float</span></dt>
+<dd>Fraction of training data to set aside for validation.
+(Default: 0.1, ten percent of the training data is
+used for the validation partition).</dd>
+<dt>dtype <span class="classifier-delimiter">:</span> <span class="classifier">data type</span></dt>
+<dd>Data type to use for the output pandas DataFrames.
+(Default: DEFAULT_DATATYPE defined in default_utils).</dd>
+<dt>seed <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
+<dd>Value to intialize or re-seed the generator.
+(Default: DEFAULT_SEED defined in default_utils).</dd>
+</dl>
+<dl class="docutils">
+<dt>X_train <span class="classifier-delimiter">:</span> <span class="classifier">pandas DataFrame</span></dt>
+<dd>Data features for training loaded in a pandas DataFrame and
+pre-processed as specified.</dd>
+<dt>y_train <span class="classifier-delimiter">:</span> <span class="classifier">pandas DataFrame</span></dt>
+<dd>Data labels for training loaded in a pandas DataFrame.</dd>
+<dt>X_val <span class="classifier-delimiter">:</span> <span class="classifier">pandas DataFrame</span></dt>
+<dd>Data features for validation loaded in a pandas DataFrame and
+pre-processed as specified.</dd>
+<dt>y_val <span class="classifier-delimiter">:</span> <span class="classifier">pandas DataFrame</span></dt>
+<dd>Data labels for validation loaded in a pandas DataFrame.</dd>
+<dt>X_test <span class="classifier-delimiter">:</span> <span class="classifier">pandas DataFrame</span></dt>
+<dd>Data features for testing loaded in a pandas DataFrame and
+pre-processed as specified.</dd>
+<dt>y_test <span class="classifier-delimiter">:</span> <span class="classifier">pandas DataFrame</span></dt>
+<dd>Data labels for testing loaded in a pandas DataFrame.</dd>
+</dl>
+</div></blockquote>
+</dd></dl>
+
+<dl class="function">
+<dt id="data_utils.load_Xy_data_noheader">
+<code class="descclassname">data_utils.</code><code class="descname">load_Xy_data_noheader</code><span class="sig-paren">(</span><em>train_file</em>, <em>test_file</em>, <em>classes</em>, <em>usecols=None</em>, <em>scaling=None</em>, <em>dtype=&lt;class 'numpy.float32'&gt;</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/data_utils.html#load_Xy_data_noheader"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#data_utils.load_Xy_data_noheader" title="Permalink to this definition">¶</a></dt>
+<dd><p>Load training and testing data from the files specified, with the first column to use as label.
+Construct corresponding training and testing pandas DataFrames,
+separated into data (i.e. features) and labels.
+Labels to output are one-hot encoded (categorical).
+Columns to load can be selected. Data can be rescaled.
+Training and testing partitions (coming from the respective files)
+are preserved.
+This function assumes that the files do not contain a header.</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>train_file <span class="classifier-delimiter">:</span> <span class="classifier">filename</span></dt>
+<dd>Name of the file to load the training data.</dd>
+<dt>test_file <span class="classifier-delimiter">:</span> <span class="classifier">filename</span></dt>
+<dd>Name of the file to load the testing data.</dd>
+<dt>classes <span class="classifier-delimiter">:</span> <span class="classifier">integer</span></dt>
+<dd>Number of total classes to consider when
+building the categorical (one-hot) label encoding.</dd>
+<dt>usecols <span class="classifier-delimiter">:</span> <span class="classifier">list</span></dt>
+<dd>List of column indices to load from the files.
+(Default: None, all the columns are used).</dd>
+<dt>scaling <span class="classifier-delimiter">:</span> <span class="classifier">string</span></dt>
+<dd><p class="first">String describing type of scaling to apply.
+Options recognized: ‘maxabs’, ‘minmax’, ‘std’.
+‘maxabs’ : scales data to range [-1 to 1].
+‘minmax’ : scales data to range [-1 to 1].
+‘std’    : scales data to normal variable with</p>
+<blockquote>
+<div>mean 0 and standard deviation 1.</div></blockquote>
+<p class="last">(Default: None, no scaling).</p>
+</dd>
+<dt>dtype <span class="classifier-delimiter">:</span> <span class="classifier">data type</span></dt>
+<dd>Data type to use for the output pandas DataFrames.
+(Default: DEFAULT_DATATYPE defined in default_utils).</dd>
+</dl>
+<dl class="docutils">
+<dt>X_train <span class="classifier-delimiter">:</span> <span class="classifier">pandas DataFrame</span></dt>
+<dd>Data features for training loaded in a pandas DataFrame and
+pre-processed as specified.</dd>
+<dt>Y_train <span class="classifier-delimiter">:</span> <span class="classifier">pandas DataFrame</span></dt>
+<dd>Data labels for training loaded in a pandas DataFrame.
+One-hot encoding (categorical) is used.</dd>
+<dt>X_test <span class="classifier-delimiter">:</span> <span class="classifier">pandas DataFrame</span></dt>
+<dd>Data features for testing loaded in a pandas DataFrame and
+pre-processed as specified.</dd>
+<dt>Y_test <span class="classifier-delimiter">:</span> <span class="classifier">pandas DataFrame</span></dt>
+<dd>Data labels for testing loaded in a pandas DataFrame.
+One-hot encoding (categorical) is used.</dd>
+</dl>
+</div></blockquote>
+</dd></dl>
+
+<dl class="function">
+<dt id="data_utils.load_Xy_one_hot_data">
+<code class="descclassname">data_utils.</code><code class="descname">load_Xy_one_hot_data</code><span class="sig-paren">(</span><em>train_file</em>, <em>test_file</em>, <em>class_col=None</em>, <em>drop_cols=None</em>, <em>n_cols=None</em>, <em>shuffle=False</em>, <em>scaling=None</em>, <em>dtype=&lt;class 'numpy.float32'&gt;</em>, <em>seed=7102</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/data_utils.html#load_Xy_one_hot_data"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#data_utils.load_Xy_one_hot_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Load training and testing data from the files specified, with a column indicated to use as label.
+Construct corresponding training and testing pandas DataFrames,
+separated into data (i.e. features) and labels. Labels to output are one-hot encoded (categorical).
+Columns to load can be selected or dropped. Order of rows
+can be shuffled. Data can be rescaled.
+Training and testing partitions (coming from the respective files)
+are preserved.
+This function assumes that the files contain a header with column names.</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>train_file <span class="classifier-delimiter">:</span> <span class="classifier">filename</span></dt>
+<dd>Name of the file to load the training data.</dd>
+<dt>test_file <span class="classifier-delimiter">:</span> <span class="classifier">filename</span></dt>
+<dd>Name of the file to load the testing data.</dd>
+<dt>class_col <span class="classifier-delimiter">:</span> <span class="classifier">integer</span></dt>
+<dd>Index of the column to use as the label.
+(Default: None, this would cause the function to fail, a label
+has to be indicated at calling).</dd>
+<dt>drop_cols <span class="classifier-delimiter">:</span> <span class="classifier">list</span></dt>
+<dd>List of column names to drop from the files being loaded.
+(Default: None, all the columns are used).</dd>
+<dt>n_cols <span class="classifier-delimiter">:</span> <span class="classifier">integer</span></dt>
+<dd>Number of columns to load from the files.
+(Default: None, all the columns are used).</dd>
+<dt>shuffle <span class="classifier-delimiter">:</span> <span class="classifier">boolean</span></dt>
+<dd>Boolean flag to indicate row shuffling. If True the rows are
+re-ordered, if False the order in which rows are read is
+preserved.
+(Default: False, no permutation of the loading row order).</dd>
+<dt>scaling <span class="classifier-delimiter">:</span> <span class="classifier">string</span></dt>
+<dd><p class="first">String describing type of scaling to apply.
+Options recognized: ‘maxabs’, ‘minmax’, ‘std’.
+‘maxabs’ : scales data to range [-1 to 1].
+‘minmax’ : scales data to range [-1 to 1].
+‘std’    : scales data to normal variable with</p>
+<blockquote>
+<div>mean 0 and standard deviation 1.</div></blockquote>
+<p class="last">(Default: None, no scaling).</p>
+</dd>
+<dt>dtype <span class="classifier-delimiter">:</span> <span class="classifier">data type</span></dt>
+<dd>Data type to use for the output pandas DataFrames.
+(Default: DEFAULT_DATATYPE defined in default_utils).</dd>
+<dt>seed <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
+<dd>Value to intialize or re-seed the generator.
+(Default: DEFAULT_SEED defined in default_utils).</dd>
+</dl>
+<dl class="docutils">
+<dt>X_train <span class="classifier-delimiter">:</span> <span class="classifier">pandas DataFrame</span></dt>
+<dd>Data features for training loaded in a pandas DataFrame and
+pre-processed as specified.</dd>
+<dt>y_train <span class="classifier-delimiter">:</span> <span class="classifier">pandas DataFrame</span></dt>
+<dd>Data labels for training loaded in a pandas DataFrame.
+One-hot encoding (categorical) is used.</dd>
+<dt>X_test <span class="classifier-delimiter">:</span> <span class="classifier">pandas DataFrame</span></dt>
+<dd>Data features for testing loaded in a pandas DataFrame and
+pre-processed as specified.</dd>
+<dt>y_test <span class="classifier-delimiter">:</span> <span class="classifier">pandas DataFrame</span></dt>
+<dd>Data labels for testing loaded in a pandas DataFrame.
+One-hot encoding (categorical) is used.</dd>
+</dl>
+</div></blockquote>
+</dd></dl>
+
+<dl class="function">
+<dt id="data_utils.load_Xy_one_hot_data2">
+<code class="descclassname">data_utils.</code><code class="descname">load_Xy_one_hot_data2</code><span class="sig-paren">(</span><em>train_file</em>, <em>test_file</em>, <em>class_col=None</em>, <em>drop_cols=None</em>, <em>n_cols=None</em>, <em>shuffle=False</em>, <em>scaling=None</em>, <em>validation_split=0.1</em>, <em>dtype=&lt;class 'numpy.float32'&gt;</em>, <em>seed=7102</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/data_utils.html#load_Xy_one_hot_data2"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#data_utils.load_Xy_one_hot_data2" title="Permalink to this definition">¶</a></dt>
+<dd><p>Load training and testing data from the files specified, with a column indicated to use as label.
+Further split trainig data into training and validation partitions,
+and construct corresponding training, validation and testing pandas DataFrames,
+separated into data (i.e. features) and labels. Labels to output are one-hot encoded (categorical).
+Columns to load can be selected or dropped. Order of rows
+can be shuffled. Data can be rescaled.
+Training and testing partitions (coming from the respective files)
+are preserved, but training is split into training and validation partitions.
+This function assumes that the files contain a header with column names.</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>train_file <span class="classifier-delimiter">:</span> <span class="classifier">filename</span></dt>
+<dd>Name of the file to load the training data.</dd>
+<dt>test_file <span class="classifier-delimiter">:</span> <span class="classifier">filename</span></dt>
+<dd>Name of the file to load the testing data.</dd>
+<dt>class_col <span class="classifier-delimiter">:</span> <span class="classifier">integer</span></dt>
+<dd>Index of the column to use as the label.
+(Default: None, this would cause the function to fail, a label
+has to be indicated at calling).</dd>
+<dt>drop_cols <span class="classifier-delimiter">:</span> <span class="classifier">list</span></dt>
+<dd>List of column names to drop from the files being loaded.
+(Default: None, all the columns are used).</dd>
+<dt>n_cols <span class="classifier-delimiter">:</span> <span class="classifier">integer</span></dt>
+<dd>Number of columns to load from the files.
+(Default: None, all the columns are used).</dd>
+<dt>shuffle <span class="classifier-delimiter">:</span> <span class="classifier">boolean</span></dt>
+<dd>Boolean flag to indicate row shuffling. If True the rows are
+re-ordered, if False the order in which rows are loaded is
+preserved.
+(Default: False, no permutation of the loading row order).</dd>
+<dt>scaling <span class="classifier-delimiter">:</span> <span class="classifier">string</span></dt>
+<dd><p class="first">String describing type of scaling to apply.
+Options recognized: ‘maxabs’, ‘minmax’, ‘std’.
+‘maxabs’ : scales data to range [-1 to 1].
+‘minmax’ : scales data to range [-1 to 1].
+‘std’    : scales data to normal variable with</p>
+<blockquote>
+<div>mean 0 and standard deviation 1.</div></blockquote>
+<p class="last">(Default: None, no scaling).</p>
+</dd>
+<dt>validation_split <span class="classifier-delimiter">:</span> <span class="classifier">float</span></dt>
+<dd>Fraction of training data to set aside for validation.
+(Default: 0.1, ten percent of the training data is
+used for the validation partition).</dd>
+<dt>dtype <span class="classifier-delimiter">:</span> <span class="classifier">data type</span></dt>
+<dd>Data type to use for the output pandas DataFrames.
+(Default: DEFAULT_DATATYPE defined in default_utils).</dd>
+<dt>seed <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
+<dd>Value to intialize or re-seed the generator.
+(Default: DEFAULT_SEED defined in default_utils).</dd>
+</dl>
+<dl class="docutils">
+<dt>X_train <span class="classifier-delimiter">:</span> <span class="classifier">pandas DataFrame</span></dt>
+<dd>Data features for training loaded in a pandas DataFrame and
+pre-processed as specified.</dd>
+<dt>y_train <span class="classifier-delimiter">:</span> <span class="classifier">pandas DataFrame</span></dt>
+<dd>Data labels for training loaded in a pandas DataFrame.
+One-hot encoding (categorical) is used.</dd>
+<dt>X_val <span class="classifier-delimiter">:</span> <span class="classifier">pandas DataFrame</span></dt>
+<dd>Data features for validation loaded in a pandas DataFrame and
+pre-processed as specified.</dd>
+<dt>y_val <span class="classifier-delimiter">:</span> <span class="classifier">pandas DataFrame</span></dt>
+<dd>Data labels for validation loaded in a pandas DataFrame.
+One-hot encoding (categorical) is used.</dd>
+<dt>X_test <span class="classifier-delimiter">:</span> <span class="classifier">pandas DataFrame</span></dt>
+<dd>Data features for testing loaded in a pandas DataFrame and
+pre-processed as specified.</dd>
+<dt>y_test <span class="classifier-delimiter">:</span> <span class="classifier">pandas DataFrame</span></dt>
+<dd>Data labels for testing loaded in a pandas DataFrame.
+One-hot encoding (categorical) is used.</dd>
+</dl>
+</div></blockquote>
+</dd></dl>
+
+<dl class="function">
+<dt id="data_utils.load_csv_data">
+<code class="descclassname">data_utils.</code><code class="descname">load_csv_data</code><span class="sig-paren">(</span><em>train_path</em>, <em>test_path=None</em>, <em>sep='</em>, <em>'</em>, <em>nrows=None</em>, <em>x_cols=None</em>, <em>y_cols=None</em>, <em>drop_cols=None</em>, <em>onehot_cols=None</em>, <em>n_cols=None</em>, <em>random_cols=False</em>, <em>shuffle=False</em>, <em>scaling=None</em>, <em>dtype=None</em>, <em>validation_split=None</em>, <em>return_dataframe=True</em>, <em>return_header=False</em>, <em>seed=7102</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/data_utils.html#load_csv_data"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#data_utils.load_csv_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Load data from the files specified.
+Columns corresponding to data features and labels can be specified. A one-hot
+encoding can be used for either features or labels.
+If validation_split is specified, trainig data is further split into training
+and validation partitions.
+pandas DataFrames are used to load and pre-process the data. If specified,
+those DataFrames are returned. Otherwise just values are returned.
+Labels to output can be integer labels (for classification) or
+continuous labels (for regression).
+Columns to load can be specified, randomly selected or a subset can be dropped.
+Order of rows can be shuffled. Data can be rescaled.
+This function assumes that the files contain a header with column names.</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>train_path <span class="classifier-delimiter">:</span> <span class="classifier">filename</span></dt>
+<dd>Name of the file to load the training data.</dd>
+<dt>test_path <span class="classifier-delimiter">:</span> <span class="classifier">filename</span></dt>
+<dd>Name of the file to load the testing data. (Optional).</dd>
+<dt>sep <span class="classifier-delimiter">:</span> <span class="classifier">character</span></dt>
+<dd>Character used as column separator.
+(Default: ‘,’, comma separated values).</dd>
+<dt>nrows <span class="classifier-delimiter">:</span> <span class="classifier">integer</span></dt>
+<dd>Number of rows to load from the files.
+(Default: None, all the rows are used).</dd>
+<dt>x_cols <span class="classifier-delimiter">:</span> <span class="classifier">list</span></dt>
+<dd>List of columns to use as features.
+(Default: None).</dd>
+<dt>y_cols <span class="classifier-delimiter">:</span> <span class="classifier">list</span></dt>
+<dd>List of columns to use as labels.
+(Default: None).</dd>
+<dt>drop_cols <span class="classifier-delimiter">:</span> <span class="classifier">list</span></dt>
+<dd>List of columns to drop from the files being loaded.
+(Default: None, all the columns are used).</dd>
+<dt>onehot_cols <span class="classifier-delimiter">:</span> <span class="classifier">list</span></dt>
+<dd>List of columns to one-hot encode.
+(Default: None).</dd>
+<dt>n_cols <span class="classifier-delimiter">:</span> <span class="classifier">integer</span></dt>
+<dd>Number of columns to load from the files.
+(Default: None).</dd>
+<dt>random_cols <span class="classifier-delimiter">:</span> <span class="classifier">boolean</span></dt>
+<dd>Boolean flag to indicate random selection of columns.
+If True a number of n_cols columns is randomly selected, if False
+the specified columns are used.
+(Default: False).</dd>
+<dt>shuffle <span class="classifier-delimiter">:</span> <span class="classifier">boolean</span></dt>
+<dd>Boolean flag to indicate row shuffling. If True the rows are
+re-ordered, if False the order in which rows are read is
+preserved.
+(Default: False, no permutation of the loading row order).</dd>
+<dt>scaling <span class="classifier-delimiter">:</span> <span class="classifier">string</span></dt>
+<dd><p class="first">String describing type of scaling to apply.
+Options recognized: ‘maxabs’, ‘minmax’, ‘std’.
+‘maxabs’ : scales data to range [-1 to 1].
+‘minmax’ : scales data to range [-1 to 1].
+‘std’    : scales data to normal variable with</p>
+<blockquote>
+<div>mean 0 and standard deviation 1.</div></blockquote>
+<p class="last">(Default: None, no scaling).</p>
+</dd>
+<dt>dtype <span class="classifier-delimiter">:</span> <span class="classifier">data type</span></dt>
+<dd>Data type to use for the output pandas DataFrames.
+(Default: None).</dd>
+<dt>validation_split <span class="classifier-delimiter">:</span> <span class="classifier">float</span></dt>
+<dd>Fraction of training data to set aside for validation.
+(Default: None, no validation partition is constructed).</dd>
+<dt>return_dataframe <span class="classifier-delimiter">:</span> <span class="classifier">boolean</span></dt>
+<dd>Boolean flag to indicate that the pandas DataFrames
+used for data pre-processing are to be returned.
+(Default: True, pandas DataFrames are returned).</dd>
+<dt>return_header <span class="classifier-delimiter">:</span> <span class="classifier">boolean</span></dt>
+<dd>Boolean flag to indicate if the column headers are
+to be returned.
+(Default: False, no column headers are separetely returned).</dd>
+<dt>seed <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
+<dd>Value to intialize or re-seed the generator.
+(Default: DEFAULT_SEED defined in default_utils).</dd>
+</dl>
+<p>Tuples of data features and labels are returned, for
+train, validation and testing partitions, together with the column
+names (headers). The specific objects to return depend
+on the options selected.</p>
+</div></blockquote>
+</dd></dl>
+
+<dl class="function">
+<dt id="data_utils.scale_array">
+<code class="descclassname">data_utils.</code><code class="descname">scale_array</code><span class="sig-paren">(</span><em>mat</em>, <em>scaling=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/data_utils.html#scale_array"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#data_utils.scale_array" title="Permalink to this definition">¶</a></dt>
+<dd><p>Scale data included in numpy array.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>mat</strong> (<em>numpy array</em>) – Array to scale</li>
+<li><strong>scaling</strong> (<em>string</em>) – <p>String describing type of scaling to apply.
+Options recognized: ‘maxabs’, ‘minmax’, ‘std’.
+‘maxabs’ : scales data to range [-1 to 1].
+‘minmax’ : scales data to range [-1 to 1].
+‘std’    : scales data to normal variable with</p>
+<blockquote>
+<div>mean 0 and standard deviation 1.</div></blockquote>
+<p>(Default: None, no scaling).</p>
+</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><ul class="simple">
+<li><em>Returns the numpy array scaled by the method specified.</em></li>
+<li><em>If no scaling method is specified, it returns the numpy</em></li>
+<li><em>array unmodified.</em></li>
+</ul>
+</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
 </div>
 
 
            </div>
-           <div class="articleComments">
-            
-           </div>
+           
           </div>
           <footer>
   
@@ -198,7 +755,7 @@
 
     </p>
   </div>
-  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
 </footer>
 
@@ -217,6 +774,7 @@
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../',
             VERSION:'',
+            LANGUAGE:'None',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true,
@@ -230,19 +788,13 @@
 
   
 
-  
-  
-    <script type="text/javascript" src="../_static/js/theme.js"></script>
-  
+  <script type="text/javascript" src="../_static/js/theme.js"></script>
 
-  
-  
   <script type="text/javascript">
       jQuery(function () {
-          SphinxRtdTheme.StickyNav.enable();
+          SphinxRtdTheme.Navigation.enable(true);
       });
-  </script>
-   
+  </script> 
 
 </body>
 </html>
