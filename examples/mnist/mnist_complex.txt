@@ -1,0 +1,7 @@
+[Global_Params]
+epochs=20
+batch_size=128
+activation='relu'
+optimizer='rmsprop'
+dropout=0.2
+dense=[512, 512, 512]
