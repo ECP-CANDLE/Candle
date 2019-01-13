@@ -1,3 +1,4 @@
+# add candle_keras library in path
 import os
 import sys
 file_path = os.path.dirname(os.path.realpath(__file__))
@@ -9,7 +10,7 @@ import candle_keras as candle
 # thread optimization
 candle.set_parallelism_threads()
 
-
+# custom parameters
 additional_definitions = None
 required = None
 
