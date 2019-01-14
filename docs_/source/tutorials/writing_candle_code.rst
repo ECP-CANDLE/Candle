@@ -94,7 +94,7 @@ On some high-performance computing machines like ``Theta``, the
 performance will be greatly improved if we let CANDLE handle threads.
 So, it is generally recommended to have code like lines 14 to 21 in
 `this
-example <https://github.com/ECP-CANDLE/Candle/blob/master/examples/mnist/mnist.py#L9-L16>`__,
+example <https://github.com/ECP-CANDLE/Candle/blob/master/examples/mnist/mnist.py#L10-L11>`__,
 which sets appropriate parameters in a tensorflow session.
 
 ::
