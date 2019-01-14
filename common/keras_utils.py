@@ -9,6 +9,7 @@ from keras.layers import Dropout
 from keras.callbacks import Callback
 from keras.utils import get_custom_objects
 from keras.metrics import binary_crossentropy, mean_squared_error
+from keras.utils.vis_utils import plot_model
 
 from scipy.stats.stats import pearsonr
 
@@ -243,3 +244,6 @@ class LoggingCallback(Callback):
     def on_epoch_end(self, epoch, logs={}):
         msg = "[Epoch: %i] %s" % (epoch, ", ".join("%s: %f" % (k, v) for k, v in sorted(logs.items())))
         self.print_fcn(msg)
+
+def model_plot(model, to_file='model.png', show_shapes=True):
+    plot_model(model, to_file, show_shapes)

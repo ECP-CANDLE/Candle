@@ -30,6 +30,7 @@ from keras_utils import set_parallelism_threads
 from keras_utils import PermanentDropout
 from keras_utils import register_permanent_dropout
 from keras_utils import LoggingCallback
+from keras_utils import model_plot 
 
 from generic_utils import Progbar
 
@@ -37,3 +38,6 @@ from solr_keras import CandleRemoteMonitor
 from solr_keras import compute_trainable_params
 from solr_keras import TerminateOnTimeOut
 
+from viz_utils import plot_history
+from viz_utils import plot_scatter
+from viz_utils import plot_error
