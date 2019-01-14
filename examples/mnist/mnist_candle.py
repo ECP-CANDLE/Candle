@@ -60,6 +60,7 @@ def run(gParameters):
     model.add(Dense(num_classes, activation='softmax'))
 
     model.summary()
+    candle.model_plot(model, 'newname.png')
 
     model.compile(loss='categorical_crossentropy',
                 optimizer=optimizer,
@@ -73,6 +74,8 @@ def run(gParameters):
     score = model.evaluate(x_test, y_test, verbose=0)
     print('Test loss:', score[0])
     print('Test accuracy:', score[1])
+
+    candle.plot_history('test',history,'loss')
 
     return history
 
