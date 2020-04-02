@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>solr_keras module &mdash; CANDLE  documentation</title>
+  <title>data_preprocessing_utils module &mdash; CANDLE  documentation</title>
   
 
   
@@ -35,8 +35,8 @@
   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="uq_utils module" href="uq_utils.html" />
-    <link rel="prev" title="keras_utils module" href="keras_utils.html" /> 
+    <link rel="next" title="data_utils module" href="data_utils.html" />
+    <link rel="prev" title="candle_keras package" href="candle_keras.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -86,13 +86,13 @@
 <li class="toctree-l1"><a class="reference internal" href="../tutorials/index.html">Tutorials</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="../candle_lib.html">CANDLE Library API</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="candle_keras.html">candle_keras package</a></li>
-<li class="toctree-l2"><a class="reference internal" href="data_preprocessing_utils.html">data_preprocessing_utils module</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">data_preprocessing_utils module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="data_utils.html">data_utils module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="default_utils.html">default_utils module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="file_utils.html">file_utils module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="generic_utils.html">generic_utils module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="keras_utils.html">keras_utils module</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">solr_keras module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="solr_keras.html">solr_keras module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="uq_utils.html">uq_utils module</a></li>
 </ul>
 </li>
@@ -144,13 +144,13 @@
         
           <li><a href="../candle_lib.html">CANDLE Library API</a> &raquo;</li>
         
-      <li>solr_keras module</li>
+      <li>data_preprocessing_utils module</li>
     
     
       <li class="wy-breadcrumbs-aside">
         
             
-            <a href="../_sources/candle_lib/solr_keras.rst.txt" rel="nofollow"> View page source</a>
+            <a href="../_sources/candle_lib/data_preprocessing_utils.rst.txt" rel="nofollow"> View page source</a>
           
         
       </li>
@@ -163,8 +163,43 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="solr-keras-module">
-<h1>solr_keras module<a class="headerlink" href="#solr-keras-module" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="module-data_preprocessing_utils">
+<span id="data-preprocessing-utils-module"></span><h1>data_preprocessing_utils module<a class="headerlink" href="#module-data_preprocessing_utils" title="Permalink to this headline">¶</a></h1>
+<dl class="function">
+<dt id="data_preprocessing_utils.generate_cross_validation_partition">
+<code class="sig-prename descclassname">data_preprocessing_utils.</code><code class="sig-name descname">generate_cross_validation_partition</code><span class="sig-paren">(</span><em class="sig-param">group_label</em>, <em class="sig-param">n_folds=5</em>, <em class="sig-param">n_repeats=1</em>, <em class="sig-param">portions=None</em>, <em class="sig-param">random_seed=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/data_preprocessing_utils.html#generate_cross_validation_partition"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#data_preprocessing_utils.generate_cross_validation_partition" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function generates partition indices of samples for cross-validation analysis.</p>
+<dl class="simple">
+<dt>group_label: 1-D array or list of group labels of samples. If there are no groups in samples, a list of</dt><dd><p>sample indices can be supplied for generating partitions based on individual samples rather than sample groups.</p>
+</dd>
+</dl>
+<p>n_folds: positive integer larger than 1, indicating the number of folds for cross-validation. Default is 5.
+n_repeats: positive integer, indicating how many times the n_folds cross-validation should be repeated.</p>
+<blockquote>
+<div><p>So the total number of cross-validation trials is n_folds * n_repeats. Default is 1.</p>
+</div></blockquote>
+<dl class="simple">
+<dt>portions: 1-D array or list of positive integers, indicating the number of data folds in each set</dt><dd><p>(e.g. training set, testing set, or validation set) after partitioning. The summation of elements
+in portions must be equal to n_folds. Default is [1, n_folds - 1].</p>
+</dd>
+</dl>
+<p>random_seed: positive integer, the seed for random generator. Default is None.</p>
+<dl class="simple">
+<dt>partition: list of n_folds * n_repeats lists, each of which contains len(portions) sample index lists for</dt><dd><p>a cross-validation trial.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="data_preprocessing_utils.quantile_normalization">
+<code class="sig-prename descclassname">data_preprocessing_utils.</code><code class="sig-name descname">quantile_normalization</code><span class="sig-paren">(</span><em class="sig-param">data</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/data_preprocessing_utils.html#quantile_normalization"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#data_preprocessing_utils.quantile_normalization" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function does quantile normalization to input data. After normalization, the samples (rows) in output
+data follow the same distribution, which is the average distribution calculated based on all samples.
+This function allows missing values, and assume missing values occur at random.</p>
+<p>data: numpy array or pandas data frame of numeric values, with a shape of [n_samples, n_features].</p>
+<p>norm_data: numpy array or pandas data frame containing the data after quantile normalization.</p>
+</dd></dl>
+
 </div>
 
 
@@ -175,10 +210,10 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="uq_utils.html" class="btn btn-neutral float-right" title="uq_utils module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="data_utils.html" class="btn btn-neutral float-right" title="data_utils module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="keras_utils.html" class="btn btn-neutral float-left" title="keras_utils module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="candle_keras.html" class="btn btn-neutral float-left" title="candle_keras package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

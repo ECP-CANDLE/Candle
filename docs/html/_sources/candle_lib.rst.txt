@@ -5,6 +5,7 @@ CANDLE Library API
    :maxdepth: 1
 
    candle_lib/candle_keras
+   candle_lib/data_preprocessing_utils
    candle_lib/data_utils
    candle_lib/default_utils
    candle_lib/file_utils
