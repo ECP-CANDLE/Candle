@@ -1,7 +1,7 @@
 viz\_utils module
 ================================
 
-.. automodule:: vis_utils
+.. automodule:: viz_utils
     :members:
     :undoc-members:
     :show-inheritance:
