@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>keras_utils module &mdash; CANDLE  documentation</title>
+  <title>exp_logger module &mdash; CANDLE  documentation</title>
   
 
   
@@ -35,8 +35,8 @@
   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="P1_utils module" href="P1_utils.html" />
-    <link rel="prev" title="generic_utils module" href="generic_utils.html" /> 
+    <link rel="next" title="feature_selection_utils module" href="feature_selection_utils.html" />
+    <link rel="prev" title="default_utils module" href="default_utils.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -89,11 +89,11 @@
 <li class="toctree-l2"><a class="reference internal" href="data_preprocessing_utils.html">data_preprocessing_utils module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="data_utils.html">data_utils module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="default_utils.html">default_utils module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="exp_logger.html">exp_logger module</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">exp_logger module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="feature_selection_utils.html">feature_selection_utils module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="file_utils.html">file_utils module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="generic_utils.html">generic_utils module</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">keras_utils module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="keras_utils.html">keras_utils module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="P1_utils.html">P1_utils module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="profiling_utils.html">profiling_utils module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="pytorch_utils.html">pytorch_utils module</a></li>
@@ -150,13 +150,13 @@
         
           <li><a href="../candle_lib.html">CANDLE Library API</a> &raquo;</li>
         
-      <li>keras_utils module</li>
+      <li>exp_logger module</li>
     
     
       <li class="wy-breadcrumbs-aside">
         
             
-            <a href="../_sources/candle_lib/keras_utils.rst.txt" rel="nofollow"> View page source</a>
+            <a href="../_sources/candle_lib/exp_logger.rst.txt" rel="nofollow"> View page source</a>
           
         
       </li>
@@ -169,8 +169,26 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="keras-utils-module">
-<h1>keras_utils module<a class="headerlink" href="#keras-utils-module" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="module-exp_logger">
+<span id="exp-logger-module"></span><h1>exp_logger module<a class="headerlink" href="#module-exp_logger" title="Permalink to this headline">¶</a></h1>
+<dl class="function">
+<dt id="exp_logger.end">
+<code class="sig-prename descclassname">exp_logger.</code><code class="sig-name descname">end</code><span class="sig-paren">(</span><em class="sig-param">experiment_id</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/exp_logger.html#end"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#exp_logger.end" title="Permalink to this definition">¶</a></dt>
+<dd><p>Capture exp end</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="exp_logger.save">
+<code class="sig-prename descclassname">exp_logger.</code><code class="sig-name descname">save</code><span class="sig-paren">(</span><em class="sig-param">filename</em>, <em class="sig-param">msg</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/exp_logger.html#save"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#exp_logger.save" title="Permalink to this definition">¶</a></dt>
+<dd><p>Save log message</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="exp_logger.start">
+<code class="sig-prename descclassname">exp_logger.</code><code class="sig-name descname">start</code><span class="sig-paren">(</span><em class="sig-param">params</em>, <em class="sig-param">sys_desc</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/exp_logger.html#start"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#exp_logger.start" title="Permalink to this definition">¶</a></dt>
+<dd><p>Capture exp start</p>
+</dd></dl>
+
 </div>
 
 
@@ -181,10 +199,10 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="P1_utils.html" class="btn btn-neutral float-right" title="P1_utils module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="feature_selection_utils.html" class="btn btn-neutral float-right" title="feature_selection_utils module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="generic_utils.html" class="btn btn-neutral float-left" title="generic_utils module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="default_utils.html" class="btn btn-neutral float-left" title="default_utils module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

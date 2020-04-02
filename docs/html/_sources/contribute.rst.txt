@@ -15,6 +15,12 @@ You can start a directory structure under the source directory, if you want to o
 Don't forget to **link** the new document in the index file. If you want to link from the top level, please add in ``docs_/source/index.rst``.
 
 
+How to add CANDLE Library API
+------------------------------
+1. create rst file in `docs_/source/candle_lib/`
+2. add to `docs_/source/candle_lib.rst` for index
+
+
 How to build html
 ------------------
 If you like to reflect all the changes in the github.io site, please follow instructions below. You may need to

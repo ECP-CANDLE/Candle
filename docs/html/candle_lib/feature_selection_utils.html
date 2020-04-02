@@ -1,0 +1,289 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>feature_selection_utils module &mdash; CANDLE  documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="file_utils module" href="file_utils.html" />
+    <link rel="prev" title="exp_logger module" href="exp_logger.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> CANDLE
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../readme.html">What is CANDLE?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorials/index.html">Tutorials</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../candle_lib.html">CANDLE Library API</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="candle_keras.html">candle_keras package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="data_preprocessing_utils.html">data_preprocessing_utils module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="data_utils.html">data_utils module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="default_utils.html">default_utils module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="exp_logger.html">exp_logger module</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">feature_selection_utils module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_utils.html">file_utils module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="generic_utils.html">generic_utils module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="keras_utils.html">keras_utils module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="P1_utils.html">P1_utils module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="profiling_utils.html">profiling_utils module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pytorch_utils.html">pytorch_utils module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="solr_keras.html">solr_keras module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="uq_utils.html">uq_utils module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="viz_utils.html">viz_utils module</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../contribute.html">How to Contribute</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">CANDLE</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../candle_lib.html">CANDLE Library API</a> &raquo;</li>
+        
+      <li>feature_selection_utils module</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/candle_lib/feature_selection_utils.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="module-feature_selection_utils">
+<span id="feature-selection-utils-module"></span><h1>feature_selection_utils module<a class="headerlink" href="#module-feature_selection_utils" title="Permalink to this headline">¶</a></h1>
+<dl class="function">
+<dt id="feature_selection_utils.select_decorrelated_features">
+<code class="sig-prename descclassname">feature_selection_utils.</code><code class="sig-name descname">select_decorrelated_features</code><span class="sig-paren">(</span><em class="sig-param">data</em>, <em class="sig-param">method='pearson'</em>, <em class="sig-param">threshold=None</em>, <em class="sig-param">random_seed=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/feature_selection_utils.html#select_decorrelated_features"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#feature_selection_utils.select_decorrelated_features" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function selects features whose mutual absolute correlation coefficients are smaller than a threshold.
+It allows missing values in data. The correlation coefficient of two features are calculated based on
+the observations that are not missing in both features. Features with only one or no value present and
+features with a zero standard deviation are not considered for selection.</p>
+<p>data: numpy array or pandas data frame of numeric values, with a shape of [n_samples, n_features].
+method: string indicating the method used for calculating correlation coefficient. ‘pearson’ indicates Pearson</p>
+<blockquote>
+<div><p>correlation coefficient; ‘kendall’ indicates Kendall Tau correlation coefficient; ‘spearman’ indicates
+Spearman rank correlation coefficient. Default is ‘pearson’.</p>
+</div></blockquote>
+<dl class="simple">
+<dt>threshold: float. If two features have an absolute correlation coefficient higher than threshold,</dt><dd><p>one of the features is removed. If threshold is None, a feature is removed only when the two features
+are exactly identical. Default is None.</p>
+</dd>
+<dt>random_seed: positive integer, seed of random generator for ordering the features. If it is None, features</dt><dd><p>are not re-ordered before feature selection and thus the first feature is always selected. Default is None.</p>
+</dd>
+</dl>
+<p>indices: 1-D numpy array containing the indices of selected features.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="feature_selection_utils.select_features_by_missing_values">
+<code class="sig-prename descclassname">feature_selection_utils.</code><code class="sig-name descname">select_features_by_missing_values</code><span class="sig-paren">(</span><em class="sig-param">data</em>, <em class="sig-param">threshold=0.1</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/feature_selection_utils.html#select_features_by_missing_values"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#feature_selection_utils.select_features_by_missing_values" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function returns the indices of the features whose missing rates are smaller than the threshold.</p>
+<p>data: numpy array or pandas data frame of numeric values, with a shape of [n_samples, n_features]
+threshold: float in the range of [0, 1]. Features with a missing rate smaller than threshold will be selected.</p>
+<blockquote>
+<div><p>Default is 0.1</p>
+</div></blockquote>
+<p>indices: 1-D numpy array containing the indices of selected features</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="feature_selection_utils.select_features_by_variation">
+<code class="sig-prename descclassname">feature_selection_utils.</code><code class="sig-name descname">select_features_by_variation</code><span class="sig-paren">(</span><em class="sig-param">data</em>, <em class="sig-param">variation_measure='var'</em>, <em class="sig-param">threshold=None</em>, <em class="sig-param">portion=None</em>, <em class="sig-param">draw_histogram=False</em>, <em class="sig-param">bins=100</em>, <em class="sig-param">log=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/feature_selection_utils.html#select_features_by_variation"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#feature_selection_utils.select_features_by_variation" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function evaluates the variations of individual features and returns the indices of features with large
+variations. Missing values are ignored in evaluating variation.</p>
+<p>data: numpy array or pandas data frame of numeric values, with a shape of [n_samples, n_features].
+variation_metric: string indicating the metric used for evaluating feature variation. ‘var’ indicates variance;</p>
+<blockquote>
+<div><p>‘std’ indicates standard deviation; ‘mad’ indicates median absolute deviation. Default is ‘var’.</p>
+</div></blockquote>
+<p>threshold: float. Features with a variation larger than threshold will be selected. Default is None.
+portion: float in the range of [0, 1]. It is the portion of features to be selected based on variation.</p>
+<blockquote>
+<div><p>The number of selected features will be the smaller of int(portion * n_features) and the total number of
+features with non-missing variations. Default is None. threshold and portion can not take real values
+and be used simultaneously.</p>
+</div></blockquote>
+<p>draw_histogram: boolean, whether to draw a histogram of feature variations. Default is False.
+bins: positive integer, the number of bins in the histogram. Default is the smaller of 50 and the number of</p>
+<blockquote>
+<div><p>features with non-missing variations.</p>
+</div></blockquote>
+<p>log: boolean, indicating whether the histogram should be drawn on log scale.</p>
+<dl class="simple">
+<dt>indices: 1-D numpy array containing the indices of selected features. If both threshold and</dt><dd><p>portion are None, indices will be an empty array.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="file_utils.html" class="btn btn-neutral float-right" title="file_utils module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="exp_logger.html" class="btn btn-neutral float-left" title="exp_logger module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020, ANL.gov
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
