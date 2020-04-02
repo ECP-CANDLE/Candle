@@ -17,34 +17,36 @@
   
 
   
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
 
-  
-  
     
 
   
-
   <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Run Asynchronous Search based hyperparameter optimization on CANDLE Benchmarks" href="workflow_async_search.html" />
     <link rel="prev" title="How to run CANDLE compliant code in Theta" href="running_on_theta.html" /> 
-
-  
-  <script src="../_static/js/modernizr.min.js"></script>
-
 </head>
 
 <body class="wy-body-for-nav">
 
    
   <div class="wy-grid-for-nav">
-
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search">
+        <div class="wy-side-nav-search" >
           
 
           
@@ -179,44 +181,44 @@ a genetic algorithm.</p>
 <div class="section" id="running">
 <h2>Running<a class="headerlink" href="#running" title="Permalink to this headline">¶</a></h2>
 <ol class="arabic simple">
-<li>cd into the <strong>Supervisor/workflows/GA/test</strong> directory</li>
-<li>Specify the GA parameters in the <strong>cfg-prm-1.sh</strong> file (see
-<a class="reference external" href="#structure">below</a> for more information on the GA parameters)</li>
-<li>Specify the PROCS, QUEUE etc. in <strong>cfg-sys-1.sh</strong> file</li>
-<li>You will pass the MODEL_NAME, SITE, and optional experiment id
+<li><p>cd into the <strong>Supervisor/workflows/GA/test</strong> directory</p></li>
+<li><p>Specify the GA parameters in the <strong>cfg-prm-1.sh</strong> file (see
+<a class="reference external" href="#structure">below</a> for more information on the GA parameters)</p></li>
+<li><p>Specify the PROCS, QUEUE etc. in <strong>cfg-sys-1.sh</strong> file</p></li>
+<li><p>You will pass the MODEL_NAME, SITE, and optional experiment id
 arguments to <strong>test-1.sh</strong> file when launching:
 <code class="docutils literal notranslate"><span class="pre">./test-1.sh</span> <span class="pre">&lt;model_name&gt;</span> <span class="pre">&lt;machine_name&gt;</span> <span class="pre">[expid]</span></code> where
 <code class="docutils literal notranslate"><span class="pre">model_name</span></code> can be tc1 etc., <code class="docutils literal notranslate"><span class="pre">machine_name</span></code> can be local, cori,
 theta, titan etc. (see <a class="reference external" href="#making_changes">NOTE</a> below on creating
-new SITE files.)</li>
-<li>Update the parameter space json file if necessary. The parameter
+new SITE files.)</p></li>
+<li><p>Update the parameter space json file if necessary. The parameter
 space is defined in json file (see
 <strong>workflows/GA/data/tc1_param_space_ga.json</strong> for an example with
 tc1). The <strong>cfg-prm-1.sh</strong> script will attempt to select the correct
 json given the model name. Edit that file as appropriate. The
-parameter space json file is further described <a class="reference external" href="#config">here</a></li>
-<li>The benchmark will be run for the number of processors specified</li>
-<li>Final objective function values, along with parameters, will be
+parameter space json file is further described <a class="reference external" href="#config">here</a></p></li>
+<li><p>The benchmark will be run for the number of processors specified</p></li>
+<li><p>Final objective function values, along with parameters, will be
 available in the experiments directory in a <strong>finals_results</strong> file
-and also printed to standard out.</li>
+and also printed to standard out.</p></li>
 </ol>
 </div>
 <div class="section" id="user-requirements">
 <h2>User requirements<a class="headerlink" href="#user-requirements" title="Permalink to this headline">¶</a></h2>
 <p>What you need to install to run the workflow:</p>
 <ul class="simple">
-<li>This workflow - <code class="docutils literal notranslate"><span class="pre">git&#64;github.com:ECP-CANDLE/Supervisor.git</span></code> . Clone
+<li><p>This workflow - <code class="docutils literal notranslate"><span class="pre">git&#64;github.com:ECP-CANDLE/Supervisor.git</span></code> . Clone
 and switch to the <code class="docutils literal notranslate"><span class="pre">master</span></code> branch. Then <code class="docutils literal notranslate"><span class="pre">cd</span></code> to <code class="docutils literal notranslate"><span class="pre">workflows/GA</span></code>
-(the directory containing this README).</li>
-<li>TC1 or other benchmark - <code class="docutils literal notranslate"><span class="pre">git&#64;github.com:ECP-CANDLE/Benchmarks.git</span></code>
-. Clone and switch to the <code class="docutils literal notranslate"><span class="pre">frameworks</span></code> branch.</li>
-<li>benchmark data - See the individual benchmarks README for obtaining
-the initial data</li>
+(the directory containing this README).</p></li>
+<li><p>TC1 or other benchmark - <code class="docutils literal notranslate"><span class="pre">git&#64;github.com:ECP-CANDLE/Benchmarks.git</span></code>
+. Clone and switch to the <code class="docutils literal notranslate"><span class="pre">frameworks</span></code> branch.</p></li>
+<li><p>benchmark data - See the individual benchmarks README for obtaining
+the initial data</p></li>
 </ul>
 <p>Python specific installation requirements:</p>
 <ol class="arabic simple">
-<li>pandas</li>
-<li>deap</li>
+<li><p>pandas</p></li>
+<li><p>deap</p></li>
 </ol>
 <p>These may be already part of the existing python installation. If not
 these can be installed using <code class="docutils literal notranslate"><span class="pre">conda</span></code> or <code class="docutils literal notranslate"><span class="pre">pip</span></code>. They must be
@@ -286,52 +288,59 @@ benchmarkts.</p>
 list of json dictionaries, each one of which defines a hyperparameter.
 Each dictionary has the following required keys:</p>
 <ul class="simple">
-<li>name: the name of the hyperparameter (e.g. <em>epochs</em>)</li>
-<li>type: determines how the initial population (i.e.&nbsp;the hyperparameter
+<li><p>name: the name of the hyperparameter (e.g. <em>epochs</em>)</p></li>
+<li><p>type: determines how the initial population (i.e. the hyperparameter
 sets) are initialized from the named parameter and how those values
 are subsequently mutated by the GA. Type is one of <code class="docutils literal notranslate"><span class="pre">constant</span></code>,
-<code class="docutils literal notranslate"><span class="pre">int</span></code>, <code class="docutils literal notranslate"><span class="pre">float</span></code>, <code class="docutils literal notranslate"><span class="pre">logical</span></code>, <code class="docutils literal notranslate"><span class="pre">categorical</span></code>, or <code class="docutils literal notranslate"><span class="pre">ordered</span></code>.<ul>
-<li><code class="docutils literal notranslate"><span class="pre">constant</span></code>:<ul>
-<li>each model is initialized with the same specifed value</li>
-<li>mutation always returns the same specified value</li>
+<code class="docutils literal notranslate"><span class="pre">int</span></code>, <code class="docutils literal notranslate"><span class="pre">float</span></code>, <code class="docutils literal notranslate"><span class="pre">logical</span></code>, <code class="docutils literal notranslate"><span class="pre">categorical</span></code>, or <code class="docutils literal notranslate"><span class="pre">ordered</span></code>.</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">constant</span></code>:</p>
+<ul>
+<li><p>each model is initialized with the same specifed value</p></li>
+<li><p>mutation always returns the same specified value</p></li>
 </ul>
 </li>
-<li><code class="docutils literal notranslate"><span class="pre">int</span></code>:<ul>
-<li>each model is initialized with an int randomly drawn from the
-range defined by <code class="docutils literal notranslate"><span class="pre">lower</span></code> and <code class="docutils literal notranslate"><span class="pre">upper</span></code> bounds</li>
-<li>mutation is peformed by adding the results of a random draw
+<li><p><code class="docutils literal notranslate"><span class="pre">int</span></code>:</p>
+<ul>
+<li><p>each model is initialized with an int randomly drawn from the
+range defined by <code class="docutils literal notranslate"><span class="pre">lower</span></code> and <code class="docutils literal notranslate"><span class="pre">upper</span></code> bounds</p></li>
+<li><p>mutation is peformed by adding the results of a random draw
 from a gaussian distribution to the current value, where the
 gaussian distribution’s mu is 0 and its sigma is specified by
-the <code class="docutils literal notranslate"><span class="pre">sigma</span></code> entry.</li>
+the <code class="docutils literal notranslate"><span class="pre">sigma</span></code> entry.</p></li>
 </ul>
 </li>
-<li><code class="docutils literal notranslate"><span class="pre">float</span></code>:<ul>
-<li>each model is initialized with a float randomly drawn from the
-range defined by <code class="docutils literal notranslate"><span class="pre">lower</span></code> and <code class="docutils literal notranslate"><span class="pre">upper</span></code> bounds</li>
-<li>mutation is peformed by adding the results of a random draw
+<li><p><code class="docutils literal notranslate"><span class="pre">float</span></code>:</p>
+<ul>
+<li><p>each model is initialized with a float randomly drawn from the
+range defined by <code class="docutils literal notranslate"><span class="pre">lower</span></code> and <code class="docutils literal notranslate"><span class="pre">upper</span></code> bounds</p></li>
+<li><p>mutation is peformed by adding the results of a random draw
 from a gaussian distribution to the current value, where the
 gaussian distribution’s mu is 0 and its sigma is specified by
-the <code class="docutils literal notranslate"><span class="pre">sigma</span></code> entry.</li>
+the <code class="docutils literal notranslate"><span class="pre">sigma</span></code> entry.</p></li>
 </ul>
 </li>
-<li><code class="docutils literal notranslate"><span class="pre">logical</span></code>:<ul>
-<li>each model is initialized with a random boolean.</li>
-<li>mutation flips the logical value</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">logical</span></code>:</p>
+<ul>
+<li><p>each model is initialized with a random boolean.</p></li>
+<li><p>mutation flips the logical value</p></li>
 </ul>
 </li>
-<li><code class="docutils literal notranslate"><span class="pre">categorical</span></code>:<ul>
-<li>each model is initialized with an element chosen at random from
-the list of elements in <code class="docutils literal notranslate"><span class="pre">values</span></code>.</li>
-<li>mutation chooses an element from the <code class="docutils literal notranslate"><span class="pre">values</span></code> list at random</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">categorical</span></code>:</p>
+<ul>
+<li><p>each model is initialized with an element chosen at random from
+the list of elements in <code class="docutils literal notranslate"><span class="pre">values</span></code>.</p></li>
+<li><p>mutation chooses an element from the <code class="docutils literal notranslate"><span class="pre">values</span></code> list at random</p></li>
 </ul>
 </li>
-<li><code class="docutils literal notranslate"><span class="pre">ordered</span></code>:<ul>
-<li>each model is inititalized with an element chosen at random
-from the list of elements in <code class="docutils literal notranslate"><span class="pre">values</span></code>.</li>
-<li>given the index of the current value in the list of <code class="docutils literal notranslate"><span class="pre">values</span></code>,
+<li><p><code class="docutils literal notranslate"><span class="pre">ordered</span></code>:</p>
+<ul>
+<li><p>each model is inititalized with an element chosen at random
+from the list of elements in <code class="docutils literal notranslate"><span class="pre">values</span></code>.</p></li>
+<li><p>given the index of the current value in the list of <code class="docutils literal notranslate"><span class="pre">values</span></code>,
 mutation selects the element <em>n</em> number of indices away, where
 n is the result of a random draw between 1 and <code class="docutils literal notranslate"><span class="pre">sigma</span></code> and
-then is negated with a 0.5 probability.</li>
+then is negated with a 0.5 probability.</p></li>
 </ul>
 </li>
 </ul>
@@ -351,35 +360,35 @@ choose from * <code class="docutils literal notranslate"><span class="pre">eleme
 from. One of <code class="docutils literal notranslate"><span class="pre">int</span></code>, <code class="docutils literal notranslate"><span class="pre">float</span></code>, <code class="docutils literal notranslate"><span class="pre">string</span></code>, or <code class="docutils literal notranslate"><span class="pre">logical</span></code> *
 <code class="docutils literal notranslate"><span class="pre">sigma</span></code>: the sigma value used by the mutation operator (see above).</p>
 <p>A sample hyperparameter definition file:</p>
-<div class="code javascript highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="p">[</span>
   <span class="p">{</span>
-    <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;activation&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;categorical&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;element_type&quot;</span><span class="p">:</span> <span class="s2">&quot;string&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;values&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;softmax&quot;</span><span class="p">,</span> <span class="s2">&quot;elu&quot;</span><span class="p">,</span> <span class="s2">&quot;softplus&quot;</span><span class="p">,</span> <span class="s2">&quot;softsign&quot;</span><span class="p">,</span> <span class="s2">&quot;relu&quot;</span><span class="p">,</span> <span class="s2">&quot;tanh&quot;</span><span class="p">,</span> <span class="s2">&quot;sigmoid&quot;</span><span class="p">,</span> <span class="s2">&quot;hard_sigmoid&quot;</span><span class="p">,</span> <span class="s2">&quot;linear&quot;</span><span class="p">]</span>
+    <span class="s2">&quot;name&quot;</span><span class="o">:</span> <span class="s2">&quot;activation&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;type&quot;</span><span class="o">:</span> <span class="s2">&quot;categorical&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;element_type&quot;</span><span class="o">:</span> <span class="s2">&quot;string&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;values&quot;</span><span class="o">:</span> <span class="p">[</span><span class="s2">&quot;softmax&quot;</span><span class="p">,</span> <span class="s2">&quot;elu&quot;</span><span class="p">,</span> <span class="s2">&quot;softplus&quot;</span><span class="p">,</span> <span class="s2">&quot;softsign&quot;</span><span class="p">,</span> <span class="s2">&quot;relu&quot;</span><span class="p">,</span> <span class="s2">&quot;tanh&quot;</span><span class="p">,</span> <span class="s2">&quot;sigmoid&quot;</span><span class="p">,</span> <span class="s2">&quot;hard_sigmoid&quot;</span><span class="p">,</span> <span class="s2">&quot;linear&quot;</span><span class="p">]</span>
   <span class="p">},</span>
 
   <span class="p">{</span>
-    <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;optimizer&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;categorical&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;element_type&quot;</span><span class="p">:</span> <span class="s2">&quot;string&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;values&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;adam&quot;</span><span class="p">,</span> <span class="s2">&quot;rmsprop&quot;</span><span class="p">]</span>
+    <span class="s2">&quot;name&quot;</span><span class="o">:</span> <span class="s2">&quot;optimizer&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;type&quot;</span><span class="o">:</span> <span class="s2">&quot;categorical&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;element_type&quot;</span><span class="o">:</span> <span class="s2">&quot;string&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;values&quot;</span><span class="o">:</span> <span class="p">[</span><span class="s2">&quot;adam&quot;</span><span class="p">,</span> <span class="s2">&quot;rmsprop&quot;</span><span class="p">]</span>
   <span class="p">},</span>
 
   <span class="p">{</span>
-    <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;lr&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;float&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;lower&quot;</span><span class="p">:</span> <span class="mf">0.0001</span><span class="p">,</span>
-    <span class="s2">&quot;upper&quot;</span><span class="p">:</span> <span class="mf">0.01</span><span class="p">,</span>
-    <span class="s2">&quot;sigma&quot;</span><span class="p">:</span> <span class="s2">&quot;0.000495&quot;</span>
+    <span class="s2">&quot;name&quot;</span><span class="o">:</span> <span class="s2">&quot;lr&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;type&quot;</span><span class="o">:</span> <span class="s2">&quot;float&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;lower&quot;</span><span class="o">:</span> <span class="mf">0.0001</span><span class="p">,</span>
+    <span class="s2">&quot;upper&quot;</span><span class="o">:</span> <span class="mf">0.01</span><span class="p">,</span>
+    <span class="s2">&quot;sigma&quot;</span><span class="o">:</span> <span class="s2">&quot;0.000495&quot;</span>
   <span class="p">},</span>
 
   <span class="p">{</span>
-    <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;batch_size&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;ordered&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;element_type&quot;</span><span class="p">:</span> <span class="s2">&quot;int&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;values&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">16</span><span class="p">,</span> <span class="mi">32</span><span class="p">,</span> <span class="mi">64</span><span class="p">,</span> <span class="mi">128</span><span class="p">,</span> <span class="mi">256</span><span class="p">],</span>
-    <span class="s2">&quot;sigma&quot;</span><span class="p">:</span> <span class="mi">1</span>
+    <span class="s2">&quot;name&quot;</span><span class="o">:</span> <span class="s2">&quot;batch_size&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;type&quot;</span><span class="o">:</span> <span class="s2">&quot;ordered&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;element_type&quot;</span><span class="o">:</span> <span class="s2">&quot;int&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;values&quot;</span><span class="o">:</span> <span class="p">[</span><span class="mi">16</span><span class="p">,</span> <span class="mi">32</span><span class="p">,</span> <span class="mi">64</span><span class="p">,</span> <span class="mi">128</span><span class="p">,</span> <span class="mi">256</span><span class="p">],</span>
+    <span class="s2">&quot;sigma&quot;</span><span class="o">:</span> <span class="mi">1</span>
   <span class="p">}</span>
 <span class="p">]</span>
 </pre></div>
@@ -396,10 +405,10 @@ information about that hyperparameter.</p>
 <code class="docutils literal notranslate"><span class="pre">TURBINE_OUTPUT</span></code> . This will be the main output directory for your
 run.</p>
 <ul class="simple">
-<li>On a local system, stdout/stderr for the workflow will go to your
-terminal.</li>
-<li>On a scheduled system, stdout/stderr for the workflow will go to
-<code class="docutils literal notranslate"><span class="pre">TURBINE_OUTPUT/output.txt</span></code></li>
+<li><p>On a local system, stdout/stderr for the workflow will go to your
+terminal.</p></li>
+<li><p>On a scheduled system, stdout/stderr for the workflow will go to
+<code class="docutils literal notranslate"><span class="pre">TURBINE_OUTPUT/output.txt</span></code></p></li>
 </ul>
 <p>The individual objective function (model) runs stdout/stderr go into
 directories of the form:</p>
@@ -411,19 +420,19 @@ iteration number, and <code class="docutils literal notranslate"><span class="pr
 <p>Each successful run of the workflow will produce a <code class="docutils literal notranslate"><span class="pre">final_results_2</span></code>
 file. The first line of the file contains the GA’s final population,
 that is, the final hyperparameter sets. The second line contains the
-final score (e.g.&nbsp;val loss) for each parameter set. The remainder of the
+final score (e.g. val loss) for each parameter set. The remainder of the
 file reports the GA’s per iteration statistics. The columns are:</p>
 <ul class="simple">
-<li>gen: the generation / iteration</li>
-<li>nevals: the number of evaluations performed in this generation. In
+<li><p>gen: the generation / iteration</p></li>
+<li><p>nevals: the number of evaluations performed in this generation. In
 generations after the first, this may be less the total population
-size as some combinations will already have been evaluated.</li>
-<li>avg: the average score</li>
-<li>std: the standard deviation</li>
-<li>min: the minimum score</li>
-<li>max: the maximum score</li>
-<li>ts: a timestamp recording when this generation finished. The value is
-the number of seconds since the epoch in floating point format</li>
+size as some combinations will already have been evaluated.</p></li>
+<li><p>avg: the average score</p></li>
+<li><p>std: the standard deviation</p></li>
+<li><p>min: the minimum score</p></li>
+<li><p>max: the maximum score</p></li>
+<li><p>ts: a timestamp recording when this generation finished. The value is
+the number of seconds since the epoch in floating point format</p></li>
 </ul>
 </div>
 </div>
@@ -440,7 +449,7 @@ the number of seconds since the epoch in floating point format</li>
         <a href="workflow_async_search.html" class="btn btn-neutral float-right" title="Run Asynchronous Search based hyperparameter optimization on CANDLE Benchmarks" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="running_on_theta.html" class="btn btn-neutral" title="How to run CANDLE compliant code in Theta" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="running_on_theta.html" class="btn btn-neutral float-left" title="How to run CANDLE compliant code in Theta" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -449,7 +458,7 @@ the number of seconds since the epoch in floating point format</li>
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2018, ANL.gov.
+        &copy; Copyright 2018, ANL.gov
 
     </p>
   </div>
@@ -466,33 +475,16 @@ the number of seconds since the epoch in floating point format</li>
   
 
 
-  
-
-    <script type="text/javascript">
-        var DOCUMENTATION_OPTIONS = {
-            URL_ROOT:'../',
-            VERSION:'',
-            LANGUAGE:'None',
-            COLLAPSE_INDEX:false,
-            FILE_SUFFIX:'.html',
-            HAS_SOURCE:  true,
-            SOURCELINK_SUFFIX: '.txt'
-        };
-    </script>
-      <script type="text/javascript" src="../_static/jquery.js"></script>
-      <script type="text/javascript" src="../_static/underscore.js"></script>
-      <script type="text/javascript" src="../_static/doctools.js"></script>
-      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-
-  
-
-  <script type="text/javascript" src="../_static/js/theme.js"></script>
-
   <script type="text/javascript">
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script> 
+  </script>
+
+  
+  
+    
+   
 
 </body>
 </html>

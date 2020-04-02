@@ -17,32 +17,34 @@
   
 
   
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
 
-  
-  
     
 
   
-
   <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" /> 
-
-  
-  <script src="../_static/js/modernizr.min.js"></script>
-
 </head>
 
 <body class="wy-body-for-nav">
 
    
   <div class="wy-grid-for-nav">
-
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search">
+        <div class="wy-side-nav-search" >
           
 
           
@@ -465,20 +467,20 @@
     <span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="n">seed</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="initialize_parameters"><a class="viewcode-back" href="../candle_lib/default_utils.html#default_utils.initialize_parameters">[docs]</a><span class="k">def</span> <span class="nf">initialize_parameters</span><span class="p">(</span><span class="n">bmk</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Utility to parse parameters in common as well as parmeters</span>
+<div class="viewcode-block" id="finalize_parameters"><a class="viewcode-back" href="../candle_lib/default_utils.html#default_utils.finalize_parameters">[docs]</a><span class="k">def</span> <span class="nf">finalize_parameters</span><span class="p">(</span><span class="n">bmk</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Utility to parse parameters in common as well as parameters</span>
 <span class="sd">        particular to each benchmark.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
 <span class="sd">        bmk : benchmark object</span>
 <span class="sd">            Object that has benchmark filepaths and specifications</span>
-<span class="sd">            </span>
+
 <span class="sd">        Return</span>
 <span class="sd">        ----------</span>
 <span class="sd">        gParameters : python dictionary</span>
 <span class="sd">            Dictionary with all the parameters necessary to run the benchmark.</span>
-<span class="sd">            Command line overwrites config file especifications</span>
+<span class="sd">            Command line overwrites config file specifications</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="c1"># Parse common parameters</span>
@@ -590,7 +592,7 @@
                         <span class="n">default</span><span class="o">=</span><span class="n">argparse</span><span class="o">.</span><span class="n">SUPPRESS</span><span class="p">,</span>
                         <span class="n">help</span><span class="o">=</span><span class="s2">&quot;evaluate model (use it for inference)&quot;</span><span class="p">)</span>
 
-    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--timeout&quot;</span><span class="p">,</span> <span class="n">dest</span><span class="o">=</span><span class="s1">&#39;timeout&#39;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s2">&quot;store&quot;</span><span class="p">,</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--timeout&quot;</span><span class="p">,</span> <span class="n">dest</span><span class="o">=</span><span class="s1">&#39;timeout&#39;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s2">&quot;store&quot;</span><span class="p">,</span>
                     <span class="n">default</span><span class="o">=</span><span class="n">argparse</span><span class="o">.</span><span class="n">SUPPRESS</span><span class="p">,</span>
                     <span class="n">help</span><span class="o">=</span><span class="s2">&quot;seconds allowed to train model (default: no timeout)&quot;</span><span class="p">)</span>
 
@@ -717,6 +719,10 @@
                         <span class="n">default</span><span class="o">=</span><span class="p">[],</span> <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span>
                         <span class="n">help</span><span class="o">=</span><span class="s2">&quot;set IDs of GPUs to use&quot;</span><span class="p">)</span>
 
+    <span class="c1"># profiling flags</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;-p&quot;</span><span class="p">,</span> <span class="s2">&quot;--profiling&quot;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="n">str2bool</span><span class="p">,</span>
+                        <span class="n">default</span> <span class="o">=</span> <span class="s1">&#39;false&#39;</span><span class="p">,</span>
+                        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Turn profiling on or off&quot;</span><span class="p">)</span>
 
     <span class="k">return</span> <span class="n">parser</span></div>
 
@@ -1042,7 +1048,7 @@
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2018, ANL.gov.
+        &copy; Copyright 2018, ANL.gov
 
     </p>
   </div>
@@ -1059,33 +1065,16 @@
   
 
 
-  
-
-    <script type="text/javascript">
-        var DOCUMENTATION_OPTIONS = {
-            URL_ROOT:'../',
-            VERSION:'',
-            LANGUAGE:'None',
-            COLLAPSE_INDEX:false,
-            FILE_SUFFIX:'.html',
-            HAS_SOURCE:  true,
-            SOURCELINK_SUFFIX: '.txt'
-        };
-    </script>
-      <script type="text/javascript" src="../_static/jquery.js"></script>
-      <script type="text/javascript" src="../_static/underscore.js"></script>
-      <script type="text/javascript" src="../_static/doctools.js"></script>
-      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-
-  
-
-  <script type="text/javascript" src="../_static/js/theme.js"></script>
-
   <script type="text/javascript">
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script> 
+  </script>
+
+  
+  
+    
+   
 
 </body>
 </html>

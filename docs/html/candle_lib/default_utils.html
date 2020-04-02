@@ -17,34 +17,36 @@
   
 
   
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
 
-  
-  
     
 
   
-
   <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="file_utils module" href="file_utils.html" />
     <link rel="prev" title="data_utils module" href="data_utils.html" /> 
-
-  
-  <script src="../_static/js/modernizr.min.js"></script>
-
 </head>
 
 <body class="wy-body-for-nav">
 
    
   <div class="wy-grid-for-nav">
-
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search">
+        <div class="wy-side-nav-search" >
           
 
           
@@ -164,7 +166,7 @@
 <span id="default-utils-module"></span><h1>default_utils module<a class="headerlink" href="#module-default_utils" title="Permalink to this headline">¶</a></h1>
 <dl class="class">
 <dt id="default_utils.ArgumentStruct">
-<em class="property">class </em><code class="descclassname">default_utils.</code><code class="descname">ArgumentStruct</code><span class="sig-paren">(</span><em>**entries</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/default_utils.html#ArgumentStruct"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#default_utils.ArgumentStruct" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">default_utils.</code><code class="sig-name descname">ArgumentStruct</code><span class="sig-paren">(</span><em class="sig-param">**entries</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/default_utils.html#ArgumentStruct"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#default_utils.ArgumentStruct" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>Class that converts a python dictionary into an object with
 named entries given by the dictionary keys.
@@ -176,7 +178,7 @@ or object entries) can be used.</p>
 
 <dl class="class">
 <dt id="default_utils.Benchmark">
-<em class="property">class </em><code class="descclassname">default_utils.</code><code class="descname">Benchmark</code><span class="sig-paren">(</span><em>filepath</em>, <em>defmodel</em>, <em>framework</em>, <em>prog=None</em>, <em>desc=None</em>, <em>parser=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/default_utils.html#Benchmark"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#default_utils.Benchmark" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">default_utils.</code><code class="sig-name descname">Benchmark</code><span class="sig-paren">(</span><em class="sig-param">filepath</em>, <em class="sig-param">defmodel</em>, <em class="sig-param">framework</em>, <em class="sig-param">prog=None</em>, <em class="sig-param">desc=None</em>, <em class="sig-param">parser=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/default_utils.html#Benchmark"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#default_utils.Benchmark" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>Class that implements an interface to handle configuration options for the
 different CANDLE benchmarks.
@@ -188,43 +190,39 @@ It interacts with the argparser to extract command-line options and arguments
 from the benchmark’s configuration files.</p>
 <dl class="method">
 <dt id="default_utils.Benchmark.check_required_exists">
-<code class="descname">check_required_exists</code><span class="sig-paren">(</span><em>gparam</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/default_utils.html#Benchmark.check_required_exists"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#default_utils.Benchmark.check_required_exists" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">check_required_exists</code><span class="sig-paren">(</span><em class="sig-param">gparam</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/default_utils.html#Benchmark.check_required_exists"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#default_utils.Benchmark.check_required_exists" title="Permalink to this definition">¶</a></dt>
 <dd><p>Functionality to verify that the required
 model parameters have been specified.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="default_utils.Benchmark.format_benchmark_config_arguments">
-<code class="descname">format_benchmark_config_arguments</code><span class="sig-paren">(</span><em>dictfileparam</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/default_utils.html#Benchmark.format_benchmark_config_arguments"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#default_utils.Benchmark.format_benchmark_config_arguments" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">format_benchmark_config_arguments</code><span class="sig-paren">(</span><em class="sig-param">dictfileparam</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/default_utils.html#Benchmark.format_benchmark_config_arguments"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#default_utils.Benchmark.format_benchmark_config_arguments" title="Permalink to this definition">¶</a></dt>
 <dd><p>Functionality to format the particular parameters of
 the benchmark.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>dictfileparam</strong> (<em>python dictionary</em>) – parameters read from configuration file</li>
-<li><strong>args</strong> (<em>python dictionary</em>) – parameters read from command-line
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>dictfileparam</strong> (<em>python dictionary</em>) – parameters read from configuration file</p></li>
+<li><p><strong>args</strong> (<em>python dictionary</em>) – parameters read from command-line
 Most of the time command-line overwrites configuration file
 except when the command-line is using default values and
-config file defines those values</li>
+config file defines those values</p></li>
 </ul>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="default_utils.Benchmark.parse_from_benchmark">
-<code class="descname">parse_from_benchmark</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/default_utils.html#Benchmark.parse_from_benchmark"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#default_utils.Benchmark.parse_from_benchmark" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">parse_from_benchmark</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/default_utils.html#Benchmark.parse_from_benchmark"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#default_utils.Benchmark.parse_from_benchmark" title="Permalink to this definition">¶</a></dt>
 <dd><p>Functionality to parse options specific
 specific for each benchmark.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="default_utils.Benchmark.parse_from_common">
-<code class="descname">parse_from_common</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/default_utils.html#Benchmark.parse_from_common"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#default_utils.Benchmark.parse_from_common" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">parse_from_common</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/default_utils.html#Benchmark.parse_from_common"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#default_utils.Benchmark.parse_from_common" title="Permalink to this definition">¶</a></dt>
 <dd><p>Functionality to parse options common
 for all benchmarks.
 This functionality is based on methods ‘get_default_neon_parser’ and
@@ -234,14 +232,14 @@ or they are moved, the calling has to be updated.</p>
 
 <dl class="method">
 <dt id="default_utils.Benchmark.read_config_file">
-<code class="descname">read_config_file</code><span class="sig-paren">(</span><em>file</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/default_utils.html#Benchmark.read_config_file"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#default_utils.Benchmark.read_config_file" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">read_config_file</code><span class="sig-paren">(</span><em class="sig-param">file</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/default_utils.html#Benchmark.read_config_file"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#default_utils.Benchmark.read_config_file" title="Permalink to this definition">¶</a></dt>
 <dd><p>Functionality to read the configue file
 specific for each benchmark.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="default_utils.Benchmark.set_locals">
-<code class="descname">set_locals</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/default_utils.html#Benchmark.set_locals"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#default_utils.Benchmark.set_locals" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">set_locals</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/default_utils.html#Benchmark.set_locals"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#default_utils.Benchmark.set_locals" title="Permalink to this definition">¶</a></dt>
 <dd><p>Functionality to set variables specific for the benchmark
 - required: set of required parameters for the benchmark.
 - additional_definitions: list of dictionaries describing                 the additional parameters for the benchmark.</p>
@@ -251,7 +249,7 @@ specific for each benchmark.</p>
 
 <dl class="class">
 <dt id="default_utils.ListOfListsAction">
-<em class="property">class </em><code class="descclassname">default_utils.</code><code class="descname">ListOfListsAction</code><span class="sig-paren">(</span><em>option_strings</em>, <em>dest</em>, <em>type</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/default_utils.html#ListOfListsAction"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#default_utils.ListOfListsAction" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">default_utils.</code><code class="sig-name descname">ListOfListsAction</code><span class="sig-paren">(</span><em class="sig-param">option_strings</em>, <em class="sig-param">dest</em>, <em class="sig-param">type</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/default_utils.html#ListOfListsAction"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#default_utils.ListOfListsAction" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">argparse.Action</span></code></p>
 <p>This class extends the argparse.Action class by instantiating
 an argparser that constructs a list-of-lists from an input
@@ -260,192 +258,161 @@ an argparser that constructs a list-of-lists from an input
 
 <dl class="function">
 <dt id="default_utils.args_overwrite_config">
-<code class="descclassname">default_utils.</code><code class="descname">args_overwrite_config</code><span class="sig-paren">(</span><em>args</em>, <em>config</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/default_utils.html#args_overwrite_config"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#default_utils.args_overwrite_config" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">default_utils.</code><code class="sig-name descname">args_overwrite_config</code><span class="sig-paren">(</span><em class="sig-param">args</em>, <em class="sig-param">config</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/default_utils.html#args_overwrite_config"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#default_utils.args_overwrite_config" title="Permalink to this definition">¶</a></dt>
 <dd><p>Overwrite configuration parameters with
 parameters specified via command-line.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>args</strong> (<em>ArgumentParser object</em>) – Parameters specified via command-line</li>
-<li><strong>config</strong> (<em>python dictionary</em>) – Parameters read from configuration file</li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>args</strong> (<em>ArgumentParser object</em>) – Parameters specified via command-line</p></li>
+<li><p><strong>config</strong> (<em>python dictionary</em>) – Parameters read from configuration file</p></li>
 </ul>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="function">
 <dt id="default_utils.directory_from_parameters">
-<code class="descclassname">default_utils.</code><code class="descname">directory_from_parameters</code><span class="sig-paren">(</span><em>params</em>, <em>commonroot='Output'</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/default_utils.html#directory_from_parameters"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#default_utils.directory_from_parameters" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">default_utils.</code><code class="sig-name descname">directory_from_parameters</code><span class="sig-paren">(</span><em class="sig-param">params</em>, <em class="sig-param">commonroot='Output'</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/default_utils.html#directory_from_parameters"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#default_utils.directory_from_parameters" title="Permalink to this definition">¶</a></dt>
 <dd><p>Construct output directory path with unique IDs from parameters</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>params</strong> (<em>python dictionary</em>) – Dictionary of parameters read</li>
-<li><strong>commonroot</strong> (<em>string</em>) – String to specify the common folder to store results.</li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>params</strong> (<em>python dictionary</em>) – Dictionary of parameters read</p></li>
+<li><p><strong>commonroot</strong> (<em>string</em>) – String to specify the common folder to store results.</p></li>
 </ul>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="function">
 <dt id="default_utils.eval_string_as_list">
-<code class="descclassname">default_utils.</code><code class="descname">eval_string_as_list</code><span class="sig-paren">(</span><em>str_read</em>, <em>separator</em>, <em>dtype</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/default_utils.html#eval_string_as_list"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#default_utils.eval_string_as_list" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">default_utils.</code><code class="sig-name descname">eval_string_as_list</code><span class="sig-paren">(</span><em class="sig-param">str_read</em>, <em class="sig-param">separator</em>, <em class="sig-param">dtype</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/default_utils.html#eval_string_as_list"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#default_utils.eval_string_as_list" title="Permalink to this definition">¶</a></dt>
 <dd><p>Parse a string and convert it into a list of lists.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>str_read</strong> (<em>string</em>) – String read (from configuration file or command line, for example)</li>
-<li><strong>separator</strong> (<em>character</em>) – Character that specifies the separation between the lists</li>
-<li><strong>dtype</strong> (<em>data type</em>) – Data type to decode the elements of the list</li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>str_read</strong> (<em>string</em>) – String read (from configuration file or command line, for example)</p></li>
+<li><p><strong>separator</strong> (<em>character</em>) – Character that specifies the separation between the lists</p></li>
+<li><p><strong>dtype</strong> (<em>data type</em>) – Data type to decode the elements of the list</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><strong>decoded_list</strong> (<em>list</em>) – List extracted from string and with elements of the
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>decoded_list</strong> (<em>list</em>) – List extracted from string and with elements of the
 specified type.</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="function">
 <dt id="default_utils.eval_string_as_list_of_lists">
-<code class="descclassname">default_utils.</code><code class="descname">eval_string_as_list_of_lists</code><span class="sig-paren">(</span><em>str_read</em>, <em>separator_out</em>, <em>separator_in</em>, <em>dtype</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/default_utils.html#eval_string_as_list_of_lists"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#default_utils.eval_string_as_list_of_lists" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">default_utils.</code><code class="sig-name descname">eval_string_as_list_of_lists</code><span class="sig-paren">(</span><em class="sig-param">str_read</em>, <em class="sig-param">separator_out</em>, <em class="sig-param">separator_in</em>, <em class="sig-param">dtype</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/default_utils.html#eval_string_as_list_of_lists"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#default_utils.eval_string_as_list_of_lists" title="Permalink to this definition">¶</a></dt>
 <dd><p>Parse a string and convert it into a list of lists.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>str_read</strong> (<em>string</em>) – String read (from configuration file or command line, for example)</li>
-<li><strong>separator_out</strong> (<em>character</em>) – Character that specifies the separation between the outer level lists</li>
-<li><strong>separator_in</strong> (<em>character</em>) – Character that specifies the separation between the inner level lists</li>
-<li><strong>dtype</strong> (<em>data type</em>) – Data type to decode the elements of the lists</li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>str_read</strong> (<em>string</em>) – String read (from configuration file or command line, for example)</p></li>
+<li><p><strong>separator_out</strong> (<em>character</em>) – Character that specifies the separation between the outer level lists</p></li>
+<li><p><strong>separator_in</strong> (<em>character</em>) – Character that specifies the separation between the inner level lists</p></li>
+<li><p><strong>dtype</strong> (<em>data type</em>) – Data type to decode the elements of the lists</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><strong>decoded_list</strong> (<em>list</em>) – List of lists extracted from string and with elements of the specified type.</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>decoded_list</strong> (<em>list</em>) – List of lists extracted from string and with elements of the specified type.</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="function">
 <dt id="default_utils.fetch_file">
-<code class="descclassname">default_utils.</code><code class="descname">fetch_file</code><span class="sig-paren">(</span><em>link</em>, <em>subdir</em>, <em>untar=False</em>, <em>md5_hash=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/default_utils.html#fetch_file"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#default_utils.fetch_file" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">default_utils.</code><code class="sig-name descname">fetch_file</code><span class="sig-paren">(</span><em class="sig-param">link</em>, <em class="sig-param">subdir</em>, <em class="sig-param">untar=False</em>, <em class="sig-param">md5_hash=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/default_utils.html#fetch_file"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#default_utils.fetch_file" title="Permalink to this definition">¶</a></dt>
 <dd><p>Convert URL to file path and download the file
 if it is not already present in spedified cache.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>link</strong> (<em>link path</em>) – URL of the file to download</li>
-<li><strong>subdir</strong> (<em>directory path</em>) – Local path to check for cached file.</li>
-<li><strong>untar</strong> (<em>boolean</em>) – Flag to specify if the file to download should
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>link</strong> (<em>link path</em>) – URL of the file to download</p></li>
+<li><p><strong>subdir</strong> (<em>directory path</em>) – Local path to check for cached file.</p></li>
+<li><p><strong>untar</strong> (<em>boolean</em>) – Flag to specify if the file to download should
 be decompressed too.
-(default: False, no decompression)</li>
-<li><strong>md5_hash</strong> (<em>MD5 hash</em>) – Hash used as a checksum to verify data integrity.
+(default: False, no decompression)</p></li>
+<li><p><strong>md5_hash</strong> (<em>MD5 hash</em>) – Hash used as a checksum to verify data integrity.
 Verification is carried out if a hash is provided.
-(default: None, no verification)</li>
+(default: None, no verification)</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><em>local path to the downloaded, or cached, file.</em></p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><em>local path to the downloaded, or cached, file.</em></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="default_utils.finalize_parameters">
+<code class="sig-prename descclassname">default_utils.</code><code class="sig-name descname">finalize_parameters</code><span class="sig-paren">(</span><em class="sig-param">bmk</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/default_utils.html#finalize_parameters"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#default_utils.finalize_parameters" title="Permalink to this definition">¶</a></dt>
+<dd><p>Utility to parse parameters in common as well as parameters
+particular to each benchmark.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>bmk</strong> (<em>benchmark object</em>) – Object that has benchmark filepaths and specifications</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>gParameters</strong> (<em>python dictionary</em>) – Dictionary with all the parameters necessary to run the benchmark.
+Command line overwrites config file specifications</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="function">
 <dt id="default_utils.get_choice">
-<code class="descclassname">default_utils.</code><code class="descname">get_choice</code><span class="sig-paren">(</span><em>name</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/default_utils.html#get_choice"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#default_utils.get_choice" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">default_utils.</code><code class="sig-name descname">get_choice</code><span class="sig-paren">(</span><em class="sig-param">name</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/default_utils.html#get_choice"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#default_utils.get_choice" title="Permalink to this definition">¶</a></dt>
 <dd><p>Maps name string to the right type of argument</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="default_utils.get_common_parser">
-<code class="descclassname">default_utils.</code><code class="descname">get_common_parser</code><span class="sig-paren">(</span><em>parser</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/default_utils.html#get_common_parser"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#default_utils.get_common_parser" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">default_utils.</code><code class="sig-name descname">get_common_parser</code><span class="sig-paren">(</span><em class="sig-param">parser</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/default_utils.html#get_common_parser"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#default_utils.get_common_parser" title="Permalink to this definition">¶</a></dt>
 <dd><p>Parse command-line arguments. Ignore if not present.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>parser</strong> (<em>ArgumentParser object</em>) – Parser for command-line options</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>parser</strong> (<em>ArgumentParser object</em>) – Parser for command-line options</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="function">
 <dt id="default_utils.get_default_neon_parser">
-<code class="descclassname">default_utils.</code><code class="descname">get_default_neon_parser</code><span class="sig-paren">(</span><em>parser</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/default_utils.html#get_default_neon_parser"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#default_utils.get_default_neon_parser" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">default_utils.</code><code class="sig-name descname">get_default_neon_parser</code><span class="sig-paren">(</span><em class="sig-param">parser</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/default_utils.html#get_default_neon_parser"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#default_utils.get_default_neon_parser" title="Permalink to this definition">¶</a></dt>
 <dd><p>Parse command-line arguments that are default in neon parser (and are common to all frameworks).
 Ignore if not present.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>parser</strong> (<em>ArgumentParser object</em>) – Parser for neon default command-line options</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="function">
-<dt id="default_utils.initialize_parameters">
-<code class="descclassname">default_utils.</code><code class="descname">initialize_parameters</code><span class="sig-paren">(</span><em>bmk</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/default_utils.html#initialize_parameters"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#default_utils.initialize_parameters" title="Permalink to this definition">¶</a></dt>
-<dd><p>Utility to parse parameters in common as well as parmeters
-particular to each benchmark.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>bmk</strong> (<em>benchmark object</em>) – Object that has benchmark filepaths and specifications</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><strong>gParameters</strong> (<em>python dictionary</em>) – Dictionary with all the parameters necessary to run the benchmark.
-Command line overwrites config file especifications</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>parser</strong> (<em>ArgumentParser object</em>) – Parser for neon default command-line options</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="function">
 <dt id="default_utils.keras_default_config">
-<code class="descclassname">default_utils.</code><code class="descname">keras_default_config</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/default_utils.html#keras_default_config"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#default_utils.keras_default_config" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">default_utils.</code><code class="sig-name descname">keras_default_config</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/default_utils.html#keras_default_config"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#default_utils.keras_default_config" title="Permalink to this definition">¶</a></dt>
 <dd><p>Defines parameters that intervine in different functions using the keras defaults.
 This helps to keep consistency in parameters between frameworks.</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="default_utils.set_seed">
-<code class="descclassname">default_utils.</code><code class="descname">set_seed</code><span class="sig-paren">(</span><em>seed</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/default_utils.html#set_seed"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#default_utils.set_seed" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">default_utils.</code><code class="sig-name descname">set_seed</code><span class="sig-paren">(</span><em class="sig-param">seed</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/default_utils.html#set_seed"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#default_utils.set_seed" title="Permalink to this definition">¶</a></dt>
 <dd><p>Set the seed of the pseudo-random generator to the specified value.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>seed</strong> (<em>int</em>) – Value to intialize or re-seed the generator.</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>seed</strong> (<em>int</em>) – Value to intialize or re-seed the generator.</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="function">
 <dt id="default_utils.set_up_logger">
-<code class="descclassname">default_utils.</code><code class="descname">set_up_logger</code><span class="sig-paren">(</span><em>logfile</em>, <em>logger</em>, <em>verbose</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/default_utils.html#set_up_logger"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#default_utils.set_up_logger" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">default_utils.</code><code class="sig-name descname">set_up_logger</code><span class="sig-paren">(</span><em class="sig-param">logfile</em>, <em class="sig-param">logger</em>, <em class="sig-param">verbose</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/default_utils.html#set_up_logger"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#default_utils.set_up_logger" title="Permalink to this definition">¶</a></dt>
 <dd><p>Set up the event logging system. Two handlers are created.
 One to send log records to a specified file and
 one to send log records to the (defaulf) sys.stderr stream.
@@ -454,60 +421,51 @@ The stream handler is set to INFO logging level, or to DEBUG
 logging level if the verbose flag is specified.
 Logging messages which are less severe than the level set will
 be ignored.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>logfile</strong> (<em>filename</em>) – File to store the log records</li>
-<li><strong>logger</strong> (<em>logger object</em>) – Python object for the logging interface</li>
-<li><strong>verbose</strong> (<em>boolean</em>) – Flag to increase the logging level from INFO to DEBUG. It
-only applies to the stream handler.</li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>logfile</strong> (<em>filename</em>) – File to store the log records</p></li>
+<li><p><strong>logger</strong> (<em>logger object</em>) – Python object for the logging interface</p></li>
+<li><p><strong>verbose</strong> (<em>boolean</em>) – Flag to increase the logging level from INFO to DEBUG. It
+only applies to the stream handler.</p></li>
 </ul>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="function">
 <dt id="default_utils.str2bool">
-<code class="descclassname">default_utils.</code><code class="descname">str2bool</code><span class="sig-paren">(</span><em>v</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/default_utils.html#str2bool"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#default_utils.str2bool" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">default_utils.</code><code class="sig-name descname">str2bool</code><span class="sig-paren">(</span><em class="sig-param">v</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/default_utils.html#str2bool"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#default_utils.str2bool" title="Permalink to this definition">¶</a></dt>
 <dd><p>This is taken from:
 <a class="reference external" href="https://stackoverflow.com/questions/15008758/parsing-boolean-values-with-argparse">https://stackoverflow.com/questions/15008758/parsing-boolean-values-with-argparse</a>
 Because type=bool is not interpreted as a bool and action=’store_true’ cannot be
 undone.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>v</strong> (<em>string</em>) – String to interpret</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><ul class="simple">
-<li><em>Boolean value. It raises and exception if the provided string cannot         be interpreted as a boolean type.</em></li>
-<li><em>Strings recognized as boolean True</em> – ‘yes’, ‘true’, ‘t’, ‘y’, ‘1’ and uppercase versions (where applicable).</li>
-<li><em>Strings recognized as boolean False</em> – ‘no’, ‘false’, ‘f’, ‘n’, ‘0’ and uppercase versions (where applicable).</li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>v</strong> (<em>string</em>) – String to interpret</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><em>Boolean value. It raises and exception if the provided string cannot         be interpreted as a boolean type.</em></p></li>
+<li><p><em>Strings recognized as boolean True</em> – ‘yes’, ‘true’, ‘t’, ‘y’, ‘1’ and uppercase versions (where applicable).</p></li>
+<li><p><em>Strings recognized as boolean False</em> – ‘no’, ‘false’, ‘f’, ‘n’, ‘0’ and uppercase versions (where applicable).</p></li>
 </ul>
-</td>
-</tr>
-</tbody>
-</table>
+</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="function">
 <dt id="default_utils.verify_path">
-<code class="descclassname">default_utils.</code><code class="descname">verify_path</code><span class="sig-paren">(</span><em>path</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/default_utils.html#verify_path"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#default_utils.verify_path" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">default_utils.</code><code class="sig-name descname">verify_path</code><span class="sig-paren">(</span><em class="sig-param">path</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/default_utils.html#verify_path"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#default_utils.verify_path" title="Permalink to this definition">¶</a></dt>
 <dd><p>Verify if a directory path exists locally. If the path
 does not exist, but is a valid path, it recursivelly creates
 the specified directory path structure.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>path</strong> (<em>directory path</em>) – Description of local directory path</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>path</strong> (<em>directory path</em>) – Description of local directory path</p>
+</dd>
+</dl>
 </dd></dl>
 
 </div>
@@ -523,7 +481,7 @@ the specified directory path structure.</p>
         <a href="file_utils.html" class="btn btn-neutral float-right" title="file_utils module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="data_utils.html" class="btn btn-neutral" title="data_utils module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="data_utils.html" class="btn btn-neutral float-left" title="data_utils module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -532,7 +490,7 @@ the specified directory path structure.</p>
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2018, ANL.gov.
+        &copy; Copyright 2018, ANL.gov
 
     </p>
   </div>
@@ -549,33 +507,16 @@ the specified directory path structure.</p>
   
 
 
-  
-
-    <script type="text/javascript">
-        var DOCUMENTATION_OPTIONS = {
-            URL_ROOT:'../',
-            VERSION:'',
-            LANGUAGE:'None',
-            COLLAPSE_INDEX:false,
-            FILE_SUFFIX:'.html',
-            HAS_SOURCE:  true,
-            SOURCELINK_SUFFIX: '.txt'
-        };
-    </script>
-      <script type="text/javascript" src="../_static/jquery.js"></script>
-      <script type="text/javascript" src="../_static/underscore.js"></script>
-      <script type="text/javascript" src="../_static/doctools.js"></script>
-      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-
-  
-
-  <script type="text/javascript" src="../_static/js/theme.js"></script>
-
   <script type="text/javascript">
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script> 
+  </script>
+
+  
+  
+    
+   
 
 </body>
 </html>

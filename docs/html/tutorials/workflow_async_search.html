@@ -17,34 +17,36 @@
   
 
   
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
 
-  
-  
     
 
   
-
   <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Run mlrMBO based hyperparameter optimization on CANDLE Benchmarks" href="workflow_mlrMBO.html" />
     <link rel="prev" title="GA (genetic algorithm) based based hyperparameter optimization on CANDLE Benchmarks" href="workflow_genetic_algorithm.html" /> 
-
-  
-  <script src="../_static/js/modernizr.min.js"></script>
-
 </head>
 
 <body class="wy-body-for-nav">
 
    
   <div class="wy-grid-for-nav">
-
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search">
+        <div class="wy-side-nav-search" >
           
 
           
@@ -178,36 +180,36 @@ available here: <code class="docutils literal notranslate"><span class="pre">git
 <div class="section" id="running">
 <h2>Running<a class="headerlink" href="#running" title="Permalink to this headline">¶</a></h2>
 <ol class="arabic simple">
-<li>cd into the <strong>Supervisor/workflows/async-search/test</strong> directory</li>
-<li>Specify the async-search parameters in the <em>cfg-prm-1.sh</em> file
-(INIT_SIZE, etc.).</li>
-<li>Specify the PROCS, queue etc. in <strong>cfg-sys-1.sh</strong> file (NOTE:
-currently INIT_SIZE must be at least PROCS-2)</li>
-<li>You will pass the MODEL_NAME, SITE, and optional experiment id
+<li><p>cd into the <strong>Supervisor/workflows/async-search/test</strong> directory</p></li>
+<li><p>Specify the async-search parameters in the <em>cfg-prm-1.sh</em> file
+(INIT_SIZE, etc.).</p></li>
+<li><p>Specify the PROCS, queue etc. in <strong>cfg-sys-1.sh</strong> file (NOTE:
+currently INIT_SIZE must be at least PROCS-2)</p></li>
+<li><p>You will pass the MODEL_NAME, SITE, and optional experiment id
 arguments to <strong>test-1.sh</strong> file when launching:
 <code class="docutils literal notranslate"><span class="pre">./test-1.sh</span> <span class="pre">&lt;model_name&gt;</span> <span class="pre">&lt;machine_name&gt;</span> <span class="pre">[expid]</span></code> where
 <code class="docutils literal notranslate"><span class="pre">model_name</span></code> can be tc1 etc., <code class="docutils literal notranslate"><span class="pre">machine_name</span></code> can be local, cori,
 theta, titan etc. (see <a class="reference external" href="#making_changes">NOTE</a> below on creating
-new SITE files.)</li>
-<li>The parameter space is defined in a <strong>problem*.py</strong> file (see
+new SITE files.)</p></li>
+<li><p>The parameter space is defined in a <strong>problem*.py</strong> file (see
 <strong>workflows/async-search/python/problem_tc1.py</strong> for an example with
-tc1.). This is imported as <code class="docutils literal notranslate"><span class="pre">problem</span></code> in <strong>async-search.py</strong>.</li>
-<li>The benchmark will be run for the number of processors specified</li>
-<li>Final objective function values, along with parameters, will be
-available in the experiments directory and also printed</li>
+tc1.). This is imported as <code class="docutils literal notranslate"><span class="pre">problem</span></code> in <strong>async-search.py</strong>.</p></li>
+<li><p>The benchmark will be run for the number of processors specified</p></li>
+<li><p>Final objective function values, along with parameters, will be
+available in the experiments directory and also printed</p></li>
 </ol>
 </div>
 <div class="section" id="user-requirements">
 <h2>User requirements<a class="headerlink" href="#user-requirements" title="Permalink to this headline">¶</a></h2>
 <p>What you need to install to run the workflow:</p>
 <ul class="simple">
-<li>This workflow - <code class="docutils literal notranslate"><span class="pre">git&#64;github.com:ECP-CANDLE/Supervisor.git</span></code> . Clone
+<li><p>This workflow - <code class="docutils literal notranslate"><span class="pre">git&#64;github.com:ECP-CANDLE/Supervisor.git</span></code> . Clone
 and switch to the <code class="docutils literal notranslate"><span class="pre">master</span></code> branch. Then <code class="docutils literal notranslate"><span class="pre">cd</span></code> to
-<code class="docutils literal notranslate"><span class="pre">workflows/async-search</span></code> (the directory containing this README).</li>
-<li>TC1 benchmark - <code class="docutils literal notranslate"><span class="pre">git&#64;github.com:ECP-CANDLE/Benchmarks.git</span></code> . Clone
-and switch to the <code class="docutils literal notranslate"><span class="pre">frameworks</span></code> branch.</li>
-<li>benchmark data - See the individual benchmarks README for obtaining
-the initial data</li>
+<code class="docutils literal notranslate"><span class="pre">workflows/async-search</span></code> (the directory containing this README).</p></li>
+<li><p>TC1 benchmark - <code class="docutils literal notranslate"><span class="pre">git&#64;github.com:ECP-CANDLE/Benchmarks.git</span></code> . Clone
+and switch to the <code class="docutils literal notranslate"><span class="pre">frameworks</span></code> branch.</p></li>
+<li><p>benchmark data - See the individual benchmarks README for obtaining
+the initial data</p></li>
 </ul>
 <p>Python specific installation needed:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">conda</span> <span class="n">install</span> <span class="n">h5py</span>
@@ -271,7 +273,7 @@ occur within 15 seconds of each other, a MAX_THRESHOLD number of
 evalutions must occur before the corresponding number of new values are
 produced for evaluation. This can help with performance when many models
 finish within a few seconds of each other. - N_JOBS: The number of jobs
-to run in parallel when producing points (i.e.&nbsp;hyperparameter values)
+to run in parallel when producing points (i.e. hyperparameter values)
 for evaluation. -1 will set this to the number of cores.</p>
 </div>
 <div class="section" id="where-to-check-for-output">
@@ -281,10 +283,10 @@ for evaluation. -1 will set this to the number of cores.</p>
 <code class="docutils literal notranslate"><span class="pre">TURBINE_OUTPUT</span></code> . This will be the main output directory for your
 run.</p>
 <ul class="simple">
-<li>On a local system, stdout/stderr for the workflow will go to your
-terminal.</li>
-<li>On a scheduled system, stdout/stderr for the workflow will go to
-<code class="docutils literal notranslate"><span class="pre">TURBINE_OUTPUT/output.txt</span></code></li>
+<li><p>On a local system, stdout/stderr for the workflow will go to your
+terminal.</p></li>
+<li><p>On a scheduled system, stdout/stderr for the workflow will go to
+<code class="docutils literal notranslate"><span class="pre">TURBINE_OUTPUT/output.txt</span></code></p></li>
 </ul>
 <p>The individual objective function (model) runs stdout/stderr go into
 directories of the form:</p>
@@ -308,7 +310,7 @@ iteration number, and <code class="docutils literal notranslate"><span class="pr
         <a href="workflow_mlrMBO.html" class="btn btn-neutral float-right" title="Run mlrMBO based hyperparameter optimization on CANDLE Benchmarks" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="workflow_genetic_algorithm.html" class="btn btn-neutral" title="GA (genetic algorithm) based based hyperparameter optimization on CANDLE Benchmarks" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="workflow_genetic_algorithm.html" class="btn btn-neutral float-left" title="GA (genetic algorithm) based based hyperparameter optimization on CANDLE Benchmarks" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -317,7 +319,7 @@ iteration number, and <code class="docutils literal notranslate"><span class="pr
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2018, ANL.gov.
+        &copy; Copyright 2018, ANL.gov
 
     </p>
   </div>
@@ -334,33 +336,16 @@ iteration number, and <code class="docutils literal notranslate"><span class="pr
   
 
 
-  
-
-    <script type="text/javascript">
-        var DOCUMENTATION_OPTIONS = {
-            URL_ROOT:'../',
-            VERSION:'',
-            LANGUAGE:'None',
-            COLLAPSE_INDEX:false,
-            FILE_SUFFIX:'.html',
-            HAS_SOURCE:  true,
-            SOURCELINK_SUFFIX: '.txt'
-        };
-    </script>
-      <script type="text/javascript" src="../_static/jquery.js"></script>
-      <script type="text/javascript" src="../_static/underscore.js"></script>
-      <script type="text/javascript" src="../_static/doctools.js"></script>
-      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-
-  
-
-  <script type="text/javascript" src="../_static/js/theme.js"></script>
-
   <script type="text/javascript">
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script> 
+  </script>
+
+  
+  
+    
+   
 
 </body>
 </html>

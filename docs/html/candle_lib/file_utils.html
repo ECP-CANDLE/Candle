@@ -17,34 +17,36 @@
   
 
   
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
 
-  
-  
     
 
   
-
   <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="generic_utils module" href="generic_utils.html" />
     <link rel="prev" title="default_utils module" href="default_utils.html" /> 
-
-  
-  <script src="../_static/js/modernizr.min.js"></script>
-
 </head>
 
 <body class="wy-body-for-nav">
 
    
   <div class="wy-grid-for-nav">
-
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search">
+        <div class="wy-side-nav-search" >
           
 
           
@@ -164,49 +166,42 @@
 <span id="file-utils-module"></span><h1>file_utils module<a class="headerlink" href="#module-file_utils" title="Permalink to this headline">¶</a></h1>
 <dl class="function">
 <dt id="file_utils.get_file">
-<code class="descclassname">file_utils.</code><code class="descname">get_file</code><span class="sig-paren">(</span><em>fname</em>, <em>origin</em>, <em>untar=False</em>, <em>md5_hash=None</em>, <em>cache_subdir='common'</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/file_utils.html#get_file"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#file_utils.get_file" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">file_utils.</code><code class="sig-name descname">get_file</code><span class="sig-paren">(</span><em class="sig-param">fname</em>, <em class="sig-param">origin</em>, <em class="sig-param">untar=False</em>, <em class="sig-param">md5_hash=None</em>, <em class="sig-param">cache_subdir='common'</em>, <em class="sig-param">datadir=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/file_utils.html#get_file"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#file_utils.get_file" title="Permalink to this definition">¶</a></dt>
 <dd><p>Downloads a file from a URL if it not already in the cache.
 Passing the MD5 hash will verify the file after download as well
 as if it is already present in the cache.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>fname</strong> (<em>string</em>) – name of the file</li>
-<li><strong>origin</strong> (<em>string</em>) – original URL of the file</li>
-<li><strong>untar</strong> (<em>boolean</em>) – whether the file should be decompressed</li>
-<li><strong>md5_hash</strong> (<em>string</em>) – MD5 hash of the file for verification</li>
-<li><strong>cache_subdir</strong> (<em>string</em>) – directory being used as the cache</li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>fname</strong> (<em>string</em>) – name of the file</p></li>
+<li><p><strong>origin</strong> (<em>string</em>) – original URL of the file</p></li>
+<li><p><strong>untar</strong> (<em>boolean</em>) – whether the file should be decompressed</p></li>
+<li><p><strong>md5_hash</strong> (<em>string</em>) – MD5 hash of the file for verification</p></li>
+<li><p><strong>cache_subdir</strong> (<em>string</em>) – directory being used as the cache</p></li>
+<li><p><strong>datadir</strong> (<em>string</em>) – if set, datadir becomes its setting (which could be e.g. an absolute path) and cache_subdir no longer matters</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><em>Path to the downloaded file</em></p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><em>Path to the downloaded file</em></p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="function">
 <dt id="file_utils.validate_file">
-<code class="descclassname">file_utils.</code><code class="descname">validate_file</code><span class="sig-paren">(</span><em>fpath</em>, <em>md5_hash</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/file_utils.html#validate_file"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#file_utils.validate_file" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">file_utils.</code><code class="sig-name descname">validate_file</code><span class="sig-paren">(</span><em class="sig-param">fpath</em>, <em class="sig-param">md5_hash</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/file_utils.html#validate_file"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#file_utils.validate_file" title="Permalink to this definition">¶</a></dt>
 <dd><p>Validates a file against a MD5 hash</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>fpath</strong> (<em>string</em>) – path to the file being validated</li>
-<li><strong>md5_hash</strong> (<em>string</em>) – the MD5 hash being validated against</li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>fpath</strong> (<em>string</em>) – path to the file being validated</p></li>
+<li><p><strong>md5_hash</strong> (<em>string</em>) – the MD5 hash being validated against</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><em>boolean</em> – Whether the file is valid</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><em>boolean</em> – Whether the file is valid</p>
+</dd>
+</dl>
 </dd></dl>
 
 </div>
@@ -222,7 +217,7 @@ as if it is already present in the cache.</p>
         <a href="generic_utils.html" class="btn btn-neutral float-right" title="generic_utils module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="default_utils.html" class="btn btn-neutral" title="default_utils module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="default_utils.html" class="btn btn-neutral float-left" title="default_utils module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -231,7 +226,7 @@ as if it is already present in the cache.</p>
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2018, ANL.gov.
+        &copy; Copyright 2018, ANL.gov
 
     </p>
   </div>
@@ -248,33 +243,16 @@ as if it is already present in the cache.</p>
   
 
 
-  
-
-    <script type="text/javascript">
-        var DOCUMENTATION_OPTIONS = {
-            URL_ROOT:'../',
-            VERSION:'',
-            LANGUAGE:'None',
-            COLLAPSE_INDEX:false,
-            FILE_SUFFIX:'.html',
-            HAS_SOURCE:  true,
-            SOURCELINK_SUFFIX: '.txt'
-        };
-    </script>
-      <script type="text/javascript" src="../_static/jquery.js"></script>
-      <script type="text/javascript" src="../_static/underscore.js"></script>
-      <script type="text/javascript" src="../_static/doctools.js"></script>
-      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-
-  
-
-  <script type="text/javascript" src="../_static/js/theme.js"></script>
-
   <script type="text/javascript">
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script> 
+  </script>
+
+  
+  
+    
+   
 
 </body>
 </html>
