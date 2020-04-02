@@ -22,7 +22,7 @@ sys.path.insert(0, os.path.abspath('../../examples/mnist'))
 # -- Project information -----------------------------------------------------
 
 project = 'CANDLE'
-copyright = '2018, ANL.gov'
+copyright = '2020, ANL.gov'
 author = 'CANDLE Team'
 
 # The short X.Y version
