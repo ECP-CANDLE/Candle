@@ -21,10 +21,10 @@
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-        <script type="text/javascript" src="../_static/jquery.js"></script>
-        <script type="text/javascript" src="../_static/underscore.js"></script>
-        <script type="text/javascript" src="../_static/doctools.js"></script>
-        <script type="text/javascript" src="../_static/language_data.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
     
     <script type="text/javascript" src="../_static/js/theme.js"></script>
 
@@ -196,14 +196,14 @@ you will extend to configure your parameters. If you don’t have any
 additional parameters to define, you can use this code as is (see <a class="reference external" href="https://github.com/ECP-CANDLE/Candle/blob/master/examples/mnist/mnist.py">MNIST
 example</a>).</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># mnist.py</span>
-<span class="n">additional_definitions</span> <span class="o">=</span> <span class="bp">None</span>
-<span class="n">required</span> <span class="o">=</span> <span class="bp">None</span>
+<span class="n">additional_definitions</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="n">required</span> <span class="o">=</span> <span class="kc">None</span>
 
 <span class="k">class</span> <span class="nc">MNIST</span><span class="p">(</span><span class="n">candle</span><span class="o">.</span><span class="n">Benchmark</span><span class="p">):</span>  <span class="c1"># 1</span>
     <span class="k">def</span> <span class="nf">set_locals</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">if</span> <span class="n">required</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">required</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">required</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">required</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">additional_definitions</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">additional_definitions</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">additional_definitions</span> <span class="o">=</span> <span class="n">additional_definitions</span>
 </pre></div>
 </div>
@@ -257,7 +257,7 @@ example</a>,
 which sets appropriate parameters in a tensorflow session.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># thread optimization</span>
 <span class="kn">import</span> <span class="nn">os</span>
-<span class="kn">from</span> <span class="nn">keras</span> <span class="k">import</span> <span class="n">backend</span> <span class="k">as</span> <span class="n">K</span>
+<span class="kn">from</span> <span class="nn">keras</span> <span class="kn">import</span> <span class="n">backend</span> <span class="k">as</span> <span class="n">K</span>
 <span class="k">if</span> <span class="n">K</span><span class="o">.</span><span class="n">backend</span><span class="p">()</span> <span class="o">==</span> <span class="s1">&#39;tensorflow&#39;</span> <span class="ow">and</span> <span class="s1">&#39;NUM_INTRA_THREADS&#39;</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">:</span>
     <span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="nn">tf</span>
     <span class="n">sess</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">Session</span><span class="p">(</span><span class="n">config</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">ConfigProto</span><span class="p">(</span><span class="n">inter_op_parallelism_threads</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s1">&#39;NUM_INTER_THREADS&#39;</span><span class="p">]),</span>
@@ -278,7 +278,7 @@ which will be passed to the <code class="docutils literal notranslate"><span cla
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># this is a part of mnist_mlp_candle.py</span>
 
 <span class="kn">import</span> <span class="nn">mnist</span>
-<span class="kn">import</span> <span class="nn">candle_keras</span> <span class="kn">as</span> <span class="nn">candle</span>
+<span class="kn">import</span> <span class="nn">candle_keras</span> <span class="k">as</span> <span class="nn">candle</span>
 
 <span class="k">def</span> <span class="nf">initialize_parameters</span><span class="p">():</span>
     <span class="n">mnist_common</span> <span class="o">=</span> <span class="n">mnist</span><span class="o">.</span><span class="n">MNIST</span><span class="p">(</span><span class="n">mnist</span><span class="o">.</span><span class="n">file_path</span><span class="p">,</span>
