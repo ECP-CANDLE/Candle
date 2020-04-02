@@ -318,20 +318,20 @@ def set_seed(seed):
     random.seed(seed)
 
 
-def initialize_parameters(bmk):
-    """Utility to parse parameters in common as well as parmeters
+def finalize_parameters(bmk):
+    """Utility to parse parameters in common as well as parameters
         particular to each benchmark.
 
         Parameters
         ----------
         bmk : benchmark object
             Object that has benchmark filepaths and specifications
-            
+
         Return
         ----------
         gParameters : python dictionary
             Dictionary with all the parameters necessary to run the benchmark.
-            Command line overwrites config file especifications
+            Command line overwrites config file specifications
     """
 
     # Parse common parameters
@@ -443,7 +443,7 @@ def get_common_parser(parser):
                         default=argparse.SUPPRESS,
                         help="evaluate model (use it for inference)")
 
-    parser.add_argument("--timeout", dest='timeout', action="store",
+    parser.add_argument("--timeout", dest='timeout', type=int, action="store",
                     default=argparse.SUPPRESS,
                     help="seconds allowed to train model (default: no timeout)")
 
@@ -570,6 +570,10 @@ def get_common_parser(parser):
                         default=[], type=int,
                         help="set IDs of GPUs to use")
 
+    # profiling flags
+    parser.add_argument("-p", "--profiling", type=str2bool,
+                        default = 'false',
+                        help="Turn profiling on or off")
 
     return parser
 
