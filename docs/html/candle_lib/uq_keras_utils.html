@@ -1,0 +1,357 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>uq_keras_utils module &mdash; CANDLE  documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="viz_utils module" href="viz_utils.html" />
+    <link rel="prev" title="uq_utils module" href="uq_utils.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> CANDLE
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../readme.html">What is CANDLE?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorials/index.html">Tutorials</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../candle_lib.html">CANDLE Library API</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="candle_keras.html">candle_keras package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="data_preprocessing_utils.html">data_preprocessing_utils module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="data_utils.html">data_utils module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="default_utils.html">default_utils module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="exp_logger.html">exp_logger module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="feature_selection_utils.html">feature_selection_utils module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_utils.html">file_utils module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="generic_utils.html">generic_utils module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="keras_utils.html">keras_utils module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="P1_utils.html">P1_utils module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="profiling_utils.html">profiling_utils module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pytorch_utils.html">pytorch_utils module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="solr_keras.html">solr_keras module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="uq_utils.html">uq_utils module</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">uq_keras_utils module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="viz_utils.html">viz_utils module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="clr_keras_utils.html">clr_keras_utils module</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../contribute.html">How to Contribute</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">CANDLE</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../candle_lib.html">CANDLE Library API</a> &raquo;</li>
+        
+      <li>uq_keras_utils module</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/candle_lib/uq_keras_utils.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="module-uq_keras_utils">
+<span id="uq-keras-utils-module"></span><h1>uq_keras_utils module<a class="headerlink" href="#module-uq_keras_utils" title="Permalink to this headline">¶</a></h1>
+<dl class="py class">
+<dt id="uq_keras_utils.AbstentionAdapt_Callback">
+<em class="property">class </em><code class="sig-prename descclassname">uq_keras_utils.</code><code class="sig-name descname">AbstentionAdapt_Callback</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">monitor</span></em>, <em class="sig-param"><span class="n">init_abs_epoch</span><span class="o">=</span><span class="default_value">4</span></em>, <em class="sig-param"><span class="n">scale_factor</span><span class="o">=</span><span class="default_value">0.95</span></em>, <em class="sig-param"><span class="n">target_acc</span><span class="o">=</span><span class="default_value">0.95</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/uq_keras_utils.html#AbstentionAdapt_Callback"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#uq_keras_utils.AbstentionAdapt_Callback" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">keras.callbacks.Callback</span></code></p>
+<p>This callback is used to adapt the parameter mu in the abstention loss.
+Factor mu (weight of the abstention term in the abstention loss) is increased or decreased to try to match the accuracy set as target.
+The accuracy to use must be specified as the ‘monitor’ argument in the initialization of the callback. It could be: the accuracy without abstention samples (abs_acc), the accuracy over class 1 without abstention samples (abs_acc_class1), etc.
+If the current monitored accuracy is smaller than the target set, mu increases to promote more abstention.
+If the current monitored accuracy is greater than the target set, mu decreases to promote more predictions (less abstention).</p>
+<dl class="py method">
+<dt id="uq_keras_utils.AbstentionAdapt_Callback.on_epoch_end">
+<code class="sig-name descname">on_epoch_end</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">epoch</span></em>, <em class="sig-param"><span class="n">logs</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/uq_keras_utils.html#AbstentionAdapt_Callback.on_epoch_end"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#uq_keras_utils.AbstentionAdapt_Callback.on_epoch_end" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initializer of the AbstentionAdapt_Callback.
+:param epoch: Current epoch in training.
+:type epoch: integer
+:param logs: Metrics stored during current keras training.
+:type logs: keras logs</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt id="uq_keras_utils.abs_acc">
+<code class="sig-prename descclassname">uq_keras_utils.</code><code class="sig-name descname">abs_acc</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">y_true</span></em>, <em class="sig-param"><span class="n">y_pred</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/uq_keras_utils.html#abs_acc"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#uq_keras_utils.abs_acc" title="Permalink to this definition">¶</a></dt>
+<dd><p>Function to estimate accuracy over the predicted samples after removing the samples where the model is abstaining.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>y_true</strong> (<em>keras tensor</em>) – True values to predict</p></li>
+<li><p><strong>y_pred</strong> (<em>keras tensor</em>) – Prediction made by the model. It is assumed that this keras tensor includes extra columns to store the abstaining classes.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="uq_keras_utils.abs_acc_class1">
+<code class="sig-prename descclassname">uq_keras_utils.</code><code class="sig-name descname">abs_acc_class1</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">y_true</span></em>, <em class="sig-param"><span class="n">y_pred</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/uq_keras_utils.html#abs_acc_class1"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#uq_keras_utils.abs_acc_class1" title="Permalink to this definition">¶</a></dt>
+<dd><p>Function to estimate accuracy over the class 1 prediction after removing the samples where the model is abstaining</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>y_true</strong> (<em>keras tensor</em>) – True values to predict</p></li>
+<li><p><strong>y_pred</strong> (<em>keras tensor</em>) – Prediction made by the model. It is assumed that this keras tensor includes extra columns to store the abstaining classes.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="uq_keras_utils.abstention_loss">
+<code class="sig-prename descclassname">uq_keras_utils.</code><code class="sig-name descname">abstention_loss</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">y_true</span></em>, <em class="sig-param"><span class="n">y_pred</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/uq_keras_utils.html#abstention_loss"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#uq_keras_utils.abstention_loss" title="Permalink to this definition">¶</a></dt>
+<dd><p>Function to compute abstention loss. It is composed by two terms: (i) original loss of the multiclass classification problem, (ii) cost associated to the abstaining samples.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>y_true</strong> (<em>keras tensor</em>) – True values to predict</p></li>
+<li><p><strong>y_pred</strong> (<em>keras tensor</em>) – Prediction made by the model. It is assumed that this keras tensor includes extra columns to store the abstaining classes.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="uq_keras_utils.abstention_variable_initialization">
+<code class="sig-prename descclassname">uq_keras_utils.</code><code class="sig-name descname">abstention_variable_initialization</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">mu0</span></em>, <em class="sig-param"><span class="n">mask_</span></em>, <em class="sig-param"><span class="n">nb_classes_</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/uq_keras_utils.html#abstention_variable_initialization"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#uq_keras_utils.abstention_variable_initialization" title="Permalink to this definition">¶</a></dt>
+<dd><p>Function that initializes parameters of the abstention loss</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>mu0</strong> (<em>float</em>) – Initial weight of abstention term in cost function</p></li>
+<li><p><strong>mask_</strong> (<em>ndarray</em>) – Numpy array to use as initialiser for global mask variable</p></li>
+<li><p><strong>nb_classes_</strong> (<em>int</em><em> or </em><em>ndarray</em>) – Integer or numpy array defining indices of the abstention class</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="uq_keras_utils.acc_class1">
+<code class="sig-prename descclassname">uq_keras_utils.</code><code class="sig-name descname">acc_class1</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">y_true</span></em>, <em class="sig-param"><span class="n">y_pred</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/uq_keras_utils.html#acc_class1"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#uq_keras_utils.acc_class1" title="Permalink to this definition">¶</a></dt>
+<dd><p>Function to estimate accuracy over the class 1 prediction. This estimation is global (i.e. abstaining samples are not removed)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>y_true</strong> (<em>keras tensor</em>) – True values to predict</p></li>
+<li><p><strong>y_pred</strong> (<em>keras tensor</em>) – Prediction made by the model. It is assumed that this keras tensor includes extra columns to store the abstaining classes.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="uq_keras_utils.add_model_output">
+<code class="sig-prename descclassname">uq_keras_utils.</code><code class="sig-name descname">add_model_output</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">modelIn</span></em>, <em class="sig-param"><span class="n">mode</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">num_add</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">activation</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/uq_keras_utils.html#add_model_output"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#uq_keras_utils.add_model_output" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function modifies the last dense layer in the passed keras model. The modification includes adding units and optionally changing the activation function.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>modelIn</strong> (<em>keras model</em>) – Keras model to be modified.</p></li>
+<li><p><strong>mode</strong> (<em>string</em>) – Mode to modify the layer. It could be:
+‘abstain’ for adding an arbitrary number of units for the abstention optimization strategy.
+‘qtl’ for quantile regression which needs the outputs to be tripled.
+‘het’ for heteroscedastic regression which needs the outputs to be doubled. (current implicit default: ‘het’)</p></li>
+<li><p><strong>num_add</strong> (<em>integer</em>) – Number of units to add. This only applies to the ‘abstain’ mode.</p></li>
+<li><p><strong>activation</strong> (<em>string</em>) – String with keras specification of activation function (e.g. ‘relu’, ‘sigomid’, ‘softmax’, etc.)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>modelOut</strong> (<em>keras model</em>) – Keras model after last dense layer has been modified as specified. If there is no mode specified it returns the same model.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="uq_keras_utils.modify_labels">
+<code class="sig-prename descclassname">uq_keras_utils.</code><code class="sig-name descname">modify_labels</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">numclasses_out</span></em>, <em class="sig-param"><span class="n">ytrain</span></em>, <em class="sig-param"><span class="n">ytest</span></em>, <em class="sig-param"><span class="n">yval</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/uq_keras_utils.html#modify_labels"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#uq_keras_utils.modify_labels" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function generates a categorical representation with a class added for indicating abstention.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>numclasses_out</strong> (<em>integer</em>) – Original number of classes + 1 abstention class</p></li>
+<li><p><strong>ytrain</strong> (<em>ndarray</em>) – Numpy array of the classes (labels) in the training set</p></li>
+<li><p><strong>ytest</strong> (<em>ndarray</em>) – Numpy array of the classes (labels) in the testing set</p></li>
+<li><p><strong>yval</strong> (<em>ndarray</em>) – Numpy array of the classes (labels) in the validation set</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="viz_utils.html" class="btn btn-neutral float-right" title="viz_utils module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="uq_utils.html" class="btn btn-neutral float-left" title="uq_utils module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020, ANL.gov
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
