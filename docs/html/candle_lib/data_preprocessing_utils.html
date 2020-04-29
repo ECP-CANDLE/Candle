@@ -173,9 +173,9 @@
             
   <div class="section" id="module-data_preprocessing_utils">
 <span id="data-preprocessing-utils-module"></span><h1>data_preprocessing_utils module<a class="headerlink" href="#module-data_preprocessing_utils" title="Permalink to this headline">¶</a></h1>
-<dl class="function">
+<dl class="py function">
 <dt id="data_preprocessing_utils.generate_cross_validation_partition">
-<code class="sig-prename descclassname">data_preprocessing_utils.</code><code class="sig-name descname">generate_cross_validation_partition</code><span class="sig-paren">(</span><em class="sig-param">group_label</em>, <em class="sig-param">n_folds=5</em>, <em class="sig-param">n_repeats=1</em>, <em class="sig-param">portions=None</em>, <em class="sig-param">random_seed=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/data_preprocessing_utils.html#generate_cross_validation_partition"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#data_preprocessing_utils.generate_cross_validation_partition" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">data_preprocessing_utils.</code><code class="sig-name descname">generate_cross_validation_partition</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">group_label</span></em>, <em class="sig-param"><span class="n">n_folds</span><span class="o">=</span><span class="default_value">5</span></em>, <em class="sig-param"><span class="n">n_repeats</span><span class="o">=</span><span class="default_value">1</span></em>, <em class="sig-param"><span class="n">portions</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">random_seed</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/data_preprocessing_utils.html#generate_cross_validation_partition"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#data_preprocessing_utils.generate_cross_validation_partition" title="Permalink to this definition">¶</a></dt>
 <dd><p>This function generates partition indices of samples for cross-validation analysis.</p>
 <dl class="simple">
 <dt>group_label: 1-D array or list of group labels of samples. If there are no groups in samples, a list of</dt><dd><p>sample indices can be supplied for generating partitions based on individual samples rather than sample groups.</p>
@@ -198,9 +198,9 @@ in portions must be equal to n_folds. Default is [1, n_folds - 1].</p>
 </dl>
 </dd></dl>
 
-<dl class="function">
+<dl class="py function">
 <dt id="data_preprocessing_utils.quantile_normalization">
-<code class="sig-prename descclassname">data_preprocessing_utils.</code><code class="sig-name descname">quantile_normalization</code><span class="sig-paren">(</span><em class="sig-param">data</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/data_preprocessing_utils.html#quantile_normalization"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#data_preprocessing_utils.quantile_normalization" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">data_preprocessing_utils.</code><code class="sig-name descname">quantile_normalization</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">data</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/data_preprocessing_utils.html#quantile_normalization"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#data_preprocessing_utils.quantile_normalization" title="Permalink to this definition">¶</a></dt>
 <dd><p>This function does quantile normalization to input data. After normalization, the samples (rows) in output
 data follow the same distribution, which is the average distribution calculated based on all samples.
 This function allows missing values, and assume missing values occur at random.</p>

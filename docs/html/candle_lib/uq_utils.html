@@ -173,9 +173,9 @@
             
   <div class="section" id="module-uq_utils">
 <span id="uq-utils-module"></span><h1>uq_utils module<a class="headerlink" href="#module-uq_utils" title="Permalink to this headline">¶</a></h1>
-<dl class="function">
+<dl class="py function">
 <dt id="uq_utils.applying_calibration">
-<code class="sig-prename descclassname">uq_utils.</code><code class="sig-name descname">applying_calibration</code><span class="sig-paren">(</span><em class="sig-param">pSigma_test</em>, <em class="sig-param">pPred_test</em>, <em class="sig-param">true_test</em>, <em class="sig-param">s_interpolate</em>, <em class="sig-param">minL_sigma_auto</em>, <em class="sig-param">maxL_sigma_auto</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/uq_utils.html#applying_calibration"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#uq_utils.applying_calibration" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">uq_utils.</code><code class="sig-name descname">applying_calibration</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">pSigma_test</span></em>, <em class="sig-param"><span class="n">pPred_test</span></em>, <em class="sig-param"><span class="n">true_test</span></em>, <em class="sig-param"><span class="n">s_interpolate</span></em>, <em class="sig-param"><span class="n">minL_sigma_auto</span></em>, <em class="sig-param"><span class="n">maxL_sigma_auto</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/uq_utils.html#applying_calibration"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#uq_utils.applying_calibration" title="Permalink to this definition">¶</a></dt>
 <dd><p>Use the empirical mapping between standard deviation and
 absolute value of error estimated during calibration (i.e.
 apply the univariate spline computed) to estimate the error
@@ -222,9 +222,9 @@ valid interval of calibration.</p></li>
 </dl>
 </dd></dl>
 
-<dl class="function">
+<dl class="py function">
 <dt id="uq_utils.bining_for_calibration">
-<code class="sig-prename descclassname">uq_utils.</code><code class="sig-name descname">bining_for_calibration</code><span class="sig-paren">(</span><em class="sig-param">pSigma_cal_ordered_</em>, <em class="sig-param">minL_sigma</em>, <em class="sig-param">maxL_sigma</em>, <em class="sig-param">Er_vect_cal_orderedSigma_</em>, <em class="sig-param">bins</em>, <em class="sig-param">coverage_percentile</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/uq_utils.html#bining_for_calibration"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#uq_utils.bining_for_calibration" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">uq_utils.</code><code class="sig-name descname">bining_for_calibration</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">pSigma_cal_ordered_</span></em>, <em class="sig-param"><span class="n">minL_sigma</span></em>, <em class="sig-param"><span class="n">maxL_sigma</span></em>, <em class="sig-param"><span class="n">Er_vect_cal_orderedSigma_</span></em>, <em class="sig-param"><span class="n">bins</span></em>, <em class="sig-param"><span class="n">coverage_percentile</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/uq_utils.html#bining_for_calibration"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#uq_utils.bining_for_calibration" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bin the values of the standard deviations observed during
 inference and estimate a specified coverage percentile
 in the absolute error (observed during inference as well).
@@ -262,9 +262,9 @@ calibration error.</p></li>
 </dl>
 </dd></dl>
 
-<dl class="function">
+<dl class="py function">
 <dt id="uq_utils.computation_of_valid_calibration_interval">
-<code class="sig-prename descclassname">uq_utils.</code><code class="sig-name descname">computation_of_valid_calibration_interval</code><span class="sig-paren">(</span><em class="sig-param">error_thresholds</em>, <em class="sig-param">error_thresholds_smooth</em>, <em class="sig-param">err_err</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/uq_utils.html#computation_of_valid_calibration_interval"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#uq_utils.computation_of_valid_calibration_interval" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">uq_utils.</code><code class="sig-name descname">computation_of_valid_calibration_interval</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">error_thresholds</span></em>, <em class="sig-param"><span class="n">error_thresholds_smooth</span></em>, <em class="sig-param"><span class="n">err_err</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/uq_utils.html#computation_of_valid_calibration_interval"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#uq_utils.computation_of_valid_calibration_interval" title="Permalink to this definition">¶</a></dt>
 <dd><p>Function that estimates the empirical range in which a
 monotonic relation is observed between standard deviation
 and coverage of absolute value of error. Since the
@@ -330,9 +330,9 @@ to the criteria explained before).</p></li>
 </dl>
 </dd></dl>
 
-<dl class="function">
+<dl class="py function">
 <dt id="uq_utils.compute_empirical_calibration">
-<code class="sig-prename descclassname">uq_utils.</code><code class="sig-name descname">compute_empirical_calibration</code><span class="sig-paren">(</span><em class="sig-param">pSigma_cal</em>, <em class="sig-param">pPred_cal</em>, <em class="sig-param">true_cal</em>, <em class="sig-param">bins</em>, <em class="sig-param">coverage_percentile</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/uq_utils.html#compute_empirical_calibration"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#uq_utils.compute_empirical_calibration" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">uq_utils.</code><code class="sig-name descname">compute_empirical_calibration</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">pSigma_cal</span></em>, <em class="sig-param"><span class="n">pPred_cal</span></em>, <em class="sig-param"><span class="n">true_cal</span></em>, <em class="sig-param"><span class="n">bins</span></em>, <em class="sig-param"><span class="n">coverage_percentile</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/uq_utils.html#compute_empirical_calibration"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#uq_utils.compute_empirical_calibration" title="Permalink to this definition">¶</a></dt>
 <dd><p>Use the arrays provided to estimate an empirical mapping
 between standard deviation and absolute value of error,
 both of which have been observed during inference. Since
@@ -382,9 +382,9 @@ calibration procedure.</p></li>
 </dl>
 </dd></dl>
 
-<dl class="function">
+<dl class="py function">
 <dt id="uq_utils.compute_limits">
-<code class="sig-prename descclassname">uq_utils.</code><code class="sig-name descname">compute_limits</code><span class="sig-paren">(</span><em class="sig-param">numdata</em>, <em class="sig-param">numblocks</em>, <em class="sig-param">blocksize</em>, <em class="sig-param">blockn</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/uq_utils.html#compute_limits"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#uq_utils.compute_limits" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">uq_utils.</code><code class="sig-name descname">compute_limits</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">numdata</span></em>, <em class="sig-param"><span class="n">numblocks</span></em>, <em class="sig-param"><span class="n">blocksize</span></em>, <em class="sig-param"><span class="n">blockn</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/uq_utils.html#compute_limits"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#uq_utils.compute_limits" title="Permalink to this definition">¶</a></dt>
 <dd><p>Generates the limit of indices corresponding to a
 specific block. It takes into account the non-exact
 divisibility of numdata into numblocks letting the
@@ -408,9 +408,9 @@ last block to take the extra chunk.</p>
 </dl>
 </dd></dl>
 
-<dl class="function">
+<dl class="py function">
 <dt id="uq_utils.compute_statistics_heteroscedastic">
-<code class="sig-prename descclassname">uq_utils.</code><code class="sig-name descname">compute_statistics_heteroscedastic</code><span class="sig-paren">(</span><em class="sig-param">df_data</em>, <em class="sig-param">col_true=4</em>, <em class="sig-param">col_pred_start=6</em>, <em class="sig-param">col_std_pred_start=7</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/uq_utils.html#compute_statistics_heteroscedastic"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#uq_utils.compute_statistics_heteroscedastic" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">uq_utils.</code><code class="sig-name descname">compute_statistics_heteroscedastic</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">df_data</span></em>, <em class="sig-param"><span class="n">col_true</span><span class="o">=</span><span class="default_value">4</span></em>, <em class="sig-param"><span class="n">col_pred_start</span><span class="o">=</span><span class="default_value">6</span></em>, <em class="sig-param"><span class="n">col_std_pred_start</span><span class="o">=</span><span class="default_value">7</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/uq_utils.html#compute_statistics_heteroscedastic"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#uq_utils.compute_statistics_heteroscedastic" title="Permalink to this definition">¶</a></dt>
 <dd><p>Extracts ground truth, mean predition, error, standard
 deviation of prediction and predicted (learned) standard
 deviation from inference data frame. The latter includes
@@ -453,9 +453,9 @@ from the data frame using the col_true index).</p></li>
 </dl>
 </dd></dl>
 
-<dl class="function">
+<dl class="py function">
 <dt id="uq_utils.compute_statistics_homoscedastic">
-<code class="sig-prename descclassname">uq_utils.</code><code class="sig-name descname">compute_statistics_homoscedastic</code><span class="sig-paren">(</span><em class="sig-param">df_data</em>, <em class="sig-param">col_true=0</em>, <em class="sig-param">col_pred=6</em>, <em class="sig-param">col_std_pred=7</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/uq_utils.html#compute_statistics_homoscedastic"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#uq_utils.compute_statistics_homoscedastic" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">uq_utils.</code><code class="sig-name descname">compute_statistics_homoscedastic</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">df_data</span></em>, <em class="sig-param"><span class="n">col_true</span><span class="o">=</span><span class="default_value">0</span></em>, <em class="sig-param"><span class="n">col_pred</span><span class="o">=</span><span class="default_value">6</span></em>, <em class="sig-param"><span class="n">col_std_pred</span><span class="o">=</span><span class="default_value">7</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/uq_utils.html#compute_statistics_homoscedastic"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#uq_utils.compute_statistics_homoscedastic" title="Permalink to this definition">¶</a></dt>
 <dd><p>Extracts ground truth, mean predition, error and
 standard deviation of prediction from inference
 data frame. The latter includes the statistics
@@ -495,9 +495,9 @@ from the data frame using the col_true index).</p></li>
 </dl>
 </dd></dl>
 
-<dl class="function">
+<dl class="py function">
 <dt id="uq_utils.compute_statistics_homoscedastic_all">
-<code class="sig-prename descclassname">uq_utils.</code><code class="sig-name descname">compute_statistics_homoscedastic_all</code><span class="sig-paren">(</span><em class="sig-param">df_data</em>, <em class="sig-param">col_true=4</em>, <em class="sig-param">col_pred_start=6</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/uq_utils.html#compute_statistics_homoscedastic_all"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#uq_utils.compute_statistics_homoscedastic_all" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">uq_utils.</code><code class="sig-name descname">compute_statistics_homoscedastic_all</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">df_data</span></em>, <em class="sig-param"><span class="n">col_true</span><span class="o">=</span><span class="default_value">4</span></em>, <em class="sig-param"><span class="n">col_pred_start</span><span class="o">=</span><span class="default_value">6</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/uq_utils.html#compute_statistics_homoscedastic_all"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#uq_utils.compute_statistics_homoscedastic_all" title="Permalink to this definition">¶</a></dt>
 <dd><p>Extracts ground truth, mean predition, error and
 standard deviation of prediction from inference
 data frame. The latter includes all the individual
@@ -535,9 +535,9 @@ from the data frame using the col_true index).</p></li>
 </dl>
 </dd></dl>
 
-<dl class="function">
+<dl class="py function">
 <dt id="uq_utils.compute_statistics_quantile">
-<code class="sig-prename descclassname">uq_utils.</code><code class="sig-name descname">compute_statistics_quantile</code><span class="sig-paren">(</span><em class="sig-param">df_data</em>, <em class="sig-param">sigma_divisor=2.56</em>, <em class="sig-param">col_true=4</em>, <em class="sig-param">col_pred_start=6</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/uq_utils.html#compute_statistics_quantile"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#uq_utils.compute_statistics_quantile" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">uq_utils.</code><code class="sig-name descname">compute_statistics_quantile</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">df_data</span></em>, <em class="sig-param"><span class="n">sigma_divisor</span><span class="o">=</span><span class="default_value">2.56</span></em>, <em class="sig-param"><span class="n">col_true</span><span class="o">=</span><span class="default_value">4</span></em>, <em class="sig-param"><span class="n">col_pred_start</span><span class="o">=</span><span class="default_value">6</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/uq_utils.html#compute_statistics_quantile"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#uq_utils.compute_statistics_quantile" title="Permalink to this definition">¶</a></dt>
 <dd><p>Extracts ground truth, 50th percentile mean predition,
 low percentile and high percentile mean prediction
 (usually 10th percentile and 90th percentile respectively),
@@ -586,9 +586,9 @@ from the data frame using the col_true index).</p></li>
 </dl>
 </dd></dl>
 
-<dl class="function">
+<dl class="py function">
 <dt id="uq_utils.fill_array">
-<code class="sig-prename descclassname">uq_utils.</code><code class="sig-name descname">fill_array</code><span class="sig-paren">(</span><em class="sig-param">blocklist</em>, <em class="sig-param">maxsize</em>, <em class="sig-param">numdata</em>, <em class="sig-param">numblocks</em>, <em class="sig-param">blocksize</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/uq_utils.html#fill_array"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#uq_utils.fill_array" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">uq_utils.</code><code class="sig-name descname">fill_array</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">blocklist</span></em>, <em class="sig-param"><span class="n">maxsize</span></em>, <em class="sig-param"><span class="n">numdata</span></em>, <em class="sig-param"><span class="n">numblocks</span></em>, <em class="sig-param"><span class="n">blocksize</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/uq_utils.html#fill_array"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#uq_utils.fill_array" title="Permalink to this definition">¶</a></dt>
 <dd><p>Fills a new array of integers with the indices corresponding
 to the specified block structure.</p>
 <dl class="field-list simple">
@@ -610,9 +610,9 @@ to the correct length.</p>
 </dl>
 </dd></dl>
 
-<dl class="function">
+<dl class="py function">
 <dt id="uq_utils.generate_index_distribution">
-<code class="sig-prename descclassname">uq_utils.</code><code class="sig-name descname">generate_index_distribution</code><span class="sig-paren">(</span><em class="sig-param">numTrain</em>, <em class="sig-param">numTest</em>, <em class="sig-param">numValidation</em>, <em class="sig-param">params</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/uq_utils.html#generate_index_distribution"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#uq_utils.generate_index_distribution" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">uq_utils.</code><code class="sig-name descname">generate_index_distribution</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">numTrain</span></em>, <em class="sig-param"><span class="n">numTest</span></em>, <em class="sig-param"><span class="n">numValidation</span></em>, <em class="sig-param"><span class="n">params</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/uq_utils.html#generate_index_distribution"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#uq_utils.generate_index_distribution" title="Permalink to this definition">¶</a></dt>
 <dd><p>Generates a vector of indices to partition the data for training.
 NO CHECKING IS DONE: it is assumed that the data could be partitioned
 in the specified blocks and that the block indices describe a coherent
@@ -640,9 +640,9 @@ uq_train_bks, uq_valid_bks, uq_test_bks for block number specification)</p></li>
 </dl>
 </dd></dl>
 
-<dl class="function">
+<dl class="py function">
 <dt id="uq_utils.generate_index_distribution_from_block_list">
-<code class="sig-prename descclassname">uq_utils.</code><code class="sig-name descname">generate_index_distribution_from_block_list</code><span class="sig-paren">(</span><em class="sig-param">numTrain</em>, <em class="sig-param">numTest</em>, <em class="sig-param">numValidation</em>, <em class="sig-param">params</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/uq_utils.html#generate_index_distribution_from_block_list"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#uq_utils.generate_index_distribution_from_block_list" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">uq_utils.</code><code class="sig-name descname">generate_index_distribution_from_block_list</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">numTrain</span></em>, <em class="sig-param"><span class="n">numTest</span></em>, <em class="sig-param"><span class="n">numValidation</span></em>, <em class="sig-param"><span class="n">params</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/uq_utils.html#generate_index_distribution_from_block_list"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#uq_utils.generate_index_distribution_from_block_list" title="Permalink to this definition">¶</a></dt>
 <dd><p>Generates a vector of indices to partition the data for training.
 NO CHECKING IS DONE: it is assumed that the data could be partitioned
 in the specified list of blocks and that the block indices describe a
@@ -668,9 +668,9 @@ coherent partition.</p>
 </dl>
 </dd></dl>
 
-<dl class="function">
+<dl class="py function">
 <dt id="uq_utils.generate_index_distribution_from_blocks">
-<code class="sig-prename descclassname">uq_utils.</code><code class="sig-name descname">generate_index_distribution_from_blocks</code><span class="sig-paren">(</span><em class="sig-param">numTrain</em>, <em class="sig-param">numTest</em>, <em class="sig-param">numValidation</em>, <em class="sig-param">params</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/uq_utils.html#generate_index_distribution_from_blocks"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#uq_utils.generate_index_distribution_from_blocks" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">uq_utils.</code><code class="sig-name descname">generate_index_distribution_from_blocks</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">numTrain</span></em>, <em class="sig-param"><span class="n">numTest</span></em>, <em class="sig-param"><span class="n">numValidation</span></em>, <em class="sig-param"><span class="n">params</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/uq_utils.html#generate_index_distribution_from_blocks"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#uq_utils.generate_index_distribution_from_blocks" title="Permalink to this definition">¶</a></dt>
 <dd><p>Generates a vector of indices to partition the data for training.
 NO CHECKING IS DONE: it is assumed that the data could be partitioned
 in the specified block quantities and that the block quantities describe a
@@ -696,9 +696,9 @@ coherent partition.</p>
 </dl>
 </dd></dl>
 
-<dl class="function">
+<dl class="py function">
 <dt id="uq_utils.generate_index_distribution_from_fraction">
-<code class="sig-prename descclassname">uq_utils.</code><code class="sig-name descname">generate_index_distribution_from_fraction</code><span class="sig-paren">(</span><em class="sig-param">numTrain</em>, <em class="sig-param">numTest</em>, <em class="sig-param">numValidation</em>, <em class="sig-param">params</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/uq_utils.html#generate_index_distribution_from_fraction"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#uq_utils.generate_index_distribution_from_fraction" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">uq_utils.</code><code class="sig-name descname">generate_index_distribution_from_fraction</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">numTrain</span></em>, <em class="sig-param"><span class="n">numTest</span></em>, <em class="sig-param"><span class="n">numValidation</span></em>, <em class="sig-param"><span class="n">params</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/uq_utils.html#generate_index_distribution_from_fraction"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#uq_utils.generate_index_distribution_from_fraction" title="Permalink to this definition">¶</a></dt>
 <dd><p>Generates a vector of indices to partition the data for training.
 It checks that the fractions provided are (0, 1) and add up to 1.</p>
 <dl class="field-list simple">
@@ -722,9 +722,9 @@ It checks that the fractions provided are (0, 1) and add up to 1.</p>
 </dl>
 </dd></dl>
 
-<dl class="function">
+<dl class="py function">
 <dt id="uq_utils.overprediction_check">
-<code class="sig-prename descclassname">uq_utils.</code><code class="sig-name descname">overprediction_check</code><span class="sig-paren">(</span><em class="sig-param">yp_test</em>, <em class="sig-param">eabs_red</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/uq_utils.html#overprediction_check"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#uq_utils.overprediction_check" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">uq_utils.</code><code class="sig-name descname">overprediction_check</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">yp_test</span></em>, <em class="sig-param"><span class="n">eabs_red</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/uq_utils.html#overprediction_check"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#uq_utils.overprediction_check" title="Permalink to this definition">¶</a></dt>
 <dd><p>Compute the percentage of overestimated absoulte error
 predictions for the arrays reserved for calibration testing
 and whose corresponding standard deviations are included
@@ -743,9 +743,9 @@ valid interval of calibration.</p></li>
 </dl>
 </dd></dl>
 
-<dl class="function">
+<dl class="py function">
 <dt id="uq_utils.split_data_for_empirical_calibration">
-<code class="sig-prename descclassname">uq_utils.</code><code class="sig-name descname">split_data_for_empirical_calibration</code><span class="sig-paren">(</span><em class="sig-param">Ytrue</em>, <em class="sig-param">Ypred</em>, <em class="sig-param">sigma</em>, <em class="sig-param">cal_split=0.8</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/uq_utils.html#split_data_for_empirical_calibration"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#uq_utils.split_data_for_empirical_calibration" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">uq_utils.</code><code class="sig-name descname">split_data_for_empirical_calibration</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">Ytrue</span></em>, <em class="sig-param"><span class="n">Ypred</span></em>, <em class="sig-param"><span class="n">sigma</span></em>, <em class="sig-param"><span class="n">cal_split</span><span class="o">=</span><span class="default_value">0.8</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/uq_utils.html#split_data_for_empirical_calibration"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#uq_utils.split_data_for_empirical_calibration" title="Permalink to this definition">¶</a></dt>
 <dd><p>Extracts a portion of the arrays provided for the computation
 of the calibration and reserves the remainder portion
 for testing.</p>

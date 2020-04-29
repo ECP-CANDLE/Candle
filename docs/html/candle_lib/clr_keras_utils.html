@@ -173,9 +173,9 @@
             
   <div class="section" id="module-clr_keras_utils">
 <span id="clr-keras-utils-module"></span><h1>clr_keras_utils module<a class="headerlink" href="#module-clr_keras_utils" title="Permalink to this headline">¶</a></h1>
-<dl class="class">
+<dl class="py class">
 <dt id="clr_keras_utils.CyclicLR">
-<em class="property">class </em><code class="sig-prename descclassname">clr_keras_utils.</code><code class="sig-name descname">CyclicLR</code><span class="sig-paren">(</span><em class="sig-param">base_lr=0.001</em>, <em class="sig-param">max_lr=0.006</em>, <em class="sig-param">step_size=2000.0</em>, <em class="sig-param">mode='triangular'</em>, <em class="sig-param">gamma=1.0</em>, <em class="sig-param">scale_fn=None</em>, <em class="sig-param">scale_mode='cycle'</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/clr_keras_utils.html#CyclicLR"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#clr_keras_utils.CyclicLR" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">clr_keras_utils.</code><code class="sig-name descname">CyclicLR</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">base_lr</span><span class="o">=</span><span class="default_value">0.001</span></em>, <em class="sig-param"><span class="n">max_lr</span><span class="o">=</span><span class="default_value">0.006</span></em>, <em class="sig-param"><span class="n">step_size</span><span class="o">=</span><span class="default_value">2000.0</span></em>, <em class="sig-param"><span class="n">mode</span><span class="o">=</span><span class="default_value">'triangular'</span></em>, <em class="sig-param"><span class="n">gamma</span><span class="o">=</span><span class="default_value">1.0</span></em>, <em class="sig-param"><span class="n">scale_fn</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">scale_mode</span><span class="o">=</span><span class="default_value">'cycle'</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/clr_keras_utils.html#CyclicLR"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#clr_keras_utils.CyclicLR" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">keras.callbacks.Callback</span></code></p>
 <p>This callback implements a cyclical learning rate policy (CLR).
 The method cycles the learning rate between two boundaries with
@@ -256,42 +256,42 @@ scale_mode=’cycle’)</p>
 </ul>
 <p><a class="reference external" href="https://arxiv.org/abs/1506.01186">https://arxiv.org/abs/1506.01186</a>)</p>
 </div></blockquote>
-<dl class="method">
+<dl class="py method">
 <dt id="clr_keras_utils.CyclicLR.clr">
 <code class="sig-name descname">clr</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/clr_keras_utils.html#CyclicLR.clr"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#clr_keras_utils.CyclicLR.clr" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="clr_keras_utils.CyclicLR.on_batch_end">
-<code class="sig-name descname">on_batch_end</code><span class="sig-paren">(</span><em class="sig-param">epoch</em>, <em class="sig-param">logs=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/clr_keras_utils.html#CyclicLR.on_batch_end"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#clr_keras_utils.CyclicLR.on_batch_end" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">on_batch_end</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">epoch</span></em>, <em class="sig-param"><span class="n">logs</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/clr_keras_utils.html#CyclicLR.on_batch_end"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#clr_keras_utils.CyclicLR.on_batch_end" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="clr_keras_utils.CyclicLR.on_epoch_end">
-<code class="sig-name descname">on_epoch_end</code><span class="sig-paren">(</span><em class="sig-param">epoch</em>, <em class="sig-param">logs=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/clr_keras_utils.html#CyclicLR.on_epoch_end"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#clr_keras_utils.CyclicLR.on_epoch_end" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">on_epoch_end</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">epoch</span></em>, <em class="sig-param"><span class="n">logs</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/clr_keras_utils.html#CyclicLR.on_epoch_end"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#clr_keras_utils.CyclicLR.on_epoch_end" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="clr_keras_utils.CyclicLR.on_train_begin">
-<code class="sig-name descname">on_train_begin</code><span class="sig-paren">(</span><em class="sig-param">logs={}</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/clr_keras_utils.html#CyclicLR.on_train_begin"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#clr_keras_utils.CyclicLR.on_train_begin" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">on_train_begin</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">logs</span><span class="o">=</span><span class="default_value">{}</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/clr_keras_utils.html#CyclicLR.on_train_begin"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#clr_keras_utils.CyclicLR.on_train_begin" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
 
-<dl class="function">
+<dl class="py function">
 <dt id="clr_keras_utils.clr_callback">
-<code class="sig-prename descclassname">clr_keras_utils.</code><code class="sig-name descname">clr_callback</code><span class="sig-paren">(</span><em class="sig-param">mode=None</em>, <em class="sig-param">base_lr=0.0001</em>, <em class="sig-param">max_lr=0.001</em>, <em class="sig-param">gamma=0.999994</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/clr_keras_utils.html#clr_callback"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#clr_keras_utils.clr_callback" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">clr_keras_utils.</code><code class="sig-name descname">clr_callback</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">mode</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">base_lr</span><span class="o">=</span><span class="default_value">0.0001</span></em>, <em class="sig-param"><span class="n">max_lr</span><span class="o">=</span><span class="default_value">0.001</span></em>, <em class="sig-param"><span class="n">gamma</span><span class="o">=</span><span class="default_value">0.999994</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/clr_keras_utils.html#clr_callback"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#clr_keras_utils.clr_callback" title="Permalink to this definition">¶</a></dt>
 <dd><p>Creates keras callback for cyclical learning rate.</p>
 </dd></dl>
 
-<dl class="function">
+<dl class="py function">
 <dt id="clr_keras_utils.clr_check_args">
-<code class="sig-prename descclassname">clr_keras_utils.</code><code class="sig-name descname">clr_check_args</code><span class="sig-paren">(</span><em class="sig-param">args</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/clr_keras_utils.html#clr_check_args"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#clr_keras_utils.clr_check_args" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">clr_keras_utils.</code><code class="sig-name descname">clr_check_args</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">args</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/clr_keras_utils.html#clr_check_args"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#clr_keras_utils.clr_check_args" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
-<dl class="function">
+<dl class="py function">
 <dt id="clr_keras_utils.clr_set_args">
-<code class="sig-prename descclassname">clr_keras_utils.</code><code class="sig-name descname">clr_set_args</code><span class="sig-paren">(</span><em class="sig-param">args</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/clr_keras_utils.html#clr_set_args"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#clr_keras_utils.clr_set_args" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">clr_keras_utils.</code><code class="sig-name descname">clr_set_args</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">args</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/clr_keras_utils.html#clr_set_args"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#clr_keras_utils.clr_set_args" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </div>

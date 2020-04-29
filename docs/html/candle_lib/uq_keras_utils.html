@@ -173,18 +173,18 @@
             
   <div class="section" id="module-uq_keras_utils">
 <span id="uq-keras-utils-module"></span><h1>uq_keras_utils module<a class="headerlink" href="#module-uq_keras_utils" title="Permalink to this headline">¶</a></h1>
-<dl class="class">
+<dl class="py class">
 <dt id="uq_keras_utils.AbstentionAdapt_Callback">
-<em class="property">class </em><code class="sig-prename descclassname">uq_keras_utils.</code><code class="sig-name descname">AbstentionAdapt_Callback</code><span class="sig-paren">(</span><em class="sig-param">monitor</em>, <em class="sig-param">init_abs_epoch=4</em>, <em class="sig-param">scale_factor=0.95</em>, <em class="sig-param">target_acc=0.95</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/uq_keras_utils.html#AbstentionAdapt_Callback"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#uq_keras_utils.AbstentionAdapt_Callback" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">uq_keras_utils.</code><code class="sig-name descname">AbstentionAdapt_Callback</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">monitor</span></em>, <em class="sig-param"><span class="n">init_abs_epoch</span><span class="o">=</span><span class="default_value">4</span></em>, <em class="sig-param"><span class="n">scale_factor</span><span class="o">=</span><span class="default_value">0.95</span></em>, <em class="sig-param"><span class="n">target_acc</span><span class="o">=</span><span class="default_value">0.95</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/uq_keras_utils.html#AbstentionAdapt_Callback"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#uq_keras_utils.AbstentionAdapt_Callback" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">keras.callbacks.Callback</span></code></p>
 <p>This callback is used to adapt the parameter mu in the abstention loss.
 Factor mu (weight of the abstention term in the abstention loss) is increased or decreased to try to match the accuracy set as target.
 The accuracy to use must be specified as the ‘monitor’ argument in the initialization of the callback. It could be: the accuracy without abstention samples (abs_acc), the accuracy over class 1 without abstention samples (abs_acc_class1), etc.
 If the current monitored accuracy is smaller than the target set, mu increases to promote more abstention.
 If the current monitored accuracy is greater than the target set, mu decreases to promote more predictions (less abstention).</p>
-<dl class="method">
+<dl class="py method">
 <dt id="uq_keras_utils.AbstentionAdapt_Callback.on_epoch_end">
-<code class="sig-name descname">on_epoch_end</code><span class="sig-paren">(</span><em class="sig-param">epoch</em>, <em class="sig-param">logs=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/uq_keras_utils.html#AbstentionAdapt_Callback.on_epoch_end"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#uq_keras_utils.AbstentionAdapt_Callback.on_epoch_end" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">on_epoch_end</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">epoch</span></em>, <em class="sig-param"><span class="n">logs</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/uq_keras_utils.html#AbstentionAdapt_Callback.on_epoch_end"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#uq_keras_utils.AbstentionAdapt_Callback.on_epoch_end" title="Permalink to this definition">¶</a></dt>
 <dd><p>Initializer of the AbstentionAdapt_Callback.
 :param epoch: Current epoch in training.
 :type epoch: integer
@@ -194,9 +194,9 @@ If the current monitored accuracy is greater than the target set, mu decreases t
 
 </dd></dl>
 
-<dl class="function">
+<dl class="py function">
 <dt id="uq_keras_utils.abs_acc">
-<code class="sig-prename descclassname">uq_keras_utils.</code><code class="sig-name descname">abs_acc</code><span class="sig-paren">(</span><em class="sig-param">y_true</em>, <em class="sig-param">y_pred</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/uq_keras_utils.html#abs_acc"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#uq_keras_utils.abs_acc" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">uq_keras_utils.</code><code class="sig-name descname">abs_acc</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">y_true</span></em>, <em class="sig-param"><span class="n">y_pred</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/uq_keras_utils.html#abs_acc"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#uq_keras_utils.abs_acc" title="Permalink to this definition">¶</a></dt>
 <dd><p>Function to estimate accuracy over the predicted samples after removing the samples where the model is abstaining.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -208,9 +208,9 @@ If the current monitored accuracy is greater than the target set, mu decreases t
 </dl>
 </dd></dl>
 
-<dl class="function">
+<dl class="py function">
 <dt id="uq_keras_utils.abs_acc_class1">
-<code class="sig-prename descclassname">uq_keras_utils.</code><code class="sig-name descname">abs_acc_class1</code><span class="sig-paren">(</span><em class="sig-param">y_true</em>, <em class="sig-param">y_pred</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/uq_keras_utils.html#abs_acc_class1"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#uq_keras_utils.abs_acc_class1" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">uq_keras_utils.</code><code class="sig-name descname">abs_acc_class1</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">y_true</span></em>, <em class="sig-param"><span class="n">y_pred</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/uq_keras_utils.html#abs_acc_class1"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#uq_keras_utils.abs_acc_class1" title="Permalink to this definition">¶</a></dt>
 <dd><p>Function to estimate accuracy over the class 1 prediction after removing the samples where the model is abstaining</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -222,9 +222,9 @@ If the current monitored accuracy is greater than the target set, mu decreases t
 </dl>
 </dd></dl>
 
-<dl class="function">
+<dl class="py function">
 <dt id="uq_keras_utils.abstention_loss">
-<code class="sig-prename descclassname">uq_keras_utils.</code><code class="sig-name descname">abstention_loss</code><span class="sig-paren">(</span><em class="sig-param">y_true</em>, <em class="sig-param">y_pred</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/uq_keras_utils.html#abstention_loss"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#uq_keras_utils.abstention_loss" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">uq_keras_utils.</code><code class="sig-name descname">abstention_loss</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">y_true</span></em>, <em class="sig-param"><span class="n">y_pred</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/uq_keras_utils.html#abstention_loss"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#uq_keras_utils.abstention_loss" title="Permalink to this definition">¶</a></dt>
 <dd><p>Function to compute abstention loss. It is composed by two terms: (i) original loss of the multiclass classification problem, (ii) cost associated to the abstaining samples.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -236,9 +236,9 @@ If the current monitored accuracy is greater than the target set, mu decreases t
 </dl>
 </dd></dl>
 
-<dl class="function">
+<dl class="py function">
 <dt id="uq_keras_utils.abstention_variable_initialization">
-<code class="sig-prename descclassname">uq_keras_utils.</code><code class="sig-name descname">abstention_variable_initialization</code><span class="sig-paren">(</span><em class="sig-param">mu0</em>, <em class="sig-param">mask_</em>, <em class="sig-param">nb_classes_</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/uq_keras_utils.html#abstention_variable_initialization"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#uq_keras_utils.abstention_variable_initialization" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">uq_keras_utils.</code><code class="sig-name descname">abstention_variable_initialization</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">mu0</span></em>, <em class="sig-param"><span class="n">mask_</span></em>, <em class="sig-param"><span class="n">nb_classes_</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/uq_keras_utils.html#abstention_variable_initialization"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#uq_keras_utils.abstention_variable_initialization" title="Permalink to this definition">¶</a></dt>
 <dd><p>Function that initializes parameters of the abstention loss</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -251,9 +251,9 @@ If the current monitored accuracy is greater than the target set, mu decreases t
 </dl>
 </dd></dl>
 
-<dl class="function">
+<dl class="py function">
 <dt id="uq_keras_utils.acc_class1">
-<code class="sig-prename descclassname">uq_keras_utils.</code><code class="sig-name descname">acc_class1</code><span class="sig-paren">(</span><em class="sig-param">y_true</em>, <em class="sig-param">y_pred</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/uq_keras_utils.html#acc_class1"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#uq_keras_utils.acc_class1" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">uq_keras_utils.</code><code class="sig-name descname">acc_class1</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">y_true</span></em>, <em class="sig-param"><span class="n">y_pred</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/uq_keras_utils.html#acc_class1"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#uq_keras_utils.acc_class1" title="Permalink to this definition">¶</a></dt>
 <dd><p>Function to estimate accuracy over the class 1 prediction. This estimation is global (i.e. abstaining samples are not removed)</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -265,9 +265,9 @@ If the current monitored accuracy is greater than the target set, mu decreases t
 </dl>
 </dd></dl>
 
-<dl class="function">
+<dl class="py function">
 <dt id="uq_keras_utils.add_model_output">
-<code class="sig-prename descclassname">uq_keras_utils.</code><code class="sig-name descname">add_model_output</code><span class="sig-paren">(</span><em class="sig-param">modelIn</em>, <em class="sig-param">mode=None</em>, <em class="sig-param">num_add=None</em>, <em class="sig-param">activation=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/uq_keras_utils.html#add_model_output"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#uq_keras_utils.add_model_output" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">uq_keras_utils.</code><code class="sig-name descname">add_model_output</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">modelIn</span></em>, <em class="sig-param"><span class="n">mode</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">num_add</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">activation</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/uq_keras_utils.html#add_model_output"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#uq_keras_utils.add_model_output" title="Permalink to this definition">¶</a></dt>
 <dd><p>This function modifies the last dense layer in the passed keras model. The modification includes adding units and optionally changing the activation function.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -287,9 +287,9 @@ If the current monitored accuracy is greater than the target set, mu decreases t
 </dl>
 </dd></dl>
 
-<dl class="function">
+<dl class="py function">
 <dt id="uq_keras_utils.modify_labels">
-<code class="sig-prename descclassname">uq_keras_utils.</code><code class="sig-name descname">modify_labels</code><span class="sig-paren">(</span><em class="sig-param">numclasses_out</em>, <em class="sig-param">ytrain</em>, <em class="sig-param">ytest</em>, <em class="sig-param">yval</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/uq_keras_utils.html#modify_labels"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#uq_keras_utils.modify_labels" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">uq_keras_utils.</code><code class="sig-name descname">modify_labels</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">numclasses_out</span></em>, <em class="sig-param"><span class="n">ytrain</span></em>, <em class="sig-param"><span class="n">ytest</span></em>, <em class="sig-param"><span class="n">yval</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/uq_keras_utils.html#modify_labels"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#uq_keras_utils.modify_labels" title="Permalink to this definition">¶</a></dt>
 <dd><p>This function generates a categorical representation with a class added for indicating abstention.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>

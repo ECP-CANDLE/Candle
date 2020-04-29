@@ -173,9 +173,9 @@
             
   <div class="section" id="module-feature_selection_utils">
 <span id="feature-selection-utils-module"></span><h1>feature_selection_utils module<a class="headerlink" href="#module-feature_selection_utils" title="Permalink to this headline">¶</a></h1>
-<dl class="function">
+<dl class="py function">
 <dt id="feature_selection_utils.select_decorrelated_features">
-<code class="sig-prename descclassname">feature_selection_utils.</code><code class="sig-name descname">select_decorrelated_features</code><span class="sig-paren">(</span><em class="sig-param">data</em>, <em class="sig-param">method='pearson'</em>, <em class="sig-param">threshold=None</em>, <em class="sig-param">random_seed=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/feature_selection_utils.html#select_decorrelated_features"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#feature_selection_utils.select_decorrelated_features" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">feature_selection_utils.</code><code class="sig-name descname">select_decorrelated_features</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">data</span></em>, <em class="sig-param"><span class="n">method</span><span class="o">=</span><span class="default_value">'pearson'</span></em>, <em class="sig-param"><span class="n">threshold</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">random_seed</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/feature_selection_utils.html#select_decorrelated_features"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#feature_selection_utils.select_decorrelated_features" title="Permalink to this definition">¶</a></dt>
 <dd><p>This function selects features whose mutual absolute correlation coefficients are smaller than a threshold.
 It allows missing values in data. The correlation coefficient of two features are calculated based on
 the observations that are not missing in both features. Features with only one or no value present and
@@ -196,9 +196,9 @@ are exactly identical. Default is None.</p>
 <p>indices: 1-D numpy array containing the indices of selected features.</p>
 </dd></dl>
 
-<dl class="function">
+<dl class="py function">
 <dt id="feature_selection_utils.select_features_by_missing_values">
-<code class="sig-prename descclassname">feature_selection_utils.</code><code class="sig-name descname">select_features_by_missing_values</code><span class="sig-paren">(</span><em class="sig-param">data</em>, <em class="sig-param">threshold=0.1</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/feature_selection_utils.html#select_features_by_missing_values"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#feature_selection_utils.select_features_by_missing_values" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">feature_selection_utils.</code><code class="sig-name descname">select_features_by_missing_values</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">data</span></em>, <em class="sig-param"><span class="n">threshold</span><span class="o">=</span><span class="default_value">0.1</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/feature_selection_utils.html#select_features_by_missing_values"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#feature_selection_utils.select_features_by_missing_values" title="Permalink to this definition">¶</a></dt>
 <dd><p>This function returns the indices of the features whose missing rates are smaller than the threshold.</p>
 <p>data: numpy array or pandas data frame of numeric values, with a shape of [n_samples, n_features]
 threshold: float in the range of [0, 1]. Features with a missing rate smaller than threshold will be selected.</p>
@@ -208,9 +208,9 @@ threshold: float in the range of [0, 1]. Features with a missing rate smaller th
 <p>indices: 1-D numpy array containing the indices of selected features</p>
 </dd></dl>
 
-<dl class="function">
+<dl class="py function">
 <dt id="feature_selection_utils.select_features_by_variation">
-<code class="sig-prename descclassname">feature_selection_utils.</code><code class="sig-name descname">select_features_by_variation</code><span class="sig-paren">(</span><em class="sig-param">data</em>, <em class="sig-param">variation_measure='var'</em>, <em class="sig-param">threshold=None</em>, <em class="sig-param">portion=None</em>, <em class="sig-param">draw_histogram=False</em>, <em class="sig-param">bins=100</em>, <em class="sig-param">log=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/feature_selection_utils.html#select_features_by_variation"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#feature_selection_utils.select_features_by_variation" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">feature_selection_utils.</code><code class="sig-name descname">select_features_by_variation</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">data</span></em>, <em class="sig-param"><span class="n">variation_measure</span><span class="o">=</span><span class="default_value">'var'</span></em>, <em class="sig-param"><span class="n">threshold</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">portion</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">draw_histogram</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">bins</span><span class="o">=</span><span class="default_value">100</span></em>, <em class="sig-param"><span class="n">log</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/feature_selection_utils.html#select_features_by_variation"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#feature_selection_utils.select_features_by_variation" title="Permalink to this definition">¶</a></dt>
 <dd><p>This function evaluates the variations of individual features and returns the indices of features with large
 variations. Missing values are ignored in evaluating variation.</p>
 <p>data: numpy array or pandas data frame of numeric values, with a shape of [n_samples, n_features].

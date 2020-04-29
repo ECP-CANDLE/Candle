@@ -173,7 +173,7 @@
             
   <div class="section" id="module-data_utils">
 <span id="data-utils-module"></span><h1>data_utils module<a class="headerlink" href="#module-data_utils" title="Permalink to this headline">¶</a></h1>
-<dl class="function">
+<dl class="py function">
 <dt id="data_utils.convert_to_class">
 <code class="sig-prename descclassname">data_utils.</code><code class="sig-name descname">convert_to_class</code><span class="sig-paren">(</span><em class="sig-param">y_one_hot</em>, <em class="sig-param">dtype=&lt;class 'int'&gt;</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/data_utils.html#convert_to_class"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#data_utils.convert_to_class" title="Permalink to this definition">¶</a></dt>
 <dd><p>Converts a one-hot class encoding (array with as many positions as total
@@ -196,9 +196,9 @@ class membership).</p></li>
 </dl>
 </dd></dl>
 
-<dl class="function">
+<dl class="py function">
 <dt id="data_utils.discretize_array">
-<code class="sig-prename descclassname">data_utils.</code><code class="sig-name descname">discretize_array</code><span class="sig-paren">(</span><em class="sig-param">y</em>, <em class="sig-param">bins=5</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/data_utils.html#discretize_array"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#data_utils.discretize_array" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">data_utils.</code><code class="sig-name descname">discretize_array</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">y</span></em>, <em class="sig-param"><span class="n">bins</span><span class="o">=</span><span class="default_value">5</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/data_utils.html#discretize_array"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#data_utils.discretize_array" title="Permalink to this definition">¶</a></dt>
 <dd><p>Discretize values of given array.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -217,9 +217,9 @@ class membership).</p></li>
 </dl>
 </dd></dl>
 
-<dl class="function">
+<dl class="py function">
 <dt id="data_utils.discretize_dataframe">
-<code class="sig-prename descclassname">data_utils.</code><code class="sig-name descname">discretize_dataframe</code><span class="sig-paren">(</span><em class="sig-param">df</em>, <em class="sig-param">col</em>, <em class="sig-param">bins=2</em>, <em class="sig-param">cutoffs=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/data_utils.html#discretize_dataframe"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#data_utils.discretize_dataframe" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">data_utils.</code><code class="sig-name descname">discretize_dataframe</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">df</span></em>, <em class="sig-param"><span class="n">col</span></em>, <em class="sig-param"><span class="n">bins</span><span class="o">=</span><span class="default_value">2</span></em>, <em class="sig-param"><span class="n">cutoffs</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/data_utils.html#discretize_dataframe"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#data_utils.discretize_dataframe" title="Permalink to this definition">¶</a></dt>
 <dd><p>Discretize values of given column in pandas dataframe.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -242,9 +242,9 @@ If None, the limits are computed as percentiles.
 </dl>
 </dd></dl>
 
-<dl class="function">
+<dl class="py function">
 <dt id="data_utils.drop_impute_and_scale_dataframe">
-<code class="sig-prename descclassname">data_utils.</code><code class="sig-name descname">drop_impute_and_scale_dataframe</code><span class="sig-paren">(</span><em class="sig-param">df</em>, <em class="sig-param">scaling='std'</em>, <em class="sig-param">imputing='mean'</em>, <em class="sig-param">dropna='all'</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/data_utils.html#drop_impute_and_scale_dataframe"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#data_utils.drop_impute_and_scale_dataframe" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">data_utils.</code><code class="sig-name descname">drop_impute_and_scale_dataframe</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">df</span></em>, <em class="sig-param"><span class="n">scaling</span><span class="o">=</span><span class="default_value">'std'</span></em>, <em class="sig-param"><span class="n">imputing</span><span class="o">=</span><span class="default_value">'mean'</span></em>, <em class="sig-param"><span class="n">dropna</span><span class="o">=</span><span class="default_value">'all'</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/data_utils.html#drop_impute_and_scale_dataframe"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#data_utils.drop_impute_and_scale_dataframe" title="Permalink to this definition">¶</a></dt>
 <dd><p>Impute missing values with mean and scale data included in pandas dataframe.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -270,9 +270,9 @@ If None, the limits are computed as percentiles.
 </dl>
 </dd></dl>
 
-<dl class="function">
+<dl class="py function">
 <dt id="data_utils.impute_and_scale_array">
-<code class="sig-prename descclassname">data_utils.</code><code class="sig-name descname">impute_and_scale_array</code><span class="sig-paren">(</span><em class="sig-param">mat</em>, <em class="sig-param">scaling=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/data_utils.html#impute_and_scale_array"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#data_utils.impute_and_scale_array" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">data_utils.</code><code class="sig-name descname">impute_and_scale_array</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">mat</span></em>, <em class="sig-param"><span class="n">scaling</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/data_utils.html#impute_and_scale_array"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#data_utils.impute_and_scale_array" title="Permalink to this definition">¶</a></dt>
 <dd><p>Impute missing values with mean and scale data included in numpy array.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -292,7 +292,7 @@ Options recognized: ‘maxabs’, ‘minmax’, ‘std’.
 </dl>
 </dd></dl>
 
-<dl class="function">
+<dl class="py function">
 <dt id="data_utils.load_X_data">
 <code class="sig-prename descclassname">data_utils.</code><code class="sig-name descname">load_X_data</code><span class="sig-paren">(</span><em class="sig-param">train_file</em>, <em class="sig-param">test_file</em>, <em class="sig-param">drop_cols=None</em>, <em class="sig-param">n_cols=None</em>, <em class="sig-param">shuffle=False</em>, <em class="sig-param">scaling=None</em>, <em class="sig-param">dtype=&lt;class 'numpy.float32'&gt;</em>, <em class="sig-param">seed=7102</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/data_utils.html#load_X_data"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#data_utils.load_X_data" title="Permalink to this definition">¶</a></dt>
 <dd><p>Load training and testing unlabeleled data from the files specified
@@ -337,7 +337,7 @@ Options recognized: ‘maxabs’, ‘minmax’, ‘std’.
 </dl>
 </dd></dl>
 
-<dl class="function">
+<dl class="py function">
 <dt id="data_utils.load_X_data2">
 <code class="sig-prename descclassname">data_utils.</code><code class="sig-name descname">load_X_data2</code><span class="sig-paren">(</span><em class="sig-param">train_file</em>, <em class="sig-param">test_file</em>, <em class="sig-param">drop_cols=None</em>, <em class="sig-param">n_cols=None</em>, <em class="sig-param">shuffle=False</em>, <em class="sig-param">scaling=None</em>, <em class="sig-param">validation_split=0.1</em>, <em class="sig-param">dtype=&lt;class 'numpy.float32'&gt;</em>, <em class="sig-param">seed=7102</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/data_utils.html#load_X_data2"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#data_utils.load_X_data2" title="Permalink to this definition">¶</a></dt>
 <dd><p>Load training and testing unlabeleled data from the files specified.
@@ -390,7 +390,7 @@ pre-processed as specified.</p></li>
 </dl>
 </dd></dl>
 
-<dl class="function">
+<dl class="py function">
 <dt id="data_utils.load_Xy_data2">
 <code class="sig-prename descclassname">data_utils.</code><code class="sig-name descname">load_Xy_data2</code><span class="sig-paren">(</span><em class="sig-param">train_file</em>, <em class="sig-param">test_file</em>, <em class="sig-param">class_col=None</em>, <em class="sig-param">drop_cols=None</em>, <em class="sig-param">n_cols=None</em>, <em class="sig-param">shuffle=False</em>, <em class="sig-param">scaling=None</em>, <em class="sig-param">validation_split=0.1</em>, <em class="sig-param">dtype=&lt;class 'numpy.float32'&gt;</em>, <em class="sig-param">seed=7102</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/data_utils.html#load_Xy_data2"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#data_utils.load_Xy_data2" title="Permalink to this definition">¶</a></dt>
 <dd><p>Load training and testing data from the files specified, with a column indicated to use as label.
@@ -452,7 +452,7 @@ pre-processed as specified.</p></li>
 </dl>
 </dd></dl>
 
-<dl class="function">
+<dl class="py function">
 <dt id="data_utils.load_Xy_data_noheader">
 <code class="sig-prename descclassname">data_utils.</code><code class="sig-name descname">load_Xy_data_noheader</code><span class="sig-paren">(</span><em class="sig-param">train_file</em>, <em class="sig-param">test_file</em>, <em class="sig-param">classes</em>, <em class="sig-param">usecols=None</em>, <em class="sig-param">scaling=None</em>, <em class="sig-param">dtype=&lt;class 'numpy.float32'&gt;</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/data_utils.html#load_Xy_data_noheader"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#data_utils.load_Xy_data_noheader" title="Permalink to this definition">¶</a></dt>
 <dd><p>Load training and testing data from the files specified, with the first column to use as label.
@@ -498,7 +498,7 @@ One-hot encoding (categorical) is used.</p></li>
 </dl>
 </dd></dl>
 
-<dl class="function">
+<dl class="py function">
 <dt id="data_utils.load_Xy_one_hot_data">
 <code class="sig-prename descclassname">data_utils.</code><code class="sig-name descname">load_Xy_one_hot_data</code><span class="sig-paren">(</span><em class="sig-param">train_file</em>, <em class="sig-param">test_file</em>, <em class="sig-param">class_col=None</em>, <em class="sig-param">drop_cols=None</em>, <em class="sig-param">n_cols=None</em>, <em class="sig-param">shuffle=False</em>, <em class="sig-param">scaling=None</em>, <em class="sig-param">dtype=&lt;class 'numpy.float32'&gt;</em>, <em class="sig-param">seed=7102</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/data_utils.html#load_Xy_one_hot_data"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#data_utils.load_Xy_one_hot_data" title="Permalink to this definition">¶</a></dt>
 <dd><p>Load training and testing data from the files specified, with a column indicated to use as label.
@@ -553,7 +553,7 @@ One-hot encoding (categorical) is used.</p></li>
 </dl>
 </dd></dl>
 
-<dl class="function">
+<dl class="py function">
 <dt id="data_utils.load_Xy_one_hot_data2">
 <code class="sig-prename descclassname">data_utils.</code><code class="sig-name descname">load_Xy_one_hot_data2</code><span class="sig-paren">(</span><em class="sig-param">train_file</em>, <em class="sig-param">test_file</em>, <em class="sig-param">class_col=None</em>, <em class="sig-param">drop_cols=None</em>, <em class="sig-param">n_cols=None</em>, <em class="sig-param">shuffle=False</em>, <em class="sig-param">scaling=None</em>, <em class="sig-param">validation_split=0.1</em>, <em class="sig-param">dtype=&lt;class 'numpy.float32'&gt;</em>, <em class="sig-param">seed=7102</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/data_utils.html#load_Xy_one_hot_data2"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#data_utils.load_Xy_one_hot_data2" title="Permalink to this definition">¶</a></dt>
 <dd><p>Load training and testing data from the files specified, with a column indicated to use as label.
@@ -616,9 +616,9 @@ One-hot encoding (categorical) is used.</p></li>
 </dl>
 </dd></dl>
 
-<dl class="function">
+<dl class="py function">
 <dt id="data_utils.load_csv_data">
-<code class="sig-prename descclassname">data_utils.</code><code class="sig-name descname">load_csv_data</code><span class="sig-paren">(</span><em class="sig-param">train_path</em>, <em class="sig-param">test_path=None</em>, <em class="sig-param">sep='</em>, <em class="sig-param">'</em>, <em class="sig-param">nrows=None</em>, <em class="sig-param">x_cols=None</em>, <em class="sig-param">y_cols=None</em>, <em class="sig-param">drop_cols=None</em>, <em class="sig-param">onehot_cols=None</em>, <em class="sig-param">n_cols=None</em>, <em class="sig-param">random_cols=False</em>, <em class="sig-param">shuffle=False</em>, <em class="sig-param">scaling=None</em>, <em class="sig-param">dtype=None</em>, <em class="sig-param">validation_split=None</em>, <em class="sig-param">return_dataframe=True</em>, <em class="sig-param">return_header=False</em>, <em class="sig-param">seed=7102</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/data_utils.html#load_csv_data"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#data_utils.load_csv_data" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">data_utils.</code><code class="sig-name descname">load_csv_data</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">train_path</span></em>, <em class="sig-param"><span class="n">test_path</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">sep</span><span class="o">=</span><span class="default_value">','</span></em>, <em class="sig-param"><span class="n">nrows</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">x_cols</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">y_cols</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">drop_cols</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">onehot_cols</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">n_cols</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">random_cols</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">shuffle</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">scaling</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">dtype</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">validation_split</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">return_dataframe</span><span class="o">=</span><span class="default_value">True</span></em>, <em class="sig-param"><span class="n">return_header</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">seed</span><span class="o">=</span><span class="default_value">7102</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/data_utils.html#load_csv_data"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#data_utils.load_csv_data" title="Permalink to this definition">¶</a></dt>
 <dd><p>Load data from the files specified.
 Columns corresponding to data features and labels can be specified. A one-hot
 encoding can be used for either features or labels.
@@ -684,9 +684,9 @@ to be returned.
 </dl>
 </dd></dl>
 
-<dl class="function">
+<dl class="py function">
 <dt id="data_utils.lookup">
-<code class="sig-prename descclassname">data_utils.</code><code class="sig-name descname">lookup</code><span class="sig-paren">(</span><em class="sig-param">df</em>, <em class="sig-param">query</em>, <em class="sig-param">ret</em>, <em class="sig-param">keys</em>, <em class="sig-param">match='match'</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/data_utils.html#lookup"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#data_utils.lookup" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">data_utils.</code><code class="sig-name descname">lookup</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">df</span></em>, <em class="sig-param"><span class="n">query</span></em>, <em class="sig-param"><span class="n">ret</span></em>, <em class="sig-param"><span class="n">keys</span></em>, <em class="sig-param"><span class="n">match</span><span class="o">=</span><span class="default_value">'match'</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/data_utils.html#lookup"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#data_utils.lookup" title="Permalink to this definition">¶</a></dt>
 <dd><p>Dataframe lookup.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -709,9 +709,9 @@ indices of columns to look into.</p></li>
 </dl>
 </dd></dl>
 
-<dl class="function">
+<dl class="py function">
 <dt id="data_utils.scale_array">
-<code class="sig-prename descclassname">data_utils.</code><code class="sig-name descname">scale_array</code><span class="sig-paren">(</span><em class="sig-param">mat</em>, <em class="sig-param">scaling=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/data_utils.html#scale_array"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#data_utils.scale_array" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">data_utils.</code><code class="sig-name descname">scale_array</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">mat</span></em>, <em class="sig-param"><span class="n">scaling</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/data_utils.html#scale_array"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#data_utils.scale_array" title="Permalink to this definition">¶</a></dt>
 <dd><p>Scale data included in numpy array.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -731,9 +731,9 @@ Options recognized: ‘maxabs’, ‘minmax’, ‘std’.
 </dl>
 </dd></dl>
 
-<dl class="function">
+<dl class="py function">
 <dt id="data_utils.to_categorical">
-<code class="sig-prename descclassname">data_utils.</code><code class="sig-name descname">to_categorical</code><span class="sig-paren">(</span><em class="sig-param">y</em>, <em class="sig-param">num_classes=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/data_utils.html#to_categorical"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#data_utils.to_categorical" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">data_utils.</code><code class="sig-name descname">to_categorical</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">y</span></em>, <em class="sig-param"><span class="n">num_classes</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/data_utils.html#to_categorical"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#data_utils.to_categorical" title="Permalink to this definition">¶</a></dt>
 <dd><p>Converts a class vector (integers) to binary class matrix.
 E.g. for use with categorical_crossentropy.
 :param y: class vector to be converted into a matrix</p>
