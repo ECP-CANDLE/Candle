@@ -99,7 +99,9 @@
 <li class="toctree-l2"><a class="reference internal" href="pytorch_utils.html">pytorch_utils module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="solr_keras.html">solr_keras module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="uq_utils.html">uq_utils module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="uq_keras_utils.html">uq_keras_utils module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="viz_utils.html">viz_utils module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="clr_keras_utils.html">clr_keras_utils module</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../contribute.html">How to Contribute</a></li>
@@ -277,6 +279,32 @@ parameters specified via command-line.</p>
 </dd>
 </dl>
 </dd></dl>
+
+<dl class="function">
+<dt id="default_utils.check_file_parameters_exists">
+<code class="sig-prename descclassname">default_utils.</code><code class="sig-name descname">check_file_parameters_exists</code><span class="sig-paren">(</span><em class="sig-param">params_parser</em>, <em class="sig-param">params_benchmark</em>, <em class="sig-param">params_file</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/default_utils.html#check_file_parameters_exists"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#default_utils.check_file_parameters_exists" title="Permalink to this definition">¶</a></dt>
+<dd><p>Functionality to verify that the parameters defined in the configuraion file are recognizable by the command line parser (i.e. no uknown keywords are used in the configuration file).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>params_parser</strong> (<em>python dictionary</em>) – Includes parameters set via the command line.</p></li>
+<li><p><strong>params_benchmark</strong> (<em>python list</em>) – Includes additional parameters defined in the benchmark.</p></li>
+<li><p><strong>params_file</strong> (<em>python dictionary</em>) – <p>Includes parameters read from the configuration file.</p>
+<p>Global:
+PARAMETERS_CANDLE : python list</p>
+<blockquote>
+<div><p>Includes all the core keywords that are specified in CANDLE.</p>
+</div></blockquote>
+</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="default_utils.check_flag_conflicts">
+<code class="sig-prename descclassname">default_utils.</code><code class="sig-name descname">check_flag_conflicts</code><span class="sig-paren">(</span><em class="sig-param">params</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/default_utils.html#check_flag_conflicts"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#default_utils.check_flag_conflicts" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
 
 <dl class="function">
 <dt id="default_utils.directory_from_parameters">

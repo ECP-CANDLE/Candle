@@ -18,4 +18,6 @@ CANDLE Library API
    candle_lib/pytorch_utils
    candle_lib/solr_keras
    candle_lib/uq_utils
+   candle_lib/uq_keras_utils
    candle_lib/viz_utils
+   candle_lib/clr_keras_utils
