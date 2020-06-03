@@ -171,8 +171,586 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="data-utils-module">
-<h1>data_utils module<a class="headerlink" href="#data-utils-module" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="module-data_utils">
+<span id="data-utils-module"></span><h1>data_utils module<a class="headerlink" href="#module-data_utils" title="Permalink to this headline">¶</a></h1>
+<dl class="py function">
+<dt id="data_utils.convert_to_class">
+<code class="sig-prename descclassname">data_utils.</code><code class="sig-name descname">convert_to_class</code><span class="sig-paren">(</span><em class="sig-param">y_one_hot</em>, <em class="sig-param">dtype=&lt;class 'int'&gt;</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/data_utils.html#convert_to_class"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#data_utils.convert_to_class" title="Permalink to this definition">¶</a></dt>
+<dd><p>Converts a one-hot class encoding (array with as many positions as total
+classes, with 1 in the corresponding class position, 0 in the other positions),
+or soft-max class encoding (array with as many positions as total
+classes, whose largest valued position is used as class membership)
+to an integer class encoding.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>y_one_hot</strong> (<em>numpy array</em>) – Input array with one-hot or soft-max class encoding.</p></li>
+<li><p><strong>dtype</strong> (<em>data type</em>) – Data type to use for the output numpy array.
+(Default: int, integer data is used to represent the
+class membership).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><em>Returns a numpy array with an integer class encoding.</em></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="data_utils.discretize_array">
+<code class="sig-prename descclassname">data_utils.</code><code class="sig-name descname">discretize_array</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">y</span></em>, <em class="sig-param"><span class="n">bins</span><span class="o">=</span><span class="default_value">5</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/data_utils.html#discretize_array"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#data_utils.discretize_array" title="Permalink to this definition">¶</a></dt>
+<dd><p>Discretize values of given array.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>y</strong> (<em>numpy array</em>) – array to discretize.</p></li>
+<li><p><strong>bins</strong> (<em>int</em>) – Number of bins for distributing column values.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><em>Returns an array with the bin number associated to the values in the</em></p></li>
+<li><p><em>original array.</em></p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="data_utils.discretize_dataframe">
+<code class="sig-prename descclassname">data_utils.</code><code class="sig-name descname">discretize_dataframe</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">df</span></em>, <em class="sig-param"><span class="n">col</span></em>, <em class="sig-param"><span class="n">bins</span><span class="o">=</span><span class="default_value">2</span></em>, <em class="sig-param"><span class="n">cutoffs</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/data_utils.html#discretize_dataframe"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#data_utils.discretize_dataframe" title="Permalink to this definition">¶</a></dt>
+<dd><p>Discretize values of given column in pandas dataframe.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>df</strong> (<em>pandas dataframe</em>) – dataframe to process.</p></li>
+<li><p><strong>col</strong> (<em>int</em>) – Index of column to bin.</p></li>
+<li><p><strong>bins</strong> (<em>int</em>) – Number of bins for distributing column values.</p></li>
+<li><p><strong>cutoffs</strong> (<em>list</em>) – List of bin limits.
+If None, the limits are computed as percentiles.
+(Default: None).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><em>Returns the data frame with the values of the specified column binned, i.e. the values</em></p></li>
+<li><p><em>are replaced by the associated bin number.</em></p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="data_utils.drop_impute_and_scale_dataframe">
+<code class="sig-prename descclassname">data_utils.</code><code class="sig-name descname">drop_impute_and_scale_dataframe</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">df</span></em>, <em class="sig-param"><span class="n">scaling</span><span class="o">=</span><span class="default_value">'std'</span></em>, <em class="sig-param"><span class="n">imputing</span><span class="o">=</span><span class="default_value">'mean'</span></em>, <em class="sig-param"><span class="n">dropna</span><span class="o">=</span><span class="default_value">'all'</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/data_utils.html#drop_impute_and_scale_dataframe"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#data_utils.drop_impute_and_scale_dataframe" title="Permalink to this definition">¶</a></dt>
+<dd><p>Impute missing values with mean and scale data included in pandas dataframe.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>df</strong> (<em>pandas dataframe</em>) – dataframe to process</p></li>
+<li><p><strong>scaling</strong> (<em>string</em>) – String describing type of scaling to apply.
+‘maxabs’ [-1,1], ‘minmax’ [0,1], ‘std’, or None, optional
+(Default ‘std’)</p></li>
+<li><p><strong>imputing</strong> (<em>string</em>) – String describing type of imputation to apply.
+‘mean’ replace missing values with mean value along the column,
+‘median’ replace missing values with median value along the column,
+‘most_frequent’ replace missing values with most frequent value along column
+(Default: ‘mean’).</p></li>
+<li><p><strong>dropna</strong> (<em>string</em>) – String describing strategy for handling missing values.
+‘all’ if all values are NA, drop that column.
+‘any’ if any NA values are present, dropt that column.
+(Default: ‘all’).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><em>Returns the data frame after handling missing values and scaling.</em></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="data_utils.impute_and_scale_array">
+<code class="sig-prename descclassname">data_utils.</code><code class="sig-name descname">impute_and_scale_array</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">mat</span></em>, <em class="sig-param"><span class="n">scaling</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/data_utils.html#impute_and_scale_array"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#data_utils.impute_and_scale_array" title="Permalink to this definition">¶</a></dt>
+<dd><p>Impute missing values with mean and scale data included in numpy array.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>mat</strong> (<em>numpy array</em>) – Array to scale</p></li>
+<li><p><strong>scaling</strong> (<em>string</em>) – String describing type of scaling to apply.
+Options recognized: ‘maxabs’, ‘minmax’, ‘std’.
+‘maxabs’ : scales data to range [-1 to 1].
+‘minmax’ : scales data to range [-1 to 1].
+‘std’    : scales data to normal variable with mean 0 and standard deviation 1.
+(Default: None, no scaling).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><em>Returns the numpy array imputed with the mean value of the         column and scaled by the method specified. If no scaling method is specified,         it returns the imputed numpy array.</em></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="data_utils.load_X_data">
+<code class="sig-prename descclassname">data_utils.</code><code class="sig-name descname">load_X_data</code><span class="sig-paren">(</span><em class="sig-param">train_file</em>, <em class="sig-param">test_file</em>, <em class="sig-param">drop_cols=None</em>, <em class="sig-param">n_cols=None</em>, <em class="sig-param">shuffle=False</em>, <em class="sig-param">scaling=None</em>, <em class="sig-param">dtype=&lt;class 'numpy.float32'&gt;</em>, <em class="sig-param">seed=7102</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/data_utils.html#load_X_data"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#data_utils.load_X_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Load training and testing unlabeleled data from the files specified
+and construct corresponding training and testing pandas DataFrames.
+Columns to load can be selected or dropped. Order of rows
+can be shuffled. Data can be rescaled.
+Training and testing partitions (coming from the respective files)
+are preserved.
+This function assumes that the files contain a header with column names.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>train_file</strong> (<em>filename</em>) – Name of the file to load the training data.</p></li>
+<li><p><strong>test_file</strong> (<em>filename</em>) – Name of the file to load the testing data.</p></li>
+<li><p><strong>drop_cols</strong> (<em>list</em>) – List of column names to drop from the files being loaded.
+(Default: None, all the columns are used).</p></li>
+<li><p><strong>n_cols</strong> (<em>integer</em>) – Number of columns to load from the files.
+(Default: None, all the columns are used).</p></li>
+<li><p><strong>shuffle</strong> (<em>boolean</em>) – Boolean flag to indicate row shuffling. If True the rows are
+re-ordered, if False the order in which rows are read is
+preserved.
+(Default: False, no permutation of the loading row order).</p></li>
+<li><p><strong>scaling</strong> (<em>string</em>) – String describing type of scaling to apply.
+Options recognized: ‘maxabs’, ‘minmax’, ‘std’.
+‘maxabs’ : scales data to range [-1 to 1].
+‘minmax’ : scales data to range [-1 to 1].
+‘std’    : scales data to normal variable with                        mean 0 and standard deviation 1.
+(Default: None, no scaling).</p></li>
+<li><p><strong>dtype</strong> (<em>data type</em>) – Data type to use for the output pandas DataFrames.
+(Default: DEFAULT_DATATYPE defined in default_utils).</p></li>
+<li><p><strong>seed</strong> (<em>int</em>) – Value to intialize or re-seed the generator.
+(Default: DEFAULT_SEED defined in default_utils).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><strong>X_train</strong> (<em>pandas DataFrame</em>) – Data for training loaded in a pandas DataFrame and pre-processed as specified.</p></li>
+<li><p><strong>X_test</strong> (<em>pandas DataFrame</em>) – Data for testing loaded in a pandas DataFrame and pre-processed as specified.</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="data_utils.load_X_data2">
+<code class="sig-prename descclassname">data_utils.</code><code class="sig-name descname">load_X_data2</code><span class="sig-paren">(</span><em class="sig-param">train_file</em>, <em class="sig-param">test_file</em>, <em class="sig-param">drop_cols=None</em>, <em class="sig-param">n_cols=None</em>, <em class="sig-param">shuffle=False</em>, <em class="sig-param">scaling=None</em>, <em class="sig-param">validation_split=0.1</em>, <em class="sig-param">dtype=&lt;class 'numpy.float32'&gt;</em>, <em class="sig-param">seed=7102</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/data_utils.html#load_X_data2"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#data_utils.load_X_data2" title="Permalink to this definition">¶</a></dt>
+<dd><p>Load training and testing unlabeleled data from the files specified.
+Further split trainig data into training and validation partitions,
+and construct corresponding training, validation and testing pandas DataFrames.
+Columns to load can be selected or dropped. Order of rows
+can be shuffled. Data can be rescaled.
+Training and testing partitions (coming from the respective files)
+are preserved, but training is split into training and validation partitions.
+This function assumes that the files contain a header with column names.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>train_file</strong> (<em>filename</em>) – Name of the file to load the training data.</p></li>
+<li><p><strong>test_file</strong> (<em>filename</em>) – Name of the file to load the testing data.</p></li>
+<li><p><strong>drop_cols</strong> (<em>list</em>) – List of column names to drop from the files being loaded.
+(Default: None, all the columns are used).</p></li>
+<li><p><strong>n_cols</strong> (<em>integer</em>) – Number of columns to load from the files.
+(Default: None, all the columns are used).</p></li>
+<li><p><strong>shuffle</strong> (<em>boolean</em>) – Boolean flag to indicate row shuffling. If True the rows are
+re-ordered, if False the order in which rows are read is
+preserved.
+(Default: False, no permutation of the loading row order).</p></li>
+<li><p><strong>scaling</strong> (<em>string</em>) – String describing type of scaling to apply.
+Options recognized: ‘maxabs’, ‘minmax’, ‘std’.
+‘maxabs’ : scales data to range [-1 to 1].
+‘minmax’ : scales data to range [-1 to 1].
+‘std’    : scales data to normal variable with mean 0 and standard deviation 1.
+(Default: None, no scaling).</p></li>
+<li><p><strong>validation_split</strong> (<em>float</em>) – Fraction of training data to set aside for validation.
+(Default: 0.1, ten percent of the training data is
+used for the validation partition).</p></li>
+<li><p><strong>dtype</strong> (<em>data type</em>) – Data type to use for the output pandas DataFrames.
+(Default: DEFAULT_DATATYPE defined in default_utils).</p></li>
+<li><p><strong>seed</strong> (<em>int</em>) – Value to intialize or re-seed the generator.
+(Default: DEFAULT_SEED defined in default_utils).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><strong>X_train</strong> (<em>pandas DataFrame</em>) – Data for training loaded in a pandas DataFrame and
+pre-processed as specified.</p></li>
+<li><p><strong>X_val</strong> (<em>pandas DataFrame</em>) – Data for validation loaded in a pandas DataFrame and
+pre-processed as specified.</p></li>
+<li><p><strong>X_test</strong> (<em>pandas DataFrame</em>) – Data for testing loaded in a pandas DataFrame and
+pre-processed as specified.</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="data_utils.load_Xy_data2">
+<code class="sig-prename descclassname">data_utils.</code><code class="sig-name descname">load_Xy_data2</code><span class="sig-paren">(</span><em class="sig-param">train_file</em>, <em class="sig-param">test_file</em>, <em class="sig-param">class_col=None</em>, <em class="sig-param">drop_cols=None</em>, <em class="sig-param">n_cols=None</em>, <em class="sig-param">shuffle=False</em>, <em class="sig-param">scaling=None</em>, <em class="sig-param">validation_split=0.1</em>, <em class="sig-param">dtype=&lt;class 'numpy.float32'&gt;</em>, <em class="sig-param">seed=7102</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/data_utils.html#load_Xy_data2"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#data_utils.load_Xy_data2" title="Permalink to this definition">¶</a></dt>
+<dd><p>Load training and testing data from the files specified, with a column indicated to use as label.
+Further split trainig data into training and validation partitions,
+and construct corresponding training, validation and testing pandas DataFrames,
+separated into data (i.e. features) and labels.
+Labels to output can be integer labels (for classification) or
+continuous labels (for regression).
+Columns to load can be selected or dropped. Order of rows
+can be shuffled. Data can be rescaled.
+Training and testing partitions (coming from the respective files)
+are preserved, but training is split into training and validation partitions.
+This function assumes that the files contain a header with column names.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>train_file</strong> (<em>filename</em>) – Name of the file to load the training data.</p></li>
+<li><p><strong>test_file</strong> (<em>filename</em>) – Name of the file to load the testing data.</p></li>
+<li><p><strong>class_col</strong> (<em>integer</em>) – Index of the column to use as the label.
+(Default: None, this would cause the function to fail, a label
+has to be indicated at calling).</p></li>
+<li><p><strong>drop_cols</strong> (<em>list</em>) – List of column names to drop from the files being loaded.
+(Default: None, all the columns are used).</p></li>
+<li><p><strong>n_cols</strong> (<em>integer</em>) – Number of columns to load from the files.
+(Default: None, all the columns are used).</p></li>
+<li><p><strong>shuffle</strong> (<em>boolean</em>) – Boolean flag to indicate row shuffling. If True the rows are
+re-ordered, if False the order in which rows are loaded is
+preserved.
+(Default: False, no permutation of the loading row order).</p></li>
+<li><p><strong>scaling</strong> (<em>string</em>) – String describing type of scaling to apply.
+Options recognized: ‘maxabs’, ‘minmax’, ‘std’.
+‘maxabs’ : scales data to range [-1 to 1].
+‘minmax’ : scales data to range [-1 to 1].
+‘std’    : scales data to normal variable with mean 0 and standard deviation 1.
+(Default: None, no scaling).</p></li>
+<li><p><strong>validation_split</strong> (<em>float</em>) – Fraction of training data to set aside for validation.
+(Default: 0.1, ten percent of the training data is
+used for the validation partition).</p></li>
+<li><p><strong>dtype</strong> (<em>data type</em>) – Data type to use for the output pandas DataFrames.
+(Default: DEFAULT_DATATYPE defined in default_utils).</p></li>
+<li><p><strong>seed</strong> (<em>int</em>) – Value to intialize or re-seed the generator.
+(Default: DEFAULT_SEED defined in default_utils).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><strong>X_train</strong> (<em>pandas DataFrame</em>) – Data features for training loaded in a pandas DataFrame and
+pre-processed as specified.</p></li>
+<li><p><strong>y_train</strong> (<em>pandas DataFrame</em>) – Data labels for training loaded in a pandas DataFrame.</p></li>
+<li><p><strong>X_val</strong> (<em>pandas DataFrame</em>) – Data features for validation loaded in a pandas DataFrame and
+pre-processed as specified.</p></li>
+<li><p><strong>y_val</strong> (<em>pandas DataFrame</em>) – Data labels for validation loaded in a pandas DataFrame.</p></li>
+<li><p><strong>X_test</strong> (<em>pandas DataFrame</em>) – Data features for testing loaded in a pandas DataFrame and
+pre-processed as specified.</p></li>
+<li><p><strong>y_test</strong> (<em>pandas DataFrame</em>) – Data labels for testing loaded in a pandas DataFrame.</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="data_utils.load_Xy_data_noheader">
+<code class="sig-prename descclassname">data_utils.</code><code class="sig-name descname">load_Xy_data_noheader</code><span class="sig-paren">(</span><em class="sig-param">train_file</em>, <em class="sig-param">test_file</em>, <em class="sig-param">classes</em>, <em class="sig-param">usecols=None</em>, <em class="sig-param">scaling=None</em>, <em class="sig-param">dtype=&lt;class 'numpy.float32'&gt;</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/data_utils.html#load_Xy_data_noheader"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#data_utils.load_Xy_data_noheader" title="Permalink to this definition">¶</a></dt>
+<dd><p>Load training and testing data from the files specified, with the first column to use as label.
+Construct corresponding training and testing pandas DataFrames,
+separated into data (i.e. features) and labels.
+Labels to output are one-hot encoded (categorical).
+Columns to load can be selected. Data can be rescaled.
+Training and testing partitions (coming from the respective files)
+are preserved.
+This function assumes that the files do not contain a header.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>train_file</strong> (<em>filename</em>) – Name of the file to load the training data.</p></li>
+<li><p><strong>test_file</strong> (<em>filename</em>) – Name of the file to load the testing data.</p></li>
+<li><p><strong>classes</strong> (<em>integer</em>) – Number of total classes to consider when
+building the categorical (one-hot) label encoding.</p></li>
+<li><p><strong>usecols</strong> (<em>list</em>) – List of column indices to load from the files.
+(Default: None, all the columns are used).</p></li>
+<li><p><strong>scaling</strong> (<em>string</em>) – String describing type of scaling to apply.
+Options recognized: ‘maxabs’, ‘minmax’, ‘std’.
+‘maxabs’ : scales data to range [-1 to 1].
+‘minmax’ : scales data to range [-1 to 1].
+‘std’    : scales data to normal variable with mean 0 and standard deviation 1.
+(Default: None, no scaling).</p></li>
+<li><p><strong>dtype</strong> (<em>data type</em>) – Data type to use for the output pandas DataFrames.
+(Default: DEFAULT_DATATYPE defined in default_utils).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><strong>X_train</strong> (<em>pandas DataFrame</em>) – Data features for training loaded in a pandas DataFrame and
+pre-processed as specified.</p></li>
+<li><p><strong>Y_train</strong> (<em>pandas DataFrame</em>) – Data labels for training loaded in a pandas DataFrame.
+One-hot encoding (categorical) is used.</p></li>
+<li><p><strong>X_test</strong> (<em>pandas DataFrame</em>) – Data features for testing loaded in a pandas DataFrame and
+pre-processed as specified.</p></li>
+<li><p><strong>Y_test</strong> (<em>pandas DataFrame</em>) – Data labels for testing loaded in a pandas DataFrame.
+One-hot encoding (categorical) is used.</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="data_utils.load_Xy_one_hot_data">
+<code class="sig-prename descclassname">data_utils.</code><code class="sig-name descname">load_Xy_one_hot_data</code><span class="sig-paren">(</span><em class="sig-param">train_file</em>, <em class="sig-param">test_file</em>, <em class="sig-param">class_col=None</em>, <em class="sig-param">drop_cols=None</em>, <em class="sig-param">n_cols=None</em>, <em class="sig-param">shuffle=False</em>, <em class="sig-param">scaling=None</em>, <em class="sig-param">dtype=&lt;class 'numpy.float32'&gt;</em>, <em class="sig-param">seed=7102</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/data_utils.html#load_Xy_one_hot_data"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#data_utils.load_Xy_one_hot_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Load training and testing data from the files specified, with a column indicated to use as label.
+Construct corresponding training and testing pandas DataFrames,
+separated into data (i.e. features) and labels. Labels to output are one-hot encoded (categorical).
+Columns to load can be selected or dropped. Order of rows
+can be shuffled. Data can be rescaled.
+Training and testing partitions (coming from the respective files)
+are preserved.
+This function assumes that the files contain a header with column names.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>train_file</strong> (<em>filename</em>) – Name of the file to load the training data.</p></li>
+<li><p><strong>test_file</strong> (<em>filename</em>) – Name of the file to load the testing data.</p></li>
+<li><p><strong>class_col</strong> (<em>integer</em>) – Index of the column to use as the label.
+(Default: None, this would cause the function to fail, a label
+has to be indicated at calling).</p></li>
+<li><p><strong>drop_cols</strong> (<em>list</em>) – List of column names to drop from the files being loaded.
+(Default: None, all the columns are used).</p></li>
+<li><p><strong>n_cols</strong> (<em>integer</em>) – Number of columns to load from the files.
+(Default: None, all the columns are used).</p></li>
+<li><p><strong>shuffle</strong> (<em>boolean</em>) – Boolean flag to indicate row shuffling. If True the rows are
+re-ordered, if False the order in which rows are read is
+preserved.
+(Default: False, no permutation of the loading row order).</p></li>
+<li><p><strong>scaling</strong> (<em>string</em>) – String describing type of scaling to apply.
+Options recognized: ‘maxabs’, ‘minmax’, ‘std’.
+‘maxabs’ : scales data to range [-1 to 1].
+‘minmax’ : scales data to range [-1 to 1].
+‘std’    : scales data to normal variable with mean 0 and standard deviation 1.
+(Default: None, no scaling).</p></li>
+<li><p><strong>dtype</strong> (<em>data type</em>) – Data type to use for the output pandas DataFrames.
+(Default: DEFAULT_DATATYPE defined in default_utils).</p></li>
+<li><p><strong>seed</strong> (<em>int</em>) – Value to intialize or re-seed the generator.
+(Default: DEFAULT_SEED defined in default_utils).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><strong>X_train</strong> (<em>pandas DataFrame</em>) – Data features for training loaded in a pandas DataFrame and
+pre-processed as specified.</p></li>
+<li><p><strong>y_train</strong> (<em>pandas DataFrame</em>) – Data labels for training loaded in a pandas DataFrame.
+One-hot encoding (categorical) is used.</p></li>
+<li><p><strong>X_test</strong> (<em>pandas DataFrame</em>) – Data features for testing loaded in a pandas DataFrame and
+pre-processed as specified.</p></li>
+<li><p><strong>y_test</strong> (<em>pandas DataFrame</em>) – Data labels for testing loaded in a pandas DataFrame.
+One-hot encoding (categorical) is used.</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="data_utils.load_Xy_one_hot_data2">
+<code class="sig-prename descclassname">data_utils.</code><code class="sig-name descname">load_Xy_one_hot_data2</code><span class="sig-paren">(</span><em class="sig-param">train_file</em>, <em class="sig-param">test_file</em>, <em class="sig-param">class_col=None</em>, <em class="sig-param">drop_cols=None</em>, <em class="sig-param">n_cols=None</em>, <em class="sig-param">shuffle=False</em>, <em class="sig-param">scaling=None</em>, <em class="sig-param">validation_split=0.1</em>, <em class="sig-param">dtype=&lt;class 'numpy.float32'&gt;</em>, <em class="sig-param">seed=7102</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/data_utils.html#load_Xy_one_hot_data2"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#data_utils.load_Xy_one_hot_data2" title="Permalink to this definition">¶</a></dt>
+<dd><p>Load training and testing data from the files specified, with a column indicated to use as label.
+Further split trainig data into training and validation partitions,
+and construct corresponding training, validation and testing pandas DataFrames,
+separated into data (i.e. features) and labels. Labels to output are one-hot encoded (categorical).
+Columns to load can be selected or dropped. Order of rows
+can be shuffled. Data can be rescaled.
+Training and testing partitions (coming from the respective files)
+are preserved, but training is split into training and validation partitions.
+This function assumes that the files contain a header with column names.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>train_file</strong> (<em>filename</em>) – Name of the file to load the training data.</p></li>
+<li><p><strong>test_file</strong> (<em>filename</em>) – Name of the file to load the testing data.</p></li>
+<li><p><strong>class_col</strong> (<em>integer</em>) – Index of the column to use as the label.
+(Default: None, this would cause the function to fail, a label
+has to be indicated at calling).</p></li>
+<li><p><strong>drop_cols</strong> (<em>list</em>) – List of column names to drop from the files being loaded.
+(Default: None, all the columns are used).</p></li>
+<li><p><strong>n_cols</strong> (<em>integer</em>) – Number of columns to load from the files.
+(Default: None, all the columns are used).</p></li>
+<li><p><strong>shuffle</strong> (<em>boolean</em>) – Boolean flag to indicate row shuffling. If True the rows are
+re-ordered, if False the order in which rows are loaded is
+preserved.
+(Default: False, no permutation of the loading row order).</p></li>
+<li><p><strong>scaling</strong> (<em>string</em>) – String describing type of scaling to apply.
+Options recognized: ‘maxabs’, ‘minmax’, ‘std’.
+‘maxabs’ : scales data to range [-1 to 1].
+‘minmax’ : scales data to range [-1 to 1].
+‘std’    : scales data to normal variable with mean 0 and standard deviation 1.
+(Default: None, no scaling).</p></li>
+<li><p><strong>validation_split</strong> (<em>float</em>) – Fraction of training data to set aside for validation.
+(Default: 0.1, ten percent of the training data is
+used for the validation partition).</p></li>
+<li><p><strong>dtype</strong> (<em>data type</em>) – Data type to use for the output pandas DataFrames.
+(Default: DEFAULT_DATATYPE defined in default_utils).</p></li>
+<li><p><strong>seed</strong> (<em>int</em>) – Value to intialize or re-seed the generator.
+(Default: DEFAULT_SEED defined in default_utils).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><strong>X_train</strong> (<em>pandas DataFrame</em>) – Data features for training loaded in a pandas DataFrame and
+pre-processed as specified.</p></li>
+<li><p><strong>y_train</strong> (<em>pandas DataFrame</em>) – Data labels for training loaded in a pandas DataFrame.
+One-hot encoding (categorical) is used.</p></li>
+<li><p><strong>X_val</strong> (<em>pandas DataFrame</em>) – Data features for validation loaded in a pandas DataFrame and
+pre-processed as specified.</p></li>
+<li><p><strong>y_val</strong> (<em>pandas DataFrame</em>) – Data labels for validation loaded in a pandas DataFrame.
+One-hot encoding (categorical) is used.</p></li>
+<li><p><strong>X_test</strong> (<em>pandas DataFrame</em>) – Data features for testing loaded in a pandas DataFrame and
+pre-processed as specified.</p></li>
+<li><p><strong>y_test</strong> (<em>pandas DataFrame</em>) – Data labels for testing loaded in a pandas DataFrame.
+One-hot encoding (categorical) is used.</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="data_utils.load_csv_data">
+<code class="sig-prename descclassname">data_utils.</code><code class="sig-name descname">load_csv_data</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">train_path</span></em>, <em class="sig-param"><span class="n">test_path</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">sep</span><span class="o">=</span><span class="default_value">','</span></em>, <em class="sig-param"><span class="n">nrows</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">x_cols</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">y_cols</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">drop_cols</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">onehot_cols</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">n_cols</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">random_cols</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">shuffle</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">scaling</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">dtype</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">validation_split</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">return_dataframe</span><span class="o">=</span><span class="default_value">True</span></em>, <em class="sig-param"><span class="n">return_header</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">seed</span><span class="o">=</span><span class="default_value">7102</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/data_utils.html#load_csv_data"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#data_utils.load_csv_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Load data from the files specified.
+Columns corresponding to data features and labels can be specified. A one-hot
+encoding can be used for either features or labels.
+If validation_split is specified, trainig data is further split into training
+and validation partitions.
+pandas DataFrames are used to load and pre-process the data. If specified,
+those DataFrames are returned. Otherwise just values are returned.
+Labels to output can be integer labels (for classification) or
+continuous labels (for regression).
+Columns to load can be specified, randomly selected or a subset can be dropped.
+Order of rows can be shuffled. Data can be rescaled.
+This function assumes that the files contain a header with column names.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>train_path</strong> (<em>filename</em>) – Name of the file to load the training data.</p></li>
+<li><p><strong>test_path</strong> (<em>filename</em>) – Name of the file to load the testing data. (Optional).</p></li>
+<li><p><strong>sep</strong> (<em>character</em>) – Character used as column separator.
+(Default: ‘,’, comma separated values).</p></li>
+<li><p><strong>nrows</strong> (<em>integer</em>) – Number of rows to load from the files.
+(Default: None, all the rows are used).</p></li>
+<li><p><strong>x_cols</strong> (<em>list</em>) – List of columns to use as features.
+(Default: None).</p></li>
+<li><p><strong>y_cols</strong> (<em>list</em>) – List of columns to use as labels.
+(Default: None).</p></li>
+<li><p><strong>drop_cols</strong> (<em>list</em>) – List of columns to drop from the files being loaded.
+(Default: None, all the columns are used).</p></li>
+<li><p><strong>onehot_cols</strong> (<em>list</em>) – List of columns to one-hot encode.
+(Default: None).</p></li>
+<li><p><strong>n_cols</strong> (<em>integer</em>) – Number of columns to load from the files.
+(Default: None).</p></li>
+<li><p><strong>random_cols</strong> (<em>boolean</em>) – Boolean flag to indicate random selection of columns.
+If True a number of n_cols columns is randomly selected, if False
+the specified columns are used.
+(Default: False).</p></li>
+<li><p><strong>shuffle</strong> (<em>boolean</em>) – Boolean flag to indicate row shuffling. If True the rows are
+re-ordered, if False the order in which rows are read is
+preserved.
+(Default: False, no permutation of the loading row order).</p></li>
+<li><p><strong>scaling</strong> (<em>string</em>) – String describing type of scaling to apply.
+Options recognized: ‘maxabs’, ‘minmax’, ‘std’.
+‘maxabs’ : scales data to range [-1 to 1].
+‘minmax’ : scales data to range [-1 to 1].
+‘std’    : scales data to normal variable with mean 0 and standard deviation 1.
+(Default: None, no scaling).</p></li>
+<li><p><strong>dtype</strong> (<em>data type</em>) – Data type to use for the output pandas DataFrames.
+(Default: None).</p></li>
+<li><p><strong>validation_split</strong> (<em>float</em>) – Fraction of training data to set aside for validation.
+(Default: None, no validation partition is constructed).</p></li>
+<li><p><strong>return_dataframe</strong> (<em>boolean</em>) – Boolean flag to indicate that the pandas DataFrames
+used for data pre-processing are to be returned.
+(Default: True, pandas DataFrames are returned).</p></li>
+<li><p><strong>return_header</strong> (<em>boolean</em>) – Boolean flag to indicate if the column headers are
+to be returned.
+(Default: False, no column headers are separetely returned).</p></li>
+<li><p><strong>seed</strong> (<em>int</em>) – Value to intialize or re-seed the generator.
+(Default: DEFAULT_SEED defined in default_utils).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><em>Tuples of data features and labels are returned, for         train, validation and testing partitions, together with the column         names (headers). The specific objects to return depend         on the options selected.</em></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="data_utils.lookup">
+<code class="sig-prename descclassname">data_utils.</code><code class="sig-name descname">lookup</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">df</span></em>, <em class="sig-param"><span class="n">query</span></em>, <em class="sig-param"><span class="n">ret</span></em>, <em class="sig-param"><span class="n">keys</span></em>, <em class="sig-param"><span class="n">match</span><span class="o">=</span><span class="default_value">'match'</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/data_utils.html#lookup"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#data_utils.lookup" title="Permalink to this definition">¶</a></dt>
+<dd><p>Dataframe lookup.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>df</strong> (<em>pandas dataframe</em>) – dataframe for retrieving values.</p></li>
+<li><p><strong>query</strong> (<em>string</em>) – String for searching.</p></li>
+<li><p><strong>ret</strong> (<em>int/string</em><em> or </em><em>list</em>) – Names or indices of columns to be returned.</p></li>
+<li><p><strong>keys</strong> (<em>list</em>) – List of strings or integers specifying the names or
+indices of columns to look into.</p></li>
+<li><p><strong>match</strong> (<em>string</em>) – String describing strategy for matching keys to query.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><em>Returns a list of the values in the dataframe whose columns match</em></p></li>
+<li><p><em>the specified query and have been selected to be returned.</em></p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="data_utils.scale_array">
+<code class="sig-prename descclassname">data_utils.</code><code class="sig-name descname">scale_array</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">mat</span></em>, <em class="sig-param"><span class="n">scaling</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/data_utils.html#scale_array"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#data_utils.scale_array" title="Permalink to this definition">¶</a></dt>
+<dd><p>Scale data included in numpy array.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>mat</strong> (<em>numpy array</em>) – Array to scale</p></li>
+<li><p><strong>scaling</strong> (<em>string</em>) – String describing type of scaling to apply.
+Options recognized: ‘maxabs’, ‘minmax’, ‘std’.
+‘maxabs’ : scales data to range [-1 to 1].
+‘minmax’ : scales data to range [-1 to 1].
+‘std’    : scales data to normal variable with mean 0 and standard deviation 1.
+(Default: None, no scaling).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><em>Returns the numpy array scaled by the method specified.         If no scaling method is specified, it returns the numpy         array unmodified.</em></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="data_utils.to_categorical">
+<code class="sig-prename descclassname">data_utils.</code><code class="sig-name descname">to_categorical</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">y</span></em>, <em class="sig-param"><span class="n">num_classes</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/data_utils.html#to_categorical"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#data_utils.to_categorical" title="Permalink to this definition">¶</a></dt>
+<dd><p>Converts a class vector (integers) to binary class matrix.
+E.g. for use with categorical_crossentropy.
+:param y: class vector to be converted into a matrix</p>
+<blockquote>
+<div><p>(integers from 0 to num_classes).</p>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>num_classes</strong> – total number of classes.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>A binary matrix representation of the input. The classes axis is placed
+last.</p>
+</dd>
+</dl>
+</dd></dl>
+
 </div>
 
 

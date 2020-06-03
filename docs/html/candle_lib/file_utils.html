@@ -171,8 +171,48 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="file-utils-module">
-<h1>file_utils module<a class="headerlink" href="#file-utils-module" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="module-file_utils">
+<span id="file-utils-module"></span><h1>file_utils module<a class="headerlink" href="#module-file_utils" title="Permalink to this headline">¶</a></h1>
+<dl class="py function">
+<dt id="file_utils.get_file">
+<code class="sig-prename descclassname">file_utils.</code><code class="sig-name descname">get_file</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">fname</span></em>, <em class="sig-param"><span class="n">origin</span></em>, <em class="sig-param"><span class="n">untar</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">md5_hash</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">cache_subdir</span><span class="o">=</span><span class="default_value">'common'</span></em>, <em class="sig-param"><span class="n">datadir</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/file_utils.html#get_file"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#file_utils.get_file" title="Permalink to this definition">¶</a></dt>
+<dd><p>Downloads a file from a URL if it not already in the cache.
+Passing the MD5 hash will verify the file after download as well
+as if it is already present in the cache.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>fname</strong> (<em>string</em>) – name of the file</p></li>
+<li><p><strong>origin</strong> (<em>string</em>) – original URL of the file</p></li>
+<li><p><strong>untar</strong> (<em>boolean</em>) – whether the file should be decompressed</p></li>
+<li><p><strong>md5_hash</strong> (<em>string</em>) – MD5 hash of the file for verification</p></li>
+<li><p><strong>cache_subdir</strong> (<em>string</em>) – directory being used as the cache</p></li>
+<li><p><strong>datadir</strong> (<em>string</em>) – if set, datadir becomes its setting (which could be e.g. an absolute path) and cache_subdir no longer matters</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><em>Path to the downloaded file</em></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="file_utils.validate_file">
+<code class="sig-prename descclassname">file_utils.</code><code class="sig-name descname">validate_file</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">fpath</span></em>, <em class="sig-param"><span class="n">md5_hash</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/file_utils.html#validate_file"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#file_utils.validate_file" title="Permalink to this definition">¶</a></dt>
+<dd><p>Validates a file against a MD5 hash</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>fpath</strong> (<em>string</em>) – path to the file being validated</p></li>
+<li><p><strong>md5_hash</strong> (<em>string</em>) – the MD5 hash being validated against</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><em>boolean</em> – Whether the file is valid</p>
+</dd>
+</dl>
+</dd></dl>
+
 </div>
 
 
