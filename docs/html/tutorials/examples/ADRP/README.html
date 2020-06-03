@@ -1,0 +1,367 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Pilot1 ADRP Benchmark &mdash; CANDLE  documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="Data preprocessing - feature selection examples" href="../M16/README.html" />
+    <link rel="prev" title="Evaluate an Unrolled Parameter File (UPF)" href="../../workflow_upf.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> CANDLE
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../../readme.html">What is CANDLE?</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../index.html">Tutorials</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../index.html#preparation">Preparation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../index.html#running-workflows">Running workflows</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../../index.html#examples">Examples</a><ul class="current">
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Pilot1 ADRP Benchmark</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#loads-a-csv-file">loads a csv file</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#sample-run">Sample run:</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../M16/README.html">Data preprocessing - feature selection examples</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../darts/README.html">DARTS Examples</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../mnist/README.html">MNIST Example</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../unet/README.html">U-NET Example</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../candle_lib.html">CANDLE Library API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../contribute.html">How to Contribute</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">CANDLE</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../index.html">Tutorials</a> &raquo;</li>
+        
+      <li>Pilot1 ADRP Benchmark</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../../../_sources/tutorials/examples/ADRP/README.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="pilot1-adrp-benchmark">
+<h1>Pilot1 ADRP Benchmark<a class="headerlink" href="#pilot1-adrp-benchmark" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="loads-a-csv-file">
+<h2>loads a csv file<a class="headerlink" href="#loads-a-csv-file" title="Permalink to this headline">¶</a></h2>
+<p>Benchmark auto downloads the file below:
+<a class="reference external" href="http://ftp.mcs.anl.gov/pub/candle/public/benchmarks/Pilot1/uno/">http://ftp.mcs.anl.gov/pub/candle/public/benchmarks/Pilot1/uno/</a> (~500MB)</p>
+</div>
+<div class="section" id="sample-run">
+<h2>Sample run:<a class="headerlink" href="#sample-run" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ export CUDA_VISIBLE_DEVICES=1
+$ python adrp_baseline_keras2.py
+Using TensorFlow backend.
+Importing candle utils for keras
+Configuration file:  /home/jain/CANDLE/fork/Benchmarks/examples/ADRP/adrp_default_model.txt
+{&#39;activation&#39;: &#39;relu&#39;,
+ &#39;batch_normalization&#39;: False,
+ &#39;batch_size&#39;: 32,
+ &#39;data_url&#39;: &#39;ftp://ftp.mcs.anl.gov/pub/candle/public/benchmarks/Pilot1/uno/&#39;,
+ &#39;dense&#39;: [250, 125, 60, 30],
+ &#39;drop&#39;: 0.1,
+ &#39;early_stop&#39;: True,
+ &#39;epochs&#39;: 1,
+ &#39;epsilon_std&#39;: 1.0,
+ &#39;feature_subsample&#39;: 0,
+ &#39;in&#39;: &#39;adrp-p1.csv&#39;,
+ &#39;initialization&#39;: &#39;glorot_uniform&#39;,
+ &#39;latent_dim&#39;: 2,
+ &#39;learning_rate&#39;: 0.0001,
+ &#39;loss&#39;: &#39;mean_squared_error&#39;,
+ &#39;model_name&#39;: &#39;adrp&#39;,
+ &#39;momentum&#39;: 0.9,
+ &#39;nb_classes&#39;: 2,
+ &#39;optimizer&#39;: &#39;sgd&#39;,
+ &#39;reduce_lr&#39;: True,
+ &#39;rng_seed&#39;: 2017,
+ &#39;save_path&#39;: &#39;./001/&#39;,
+ &#39;scaling&#39;: &#39;minmax&#39;,
+ &#39;timeout&#39;: 3600,
+ &#39;use_cp&#39;: False,
+ &#39;validation_split&#39;: 0.1}
+Params:
+{&#39;activation&#39;: &#39;relu&#39;,
+ &#39;batch_normalization&#39;: False,
+ &#39;batch_size&#39;: 32,
+ &#39;data_url&#39;: &#39;ftp://ftp.mcs.anl.gov/pub/candle/public/benchmarks/Pilot1/uno/&#39;,
+ &#39;datatype&#39;: &lt;class &#39;numpy.float32&#39;&gt;,
+ &#39;dense&#39;: [250, 125, 60, 30],
+ &#39;drop&#39;: 0.1,
+ &#39;early_stop&#39;: True,
+ &#39;epochs&#39;: 400,
+ &#39;epsilon_std&#39;: 1.0,
+ &#39;experiment_id&#39;: &#39;EXP000&#39;,
+ &#39;feature_subsample&#39;: 0,
+ &#39;gpus&#39;: [],
+ &#39;in&#39;: &#39;adrp-p1.csv&#39;,
+ &#39;initialization&#39;: &#39;glorot_uniform&#39;,
+ &#39;latent_dim&#39;: 2,
+ &#39;learning_rate&#39;: 0.0001,
+ &#39;logfile&#39;: None,
+ &#39;loss&#39;: &#39;mean_squared_error&#39;,
+ &#39;model_name&#39;: &#39;adrp&#39;,
+ &#39;momentum&#39;: 0.9,
+ &#39;nb_classes&#39;: 2,
+ &#39;optimizer&#39;: &#39;sgd&#39;,
+ &#39;output_dir&#39;: &#39;/home/jain/CANDLE/fork/Benchmarks/examples/ADRP/Output/EXP000/RUN000&#39;,
+ &#39;profiling&#39;: False,
+ &#39;reduce_lr&#39;: True,
+ &#39;residual&#39;: False,
+ &#39;rng_seed&#39;: 2017,
+ &#39;run_id&#39;: &#39;RUN000&#39;,
+ &#39;save_path&#39;: &#39;./001/&#39;,
+ &#39;scaling&#39;: &#39;minmax&#39;,
+ &#39;shuffle&#39;: False,
+ &#39;timeout&#39;: 0,
+ &#39;train_bool&#39;: True,
+ &#39;tsne&#39;: False,
+ &#39;use_cp&#39;: False,
+ &#39;use_tb&#39;: False,
+ &#39;validation_split&#39;: 0.1,
+ &#39;verbose&#39;: None,
+ &#39;warmup_lr&#39;: False}
+WARNING:tensorflow:From /home/jain/CANDLE/fork/Benchmarks/common/keras_utils.py:51: The name tf.set_random_seed is deprecated. Please use tf.compat.v1.set_random_seed instead.
+
+Params: {&#39;data_url&#39;: &#39;ftp://ftp.mcs.anl.gov/pub/candle/public/benchmarks/Pilot1/uno/&#39;, &#39;in&#39;: &#39;adrp-p1.csv&#39;, &#39;model_name&#39;: &#39;adrp&#39;, &#39;dense&#39;: [250, 125, 60, 30], &#39;batch_size&#39;: 32, &#39;epochs&#39;: 1, &#39;activation&#39;: &#39;relu&#39;, &#39;loss&#39;: &#39;mean_squared_error&#39;, &#39;optimizer&#39;: &#39;sgd&#39;, &#39;drop&#39;: 0.1, &#39;learning_rate&#39;: 0.0001, &#39;momentum&#39;: 0.9, &#39;scaling&#39;: &#39;minmax&#39;, &#39;validation_split&#39;: 0.1, &#39;epsilon_std&#39;: 1.0, &#39;rng_seed&#39;: 2017, &#39;initialization&#39;: &#39;glorot_uniform&#39;, &#39;latent_dim&#39;: 2, &#39;batch_normalization&#39;: False, &#39;save_path&#39;: &#39;./001/&#39;, &#39;use_cp&#39;: False, &#39;early_stop&#39;: True, &#39;reduce_lr&#39;: True, &#39;feature_subsample&#39;: 0, &#39;nb_classes&#39;: 2, &#39;timeout&#39;: 3600, &#39;verbose&#39;: None, &#39;logfile&#39;: None, &#39;train_bool&#39;: True, &#39;experiment_id&#39;: &#39;EXP000&#39;, &#39;run_id&#39;: &#39;RUN000&#39;, &#39;shuffle&#39;: False, &#39;gpus&#39;: [], &#39;profiling&#39;: False, &#39;residual&#39;: False, &#39;warmup_lr&#39;: False, &#39;use_tb&#39;: False, &#39;tsne&#39;: False, &#39;datatype&#39;: &lt;class &#39;numpy.float32&#39;&gt;, &#39;output_dir&#39;: &#39;/home/jain/CANDLE/fork/Benchmarks/examples/ADRP/Output/EXP000/RUN000&#39;}
+processing csv in file adrp-p1.csv
+PL= 1614
+X_train shape: (27447, 1613)
+X_test shape: (6862, 1613)
+Y_train shape: (27447,)
+Y_test shape: (6862,)
+WARNING:tensorflow:From /home/jain/.local/lib/python3.7/site-packages/tensorflow_core/python/ops/resource_variable_ops.py:1630: calling BaseResourceVariable.__init__ (from tensorflow.python.ops.resource_variable_ops) with constraint is deprecated and will be removed in a future version.
+Instructions for updating:
+If using Keras pass *_constraint arguments to layers.
+Model: &quot;model_1&quot;
+_________________________________________________________________
+Layer (type)                 Output Shape              Param #
+=================================================================
+input_1 (InputLayer)         (None, 1613)              0
+_________________________________________________________________
+dense_1 (Dense)              (None, 250)               403500
+_________________________________________________________________
+dropout_1 (Dropout)          (None, 250)               0
+_________________________________________________________________
+dense_2 (Dense)              (None, 125)               31375
+_________________________________________________________________
+dropout_2 (Dropout)          (None, 125)               0
+_________________________________________________________________
+dense_3 (Dense)              (None, 60)                7560
+_________________________________________________________________
+dropout_3 (Dropout)          (None, 60)                0
+_________________________________________________________________
+dense_4 (Dense)              (None, 30)                1830
+_________________________________________________________________
+dropout_4 (Dropout)          (None, 30)                0
+_________________________________________________________________
+dense_5 (Dense)              (None, 1)                 31
+=================================================================
+Total params: 444,296
+Trainable params: 444,296
+Non-trainable params: 0
+_________________________________________________________________
+/home/jain/.local/lib/python3.7/site-packages/keras/callbacks/callbacks.py:998: UserWarning: `epsilon` argument is deprecated and will be removed, use `min_delta` instead.
+  warnings.warn(&#39;`epsilon` argument is deprecated and &#39;
+2020-03-23 14:36:20.461062: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library libcuda.so.1
+2020-03-23 14:36:20.463626: E tensorflow/stream_executor/cuda/cuda_driver.cc:318] failed call to cuInit: CUDA_ERROR_UNKNOWN: unknown error
+2020-03-23 14:36:20.463720: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:156] kernel driver does not appear to be running on this host (jain): /proc/driver/nvidia/version does not exist
+2020-03-23 14:36:20.464039: I tensorflow/core/platform/cpu_feature_guard.cc:142] Your CPU supports instructions that this TensorFlow binary was not compiled to use: AVX2
+2020-03-23 14:36:20.475490: I tensorflow/core/platform/profile_utils/cpu_utils.cc:94] CPU Frequency: 2808000000 Hz
+2020-03-23 14:36:20.475685: I tensorflow/compiler/xla/service/service.cc:168] XLA service 0x2dab430 initialized for platform Host (this does not guarantee that XLA will be used). Devices:
+2020-03-23 14:36:20.475708: I tensorflow/compiler/xla/service/service.cc:176]   StreamExecutor device (0): Host, Default Version
+WARNING:tensorflow:From /home/jain/.local/lib/python3.7/site-packages/keras/backend/tensorflow_backend.py:422: The name tf.global_variables is deprecated. Please use tf.compat.v1.global_variables instead.
+
+Train on 27447 samples, validate on 6862 samples
+Epoch 1/1
+27447/27447 [==============================] - 5s 173us/step - loss: 3.4695 - mae: 1.3269 - r2: -2.1720 - val_loss: 1.2343 - val_mae: 0.9235 - val_r2: -0.1880
+
+Epoch 00001: val_loss improved from inf to 1.23431, saving model to ./001/agg_adrp.autosave.model.h5
+[1.2343122459159792, 0.9235042333602905, -0.18803702294826508]
+dict_keys([&#39;val_loss&#39;, &#39;val_mae&#39;, &#39;val_r2&#39;, &#39;loss&#39;, &#39;mae&#39;, &#39;r2&#39;, &#39;lr&#39;])
+saving to path:  ./001/
+Test val_loss: 1.2343122459159792
+Test val_mae: 0.9235042333602905
+</pre></div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../M16/README.html" class="btn btn-neutral float-right" title="Data preprocessing - feature selection examples" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="../../workflow_upf.html" class="btn btn-neutral float-left" title="Evaluate an Unrolled Parameter File (UPF)" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020, ANL.gov
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
