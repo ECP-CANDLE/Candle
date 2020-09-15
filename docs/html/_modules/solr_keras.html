@@ -17,32 +17,34 @@
   
 
   
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
 
-  
-  
     
 
   
-
   <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" /> 
-
-  
-  <script src="../_static/js/modernizr.min.js"></script>
-
 </head>
 
 <body class="wy-body-for-nav">
 
    
   <div class="wy-grid-for-nav">
-
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search">
+        <div class="wy-side-nav-search" >
           
 
           
@@ -148,12 +150,11 @@
 <span></span><span class="kn">import</span> <span class="nn">json</span>
 <span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">import</span> <span class="nn">warnings</span>
-<span class="kn">from</span> <span class="nn">datetime</span> <span class="k">import</span> <span class="n">datetime</span>
+<span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span>
 
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">requests</span>
-<span class="kn">from</span> <span class="nn">keras</span> <span class="k">import</span> <span class="n">backend</span> <span class="k">as</span> <span class="n">K</span>
-<span class="kn">from</span> <span class="nn">keras.callbacks</span> <span class="k">import</span> <span class="n">Callback</span>
+<span class="kn">from</span> <span class="nn">keras.callbacks</span> <span class="kn">import</span> <span class="n">Callback</span>
 
 
 <div class="viewcode-block" id="compute_trainable_params"><a class="viewcode-back" href="../candle_lib/solr_keras.html#solr_keras.compute_trainable_params">[docs]</a><span class="k">def</span> <span class="nf">compute_trainable_params</span><span class="p">(</span><span class="n">model</span><span class="p">):</span>
@@ -167,10 +168,17 @@
 <span class="sd">        ----------</span>
 <span class="sd">        python dictionary that contains trainable_params, non_trainable_params and total_params</span>
 <span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="nb">str</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">model</span><span class="p">))</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;&lt;class &#39;keras.&quot;</span><span class="p">):</span>
+        <span class="kn">from</span> <span class="nn">keras</span> <span class="kn">import</span> <span class="n">backend</span> <span class="k">as</span> <span class="n">K</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="kn">import</span> <span class="nn">tensorflow.keras.backend</span> <span class="k">as</span> <span class="nn">K</span>
+   
     <span class="n">trainable_count</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span>
-        <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">([</span><span class="n">K</span><span class="o">.</span><span class="n">count_params</span><span class="p">(</span><span class="n">p</span><span class="p">)</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="nb">set</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">trainable_weights</span><span class="p">)]))</span>
+        <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">([</span><span class="n">K</span><span class="o">.</span><span class="n">count_params</span><span class="p">(</span><span class="n">w</span><span class="p">)</span> <span class="k">for</span> <span class="n">w</span> <span class="ow">in</span> <span class="n">model</span><span class="o">.</span><span class="n">trainable_weights</span><span class="p">])</span>
+    <span class="p">)</span>
     <span class="n">non_trainable_count</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span>
-        <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">([</span><span class="n">K</span><span class="o">.</span><span class="n">count_params</span><span class="p">(</span><span class="n">p</span><span class="p">)</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="nb">set</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">non_trainable_weights</span><span class="p">)]))</span>
+        <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">([</span><span class="n">K</span><span class="o">.</span><span class="n">count_params</span><span class="p">(</span><span class="n">w</span><span class="p">)</span> <span class="k">for</span> <span class="n">w</span> <span class="ow">in</span> <span class="n">model</span><span class="o">.</span><span class="n">non_trainable_weights</span><span class="p">])</span>
+    <span class="p">)</span>
 
     <span class="k">return</span> <span class="p">{</span><span class="s1">&#39;trainable_params&#39;</span><span class="p">:</span> <span class="n">trainable_count</span><span class="p">,</span>
             <span class="s1">&#39;non_trainable_params&#39;</span><span class="p">:</span> <span class="n">non_trainable_count</span><span class="p">,</span>
@@ -181,17 +189,11 @@
     <span class="sd">&quot;&quot;&quot;Capture Run level output and store/send for monitoring</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
                  <span class="n">params</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">CandleRemoteMonitor</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">global_params</span> <span class="o">=</span> <span class="n">params</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">has_solr_config</span> <span class="o">=</span> <span class="kc">False</span>
-        <span class="k">if</span> <span class="s1">&#39;solr_root&#39;</span> <span class="ow">in</span> <span class="n">params</span> <span class="ow">and</span> <span class="n">params</span><span class="p">[</span><span class="s1">&#39;solr_root&#39;</span><span class="p">]</span> <span class="o">!=</span> <span class="s1">&#39;&#39;</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">has_solr_config</span> <span class="o">=</span> <span class="kc">True</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">root</span> <span class="o">=</span> <span class="n">params</span><span class="p">[</span><span class="s1">&#39;solr_root&#39;</span><span class="p">]</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">path</span> <span class="o">=</span> <span class="s1">&#39;/run/update?commit=true&#39;</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">headers</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;Content-Type&#39;</span><span class="p">:</span> <span class="s1">&#39;application/json&#39;</span><span class="p">}</span>
 
         <span class="c1"># init</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">experiment_id</span> <span class="o">=</span> <span class="kc">None</span>
@@ -217,9 +219,7 @@
                 <span class="s1">&#39;status&#39;</span><span class="p">:</span> <span class="s1">&#39;Started&#39;</span>
                <span class="p">}</span>
         <span class="c1"># print(&quot;on_train_begin&quot;, send)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">log_messages</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">send</span><span class="p">)</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">has_solr_config</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">submit</span><span class="p">(</span><span class="n">send</span><span class="p">)</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">log_messages</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">send</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="CandleRemoteMonitor.on_epoch_begin"><a class="viewcode-back" href="../candle_lib/solr_keras.html#solr_keras.CandleRemoteMonitor.on_epoch_begin">[docs]</a>    <span class="k">def</span> <span class="nf">on_epoch_begin</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">epoch</span><span class="p">,</span> <span class="n">logs</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">epoch_timestamp</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span></div>
@@ -241,9 +241,7 @@
                 <span class="s1">&#39;run_progress&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;add&#39;</span><span class="p">:</span> <span class="p">[</span><span class="n">epoch_line</span><span class="p">]}</span>
                <span class="p">}</span>
         <span class="c1"># print(&quot;on_epoch_end&quot;, send)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">log_messages</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">send</span><span class="p">)</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">has_solr_config</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">submit</span><span class="p">(</span><span class="n">send</span><span class="p">)</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">log_messages</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">send</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="CandleRemoteMonitor.on_train_end"><a class="viewcode-back" href="../candle_lib/solr_keras.html#solr_keras.CandleRemoteMonitor.on_train_end">[docs]</a>    <span class="k">def</span> <span class="nf">on_train_end</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">logs</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="n">logs</span> <span class="o">=</span> <span class="n">logs</span> <span class="ow">or</span> <span class="p">{}</span>
@@ -259,25 +257,9 @@
                <span class="p">}</span>
         <span class="c1"># print(&quot;on_train_end&quot;, send)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">log_messages</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">send</span><span class="p">)</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">has_solr_config</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">submit</span><span class="p">(</span><span class="n">send</span><span class="p">)</span>
 
         <span class="c1"># save to file when finished</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">save</span><span class="p">()</span></div>
-
-<div class="viewcode-block" id="CandleRemoteMonitor.submit"><a class="viewcode-back" href="../candle_lib/solr_keras.html#solr_keras.CandleRemoteMonitor.submit">[docs]</a>    <span class="k">def</span> <span class="nf">submit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">send</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Send json to solr</span>
-
-<span class="sd">        Arguments:</span>
-<span class="sd">        send -- json object</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">try</span><span class="p">:</span>
-            <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="p">,</span>
-                          <span class="n">json</span><span class="o">=</span><span class="p">[</span><span class="n">send</span><span class="p">],</span>
-                          <span class="n">headers</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">headers</span><span class="p">)</span>
-        <span class="k">except</span> <span class="n">requests</span><span class="o">.</span><span class="n">exceptions</span><span class="o">.</span><span class="n">RequestException</span><span class="p">:</span>
-            <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span>
-                <span class="s1">&#39;Warning: could not reach RemoteMonitor root server at &#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="p">))</span></div>
 
 <div class="viewcode-block" id="CandleRemoteMonitor.save"><a class="viewcode-back" href="../candle_lib/solr_keras.html#solr_keras.CandleRemoteMonitor.save">[docs]</a>    <span class="k">def</span> <span class="nf">save</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Save log_messages to file</span>
@@ -295,7 +277,7 @@
     <span class="sd">&quot;&quot;&quot; This class implements timeout on model training. When the script reaches timeout,</span>
 <span class="sd">       this class sets model.stop_training = True</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">timeout_in_sec</span> <span class="o">=</span> <span class="mi">10</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">timeout_in_sec</span> <span class="o">=</span> <span class="mi">10</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Initialize TerminateOnTimeOut class.</span>
 
 <span class="sd">            Parameters</span>
@@ -341,7 +323,7 @@
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2018, ANL.gov.
+        &copy; Copyright 2020, ANL.gov
 
     </p>
   </div>
@@ -358,33 +340,16 @@
   
 
 
-  
-
-    <script type="text/javascript">
-        var DOCUMENTATION_OPTIONS = {
-            URL_ROOT:'../',
-            VERSION:'',
-            LANGUAGE:'None',
-            COLLAPSE_INDEX:false,
-            FILE_SUFFIX:'.html',
-            HAS_SOURCE:  true,
-            SOURCELINK_SUFFIX: '.txt'
-        };
-    </script>
-      <script type="text/javascript" src="../_static/jquery.js"></script>
-      <script type="text/javascript" src="../_static/underscore.js"></script>
-      <script type="text/javascript" src="../_static/doctools.js"></script>
-      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-
-  
-
-  <script type="text/javascript" src="../_static/js/theme.js"></script>
-
   <script type="text/javascript">
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script> 
+  </script>
+
+  
+  
+    
+   
 
 </body>
 </html>

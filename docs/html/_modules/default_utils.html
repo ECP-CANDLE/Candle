@@ -17,32 +17,34 @@
   
 
   
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
 
-  
-  
     
 
   
-
   <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" /> 
-
-  
-  <script src="../_static/js/modernizr.min.js"></script>
-
 </head>
 
 <body class="wy-body-for-nav">
 
    
   <div class="wy-grid-for-nav">
-
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search">
+        <div class="wy-side-nav-search" >
           
 
           
@@ -145,14 +147,15 @@
            <div itemprop="articleBody">
             
   <h1>Source code for default_utils</h1><div class="highlight"><pre>
-<span></span><span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">absolute_import</span>
+<span></span><span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">absolute_import</span>
 
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">random</span>
-<span class="kn">from</span> <span class="nn">pprint</span> <span class="k">import</span> <span class="n">pprint</span>
+<span class="kn">from</span> <span class="nn">pprint</span> <span class="kn">import</span> <span class="n">pprint</span>
 <span class="kn">import</span> <span class="nn">inspect</span>
 
 <span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">import</span> <span class="nn">warnings</span>
 
 <span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">import</span> <span class="nn">sys</span>
@@ -169,13 +172,64 @@
 
 <span class="n">work_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">realpath</span><span class="p">(</span><span class="vm">__file__</span><span class="p">))</span>
 
-<span class="kn">from</span> <span class="nn">file_utils</span> <span class="k">import</span> <span class="n">get_file</span>
+<span class="kn">from</span> <span class="nn">file_utils</span> <span class="kn">import</span> <span class="n">get_file</span>
 
 <span class="c1"># Seed for random generation -- default value</span>
 <span class="n">DEFAULT_SEED</span> <span class="o">=</span> <span class="mi">7102</span>
 <span class="n">DEFAULT_TIMEOUT</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span> <span class="c1"># no timeout</span>
 <span class="n">DEFAULT_DATATYPE</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">float32</span>
 
+
+<span class="n">PARAMETERS_CANDLE</span> <span class="o">=</span> <span class="p">[</span>
+                  <span class="s1">&#39;config_file&#39;</span><span class="p">,</span> 
+                  <span class="c1"># neon parser</span>
+                  <span class="s1">&#39;verbose&#39;</span><span class="p">,</span> <span class="s1">&#39;logfile&#39;</span><span class="p">,</span> <span class="s1">&#39;save_path&#39;</span><span class="p">,</span> <span class="s1">&#39;model_name&#39;</span><span class="p">,</span> <span class="s1">&#39;data_type&#39;</span><span class="p">,</span> <span class="s1">&#39;dense&#39;</span><span class="p">,</span> <span class="s1">&#39;rng_seed&#39;</span><span class="p">,</span> <span class="s1">&#39;epochs&#39;</span><span class="p">,</span> <span class="s1">&#39;batch_size&#39;</span><span class="p">,</span> 
+                  <span class="c1"># general behavior</span>
+                  <span class="s1">&#39;train_bool&#39;</span><span class="p">,</span> <span class="s1">&#39;eval_bool&#39;</span><span class="p">,</span> <span class="s1">&#39;timeout&#39;</span><span class="p">,</span> 
+                  <span class="c1"># logging</span>
+                  <span class="s1">&#39;home_dir&#39;</span><span class="p">,</span> <span class="s1">&#39;train_data&#39;</span><span class="p">,</span> <span class="s1">&#39;test_data&#39;</span><span class="p">,</span> <span class="s1">&#39;output_dir&#39;</span><span class="p">,</span> <span class="s1">&#39;data_url&#39;</span><span class="p">,</span> <span class="s1">&#39;experiment_id&#39;</span><span class="p">,</span> <span class="s1">&#39;run_id&#39;</span><span class="p">,</span> 
+                  <span class="c1"># model architecture</span>
+                  <span class="s1">&#39;conv&#39;</span><span class="p">,</span> <span class="s1">&#39;locally_connected&#39;</span><span class="p">,</span> <span class="s1">&#39;activation&#39;</span><span class="p">,</span> <span class="s1">&#39;out_activation&#39;</span><span class="p">,</span> <span class="s1">&#39;lstm_size&#39;</span><span class="p">,</span> <span class="s1">&#39;recurrent_dropout&#39;</span><span class="p">,</span> 
+                  <span class="c1"># processing between layers</span>
+                  <span class="s1">&#39;dropout&#39;</span><span class="p">,</span> <span class="s1">&#39;pool&#39;</span><span class="p">,</span> <span class="s1">&#39;batch_normalization&#39;</span><span class="p">,</span> 
+                  <span class="c1"># model evaluation</span>
+                  <span class="s1">&#39;loss&#39;</span><span class="p">,</span> <span class="s1">&#39;optimizer&#39;</span><span class="p">,</span> <span class="s1">&#39;metrics&#39;</span><span class="p">,</span> 
+                  <span class="c1"># data preprocessing</span>
+                  <span class="s1">&#39;scaling&#39;</span><span class="p">,</span> <span class="s1">&#39;shuffle&#39;</span><span class="p">,</span> <span class="s1">&#39;feature_subsample&#39;</span><span class="p">,</span> 
+                  <span class="c1"># training</span>
+                  <span class="s1">&#39;learning_rate&#39;</span><span class="p">,</span> <span class="s1">&#39;early_stop&#39;</span><span class="p">,</span> <span class="s1">&#39;momentum&#39;</span><span class="p">,</span> <span class="s1">&#39;initialization&#39;</span><span class="p">,</span> 
+                  <span class="s1">&#39;val_split&#39;</span><span class="p">,</span> <span class="s1">&#39;train_steps&#39;</span><span class="p">,</span> <span class="s1">&#39;val_steps&#39;</span><span class="p">,</span> <span class="s1">&#39;test_steps&#39;</span><span class="p">,</span> <span class="s1">&#39;train_samples&#39;</span><span class="p">,</span> <span class="s1">&#39;val_samples&#39;</span><span class="p">,</span> 
+                  <span class="c1"># backend</span>
+                  <span class="s1">&#39;gpus&#39;</span><span class="p">,</span> 
+                  <span class="c1"># profiling</span>
+                  <span class="s1">&#39;profiling&#39;</span><span class="p">,</span>
+                  <span class="c1"># cyclic learning rate</span>
+                  <span class="s1">&#39;clr_flag&#39;</span><span class="p">,</span> <span class="s1">&#39;clr_mode&#39;</span><span class="p">,</span> <span class="s1">&#39;clr_base_lr&#39;</span><span class="p">,</span> <span class="s1">&#39;clr_max_lr&#39;</span><span class="p">,</span> <span class="s1">&#39;clr_gamma&#39;</span>
+                  <span class="p">]</span>
+
+<span class="n">CONFLICT_LIST</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="p">[</span><span class="s1">&#39;clr_flag&#39;</span><span class="p">,</span><span class="s1">&#39;warmup_lr&#39;</span><span class="p">],</span>
+    <span class="p">[</span><span class="s1">&#39;clr_flag&#39;</span><span class="p">,</span><span class="s1">&#39;reduce_lr&#39;</span><span class="p">]</span>
+<span class="p">]</span>
+
+<div class="viewcode-block" id="check_flag_conflicts"><a class="viewcode-back" href="../candle_lib/default_utils.html#default_utils.check_flag_conflicts">[docs]</a><span class="k">def</span> <span class="nf">check_flag_conflicts</span><span class="p">(</span><span class="n">params</span><span class="p">):</span>
+    <span class="n">key_set</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">params</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+    <span class="c1"># check for conflicts</span>
+    <span class="c1">#conflict_flag = False</span>
+    <span class="c1"># loop over each set of mutually exclusive flags</span>
+    <span class="c1"># if any set conflicts exit program </span>
+    <span class="k">for</span> <span class="n">flag_list</span> <span class="ow">in</span> <span class="n">CONFLICT_LIST</span><span class="p">:</span>
+        <span class="n">flag_count</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">flag_list</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">key_set</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">params</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
+                    <span class="n">flag_count</span> <span class="o">+=</span><span class="mi">1</span>
+        <span class="k">if</span> <span class="n">flag_count</span> <span class="o">&gt;</span> <span class="mi">1</span> <span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s1">&#39;ERROR ! Conflict in flag specification. &#39;</span> \
+                        <span class="s1">&#39;These flags should not be used together: &#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="n">flag_list</span><span class="p">))</span> <span class="o">+</span> \
+                            <span class="s1">&#39;... Exiting&#39;</span><span class="p">)</span></div>
+            <span class="c1">#print(&quot;Warning: conflicting flags in &quot;, flag_list)</span>
+            <span class="c1">#exit()</span>
 
 <span class="c1">#### IO UTILS</span>
 
@@ -260,7 +314,7 @@
 
 <div class="viewcode-block" id="eval_string_as_list"><a class="viewcode-back" href="../candle_lib/default_utils.html#default_utils.eval_string_as_list">[docs]</a><span class="k">def</span> <span class="nf">eval_string_as_list</span><span class="p">(</span><span class="n">str_read</span><span class="p">,</span> <span class="n">separator</span><span class="p">,</span> <span class="n">dtype</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot; Parse a string and convert it into a list of lists.</span>
-<span class="sd">        </span>
+
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
 <span class="sd">        str_read : string</span>
@@ -269,7 +323,7 @@
 <span class="sd">            Character that specifies the separation between the lists</span>
 <span class="sd">        dtype : data type</span>
 <span class="sd">            Data type to decode the elements of the list</span>
-<span class="sd">            </span>
+
 <span class="sd">        Return</span>
 <span class="sd">        ----------</span>
 <span class="sd">        decoded_list : list</span>
@@ -296,7 +350,7 @@
 
 <div class="viewcode-block" id="eval_string_as_list_of_lists"><a class="viewcode-back" href="../candle_lib/default_utils.html#default_utils.eval_string_as_list_of_lists">[docs]</a><span class="k">def</span> <span class="nf">eval_string_as_list_of_lists</span><span class="p">(</span><span class="n">str_read</span><span class="p">,</span> <span class="n">separator_out</span><span class="p">,</span> <span class="n">separator_in</span><span class="p">,</span> <span class="n">dtype</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot; Parse a string and convert it into a list of lists.</span>
-<span class="sd">        </span>
+
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
 <span class="sd">        str_read : string</span>
@@ -307,7 +361,7 @@
 <span class="sd">            Character that specifies the separation between the inner level lists</span>
 <span class="sd">        dtype : data type</span>
 <span class="sd">            Data type to decode the elements of the lists</span>
-<span class="sd">            </span>
+
 <span class="sd">        Return</span>
 <span class="sd">        ----------</span>
 <span class="sd">        decoded_list : list</span>
@@ -371,7 +425,7 @@
 <span class="sd">       After the object instantiation both modes of access (dictionary</span>
 <span class="sd">       or object entries) can be used.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">entries</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">entries</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="vm">__dict__</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">entries</span><span class="p">)</span></div>
 
 
@@ -381,11 +435,11 @@
 <span class="sd">        an argparser that constructs a list-of-lists from an input</span>
 <span class="sd">        (command-line option or argument) given as a string.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">option_strings</span><span class="p">,</span> <span class="n">dest</span><span class="p">,</span> <span class="nb">type</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">option_strings</span><span class="p">,</span> <span class="n">dest</span><span class="p">,</span> <span class="nb">type</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Initialize a ListOfListsAction object. If no type is specified,</span>
 <span class="sd">           an integer is assumed by default as the type for the elements</span>
 <span class="sd">           of the list-of-lists.</span>
-<span class="sd"> </span>
+
 <span class="sd">           Parameters</span>
 <span class="sd">           ----------</span>
 <span class="sd">           option_strings : string</span>
@@ -404,13 +458,13 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">dtype</span> <span class="o">=</span> <span class="nb">type</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">dtype</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">dtype</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">int32</span>
-    
 
 
-    <span class="k">def</span> <span class="nf">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parser</span><span class="p">,</span> <span class="n">namespace</span><span class="p">,</span> <span class="n">values</span><span class="p">,</span> <span class="n">option_string</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parser</span><span class="p">,</span> <span class="n">namespace</span><span class="p">,</span> <span class="n">values</span><span class="p">,</span> <span class="n">option_string</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;This function overrides the __call__ method of the base</span>
 <span class="sd">           argparse.Action class.</span>
-<span class="sd">  </span>
+
 <span class="sd">           This function implements the action of the ListOfListAction</span>
 <span class="sd">           class by parsing an input string (command-line option or argument)</span>
 <span class="sd">           and maping it into a list-of-lists. The resulting list-of-lists is</span>
@@ -464,21 +518,59 @@
 
     <span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="n">seed</span><span class="p">)</span></div>
 
+<div class="viewcode-block" id="check_file_parameters_exists"><a class="viewcode-back" href="../candle_lib/default_utils.html#default_utils.check_file_parameters_exists">[docs]</a><span class="k">def</span> <span class="nf">check_file_parameters_exists</span><span class="p">(</span><span class="n">params_parser</span><span class="p">,</span> <span class="n">params_benchmark</span><span class="p">,</span> <span class="n">params_file</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Functionality to verify that the parameters defined in the configuraion file are recognizable by the command line parser (i.e. no uknown keywords are used in the configuration file).</span>
+<span class="sd"> </span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    params_parser : python dictionary</span>
+<span class="sd">        Includes parameters set via the command line.</span>
+<span class="sd">    params_benchmark : python list</span>
+<span class="sd">        Includes additional parameters defined in the benchmark.</span>
+<span class="sd">    params_file : python dictionary</span>
+<span class="sd">        Includes parameters read from the configuration file.</span>
 
-<div class="viewcode-block" id="initialize_parameters"><a class="viewcode-back" href="../candle_lib/default_utils.html#default_utils.initialize_parameters">[docs]</a><span class="k">def</span> <span class="nf">initialize_parameters</span><span class="p">(</span><span class="n">bmk</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Utility to parse parameters in common as well as parmeters</span>
+<span class="sd">        Global:</span>
+<span class="sd">        PARAMETERS_CANDLE : python list</span>
+<span class="sd">            Includes all the core keywords that are specified in CANDLE.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Get keywords from arguments coming via command line (and CANDLE supervisor)</span>
+    <span class="n">args_dict</span> <span class="o">=</span> <span class="nb">vars</span><span class="p">(</span><span class="n">params_parser</span><span class="p">)</span>
+    <span class="n">args_set</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">args_dict</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+    <span class="c1"># Get keywords from benchmark definition</span>
+    <span class="n">bmk_keys</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">params_benchmark</span><span class="p">:</span>
+        <span class="n">bmk_keys</span><span class="o">.</span><span class="n">append</span><span class="p">(</span> <span class="n">item</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]</span> <span class="p">)</span>
+    <span class="n">bmk_set</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">bmk_keys</span><span class="p">)</span>
+    <span class="c1"># Get core CANDLE keywords</span>
+    <span class="n">candle_set</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">PARAMETERS_CANDLE</span><span class="p">)</span>
+    <span class="c1"># Consolidate keywords from CANDLE core, command line, CANDLE supervisor and benchmark</span>
+    <span class="n">candle_set</span> <span class="o">=</span> <span class="n">candle_set</span><span class="o">.</span><span class="n">union</span><span class="p">(</span><span class="n">args_set</span><span class="p">)</span>
+    <span class="n">candle_set</span> <span class="o">=</span> <span class="n">candle_set</span><span class="o">.</span><span class="n">union</span><span class="p">(</span><span class="n">bmk_set</span><span class="p">)</span>
+    <span class="c1"># Get keywords used in config_file</span>
+    <span class="n">file_set</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">params_file</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+    <span class="c1"># Compute keywords that come from the config_file that are not in the CANDLE specs</span>
+    <span class="n">diff_set</span> <span class="o">=</span> <span class="n">file_set</span><span class="o">.</span><span class="n">difference</span><span class="p">(</span><span class="n">candle_set</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="p">(</span> <span class="nb">len</span><span class="p">(</span><span class="n">diff_set</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="p">):</span>
+        <span class="n">message</span> <span class="o">=</span> <span class="s1">&#39;These keywords used in the configuration file are not defined in CANDLE: &#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="n">diff_set</span><span class="p">))</span>
+        <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="ne">RuntimeWarning</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="finalize_parameters"><a class="viewcode-back" href="../candle_lib/default_utils.html#default_utils.finalize_parameters">[docs]</a><span class="k">def</span> <span class="nf">finalize_parameters</span><span class="p">(</span><span class="n">bmk</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Utility to parse parameters in common as well as parameters</span>
 <span class="sd">        particular to each benchmark.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
 <span class="sd">        bmk : benchmark object</span>
 <span class="sd">            Object that has benchmark filepaths and specifications</span>
-<span class="sd">            </span>
+
 <span class="sd">        Return</span>
 <span class="sd">        ----------</span>
 <span class="sd">        gParameters : python dictionary</span>
 <span class="sd">            Dictionary with all the parameters necessary to run the benchmark.</span>
-<span class="sd">            Command line overwrites config file especifications</span>
+<span class="sd">            Command line overwrites config file specifications</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="c1"># Parse common parameters</span>
@@ -499,17 +591,22 @@
     <span class="k">else</span><span class="p">:</span> <span class="c1"># a &#39;config_file&#39; has been set --&gt; use this file</span>
         <span class="n">conffile</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">bmk</span><span class="o">.</span><span class="n">file_path</span><span class="p">,</span> <span class="n">conffile_txt</span><span class="p">)</span>
 
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Configuration file: &quot;</span><span class="p">,</span> <span class="n">conffile</span><span class="p">)</span>
+    <span class="c1">#print(&quot;Configuration file: &quot;, conffile)</span>
     <span class="n">fileParameters</span> <span class="o">=</span> <span class="n">bmk</span><span class="o">.</span><span class="n">read_config_file</span><span class="p">(</span><span class="n">conffile</span><span class="p">)</span><span class="c1">#aux.config_file)#args.config_file)</span>
     <span class="c1"># Get command-line parameters</span>
     <span class="n">args</span> <span class="o">=</span> <span class="n">bmk</span><span class="o">.</span><span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">()</span>
     <span class="c1">#print (&#39;Params:&#39;, fileParameters)</span>
+    <span class="c1"># Check keywords from file against CANDLE common and module definitions</span>
+    <span class="n">bmk_dict</span> <span class="o">=</span> <span class="n">bmk</span><span class="o">.</span><span class="n">additional_definitions</span>
+    <span class="n">check_file_parameters_exists</span><span class="p">(</span><span class="n">args</span><span class="p">,</span> <span class="n">bmk_dict</span><span class="p">,</span> <span class="n">fileParameters</span><span class="p">)</span>
     <span class="c1"># Consolidate parameter set. Command-line parameters overwrite file configuration</span>
     <span class="n">gParameters</span> <span class="o">=</span> <span class="n">args_overwrite_config</span><span class="p">(</span><span class="n">args</span><span class="p">,</span> <span class="n">fileParameters</span><span class="p">)</span>
     <span class="c1"># Check that required set of parameters has been defined</span>
     <span class="n">bmk</span><span class="o">.</span><span class="n">check_required_exists</span><span class="p">(</span><span class="n">gParameters</span><span class="p">)</span>
     <span class="nb">print</span> <span class="p">(</span><span class="s1">&#39;Params:&#39;</span><span class="p">)</span>
     <span class="n">pprint</span><span class="p">(</span><span class="n">gParameters</span><span class="p">)</span>
+    <span class="c1"># Check that no keywords conflict</span>
+    <span class="n">check_flag_conflicts</span><span class="p">(</span><span class="n">gParameters</span><span class="p">)</span>
 
     <span class="k">return</span> <span class="n">gParameters</span></div>
 
@@ -517,7 +614,7 @@
 <div class="viewcode-block" id="get_default_neon_parser"><a class="viewcode-back" href="../candle_lib/default_utils.html#default_utils.get_default_neon_parser">[docs]</a><span class="k">def</span> <span class="nf">get_default_neon_parser</span><span class="p">(</span><span class="n">parser</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Parse command-line arguments that are default in neon parser (and are common to all frameworks). </span>
 <span class="sd">        Ignore if not present.</span>
-<span class="sd">        </span>
+
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
 <span class="sd">        parser : ArgumentParser object</span>
@@ -529,16 +626,16 @@
     <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;-l&quot;</span><span class="p">,</span> <span class="s2">&quot;--log&quot;</span><span class="p">,</span> <span class="n">dest</span><span class="o">=</span><span class="s1">&#39;logfile&#39;</span><span class="p">,</span>
                         <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
                         <span class="n">help</span><span class="o">=</span><span class="s2">&quot;log file&quot;</span><span class="p">)</span>
-                        
+
     <span class="c1"># Logging utilities</span>
     <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;-s&quot;</span><span class="p">,</span> <span class="s2">&quot;--save_path&quot;</span><span class="p">,</span> <span class="n">dest</span><span class="o">=</span><span class="s1">&#39;save_path&#39;</span><span class="p">,</span>
                         <span class="n">default</span><span class="o">=</span><span class="n">argparse</span><span class="o">.</span><span class="n">SUPPRESS</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span>
                         <span class="n">help</span><span class="o">=</span><span class="s2">&quot;file path to save model snapshots&quot;</span><span class="p">)</span>
 
     <span class="c1"># General behavior</span>
-    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--model_file&quot;</span><span class="p">,</span> <span class="n">dest</span><span class="o">=</span><span class="s1">&#39;model_file&#39;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--model_name&quot;</span><span class="p">,</span> <span class="n">dest</span><span class="o">=</span><span class="s1">&#39;model_name&#39;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span>
                         <span class="n">default</span><span class="o">=</span><span class="n">argparse</span><span class="o">.</span><span class="n">SUPPRESS</span><span class="p">,</span>
-                        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;specify trained model Pickle file&quot;</span><span class="p">)</span>
+                        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;specify model name to use when building filenames for saving&quot;</span><span class="p">)</span>
     <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;-d&quot;</span><span class="p">,</span> <span class="s2">&quot;--data_type&quot;</span><span class="p">,</span> <span class="n">dest</span><span class="o">=</span><span class="s1">&#39;data_type&#39;</span><span class="p">,</span>
                         <span class="n">default</span><span class="o">=</span><span class="n">argparse</span><span class="o">.</span><span class="n">SUPPRESS</span><span class="p">,</span>
                         <span class="n">choices</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;f16&#39;</span><span class="p">,</span> <span class="s1">&#39;f32&#39;</span><span class="p">,</span> <span class="s1">&#39;f64&#39;</span><span class="p">],</span>
@@ -571,17 +668,17 @@
 
 <div class="viewcode-block" id="get_common_parser"><a class="viewcode-back" href="../candle_lib/default_utils.html#default_utils.get_common_parser">[docs]</a><span class="k">def</span> <span class="nf">get_common_parser</span><span class="p">(</span><span class="n">parser</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Parse command-line arguments. Ignore if not present.</span>
-<span class="sd">        </span>
+
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
 <span class="sd">        parser : ArgumentParser object</span>
 <span class="sd">            Parser for command-line options</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    
+
     <span class="c1"># Configuration file</span>
     <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--config_file&quot;</span><span class="p">,</span> <span class="n">dest</span><span class="o">=</span><span class="s1">&#39;config_file&#39;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="n">argparse</span><span class="o">.</span><span class="n">SUPPRESS</span><span class="p">,</span>
         <span class="n">help</span><span class="o">=</span><span class="s2">&quot;specify model configuration file&quot;</span><span class="p">)</span>
-    
+
     <span class="c1"># General behavior</span>
     <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--train_bool&quot;</span><span class="p">,</span> <span class="n">dest</span><span class="o">=</span><span class="s1">&#39;train_bool&#39;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="n">str2bool</span><span class="p">,</span>
                         <span class="n">default</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
@@ -590,7 +687,7 @@
                         <span class="n">default</span><span class="o">=</span><span class="n">argparse</span><span class="o">.</span><span class="n">SUPPRESS</span><span class="p">,</span>
                         <span class="n">help</span><span class="o">=</span><span class="s2">&quot;evaluate model (use it for inference)&quot;</span><span class="p">)</span>
 
-    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--timeout&quot;</span><span class="p">,</span> <span class="n">dest</span><span class="o">=</span><span class="s1">&#39;timeout&#39;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s2">&quot;store&quot;</span><span class="p">,</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--timeout&quot;</span><span class="p">,</span> <span class="n">dest</span><span class="o">=</span><span class="s1">&#39;timeout&#39;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s2">&quot;store&quot;</span><span class="p">,</span>
                     <span class="n">default</span><span class="o">=</span><span class="n">argparse</span><span class="o">.</span><span class="n">SUPPRESS</span><span class="p">,</span>
                     <span class="n">help</span><span class="o">=</span><span class="s2">&quot;seconds allowed to train model (default: no timeout)&quot;</span><span class="p">)</span>
 
@@ -599,7 +696,7 @@
     <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--home_dir&quot;</span><span class="p">,</span> <span class="n">dest</span><span class="o">=</span><span class="s1">&#39;home_dir&#39;</span><span class="p">,</span>
                         <span class="n">default</span><span class="o">=</span><span class="n">argparse</span><span class="o">.</span><span class="n">SUPPRESS</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span>
                         <span class="n">help</span><span class="o">=</span><span class="s2">&quot;set home directory&quot;</span><span class="p">)</span>
-                        
+
     <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--train_data&quot;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s2">&quot;store&quot;</span><span class="p">,</span>
                         <span class="n">default</span><span class="o">=</span><span class="n">argparse</span><span class="o">.</span><span class="n">SUPPRESS</span><span class="p">,</span>
                         <span class="n">help</span><span class="o">=</span><span class="s2">&quot;training data filename&quot;</span><span class="p">)</span>
@@ -611,7 +708,7 @@
     <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--output_dir&quot;</span><span class="p">,</span> <span class="n">dest</span><span class="o">=</span><span class="s1">&#39;output_dir&#39;</span><span class="p">,</span>
                         <span class="n">default</span><span class="o">=</span><span class="n">argparse</span><span class="o">.</span><span class="n">SUPPRESS</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span>
                         <span class="n">help</span><span class="o">=</span><span class="s2">&quot;output directory&quot;</span><span class="p">)</span>
-                        
+
     <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--data_url&quot;</span><span class="p">,</span> <span class="n">dest</span><span class="o">=</span><span class="s1">&#39;data_url&#39;</span><span class="p">,</span>
                         <span class="n">default</span><span class="o">=</span><span class="n">argparse</span><span class="o">.</span><span class="n">SUPPRESS</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span>
                         <span class="n">help</span><span class="o">=</span><span class="s2">&quot;set data source url&quot;</span><span class="p">)</span>
@@ -619,7 +716,7 @@
     <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--experiment_id&quot;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="s2">&quot;EXP000&quot;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;set the experiment unique identifier&quot;</span><span class="p">)</span>
 
     <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--run_id&quot;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="s2">&quot;RUN000&quot;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;set the run unique identifier&quot;</span><span class="p">)</span>
-    
+
 
 
     <span class="c1"># Model definition</span>
@@ -636,18 +733,18 @@
     <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--out_activation&quot;</span><span class="p">,</span>
                         <span class="n">default</span><span class="o">=</span><span class="n">argparse</span><span class="o">.</span><span class="n">SUPPRESS</span><span class="p">,</span>
                         <span class="n">help</span><span class="o">=</span><span class="s2">&quot;keras activation function to use in out layer: softmax, linear, ...&quot;</span><span class="p">)</span>
-                        
-                        
+
+
     <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--lstm_size&quot;</span><span class="p">,</span> <span class="n">nargs</span><span class="o">=</span><span class="s1">&#39;+&#39;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span>
                         <span class="n">default</span><span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">SUPPRESS</span><span class="p">,</span>
                         <span class="n">help</span><span class="o">=</span><span class="s2">&quot;integer array describing size of LSTM internal state per layer&quot;</span><span class="p">)</span>
     <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--recurrent_dropout&quot;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s2">&quot;store&quot;</span><span class="p">,</span>
                         <span class="n">default</span><span class="o">=</span><span class="n">argparse</span><span class="o">.</span><span class="n">SUPPRESS</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">float</span><span class="p">,</span>
                         <span class="n">help</span><span class="o">=</span><span class="s2">&quot;ratio of recurrent dropout&quot;</span><span class="p">)</span>
-                        
-                        
+
+
     <span class="c1"># Processing between layers</span>
-    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--drop&quot;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">float</span><span class="p">,</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--dropout&quot;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">float</span><span class="p">,</span>
                         <span class="n">default</span><span class="o">=</span><span class="n">argparse</span><span class="o">.</span><span class="n">SUPPRESS</span><span class="p">,</span>
                         <span class="n">help</span><span class="o">=</span><span class="s2">&quot;ratio of dropout used in fully connected layers&quot;</span><span class="p">)</span>
     <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--pool&quot;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span>
@@ -656,7 +753,7 @@
     <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--batch_normalization&quot;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="n">str2bool</span><span class="p">,</span>
                         <span class="n">default</span><span class="o">=</span><span class="n">argparse</span><span class="o">.</span><span class="n">SUPPRESS</span><span class="p">,</span>
                         <span class="n">help</span><span class="o">=</span><span class="s2">&quot;use batch normalization&quot;</span><span class="p">)</span>
-                        
+
     <span class="c1"># Model Evaluation</span>
     <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--loss&quot;</span><span class="p">,</span>
                         <span class="n">default</span><span class="o">=</span><span class="n">argparse</span><span class="o">.</span><span class="n">SUPPRESS</span><span class="p">,</span>
@@ -668,13 +765,13 @@
     <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--metrics&quot;</span><span class="p">,</span>
                         <span class="n">default</span><span class="o">=</span><span class="n">argparse</span><span class="o">.</span><span class="n">SUPPRESS</span><span class="p">,</span>
                         <span class="n">help</span><span class="o">=</span><span class="s2">&quot;metrics to evaluate performance: accuracy, ...&quot;</span><span class="p">)</span>
-    
+
     <span class="c1"># Data preprocessing</span>
     <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--scaling&quot;</span><span class="p">,</span>
                         <span class="n">default</span><span class="o">=</span><span class="n">argparse</span><span class="o">.</span><span class="n">SUPPRESS</span><span class="p">,</span>
                         <span class="n">choices</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;minabs&#39;</span><span class="p">,</span> <span class="s1">&#39;minmax&#39;</span><span class="p">,</span> <span class="s1">&#39;std&#39;</span><span class="p">,</span> <span class="s1">&#39;none&#39;</span><span class="p">],</span>
                         <span class="n">help</span><span class="o">=</span><span class="s2">&quot;type of feature scaling; &#39;minabs&#39;: to [-1,1]; &#39;minmax&#39;: to [0,1], &#39;std&#39;: standard unit normalization; &#39;none&#39;: no normalization&quot;</span><span class="p">)</span>
-                        
+
     <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--shuffle&quot;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="n">str2bool</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
                         <span class="n">help</span><span class="o">=</span><span class="s2">&quot;randomly shuffle data set (produces different training and testing partitions each run depending on the seed)&quot;</span><span class="p">)</span>
 
@@ -687,7 +784,13 @@
     <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--learning_rate&quot;</span><span class="p">,</span>
                         <span class="n">default</span><span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">SUPPRESS</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">float</span><span class="p">,</span>
                         <span class="n">help</span><span class="o">=</span><span class="s2">&quot;overrides the learning rate for training&quot;</span><span class="p">)</span>
-    
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--early_stop&quot;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="n">str2bool</span><span class="p">,</span>
+                        <span class="n">default</span><span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">SUPPRESS</span><span class="p">,</span>
+                        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;activates keras callback for early stopping of training in function of the monitored variable specified&quot;</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--momentum&quot;</span><span class="p">,</span>
+                        <span class="n">default</span><span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">SUPPRESS</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">float</span><span class="p">,</span>
+                        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;overrides the momentum to use in the SGD optimizer when training&quot;</span><span class="p">)</span>
+
     <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--initialization&quot;</span><span class="p">,</span>
                         <span class="n">default</span><span class="o">=</span><span class="n">argparse</span><span class="o">.</span><span class="n">SUPPRESS</span><span class="p">,</span>
                         <span class="n">choices</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;constant&#39;</span><span class="p">,</span> <span class="s1">&#39;uniform&#39;</span><span class="p">,</span> <span class="s1">&#39;normal&#39;</span><span class="p">,</span> <span class="s1">&#39;glorot_uniform&#39;</span><span class="p">,</span> <span class="s1">&#39;lecun_uniform&#39;</span><span class="p">,</span> <span class="s1">&#39;he_normal&#39;</span><span class="p">],</span>
@@ -710,13 +813,41 @@
     <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--val_samples&quot;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s2">&quot;store&quot;</span><span class="p">,</span>
                         <span class="n">default</span><span class="o">=</span><span class="n">argparse</span><span class="o">.</span><span class="n">SUPPRESS</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span>
                         <span class="n">help</span><span class="o">=</span><span class="s2">&quot;overrides the number of validation samples if set to nonzero&quot;</span><span class="p">)</span>
-    
-    
+
+
     <span class="c1"># Backend configuration</span>
     <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--gpus&quot;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s2">&quot;store&quot;</span><span class="p">,</span> <span class="n">nargs</span><span class="o">=</span><span class="s1">&#39;*&#39;</span><span class="p">,</span>
                         <span class="n">default</span><span class="o">=</span><span class="p">[],</span> <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span>
                         <span class="n">help</span><span class="o">=</span><span class="s2">&quot;set IDs of GPUs to use&quot;</span><span class="p">)</span>
 
+    <span class="c1"># profiling flags</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;-p&quot;</span><span class="p">,</span> <span class="s2">&quot;--profiling&quot;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="n">str2bool</span><span class="p">,</span>
+                        <span class="n">default</span> <span class="o">=</span> <span class="s1">&#39;false&#39;</span><span class="p">,</span>
+                        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Turn profiling on or off&quot;</span><span class="p">)</span>
+
+    <span class="c1"># cyclic learning rate</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--clr_flag&quot;</span><span class="p">,</span> 
+                        <span class="n">default</span><span class="o">=</span><span class="n">argparse</span><span class="o">.</span><span class="n">SUPPRESS</span><span class="p">,</span>
+            <span class="c1">#default=None, </span>
+                        <span class="nb">type</span><span class="o">=</span><span class="n">str2bool</span><span class="p">,</span> 
+            <span class="n">help</span><span class="o">=</span><span class="s2">&quot;CLR flag (boolean)&quot;</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--clr_mode&quot;</span><span class="p">,</span> 
+                        <span class="n">default</span><span class="o">=</span><span class="n">argparse</span><span class="o">.</span><span class="n">SUPPRESS</span><span class="p">,</span>
+            <span class="c1">#default=None, </span>
+                        <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span> <span class="n">choices</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;trng1&#39;</span><span class="p">,</span> <span class="s1">&#39;trng2&#39;</span><span class="p">,</span> <span class="s1">&#39;exp&#39;</span><span class="p">],</span> 
+            <span class="n">help</span><span class="o">=</span><span class="s2">&quot;CLR mode (default: trng1)&quot;</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--clr_base_lr&quot;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">float</span><span class="p">,</span> 
+                        <span class="n">default</span><span class="o">=</span><span class="n">argparse</span><span class="o">.</span><span class="n">SUPPRESS</span><span class="p">,</span>
+            <span class="c1">#default=1e-4, </span>
+            <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Base lr for cycle lr.&quot;</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--clr_max_lr&quot;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">float</span><span class="p">,</span> 
+                        <span class="n">default</span><span class="o">=</span><span class="n">argparse</span><span class="o">.</span><span class="n">SUPPRESS</span><span class="p">,</span>
+            <span class="c1">#default=1e-3, </span>
+            <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Max lr for cycle lr.&quot;</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--clr_gamma&quot;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">float</span><span class="p">,</span> 
+                        <span class="n">default</span><span class="o">=</span><span class="n">argparse</span><span class="o">.</span><span class="n">SUPPRESS</span><span class="p">,</span>
+            <span class="c1">#default=0.999994, </span>
+            <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Gamma parameter for learning cycle LR.&quot;</span><span class="p">)</span>
 
     <span class="k">return</span> <span class="n">parser</span></div>
 
@@ -725,7 +856,7 @@
 <div class="viewcode-block" id="args_overwrite_config"><a class="viewcode-back" href="../candle_lib/default_utils.html#default_utils.args_overwrite_config">[docs]</a><span class="k">def</span> <span class="nf">args_overwrite_config</span><span class="p">(</span><span class="n">args</span><span class="p">,</span> <span class="n">config</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Overwrite configuration parameters with </span>
 <span class="sd">        parameters specified via command-line.</span>
-<span class="sd">        </span>
+
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
 <span class="sd">        args : ArgumentParser object</span>
@@ -733,20 +864,20 @@
 <span class="sd">        config : python dictionary</span>
 <span class="sd">            Parameters read from configuration file</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    
+
     <span class="n">params</span> <span class="o">=</span> <span class="n">config</span>
-    
+
     <span class="n">args_dict</span> <span class="o">=</span> <span class="nb">vars</span><span class="p">(</span><span class="n">args</span><span class="p">)</span>
-    
+
     <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">args_dict</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
         <span class="n">params</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">args_dict</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
-    
-    
-    <span class="k">if</span> <span class="s1">&#39;datatype&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">params</span><span class="p">:</span>
-        <span class="n">params</span><span class="p">[</span><span class="s1">&#39;datatype&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">DEFAULT_DATATYPE</span>
+
+
+    <span class="k">if</span> <span class="s1">&#39;data_type&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">params</span><span class="p">:</span>
+        <span class="n">params</span><span class="p">[</span><span class="s1">&#39;data_type&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">DEFAULT_DATATYPE</span>
     <span class="k">else</span><span class="p">:</span>
-        <span class="k">if</span> <span class="n">params</span><span class="p">[</span><span class="s1">&#39;datatype&#39;</span><span class="p">]</span> <span class="ow">in</span> <span class="nb">set</span><span class="p">([</span><span class="s1">&#39;f16&#39;</span><span class="p">,</span> <span class="s1">&#39;f32&#39;</span><span class="p">,</span> <span class="s1">&#39;f64&#39;</span><span class="p">]):</span>
-            <span class="n">params</span><span class="p">[</span><span class="s1">&#39;datatype&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">get_choice</span><span class="p">(</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;datatype&#39;</span><span class="p">])</span>
+        <span class="k">if</span> <span class="n">params</span><span class="p">[</span><span class="s1">&#39;data_type&#39;</span><span class="p">]</span> <span class="ow">in</span> <span class="nb">set</span><span class="p">([</span><span class="s1">&#39;f16&#39;</span><span class="p">,</span> <span class="s1">&#39;f32&#39;</span><span class="p">,</span> <span class="s1">&#39;f64&#39;</span><span class="p">]):</span>
+            <span class="n">params</span><span class="p">[</span><span class="s1">&#39;data_type&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">get_choice</span><span class="p">(</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;datatype&#39;</span><span class="p">])</span>
 
     <span class="k">if</span> <span class="s1">&#39;output_dir&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">params</span><span class="p">:</span>
         <span class="n">params</span><span class="p">[</span><span class="s1">&#39;output_dir&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">directory_from_parameters</span><span class="p">(</span><span class="n">params</span><span class="p">)</span>
@@ -768,16 +899,16 @@
     <span class="sd">&quot;&quot;&quot; Maps name string to the right type of argument</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">mapping</span> <span class="o">=</span> <span class="p">{}</span>
-    
+
     <span class="c1"># dtype</span>
     <span class="n">mapping</span><span class="p">[</span><span class="s1">&#39;f16&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">float16</span>
     <span class="n">mapping</span><span class="p">[</span><span class="s1">&#39;f32&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">float32</span>
     <span class="n">mapping</span><span class="p">[</span><span class="s1">&#39;f64&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">float64</span>
-    
+
     <span class="n">mapped</span> <span class="o">=</span> <span class="n">mapping</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="n">mapped</span><span class="p">:</span>
         <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s1">&#39;No mapping found for &quot;</span><span class="si">{}</span><span class="s1">&quot;&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">name</span><span class="p">))</span>
-    
+
     <span class="k">return</span> <span class="n">mapped</span></div>
 
 
@@ -792,7 +923,7 @@
 <span class="sd">            String to specify the common folder to store results.</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
-    
+
     <span class="k">if</span> <span class="n">commonroot</span> <span class="ow">in</span> <span class="nb">set</span><span class="p">([</span><span class="s1">&#39;.&#39;</span><span class="p">,</span> <span class="s1">&#39;./&#39;</span><span class="p">]):</span> <span class="c1"># Same directory --&gt; convert to absolute path</span>
         <span class="n">outdir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="s1">&#39;.&#39;</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span> <span class="c1"># Create path specified</span>
@@ -824,7 +955,7 @@
 <span class="sd">        from the benchmark&#39;s configuration files.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filepath</span><span class="p">,</span> <span class="n">defmodel</span><span class="p">,</span> <span class="n">framework</span><span class="p">,</span> <span class="n">prog</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">parser</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filepath</span><span class="p">,</span> <span class="n">defmodel</span><span class="p">,</span> <span class="n">framework</span><span class="p">,</span> <span class="n">prog</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">parser</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; Initialize Benchmark object.</span>
 
 <span class="sd">            Parameters</span>
@@ -843,7 +974,7 @@
 <span class="sd">            parser : argparser (default None)</span>
 <span class="sd">                if &#39;neon&#39; framework a NeonArgparser is passed. Otherwise an argparser is constructed.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        
+
         <span class="k">if</span> <span class="n">parser</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">parser</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">(</span><span class="n">prog</span><span class="o">=</span><span class="n">prog</span><span class="p">,</span> <span class="n">formatter_class</span><span class="o">=</span><span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentDefaultsHelpFormatter</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="n">desc</span><span class="p">,</span> <span class="n">conflict_handler</span><span class="o">=</span><span class="s1">&#39;resolve&#39;</span><span class="p">)</span>
 
@@ -851,11 +982,11 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">file_path</span> <span class="o">=</span> <span class="n">filepath</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">default_model</span> <span class="o">=</span> <span class="n">defmodel</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">framework</span> <span class="o">=</span> <span class="n">framework</span>
-        
+
         <span class="bp">self</span><span class="o">.</span><span class="n">required</span> <span class="o">=</span> <span class="nb">set</span><span class="p">([])</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">additional_definitions</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">set_locals</span><span class="p">()</span>
-        
+
 
 
 <div class="viewcode-block" id="Benchmark.parse_from_common"><a class="viewcode-back" href="../candle_lib/default_utils.html#default_utils.Benchmark.parse_from_common">[docs]</a>    <span class="k">def</span> <span class="nf">parse_from_common</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -865,15 +996,15 @@
 <span class="sd">           &#39;get_common_parser&#39; which are defined previously(above). If the order changes</span>
 <span class="sd">           or they are moved, the calling has to be updated.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        
-        
+
+
         <span class="c1"># Parse has been split between arguments that are common with the default neon parser</span>
         <span class="c1"># and all the other options</span>
         <span class="n">parser</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parser</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">framework</span> <span class="ow">is</span> <span class="ow">not</span> <span class="s1">&#39;neon&#39;</span><span class="p">:</span>
             <span class="n">parser</span> <span class="o">=</span> <span class="n">get_default_neon_parser</span><span class="p">(</span><span class="n">parser</span><span class="p">)</span>
         <span class="n">parser</span> <span class="o">=</span> <span class="n">get_common_parser</span><span class="p">(</span><span class="n">parser</span><span class="p">)</span>
-    
+
         <span class="bp">self</span><span class="o">.</span><span class="n">parser</span> <span class="o">=</span> <span class="n">parser</span>
 
         <span class="c1"># Set default configuration file</span>
@@ -884,7 +1015,7 @@
         <span class="sd">&quot;&quot;&quot;Functionality to parse options specific</span>
 <span class="sd">           specific for each benchmark.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        
+
         <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">additional_definitions</span><span class="p">:</span>
             <span class="k">if</span> <span class="s1">&#39;type&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">d</span><span class="p">:</span>
                 <span class="n">d</span><span class="p">[</span><span class="s1">&#39;type&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
@@ -910,13 +1041,13 @@
                     <span class="bp">self</span><span class="o">.</span><span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;--&#39;</span> <span class="o">+</span> <span class="n">d</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">],</span> <span class="n">choices</span><span class="o">=</span><span class="n">d</span><span class="p">[</span><span class="s1">&#39;choices&#39;</span><span class="p">],</span> <span class="n">default</span><span class="o">=</span><span class="n">d</span><span class="p">[</span><span class="s1">&#39;default&#39;</span><span class="p">],</span> <span class="n">help</span><span class="o">=</span><span class="n">d</span><span class="p">[</span><span class="s1">&#39;help&#39;</span><span class="p">])</span>
                 <span class="k">else</span><span class="p">:</span> <span class="c1"># Non an action, one parameter, no choices</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;--&#39;</span> <span class="o">+</span> <span class="n">d</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">],</span> <span class="nb">type</span><span class="o">=</span><span class="n">d</span><span class="p">[</span><span class="s1">&#39;type&#39;</span><span class="p">],</span> <span class="n">default</span><span class="o">=</span><span class="n">d</span><span class="p">[</span><span class="s1">&#39;default&#39;</span><span class="p">],</span> <span class="n">help</span><span class="o">=</span><span class="n">d</span><span class="p">[</span><span class="s1">&#39;help&#39;</span><span class="p">])</span></div>
-                
+
 
 
 <div class="viewcode-block" id="Benchmark.format_benchmark_config_arguments"><a class="viewcode-back" href="../candle_lib/default_utils.html#default_utils.Benchmark.format_benchmark_config_arguments">[docs]</a>    <span class="k">def</span> <span class="nf">format_benchmark_config_arguments</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dictfileparam</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; Functionality to format the particular parameters of</span>
 <span class="sd">            the benchmark.</span>
-<span class="sd">           </span>
+
 <span class="sd">            Parameters</span>
 <span class="sd">            ----------</span>
 <span class="sd">            dictfileparam : python dictionary</span>
@@ -926,7 +1057,7 @@
 <span class="sd">                Most of the time command-line overwrites configuration file</span>
 <span class="sd">                except when the command-line is using default values and</span>
 <span class="sd">                config file defines those values</span>
-<span class="sd">           </span>
+
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="n">configOut</span> <span class="o">=</span> <span class="n">dictfileparam</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
@@ -937,7 +1068,7 @@
                     <span class="n">dtype</span> <span class="o">=</span> <span class="n">d</span><span class="p">[</span><span class="s1">&#39;type&#39;</span><span class="p">]</span>
                 <span class="k">else</span><span class="p">:</span>
                     <span class="n">dtype</span> <span class="o">=</span> <span class="kc">None</span>
-                
+
                 <span class="k">if</span> <span class="s1">&#39;action&#39;</span> <span class="ow">in</span> <span class="n">d</span><span class="p">:</span>
                     <span class="k">if</span> <span class="n">inspect</span><span class="o">.</span><span class="n">isclass</span><span class="p">(</span><span class="n">d</span><span class="p">[</span><span class="s1">&#39;action&#39;</span><span class="p">]):</span>
                         <span class="n">str_read</span> <span class="o">=</span> <span class="n">dictfileparam</span><span class="p">[</span><span class="n">d</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]]</span>
@@ -959,7 +1090,7 @@
         <span class="n">config</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
         <span class="n">section</span><span class="o">=</span><span class="n">config</span><span class="o">.</span><span class="n">sections</span><span class="p">()</span>
         <span class="n">fileParams</span><span class="o">=</span><span class="p">{}</span>
-        
+
         <span class="c1"># parse specified arguments (minimal validation: if arguments</span>
         <span class="c1"># are written several times in the file, just the first time</span>
         <span class="c1"># will be used)</span>
@@ -967,9 +1098,9 @@
             <span class="k">for</span> <span class="n">k</span><span class="p">,</span><span class="n">v</span> <span class="ow">in</span> <span class="n">config</span><span class="o">.</span><span class="n">items</span><span class="p">(</span><span class="n">sec</span><span class="p">):</span>
                 <span class="k">if</span> <span class="ow">not</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">fileParams</span><span class="p">:</span>
                     <span class="n">fileParams</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="nb">eval</span><span class="p">(</span><span class="n">v</span><span class="p">)</span>
-    
+
         <span class="n">fileParams</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">format_benchmark_config_arguments</span><span class="p">(</span><span class="n">fileParams</span><span class="p">)</span>
-        <span class="n">pprint</span><span class="p">(</span><span class="n">fileParams</span><span class="p">)</span>
+        <span class="c1">#pprint(fileParams)</span>
 
         <span class="k">return</span> <span class="n">fileParams</span></div>
 
@@ -981,11 +1112,11 @@
 <span class="sd">            - additional_definitions: list of dictionaries describing \</span>
 <span class="sd">                the additional parameters for the benchmark.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-    
+
         <span class="k">pass</span></div>
 
 
-        
+
 <div class="viewcode-block" id="Benchmark.check_required_exists"><a class="viewcode-back" href="../candle_lib/default_utils.html#default_utils.Benchmark.check_required_exists">[docs]</a>    <span class="k">def</span> <span class="nf">check_required_exists</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">gparam</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Functionality to verify that the required </span>
 <span class="sd">           model parameters have been specified.</span>
@@ -994,7 +1125,7 @@
         <span class="n">key_set</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">gparam</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
         <span class="n">intersect_set</span> <span class="o">=</span> <span class="n">key_set</span><span class="o">.</span><span class="n">intersection</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">required</span><span class="p">)</span>
         <span class="n">diff_set</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">required</span><span class="o">.</span><span class="n">difference</span><span class="p">(</span><span class="n">intersect_set</span><span class="p">)</span>
-        
+
         <span class="k">if</span> <span class="p">(</span> <span class="nb">len</span><span class="p">(</span><span class="n">diff_set</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="p">):</span>
             <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s1">&#39;ERROR ! Required parameters are not specified. &#39;</span> \
             <span class="s1">&#39;These required parameters have not been initialized: &#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="n">diff_set</span><span class="p">))</span> <span class="o">+</span> \
@@ -1006,9 +1137,9 @@
     <span class="sd">&quot;&quot;&quot;Defines parameters that intervine in different functions using the keras defaults.</span>
 <span class="sd">        This helps to keep consistency in parameters between frameworks.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    
+
     <span class="n">kerasDefaults</span> <span class="o">=</span> <span class="p">{}</span>
-    
+
     <span class="c1"># Optimizers</span>
     <span class="c1">#kerasDefaults[&#39;clipnorm&#39;]=?            # Maximum norm to clip all parameter gradients</span>
     <span class="c1">#kerasDefaults[&#39;clipvalue&#39;]=?          # Maximum (minimum=-max) value to clip all parameter gradients</span>
@@ -1042,7 +1173,7 @@
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2018, ANL.gov.
+        &copy; Copyright 2020, ANL.gov
 
     </p>
   </div>
@@ -1059,33 +1190,16 @@
   
 
 
-  
-
-    <script type="text/javascript">
-        var DOCUMENTATION_OPTIONS = {
-            URL_ROOT:'../',
-            VERSION:'',
-            LANGUAGE:'None',
-            COLLAPSE_INDEX:false,
-            FILE_SUFFIX:'.html',
-            HAS_SOURCE:  true,
-            SOURCELINK_SUFFIX: '.txt'
-        };
-    </script>
-      <script type="text/javascript" src="../_static/jquery.js"></script>
-      <script type="text/javascript" src="../_static/underscore.js"></script>
-      <script type="text/javascript" src="../_static/doctools.js"></script>
-      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-
-  
-
-  <script type="text/javascript" src="../_static/js/theme.js"></script>
-
   <script type="text/javascript">
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script> 
+  </script>
+
+  
+  
+    
+   
 
 </body>
 </html>

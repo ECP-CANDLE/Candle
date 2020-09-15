@@ -17,34 +17,36 @@
   
 
   
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
 
-  
-  
     
 
   
-
   <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="How to write CANDLE compliant deep learning code" href="writing_candle_code.html" />
     <link rel="prev" title="What is CANDLE?" href="../readme.html" /> 
-
-  
-  <script src="../_static/js/modernizr.min.js"></script>
-
 </head>
 
 <body class="wy-body-for-nav">
 
    
   <div class="wy-grid-for-nav">
-
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search">
+        <div class="wy-side-nav-search" >
           
 
           
@@ -82,14 +84,28 @@
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../readme.html">What is CANDLE?</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Tutorials</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="writing_candle_code.html">How to write CANDLE compliant deep learning code</a></li>
-<li class="toctree-l2"><a class="reference internal" href="default_parameters.html">Example of Parameters</a></li>
-<li class="toctree-l2"><a class="reference internal" href="running_on_theta.html">How to run CANDLE compliant code in Theta</a></li>
-<li class="toctree-l2"><a class="reference internal" href="workflow_genetic_algorithm.html">GA (genetic algorithm) based based hyperparameter optimization on CANDLE Benchmarks</a></li>
-<li class="toctree-l2"><a class="reference internal" href="workflow_async_search.html">Run Asynchronous Search based hyperparameter optimization on CANDLE Benchmarks</a></li>
-<li class="toctree-l2"><a class="reference internal" href="workflow_mlrMBO.html">Run mlrMBO based hyperparameter optimization on CANDLE Benchmarks</a></li>
-<li class="toctree-l2"><a class="reference internal" href="workflow_pbt.html">PBT Workflow</a></li>
-<li class="toctree-l2"><a class="reference internal" href="workflow_upf.html">Evaluate an Unrolled Parameter File (UPF)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#preparation">Preparation</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="writing_candle_code.html">How to write CANDLE compliant deep learning code</a></li>
+<li class="toctree-l3"><a class="reference internal" href="default_parameters.html">Example of Parameters</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#running-workflows">Running workflows</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="running_on_theta.html">How to run CANDLE compliant code in Theta</a></li>
+<li class="toctree-l3"><a class="reference internal" href="workflow_genetic_algorithm.html">GA (genetic algorithm) based based hyperparameter optimization on CANDLE Benchmarks</a></li>
+<li class="toctree-l3"><a class="reference internal" href="workflow_async_search.html">Run Asynchronous Search based hyperparameter optimization on CANDLE Benchmarks</a></li>
+<li class="toctree-l3"><a class="reference internal" href="workflow_mlrMBO.html">Run mlrMBO based hyperparameter optimization on CANDLE Benchmarks</a></li>
+<li class="toctree-l3"><a class="reference internal" href="workflow_pbt.html">PBT Workflow</a></li>
+<li class="toctree-l3"><a class="reference internal" href="workflow_upf.html">Evaluate an Unrolled Parameter File (UPF)</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#examples">Examples</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="examples/ADRP/README.html">Pilot1 ADRP Benchmark</a></li>
+<li class="toctree-l3"><a class="reference internal" href="examples/M16/README.html">Data preprocessing - feature selection examples</a></li>
+<li class="toctree-l3"><a class="reference internal" href="examples/darts/README.html">DARTS Examples</a></li>
+<li class="toctree-l3"><a class="reference internal" href="examples/mnist/README.html">MNIST Example</a></li>
+<li class="toctree-l3"><a class="reference internal" href="examples/unet/README.html">U-NET Example</a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../candle_lib.html">CANDLE Library API</a></li>
@@ -160,10 +176,19 @@
             
   <div class="section" id="tutorials">
 <h1>Tutorials<a class="headerlink" href="#tutorials" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="preparation">
+<h2>Preparation<a class="headerlink" href="#preparation" title="Permalink to this headline">¶</a></h2>
 <div class="toctree-wrapper compound">
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="writing_candle_code.html">How to write CANDLE compliant deep learning code</a></li>
 <li class="toctree-l1"><a class="reference internal" href="default_parameters.html">Example of Parameters</a></li>
+</ul>
+</div>
+</div>
+<div class="section" id="running-workflows">
+<h2>Running workflows<a class="headerlink" href="#running-workflows" title="Permalink to this headline">¶</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
 <li class="toctree-l1"><a class="reference internal" href="running_on_theta.html">How to run CANDLE compliant code in Theta</a></li>
 <li class="toctree-l1"><a class="reference internal" href="workflow_genetic_algorithm.html">GA (genetic algorithm) based based hyperparameter optimization on CANDLE Benchmarks</a></li>
 <li class="toctree-l1"><a class="reference internal" href="workflow_async_search.html">Run Asynchronous Search based hyperparameter optimization on CANDLE Benchmarks</a></li>
@@ -171,6 +196,19 @@
 <li class="toctree-l1"><a class="reference internal" href="workflow_pbt.html">PBT Workflow</a></li>
 <li class="toctree-l1"><a class="reference internal" href="workflow_upf.html">Evaluate an Unrolled Parameter File (UPF)</a></li>
 </ul>
+</div>
+</div>
+<div class="section" id="examples">
+<h2>Examples<a class="headerlink" href="#examples" title="Permalink to this headline">¶</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="examples/ADRP/README.html">Pilot1 ADRP Benchmark</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples/M16/README.html">Data preprocessing - feature selection examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples/darts/README.html">DARTS Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples/mnist/README.html">MNIST Example</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples/unet/README.html">U-NET Example</a></li>
+</ul>
+</div>
 </div>
 </div>
 
@@ -185,7 +223,7 @@
         <a href="writing_candle_code.html" class="btn btn-neutral float-right" title="How to write CANDLE compliant deep learning code" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="../readme.html" class="btn btn-neutral" title="What is CANDLE?" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="../readme.html" class="btn btn-neutral float-left" title="What is CANDLE?" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -194,7 +232,7 @@
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2018, ANL.gov.
+        &copy; Copyright 2020, ANL.gov
 
     </p>
   </div>
@@ -211,33 +249,16 @@
   
 
 
-  
-
-    <script type="text/javascript">
-        var DOCUMENTATION_OPTIONS = {
-            URL_ROOT:'../',
-            VERSION:'',
-            LANGUAGE:'None',
-            COLLAPSE_INDEX:false,
-            FILE_SUFFIX:'.html',
-            HAS_SOURCE:  true,
-            SOURCELINK_SUFFIX: '.txt'
-        };
-    </script>
-      <script type="text/javascript" src="../_static/jquery.js"></script>
-      <script type="text/javascript" src="../_static/underscore.js"></script>
-      <script type="text/javascript" src="../_static/doctools.js"></script>
-      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-
-  
-
-  <script type="text/javascript" src="../_static/js/theme.js"></script>
-
   <script type="text/javascript">
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script> 
+  </script>
+
+  
+  
+    
+   
 
 </body>
 </html>

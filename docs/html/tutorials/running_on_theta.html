@@ -17,34 +17,36 @@
   
 
   
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
 
-  
-  
     
 
   
-
   <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="GA (genetic algorithm) based based hyperparameter optimization on CANDLE Benchmarks" href="workflow_genetic_algorithm.html" />
     <link rel="prev" title="Example of Parameters" href="default_parameters.html" /> 
-
-  
-  <script src="../_static/js/modernizr.min.js"></script>
-
 </head>
 
 <body class="wy-body-for-nav">
 
    
   <div class="wy-grid-for-nav">
-
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search">
+        <div class="wy-side-nav-search" >
           
 
           
@@ -177,8 +179,8 @@ hyperparameters based on the mlrMBO algorithm.</p>
 The source code is available on <a class="reference external" href="https://github.com/ECP-CANDLE/Candle/tree/master/examples/mnist">CANDLE github
 repo</a>. This example assumes that you have access to the Candle_ECP project on theta.</p>
 <p>Step 1. Create directory and checkout Supervisor &amp; Candle repos</p>
-<div class="code bash highlight-default notranslate"><div class="highlight"><pre><span></span>$ mkdir candle_tutorial
-$ cd candle_tutorial
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ mkdir candle_tutorial
+$ <span class="nb">cd</span> candle_tutorial
 $ git clone -b master https://github.com/ECP-CANDLE/Supervisor.git
 $ git clone https://github.com/ECP-CANDLE/Candle.git
 </pre></div>
@@ -195,8 +197,8 @@ set <code class="docutils literal notranslate"><span class="pre">MODEL_PYTHON_DI
 </pre></div>
 </div>
 <ul class="simple">
-<li># 1: This location should reflect your environment</li>
-<li># 2: Note this requires filename without extension (such as .py)</li>
+<li><p># 1: This location should reflect your environment</p></li>
+<li><p># 2: Note this requires filename without extension (such as .py)</p></li>
 </ul>
 <p>Step 4. Set execution plan. Check <code class="docutils literal notranslate"><span class="pre">test/upf-1.txt</span></code> for parameter
 configuration and modify as needed. This file contains multiple JSON
@@ -225,19 +227,19 @@ $ QUEUE=debug-cache-quad PROJECT=myproject PROCS=3 WALLTIME=00:10:00 ./test/upf-
 </pre></div>
 </div>
 <ul class="simple">
-<li><code class="docutils literal notranslate"><span class="pre">QUEUE</span></code> refers to the system queue name. The Theta machine has
+<li><p><code class="docutils literal notranslate"><span class="pre">QUEUE</span></code> refers to the system queue name. The Theta machine has
 queues named <code class="docutils literal notranslate"><span class="pre">default</span></code>, <code class="docutils literal notranslate"><span class="pre">debug-flat-quad</span></code>, and
 <code class="docutils literal notranslate"><span class="pre">debug-cache-quad</span></code>. For more information, please check
-<a class="reference external" href="https://www.alcf.anl.gov/user-guides/job-scheduling-policy-xc40-systems#queues">https://www.alcf.anl.gov/user-guides/job-scheduling-policy-xc40-systems#queues</a></li>
-<li><code class="docutils literal notranslate"><span class="pre">PROJECT</span></code> refers to your allocated project name. Please check
-<a class="reference external" href="https://www.alcf.anl.gov/user-guides/allocations">https://www.alcf.anl.gov/user-guides/allocations</a>, for more detail.</li>
-<li><code class="docutils literal notranslate"><span class="pre">PROCS</span></code> is a number of nodes. We recommend adding extra 1 node in
+<a class="reference external" href="https://www.alcf.anl.gov/user-guides/job-scheduling-policy-xc40-systems#queues">https://www.alcf.anl.gov/user-guides/job-scheduling-policy-xc40-systems#queues</a></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">PROJECT</span></code> refers to your allocated project name. Please check
+<a class="reference external" href="https://www.alcf.anl.gov/user-guides/allocations">https://www.alcf.anl.gov/user-guides/allocations</a>, for more detail.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">PROCS</span></code> is a number of nodes. We recommend adding extra 1 node in
 addition to the number of executions in your plan. In this example,
-we set 3 (1 + 2).</li>
-<li><code class="docutils literal notranslate"><span class="pre">WALLTIME</span></code> refers to computing time you are requesting for
+we set 3 (1 + 2).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">WALLTIME</span></code> refers to computing time you are requesting for
 individual node. The production queues are limited by policy. Check
 <a class="reference external" href="https://www.alcf.anl.gov/user-guides/job-scheduling-policy-xc40-systems#queues">https://www.alcf.anl.gov/user-guides/job-scheduling-policy-xc40-systems#queues</a>
-for more detail.</li>
+for more detail.</p></li>
 </ul>
 <p>Step 6. Check queue status</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ qstat -u user_name -f
@@ -276,13 +278,13 @@ will contain files like below,</p>
 </pre></div>
 </div>
 <ul class="simple">
-<li><code class="docutils literal notranslate"><span class="pre">output.txt</span></code> contains stdout and stderr of this experiment. This is
-helpful to debug errors.</li>
-<li><code class="docutils literal notranslate"><span class="pre">run</span></code> directory contains the output files. You will see two
-directories that are corresponding the IDs configured in upf-1.txt</li>
-<li>a copy of configuration files are available so that you can trace
-what were passed to this experiment.</li>
-<li>stdout of test0. After 10 epoches, validation loss was 2.1082.</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">output.txt</span></code> contains stdout and stderr of this experiment. This is
+helpful to debug errors.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">run</span></code> directory contains the output files. You will see two
+directories that are corresponding the IDs configured in upf-1.txt</p></li>
+<li><p>a copy of configuration files are available so that you can trace
+what were passed to this experiment.</p></li>
+<li><p>stdout of test0. After 10 epoches, validation loss was 2.1082.</p></li>
 </ul>
 </div>
 <div class="section" id="running-mlrmbo-based-hyperparameters-optimization-hpo-on-theta">
@@ -307,8 +309,8 @@ and <code class="docutils literal notranslate"><span class="pre">MODEL_PYTHON_SC
 </pre></div>
 </div>
 <ul class="simple">
-<li># 1: This location should reflect your environment</li>
-<li># 2: Note this requires filename without extension (such as .py)</li>
+<li><p># 1: This location should reflect your environment</p></li>
+<li><p># 2: Note this requires filename without extension (such as .py)</p></li>
 </ul>
 <p>Step 4. Config hyper parameters. In this step, we are configuring
 parameter sets, which we will iteratively evaluate. For example, you can
@@ -347,16 +349,16 @@ Otherwise, CANDLE will use <code class="docutils literal notranslate"><span clas
 <code class="docutils literal notranslate"><span class="pre">MAX_CONCURRENT_EVALUATIONS</span></code>, <code class="docutils literal notranslate"><span class="pre">MAX_ITERATIONS</span></code>, <code class="docutils literal notranslate"><span class="pre">MAX_BUDGE</span></code>,
 <code class="docutils literal notranslate"><span class="pre">DESIGN_SIZE</span></code>.</p>
 <ul class="simple">
-<li><code class="docutils literal notranslate"><span class="pre">DESIGN_SIZE</span></code> is a number of parameter sets that will evaluate at
+<li><p><code class="docutils literal notranslate"><span class="pre">DESIGN_SIZE</span></code> is a number of parameter sets that will evaluate at
 the beginning of HPO search. In this example, CANDLE will select
-random 10 parameter sets out of 45 (see Step 4, for break downs).</li>
-<li><code class="docutils literal notranslate"><span class="pre">MAX_ITERATIONS</span></code> is a number of iterations.</li>
-<li><code class="docutils literal notranslate"><span class="pre">PROPOSE_POINTS</span></code> is a number of parameter sets that CANDLE will
+random 10 parameter sets out of 45 (see Step 4, for break downs).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">MAX_ITERATIONS</span></code> is a number of iterations.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">PROPOSE_POINTS</span></code> is a number of parameter sets that CANDLE will
 evaluate in each iteration. So, if <code class="docutils literal notranslate"><span class="pre">MAX_ITERATION=3</span></code> and
 <code class="docutils literal notranslate"><span class="pre">PROPOSE_POINTS=5</span></code>, CANDLE will be ended up evaluating 25 params
-(10 + 3 x 5).</li>
-<li><code class="docutils literal notranslate"><span class="pre">MAX_BUDGET</span></code> should be greater than total evaluations. In this
-example, 45.</li>
+(10 + 3 x 5).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">MAX_BUDGET</span></code> should be greater than total evaluations. In this
+example, 45.</p></li>
 </ul>
 </div>
 </div>
@@ -372,7 +374,7 @@ example, 45.</li>
         <a href="workflow_genetic_algorithm.html" class="btn btn-neutral float-right" title="GA (genetic algorithm) based based hyperparameter optimization on CANDLE Benchmarks" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="default_parameters.html" class="btn btn-neutral" title="Example of Parameters" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="default_parameters.html" class="btn btn-neutral float-left" title="Example of Parameters" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -381,7 +383,7 @@ example, 45.</li>
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2018, ANL.gov.
+        &copy; Copyright 2020, ANL.gov
 
     </p>
   </div>
@@ -398,33 +400,16 @@ example, 45.</li>
   
 
 
-  
-
-    <script type="text/javascript">
-        var DOCUMENTATION_OPTIONS = {
-            URL_ROOT:'../',
-            VERSION:'',
-            LANGUAGE:'None',
-            COLLAPSE_INDEX:false,
-            FILE_SUFFIX:'.html',
-            HAS_SOURCE:  true,
-            SOURCELINK_SUFFIX: '.txt'
-        };
-    </script>
-      <script type="text/javascript" src="../_static/jquery.js"></script>
-      <script type="text/javascript" src="../_static/underscore.js"></script>
-      <script type="text/javascript" src="../_static/doctools.js"></script>
-      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-
-  
-
-  <script type="text/javascript" src="../_static/js/theme.js"></script>
-
   <script type="text/javascript">
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script> 
+  </script>
+
+  
+  
+    
+   
 
 </body>
 </html>

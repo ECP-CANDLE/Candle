@@ -17,33 +17,35 @@
   
 
   
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
 
-  
-  
     
 
   
-
   <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="What is CANDLE?" href="readme.html" /> 
-
-  
-  <script src="_static/js/modernizr.min.js"></script>
-
 </head>
 
 <body class="wy-body-for-nav">
 
    
   <div class="wy-grid-for-nav">
-
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search">
+        <div class="wy-side-nav-search" >
           
 
           
@@ -160,29 +162,53 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="tutorials/index.html">Tutorials</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="tutorials/writing_candle_code.html">How to write CANDLE compliant deep learning code</a></li>
-<li class="toctree-l2"><a class="reference internal" href="tutorials/default_parameters.html">Example of Parameters</a></li>
-<li class="toctree-l2"><a class="reference internal" href="tutorials/running_on_theta.html">How to run CANDLE compliant code in Theta</a></li>
-<li class="toctree-l2"><a class="reference internal" href="tutorials/workflow_genetic_algorithm.html">GA (genetic algorithm) based based hyperparameter optimization on CANDLE Benchmarks</a></li>
-<li class="toctree-l2"><a class="reference internal" href="tutorials/workflow_async_search.html">Run Asynchronous Search based hyperparameter optimization on CANDLE Benchmarks</a></li>
-<li class="toctree-l2"><a class="reference internal" href="tutorials/workflow_mlrMBO.html">Run mlrMBO based hyperparameter optimization on CANDLE Benchmarks</a></li>
-<li class="toctree-l2"><a class="reference internal" href="tutorials/workflow_pbt.html">PBT Workflow</a></li>
-<li class="toctree-l2"><a class="reference internal" href="tutorials/workflow_upf.html">Evaluate an Unrolled Parameter File (UPF)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorials/index.html#preparation">Preparation</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="tutorials/writing_candle_code.html">How to write CANDLE compliant deep learning code</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tutorials/default_parameters.html">Example of Parameters</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="tutorials/index.html#running-workflows">Running workflows</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="tutorials/running_on_theta.html">How to run CANDLE compliant code in Theta</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tutorials/workflow_genetic_algorithm.html">GA (genetic algorithm) based based hyperparameter optimization on CANDLE Benchmarks</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tutorials/workflow_async_search.html">Run Asynchronous Search based hyperparameter optimization on CANDLE Benchmarks</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tutorials/workflow_mlrMBO.html">Run mlrMBO based hyperparameter optimization on CANDLE Benchmarks</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tutorials/workflow_pbt.html">PBT Workflow</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tutorials/workflow_upf.html">Evaluate an Unrolled Parameter File (UPF)</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="tutorials/index.html#examples">Examples</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="tutorials/examples/ADRP/README.html">Pilot1 ADRP Benchmark</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tutorials/examples/M16/README.html">Data preprocessing - feature selection examples</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tutorials/examples/darts/README.html">DARTS Examples</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tutorials/examples/mnist/README.html">MNIST Example</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tutorials/examples/unet/README.html">U-NET Example</a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="candle_lib.html">CANDLE Library API</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="candle_lib/candle_keras.html">candle_keras package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="candle_lib/data_preprocessing_utils.html">data_preprocessing_utils module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="candle_lib/data_utils.html">data_utils module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="candle_lib/default_utils.html">default_utils module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="candle_lib/exp_logger.html">exp_logger module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="candle_lib/feature_selection_utils.html">feature_selection_utils module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="candle_lib/file_utils.html">file_utils module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="candle_lib/generic_utils.html">generic_utils module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="candle_lib/keras_utils.html">keras_utils module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="candle_lib/P1_utils.html">P1_utils module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="candle_lib/profiling_utils.html">profiling_utils module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="candle_lib/pytorch_utils.html">pytorch_utils module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="candle_lib/solr_keras.html">solr_keras module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="candle_lib/uq_utils.html">uq_utils module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="candle_lib/uq_keras_utils.html">uq_keras_utils module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="candle_lib/viz_utils.html">viz_utils module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="candle_lib/clr_keras_utils.html">clr_keras_utils module</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="contribute.html">How to Contribute</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="contribute.html#how-to-add-a-new-document">How to add a new document</a></li>
+<li class="toctree-l2"><a class="reference internal" href="contribute.html#how-to-add-candle-library-api">How to add CANDLE Library API</a></li>
 <li class="toctree-l2"><a class="reference internal" href="contribute.html#how-to-build-html">How to build html</a></li>
 <li class="toctree-l2"><a class="reference internal" href="contribute.html#how-to-install-sphinx">How to install Sphinx</a></li>
 <li class="toctree-l2"><a class="reference internal" href="contribute.html#how-to-convert-asciidoc-format-to-rst">How to convert asciidoc format to rst</a></li>
@@ -210,7 +236,7 @@
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2018, ANL.gov.
+        &copy; Copyright 2020, ANL.gov
 
     </p>
   </div>
@@ -227,33 +253,16 @@
   
 
 
-  
-
-    <script type="text/javascript">
-        var DOCUMENTATION_OPTIONS = {
-            URL_ROOT:'./',
-            VERSION:'',
-            LANGUAGE:'None',
-            COLLAPSE_INDEX:false,
-            FILE_SUFFIX:'.html',
-            HAS_SOURCE:  true,
-            SOURCELINK_SUFFIX: '.txt'
-        };
-    </script>
-      <script type="text/javascript" src="_static/jquery.js"></script>
-      <script type="text/javascript" src="_static/underscore.js"></script>
-      <script type="text/javascript" src="_static/doctools.js"></script>
-      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-
-  
-
-  <script type="text/javascript" src="_static/js/theme.js"></script>
-
   <script type="text/javascript">
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script> 
+  </script>
+
+  
+  
+    
+   
 
 </body>
 </html>

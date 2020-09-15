@@ -14,7 +14,6 @@
 #
 import os
 import sys
-# sys.path.insert(0, os.path.abspath('/Users/dcarron/PycharmProjects/Candle/common'))
 sys.path.insert(0, os.path.abspath('../../common'))
 sys.path.insert(0, os.path.abspath('../../examples/mnist'))
 
@@ -22,7 +21,7 @@ sys.path.insert(0, os.path.abspath('../../examples/mnist'))
 # -- Project information -----------------------------------------------------
 
 project = 'CANDLE'
-copyright = '2018, ANL.gov'
+copyright = '2020, ANL.gov'
 author = 'CANDLE Team'
 
 # The short X.Y version

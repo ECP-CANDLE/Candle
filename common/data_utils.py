@@ -3,13 +3,47 @@ from __future__ import absolute_import
 import numpy as np
 import pandas as pd
 
-from sklearn.preprocessing import Imputer
+## Adding conditional import for compatibility between
+## sklearn versions
+## The second commented line corresponds to a more recent version
+#from sklearn.preprocessing import Imputer
+#from sklearn.impute import SimpleImputer
+try:
+    from sklearn.impute import SimpleImputer as Imputer
+except ImportError:
+    from sklearn.preprocessing import Imputer
 from sklearn.preprocessing import StandardScaler, MinMaxScaler, MaxAbsScaler
-
-from keras.utils import np_utils
 
 from default_utils import DEFAULT_SEED
 from default_utils import DEFAULT_DATATYPE
+
+
+# TAKEN from tensorflow
+def to_categorical(y, num_classes=None):
+  """Converts a class vector (integers) to binary class matrix.
+  E.g. for use with categorical_crossentropy.
+  Arguments:
+      y: class vector to be converted into a matrix
+          (integers from 0 to num_classes).
+      num_classes: total number of classes.
+  Returns:
+      A binary matrix representation of the input. The classes axis is placed
+      last.
+  """
+  y = np.array(y, dtype='int')
+  input_shape = y.shape
+  if input_shape and input_shape[-1] == 1 and len(input_shape) > 1:
+    input_shape = tuple(input_shape[:-1])
+  y = y.ravel()
+  if not num_classes:
+    num_classes = np.max(y) + 1
+  n = y.shape[0]
+  categorical = np.zeros((n, num_classes), dtype=np.float32)
+  categorical[np.arange(n), y] = 1
+  output_shape = input_shape + (num_classes,)
+  categorical = np.reshape(categorical, output_shape)
+  return categorical
+
 
 def convert_to_class(y_one_hot, dtype=int):
     """ Converts a one-hot class encoding (array with as many positions as total
@@ -99,12 +133,167 @@ def impute_and_scale_array(mat, scaling=None):
         it returns the imputed numpy array.
     """
     
-    imputer = Imputer(strategy='mean', axis=0, copy=False)
+#    imputer = Imputer(strategy='mean', axis=0, copy=False)
+#    imputer = SimpleImputer(strategy='mean', copy=False)
+    # Next line is from conditional import. axis=0 is default
+    # in old version so it is not necessary.
+    imputer = Imputer(strategy='mean', copy=False)
     imputer.fit_transform(mat)
-    #mat = imputer.fit_transform(mat)
     
     return scale_array(mat, scaling)
 
+
+def drop_impute_and_scale_dataframe(df, scaling='std', imputing='mean', dropna='all'):
+    """Impute missing values with mean and scale data included in pandas dataframe.
+
+    Parameters
+    ----------
+    df : pandas dataframe
+        dataframe to process
+    scaling : string
+        String describing type of scaling to apply.
+        'maxabs' [-1,1], 'minmax' [0,1], 'std', or None, optional
+        (Default 'std')
+    imputing : string
+        String describing type of imputation to apply.
+        'mean' replace missing values with mean value along the column,
+        'median' replace missing values with median value along the column,
+        'most_frequent' replace missing values with most frequent value along column
+        (Default: 'mean').
+    dropna : string
+        String describing strategy for handling missing values.
+        'all' if all values are NA, drop that column.
+        'any' if any NA values are present, dropt that column.
+        (Default: 'all').
+
+    Return
+    ----------
+    Returns the data frame after handling missing values and scaling.
+
+    """
+
+    if dropna:
+        df = df.dropna(axis=1, how=dropna)
+    else:
+        empty_cols = df.columns[df.notnull().sum() == 0]
+        df[empty_cols] = 0
+
+    if imputing is None or imputing.lower() == 'none':
+        mat = df.values
+    else:
+#        imputer = Imputer(strategy=imputing, axis=0)
+#        imputer = SimpleImputer(strategy=imputing)
+        # Next line is from conditional import. axis=0 is default
+        # in old version so it is not necessary.
+        imputer = Imputer(strategy=imputing)
+        mat = imputer.fit_transform(df.values)
+
+    if scaling is None or scaling.lower() == 'none':
+        return pd.DataFrame(mat, columns=df.columns)
+
+    if scaling == 'maxabs':
+        scaler = MaxAbsScaler()
+    elif scaling == 'minmax':
+        scaler = MinMaxScaler()
+    else:
+        scaler = StandardScaler()
+
+    mat = scaler.fit_transform(mat)
+    df = pd.DataFrame(mat, columns=df.columns)
+
+    return df
+
+
+def discretize_dataframe(df, col, bins=2, cutoffs=None):
+    """Discretize values of given column in pandas dataframe.
+
+    Parameters
+    ----------
+    df : pandas dataframe
+        dataframe to process.
+    col : int
+        Index of column to bin.
+    bins : int
+        Number of bins for distributing column values.
+    cutoffs : list
+        List of bin limits.
+        If None, the limits are computed as percentiles.
+        (Default: None).
+
+    Return
+    ----------
+    Returns the data frame with the values of the specified column binned, i.e. the values
+    are replaced by the associated bin number.
+
+    """
+
+    y = df[col]
+    thresholds = cutoffs
+    if thresholds is None:
+        percentiles = [100 / bins * (i + 1) for i in range(bins - 1)]
+        thresholds = [np.percentile(y, x) for x in percentiles]
+    classes = np.digitize(y, thresholds)
+    df[col] = classes
+    
+    return df
+
+
+def discretize_array(y, bins=5):
+    """Discretize values of given array.
+
+    Parameters
+    ----------
+    y : numpy array
+        array to discretize.
+    bins : int
+        Number of bins for distributing column values.
+
+    Return
+    ----------
+    Returns an array with the bin number associated to the values in the
+    original array.
+
+    """
+
+    percentiles = [100 / bins * (i + 1) for i in range(bins - 1)]
+    thresholds = [np.percentile(y, x) for x in percentiles]
+    classes = np.digitize(y, thresholds)
+    return classes
+
+
+
+def lookup(df, query, ret, keys, match='match'):
+    """Dataframe lookup.
+
+    Parameters
+    ----------
+    df : pandas dataframe
+        dataframe for retrieving values.
+    query : string
+        String for searching.
+    ret : int/string or list
+        Names or indices of columns to be returned.
+    keys : list
+        List of strings or integers specifying the names or
+        indices of columns to look into.
+    match : string
+        String describing strategy for matching keys to query.
+
+    Return
+    ----------
+    Returns a list of the values in the dataframe whose columns match
+    the specified query and have been selected to be returned.
+
+    """
+
+    mask = pd.Series(False, index=range(df.shape[0]))
+    for key in keys:
+        if match == 'contains':
+            mask |= df[key].str.contains(query.upper(), case=False)
+        else:
+            mask |= (df[key].str.upper() == query.upper())
+
+    return list(set(df[mask][ret].values.flatten().tolist()))
 
 
 def load_X_data(train_file, test_file,
@@ -655,8 +844,8 @@ def load_Xy_data_noheader(train_file, test_file, classes, usecols=None, scaling=
     df_y_train = df_train[:,0].astype('int')
     df_y_test = df_test[:,0].astype('int')
 
-    Y_train = np_utils.to_categorical(df_y_train, classes)
-    Y_test = np_utils.to_categorical(df_y_test, classes)
+    Y_train = to_categorical(df_y_train, classes)
+    Y_test = to_categorical(df_y_test, classes)
 
     df_x_train = df_train[:, 1:seqlen].astype(dtype)
     df_x_test = df_test[:, 1:seqlen].astype(dtype)

@@ -6,10 +6,10 @@ from keras import optimizers
 from keras import initializers
 
 from keras.layers import Dropout
-from keras.callbacks import Callback
+from keras.callbacks import Callback, ModelCheckpoint
 from keras.utils import get_custom_objects
-from keras.metrics import binary_crossentropy, mean_squared_error
-from keras.utils.vis_utils import plot_model
+from keras.metrics import binary_crossentropy, mean_squared_error, mean_absolute_error
+from keras.models import Model
 
 from scipy.stats.stats import pearsonr
 
@@ -48,7 +48,10 @@ def set_seed(seed):
 
     if K.backend() == 'tensorflow':
         import tensorflow as tf
-        tf.set_random_seed(seed)
+        if tf.__version__ < "2.0.0":
+            tf.set_random_seed(seed)
+        else:
+            tf.random.set_seed(seed)
 
 
 def get_function(name):
@@ -197,6 +200,16 @@ def xent(y_true, y_pred):
     return binary_crossentropy(y_true, y_pred)
 
 
+def r2(y_true, y_pred):
+    SS_res =  K.sum(K.square(y_true - y_pred))
+    SS_tot = K.sum(K.square(y_true - K.mean(y_true)))
+    return (1 - SS_res/(SS_tot + K.epsilon()))
+
+
+def mae(y_true, y_pred):
+    return mean_absolute_error(y_true, y_pred)
+
+
 def mse(y_true, y_pred):
     return mean_squared_error(y_true, y_pred)
 
@@ -245,5 +258,12 @@ class LoggingCallback(Callback):
         msg = "[Epoch: %i] %s" % (epoch, ", ".join("%s: %f" % (k, v) for k, v in sorted(logs.items())))
         self.print_fcn(msg)
 
-def model_plot(model, to_file='model.png', show_shapes=True):
-    plot_model(model, to_file, show_shapes)
+
+class MultiGPUCheckpoint(ModelCheckpoint):
+
+    def set_model(self, model):
+        if isinstance(model.layers[-2], Model):
+            self.model = model.layers[-2]
+        else:
+            self.model = model
+

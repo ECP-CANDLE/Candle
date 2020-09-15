@@ -17,32 +17,34 @@
   
 
   
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
 
-  
-  
     
 
   
-
   <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" /> 
-
-  
-  <script src="../_static/js/modernizr.min.js"></script>
-
 </head>
 
 <body class="wy-body-for-nav">
 
    
   <div class="wy-grid-for-nav">
-
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search">
+        <div class="wy-side-nav-search" >
           
 
           
@@ -145,10 +147,12 @@
            <div itemprop="articleBody">
             
   <h1>Source code for uq_utils</h1><div class="highlight"><pre>
-<span></span><span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">absolute_import</span>
+<span></span><span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">absolute_import</span>
 
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-
+<span class="kn">from</span> <span class="nn">scipy.stats</span> <span class="kn">import</span> <span class="n">pearsonr</span><span class="p">,</span> <span class="n">spearmanr</span>
+<span class="kn">from</span> <span class="nn">scipy</span> <span class="kn">import</span> <span class="n">signal</span>
+<span class="kn">from</span> <span class="nn">scipy.interpolate</span> <span class="kn">import</span> <span class="n">InterpolatedUnivariateSpline</span>
 
 <div class="viewcode-block" id="generate_index_distribution"><a class="viewcode-back" href="../candle_lib/uq_utils.html#uq_utils.generate_index_distribution">[docs]</a><span class="k">def</span> <span class="nf">generate_index_distribution</span><span class="p">(</span><span class="n">numTrain</span><span class="p">,</span> <span class="n">numTest</span><span class="p">,</span> <span class="n">numValidation</span><span class="p">,</span> <span class="n">params</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot; Generates a vector of indices to partition the data for training.</span>
@@ -222,6 +226,8 @@
 <span class="sd">            Indices for data in testing (if merging)</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
+    <span class="n">tol</span> <span class="o">=</span> <span class="mf">1e-7</span>
+
     <span class="c1"># Extract required parameters</span>
     <span class="n">fractionTrain</span> <span class="o">=</span> <span class="n">params</span><span class="p">[</span><span class="s1">&#39;uq_train_fr&#39;</span><span class="p">]</span>
     <span class="n">fractionValidation</span> <span class="o">=</span> <span class="n">params</span><span class="p">[</span><span class="s1">&#39;uq_valid_fr&#39;</span><span class="p">]</span>
@@ -235,7 +241,8 @@
         <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;uq_test_fr is not in (0, 1) range. uq_test_fr: &#39;</span><span class="p">,</span> <span class="n">fractionTest</span><span class="p">)</span>
 
     <span class="n">fractionSum</span> <span class="o">=</span> <span class="n">fractionTrain</span> <span class="o">+</span> <span class="n">fractionValidation</span> <span class="o">+</span> <span class="n">fractionTest</span>
-    <span class="k">if</span> <span class="p">(</span><span class="n">fractionSum</span> <span class="o">&gt;</span> <span class="mf">1.</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span><span class="n">fractionSum</span> <span class="o">&lt;</span> <span class="mf">1.</span><span class="p">):</span>
+    <span class="c1">#if (fractionSum &gt; 1.) or (fractionSum &lt; 1.):</span>
+    <span class="k">if</span> <span class="nb">abs</span><span class="p">(</span><span class="n">fractionSum</span><span class="o">-</span><span class="mf">1.</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">tol</span><span class="p">:</span>
         <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Specified UQ fractions (uq_train_fr, uq_valid_fr, uq_test_fr) do not add up to 1. No cross-validation partition is computed ! sum:&#39;</span><span class="p">,</span> <span class="n">fractionSum</span><span class="p">)</span>
 
     <span class="c1"># Determine data size and block size</span>
@@ -478,6 +485,751 @@
     <span class="k">return</span> <span class="n">indexArray</span><span class="p">[:</span><span class="n">offset</span><span class="p">]</span></div>
 
 
+<span class="c1">###### UTILS for COMPUTATION OF EMPIRICAL CALIBRATION</span>
+
+<div class="viewcode-block" id="compute_statistics_homoscedastic"><a class="viewcode-back" href="../candle_lib/uq_utils.html#uq_utils.compute_statistics_homoscedastic">[docs]</a><span class="k">def</span> <span class="nf">compute_statistics_homoscedastic</span><span class="p">(</span><span class="n">df_data</span><span class="p">,</span>
+                                     <span class="n">col_true</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+                                     <span class="n">col_pred</span><span class="o">=</span><span class="mi">6</span><span class="p">,</span>
+                                     <span class="n">col_std_pred</span><span class="o">=</span><span class="mi">7</span><span class="p">,</span>
+                                     <span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; Extracts ground truth, mean predition, error and</span>
+<span class="sd">        standard deviation of prediction from inference</span>
+<span class="sd">        data frame. The latter includes the statistics</span>
+<span class="sd">        over all the inference realizations.</span>
+<span class="sd">        </span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        df_data : pandas data frame</span>
+<span class="sd">            Data frame generated by current CANDLE inference</span>
+<span class="sd">            experiments. Indices are hard coded to agree with</span>
+<span class="sd">            current CANDLE version. (The inference file usually</span>
+<span class="sd">            has the name: &lt;model&gt;_pred.tsv).</span>
+<span class="sd">        col_true : integer</span>
+<span class="sd">            Index of the column in the data frame where the true </span>
+<span class="sd">            value is stored (Default: 0, index in current CANDLE format).</span>
+<span class="sd">        col_pred : integer</span>
+<span class="sd">            Index of the column in the data frame where the predicted </span>
+<span class="sd">            value is stored (Default: 6, index in current CANDLE format).</span>
+<span class="sd">        col_std_pred : integer</span>
+<span class="sd">            Index of the column in the data frame where the standard </span>
+<span class="sd">            deviation of the predicted values is stored (Default: 7,</span>
+<span class="sd">            index in current CANDLE format).</span>
+<span class="sd">            </span>
+<span class="sd">        Return</span>
+<span class="sd">        ----------</span>
+<span class="sd">        Ytrue : numpy array</span>
+<span class="sd">            Array with true (observed) values</span>
+<span class="sd">        Ypred : numpy array</span>
+<span class="sd">            Array with predicted values.</span>
+<span class="sd">        yerror : numpy array</span>
+<span class="sd">            Array with errors computed (observed - predicted).</span>
+<span class="sd">        sigma : numpy array</span>
+<span class="sd">            Array with standard deviations learned with deep learning</span>
+<span class="sd">            model. For homoscedastic inference this corresponds to the</span>
+<span class="sd">            std value computed from prediction (and is equal to the </span>
+<span class="sd">            following returned variable).</span>
+<span class="sd">        Ypred_std : numpy array</span>
+<span class="sd">            Array with standard deviations computed from regular</span>
+<span class="sd">            (homoscedastic) inference.</span>
+<span class="sd">        pred_name : string</span>
+<span class="sd">            Name of data colum or quantity predicted (as extracted</span>
+<span class="sd">            from the data frame using the col_true index).</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">Ytrue</span> <span class="o">=</span> <span class="n">df_data</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span><span class="n">col_true</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Ytrue shape: &#39;</span><span class="p">,</span> <span class="n">Ytrue</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+    <span class="n">pred_name</span> <span class="o">=</span> <span class="n">df_data</span><span class="o">.</span><span class="n">columns</span><span class="p">[</span><span class="n">col_true</span><span class="p">]</span>
+    <span class="n">Ypred</span> <span class="o">=</span> <span class="n">df_data</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span><span class="n">col_pred</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Ypred shape: &#39;</span><span class="p">,</span> <span class="n">Ypred</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+    <span class="n">Ypred_std</span> <span class="o">=</span> <span class="n">df_data</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span><span class="n">col_std_pred</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Ypred_std shape: &#39;</span><span class="p">,</span> <span class="n">Ypred_std</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+    <span class="n">yerror</span> <span class="o">=</span> <span class="n">Ytrue</span> <span class="o">-</span> <span class="n">Ypred</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;yerror shape: &#39;</span><span class="p">,</span> <span class="n">yerror</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+    <span class="n">sigma</span> <span class="o">=</span> <span class="n">Ypred_std</span> <span class="c1"># std</span>
+    <span class="n">MSE</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">((</span><span class="n">Ytrue</span> <span class="o">-</span> <span class="n">Ypred</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;MSE: &#39;</span><span class="p">,</span> <span class="n">MSE</span><span class="p">)</span>
+    <span class="n">MSE_STD</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">std</span><span class="p">((</span><span class="n">Ytrue</span> <span class="o">-</span> <span class="n">Ypred</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;MSE_STD: &#39;</span><span class="p">,</span> <span class="n">MSE_STD</span><span class="p">)</span>
+    <span class="c1"># p-value &#39;not entirely reliable, reasonable for datasets &gt; 500&#39;</span>
+    <span class="n">spearman_cc</span><span class="p">,</span> <span class="n">pval</span> <span class="o">=</span> <span class="n">spearmanr</span><span class="p">(</span><span class="n">Ytrue</span><span class="p">,</span> <span class="n">Ypred</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Spearman CC: </span><span class="si">%f</span><span class="s1">, p-value: </span><span class="si">%e</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">spearman_cc</span><span class="p">,</span> <span class="n">pval</span><span class="p">))</span>
+
+    <span class="k">return</span> <span class="n">Ytrue</span><span class="p">,</span> <span class="n">Ypred</span><span class="p">,</span> <span class="n">yerror</span><span class="p">,</span> <span class="n">sigma</span><span class="p">,</span> <span class="n">Ypred_std</span><span class="p">,</span> <span class="n">pred_name</span></div>
+
+
+<div class="viewcode-block" id="compute_statistics_homoscedastic_all"><a class="viewcode-back" href="../candle_lib/uq_utils.html#uq_utils.compute_statistics_homoscedastic_all">[docs]</a><span class="k">def</span> <span class="nf">compute_statistics_homoscedastic_all</span><span class="p">(</span><span class="n">df_data</span><span class="p">,</span>
+                                     <span class="n">col_true</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span>
+                                     <span class="n">col_pred_start</span><span class="o">=</span><span class="mi">6</span>
+                                     <span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; Extracts ground truth, mean predition, error and</span>
+<span class="sd">        standard deviation of prediction from inference</span>
+<span class="sd">        data frame. The latter includes all the individual</span>
+<span class="sd">        inference realizations.</span>
+<span class="sd">        </span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        df_data : pandas data frame</span>
+<span class="sd">            Data frame generated by current CANDLE inference</span>
+<span class="sd">            experiments. Indices are hard coded to agree with</span>
+<span class="sd">            current CANDLE version. (The inference file usually</span>
+<span class="sd">            has the name: &lt;model&gt;.predicted_INFER.tsv).</span>
+<span class="sd">        col_true : integer</span>
+<span class="sd">            Index of the column in the data frame where the true</span>
+<span class="sd">            value is stored (Default: 4, index in current HOM format).</span>
+<span class="sd">        col_pred_start : integer</span>
+<span class="sd">            Index of the column in the data frame where the first predicted</span>
+<span class="sd">            value is stored. All the predicted values during inference</span>
+<span class="sd">            are stored (Default: 6 index, in current HOM format).</span>
+<span class="sd">            </span>
+<span class="sd">        Return</span>
+<span class="sd">        ----------</span>
+<span class="sd">        Ytrue : numpy array</span>
+<span class="sd">            Array with true (observed) values</span>
+<span class="sd">        Ypred : numpy array</span>
+<span class="sd">            Array with predicted values.</span>
+<span class="sd">        yerror : numpy array</span>
+<span class="sd">            Array with errors computed (observed - predicted).</span>
+<span class="sd">        sigma : numpy array</span>
+<span class="sd">            Array with standard deviations learned with deep learning</span>
+<span class="sd">            model. For homoscedastic inference this corresponds to the</span>
+<span class="sd">            std value computed from prediction (and is equal to the</span>
+<span class="sd">            following returned variable).</span>
+<span class="sd">        Ypred_std : numpy array</span>
+<span class="sd">            Array with standard deviations computed from regular</span>
+<span class="sd">            (homoscedastic) inference.</span>
+<span class="sd">        pred_name : string</span>
+<span class="sd">            Name of data colum or quantity predicted (as extracted</span>
+<span class="sd">            from the data frame using the col_true index).</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">Ytrue</span> <span class="o">=</span> <span class="n">df_data</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span><span class="n">col_true</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Ytrue shape: &#39;</span><span class="p">,</span> <span class="n">Ytrue</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+    <span class="n">pred_name</span> <span class="o">=</span> <span class="n">df_data</span><span class="o">.</span><span class="n">columns</span><span class="p">[</span><span class="n">col_true</span><span class="p">]</span>
+    <span class="n">Ypred_mean_</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">df_data</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span><span class="n">col_pred_start</span><span class="p">:],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">Ypred_mean</span> <span class="o">=</span> <span class="n">Ypred_mean_</span><span class="o">.</span><span class="n">values</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Ypred_mean shape: &#39;</span><span class="p">,</span> <span class="n">Ypred_mean</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+    <span class="n">Ypred_std_</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">df_data</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span><span class="n">col_pred_start</span><span class="p">:],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">Ypred_std</span> <span class="o">=</span> <span class="n">Ypred_std_</span><span class="o">.</span><span class="n">values</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Ypred_std shape: &#39;</span><span class="p">,</span> <span class="n">Ypred_std</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+    <span class="n">yerror</span> <span class="o">=</span> <span class="n">Ytrue</span> <span class="o">-</span> <span class="n">Ypred_mean</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;yerror shape: &#39;</span><span class="p">,</span> <span class="n">yerror</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+    <span class="n">sigma</span> <span class="o">=</span> <span class="n">Ypred_std</span> <span class="c1"># std</span>
+    <span class="n">MSE</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">((</span><span class="n">Ytrue</span> <span class="o">-</span> <span class="n">Ypred_mean</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;MSE: &#39;</span><span class="p">,</span> <span class="n">MSE</span><span class="p">)</span>
+    <span class="n">MSE_STD</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">std</span><span class="p">((</span><span class="n">Ytrue</span> <span class="o">-</span> <span class="n">Ypred_mean</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;MSE_STD: &#39;</span><span class="p">,</span> <span class="n">MSE_STD</span><span class="p">)</span>
+    <span class="c1"># p-value &#39;not entirely reliable, reasonable for datasets &gt; 500&#39;</span>
+    <span class="n">spearman_cc</span><span class="p">,</span> <span class="n">pval</span> <span class="o">=</span> <span class="n">spearmanr</span><span class="p">(</span><span class="n">Ytrue</span><span class="p">,</span> <span class="n">Ypred_mean</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Spearman CC: </span><span class="si">%f</span><span class="s1">, p-value: </span><span class="si">%e</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">spearman_cc</span><span class="p">,</span> <span class="n">pval</span><span class="p">))</span>
+
+    <span class="k">return</span> <span class="n">Ytrue</span><span class="p">,</span> <span class="n">Ypred_mean</span><span class="p">,</span> <span class="n">yerror</span><span class="p">,</span> <span class="n">sigma</span><span class="p">,</span> <span class="n">Ypred_std</span><span class="p">,</span> <span class="n">pred_name</span></div>
+
+
+<div class="viewcode-block" id="compute_statistics_heteroscedastic"><a class="viewcode-back" href="../candle_lib/uq_utils.html#uq_utils.compute_statistics_heteroscedastic">[docs]</a><span class="k">def</span> <span class="nf">compute_statistics_heteroscedastic</span><span class="p">(</span><span class="n">df_data</span><span class="p">,</span>
+                                     <span class="n">col_true</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span>
+                                     <span class="n">col_pred_start</span><span class="o">=</span><span class="mi">6</span><span class="p">,</span>
+                                     <span class="n">col_std_pred_start</span><span class="o">=</span><span class="mi">7</span><span class="p">,</span>
+                                     <span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; Extracts ground truth, mean predition, error, standard</span>
+<span class="sd">        deviation of prediction and predicted (learned) standard</span>
+<span class="sd">        deviation from inference data frame. The latter includes</span>
+<span class="sd">        all the individual inference realizations.</span>
+<span class="sd">        </span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        df_data : pandas data frame</span>
+<span class="sd">            Data frame generated by current heteroscedastic inference</span>
+<span class="sd">            experiments. Indices are hard coded to agree with</span>
+<span class="sd">            current version. (The inference file usually</span>
+<span class="sd">            has the name: &lt;model&gt;.predicted_INFER_HET.tsv).</span>
+<span class="sd">        col_true : integer</span>
+<span class="sd">            Index of the column in the data frame where the true</span>
+<span class="sd">            value is stored (Default: 4, index in current HET format).</span>
+<span class="sd">        col_pred_start : integer</span>
+<span class="sd">            Index of the column in the data frame where the first predicted</span>
+<span class="sd">            value is stored. All the predicted values during inference</span>
+<span class="sd">            are stored and are interspaced with standard deviation</span>
+<span class="sd">            predictions (Default: 6 index, step 2, in current HET format).</span>
+<span class="sd">        col_std_pred_start : integer</span>
+<span class="sd">            Index of the column in the data frame where the first predicted</span>
+<span class="sd">            standard deviation value is stored. All the predicted values</span>
+<span class="sd">            during inference are stored and are interspaced with predictions</span>
+<span class="sd">            (Default: 7 index, step 2, in current HET format).</span>
+<span class="sd">            </span>
+<span class="sd">        Return</span>
+<span class="sd">        ----------</span>
+<span class="sd">        Ytrue : numpy array</span>
+<span class="sd">            Array with true (observed) values</span>
+<span class="sd">        Ypred : numpy array</span>
+<span class="sd">            Array with predicted values.</span>
+<span class="sd">        yerror : numpy array</span>
+<span class="sd">            Array with errors computed (observed - predicted).</span>
+<span class="sd">        sigma : numpy array</span>
+<span class="sd">            Array with standard deviations learned with deep learning</span>
+<span class="sd">            model. For homoscedastic inference this corresponds to the</span>
+<span class="sd">            std value computed from prediction (and is equal to the</span>
+<span class="sd">            following returned variable).</span>
+<span class="sd">        Ypred_std : numpy array</span>
+<span class="sd">            Array with standard deviations computed from regular</span>
+<span class="sd">            (homoscedastic) inference.</span>
+<span class="sd">        pred_name : string</span>
+<span class="sd">            Name of data colum or quantity predicted (as extracted</span>
+<span class="sd">            from the data frame using the col_true index).</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">Ytrue</span> <span class="o">=</span> <span class="n">df_data</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span><span class="n">col_true</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Ytrue shape: &#39;</span><span class="p">,</span> <span class="n">Ytrue</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+    <span class="n">pred_name</span> <span class="o">=</span> <span class="n">df_data</span><span class="o">.</span><span class="n">columns</span><span class="p">[</span><span class="n">col_true</span><span class="p">]</span>
+    <span class="n">Ypred_mean_</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">df_data</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span><span class="n">col_pred_start</span><span class="p">::</span><span class="mi">2</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">Ypred_mean</span> <span class="o">=</span> <span class="n">Ypred_mean_</span><span class="o">.</span><span class="n">values</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Ypred shape: &#39;</span><span class="p">,</span> <span class="n">Ypred_mean</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+    <span class="n">Ypred_std_</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">df_data</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span><span class="n">col_pred_start</span><span class="p">::</span><span class="mi">2</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">Ypred_std</span> <span class="o">=</span> <span class="n">Ypred_std_</span><span class="o">.</span><span class="n">values</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Ypred_std shape: &#39;</span><span class="p">,</span> <span class="n">Ypred_std</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+    <span class="n">yerror</span> <span class="o">=</span> <span class="n">Ytrue</span> <span class="o">-</span> <span class="n">Ypred_mean</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;yerror shape: &#39;</span><span class="p">,</span> <span class="n">yerror</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+    <span class="n">s_</span> <span class="o">=</span> <span class="n">df_data</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span><span class="n">col_std_pred_start</span><span class="p">::</span><span class="mi">2</span><span class="p">]</span>
+    <span class="n">s_mean</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">s_</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">var</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">s_mean</span><span class="o">.</span><span class="n">values</span><span class="p">)</span> <span class="c1"># variance</span>
+    <span class="n">sigma</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">var</span><span class="p">)</span> <span class="c1"># std</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;sigma shape: &#39;</span><span class="p">,</span> <span class="n">sigma</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+    <span class="n">MSE</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">((</span><span class="n">Ytrue</span> <span class="o">-</span> <span class="n">Ypred_mean</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;MSE: &#39;</span><span class="p">,</span> <span class="n">MSE</span><span class="p">)</span>
+    <span class="n">MSE_STD</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">std</span><span class="p">((</span><span class="n">Ytrue</span> <span class="o">-</span> <span class="n">Ypred_mean</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;MSE_STD: &#39;</span><span class="p">,</span> <span class="n">MSE_STD</span><span class="p">)</span>
+    <span class="c1"># p-value &#39;not entirely reliable, reasonable for datasets &gt; 500&#39;</span>
+    <span class="n">spearman_cc</span><span class="p">,</span> <span class="n">pval</span> <span class="o">=</span> <span class="n">spearmanr</span><span class="p">(</span><span class="n">Ytrue</span><span class="p">,</span> <span class="n">Ypred_mean</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Spearman CC: </span><span class="si">%f</span><span class="s1">, p-value: </span><span class="si">%e</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">spearman_cc</span><span class="p">,</span> <span class="n">pval</span><span class="p">))</span>
+
+    <span class="k">return</span> <span class="n">Ytrue</span><span class="p">,</span> <span class="n">Ypred_mean</span><span class="p">,</span> <span class="n">yerror</span><span class="p">,</span> <span class="n">sigma</span><span class="p">,</span> <span class="n">Ypred_std</span><span class="p">,</span> <span class="n">pred_name</span></div>
+
+
+<div class="viewcode-block" id="compute_statistics_quantile"><a class="viewcode-back" href="../candle_lib/uq_utils.html#uq_utils.compute_statistics_quantile">[docs]</a><span class="k">def</span> <span class="nf">compute_statistics_quantile</span><span class="p">(</span><span class="n">df_data</span><span class="p">,</span>
+                                     <span class="n">sigma_divisor</span><span class="o">=</span><span class="mf">2.56</span><span class="p">,</span>
+                                     <span class="n">col_true</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span>
+                                     <span class="n">col_pred_start</span><span class="o">=</span><span class="mi">6</span>
+                                     <span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; Extracts ground truth, 50th percentile mean predition,</span>
+<span class="sd">        low percentile and high percentile mean prediction</span>
+<span class="sd">        (usually 10th percentile and 90th percentile respectively),</span>
+<span class="sd">        error (using 50th percentile), standard deviation of</span>
+<span class="sd">        prediction (using 50th percentile) and predicted (learned)</span>
+<span class="sd">        standard deviation from interdecile range in inference data frame.</span>
+<span class="sd">        The latter includes all the individual inference realizations.</span>
+<span class="sd">        </span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        df_data : pandas data frame</span>
+<span class="sd">            Data frame generated by current quantile inference</span>
+<span class="sd">            experiments. Indices are hard coded to agree with</span>
+<span class="sd">            current version. (The inference file usually</span>
+<span class="sd">            has the name: &lt;model&gt;.predicted_INFER_QTL.tsv).</span>
+<span class="sd">        sigma_divisor : float</span>
+<span class="sd">            Divisor to convert from the intercedile range to the corresponding</span>
+<span class="sd">            standard deviation for a Gaussian distribution.</span>
+<span class="sd">            (Default: 2.56, consisten with an interdecile range computed from</span>
+<span class="sd">            the difference between the 90th and 10th percentiles).</span>
+<span class="sd">        col_true : integer</span>
+<span class="sd">            Index of the column in the data frame where the true</span>
+<span class="sd">            value is stored (Default: 4, index in current QTL format).</span>
+<span class="sd">        col_pred_start : integer</span>
+<span class="sd">            Index of the column in the data frame where the first predicted</span>
+<span class="sd">            value is stored. All the predicted values during inference</span>
+<span class="sd">            are stored and are interspaced with other percentile</span>
+<span class="sd">            predictions (Default: 6 index, step 3, in current QTL format).</span>
+<span class="sd">            </span>
+<span class="sd">        Return</span>
+<span class="sd">        ----------</span>
+<span class="sd">        Ytrue : numpy array</span>
+<span class="sd">            Array with true (observed) values</span>
+<span class="sd">        Ypred : numpy array</span>
+<span class="sd">            Array with predicted values (based on the 50th percentile).</span>
+<span class="sd">        yerror : numpy array</span>
+<span class="sd">            Array with errors computed (observed - predicted).</span>
+<span class="sd">        sigma : numpy array</span>
+<span class="sd">            Array with standard deviations learned with deep learning</span>
+<span class="sd">            model. This corresponds to the interdecile range divided</span>
+<span class="sd">            by the sigma divisor.</span>
+<span class="sd">        Ypred_std : numpy array</span>
+<span class="sd">            Array with standard deviations computed from regular</span>
+<span class="sd">            (homoscedastic) inference.</span>
+<span class="sd">        pred_name : string</span>
+<span class="sd">            Name of data colum or quantity predicted (as extracted</span>
+<span class="sd">            from the data frame using the col_true index).</span>
+<span class="sd">        Ypred_Lp_mean : numpy array</span>
+<span class="sd">            Array with predicted values of the lower percentile</span>
+<span class="sd">            (usually the 10th percentile).</span>
+<span class="sd">        Ypred_Hp_mean : numpy array</span>
+<span class="sd">            Array with predicted values of the higher percentile</span>
+<span class="sd">            (usually the 90th percentile).</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">Ytrue</span> <span class="o">=</span> <span class="n">df_data</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span><span class="n">col_true</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Ytrue shape: &#39;</span><span class="p">,</span> <span class="n">Ytrue</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+    <span class="n">pred_name</span> <span class="o">=</span> <span class="n">df_data</span><span class="o">.</span><span class="n">columns</span><span class="p">[</span><span class="n">col_true</span><span class="p">]</span>
+    <span class="n">Ypred_50q_mean</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">df_data</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span><span class="n">col_pred_start</span><span class="p">::</span><span class="mi">3</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">Ypred_mean</span> <span class="o">=</span> <span class="n">Ypred_50q_mean</span><span class="o">.</span><span class="n">values</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Ypred shape: &#39;</span><span class="p">,</span> <span class="n">Ypred_mean</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+    <span class="n">Ypred_Lp_mean_</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">df_data</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span><span class="n">col_pred_start</span><span class="o">+</span><span class="mi">1</span><span class="p">::</span><span class="mi">3</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">Ypred_Hp_mean_</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">df_data</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span><span class="n">col_pred_start</span><span class="o">+</span><span class="mi">2</span><span class="p">::</span><span class="mi">3</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">Ypred_Lp_mean</span> <span class="o">=</span> <span class="n">Ypred_Lp_mean_</span><span class="o">.</span><span class="n">values</span>
+    <span class="n">Ypred_Hp_mean</span> <span class="o">=</span> <span class="n">Ypred_Hp_mean_</span><span class="o">.</span><span class="n">values</span>
+    <span class="n">interdecile_range</span> <span class="o">=</span> <span class="n">Ypred_Hp_mean</span> <span class="o">-</span> <span class="n">Ypred_Lp_mean</span>
+    <span class="n">sigma</span> <span class="o">=</span> <span class="n">interdecile_range</span> <span class="o">/</span> <span class="n">sigma_divisor</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;sigma shape: &#39;</span><span class="p">,</span> <span class="n">sigma</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+    <span class="n">yerror</span> <span class="o">=</span> <span class="n">Ytrue</span> <span class="o">-</span> <span class="n">Ypred_mean</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;yerror shape: &#39;</span><span class="p">,</span> <span class="n">yerror</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+    <span class="n">Ypred_std_</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">df_data</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span><span class="n">col_pred_start</span><span class="p">::</span><span class="mi">3</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">Ypred_std</span> <span class="o">=</span> <span class="n">Ypred_std_</span><span class="o">.</span><span class="n">values</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Ypred_std shape: &#39;</span><span class="p">,</span> <span class="n">Ypred_std</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+    <span class="n">MSE</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">((</span><span class="n">Ytrue</span> <span class="o">-</span> <span class="n">Ypred_mean</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;MSE: &#39;</span><span class="p">,</span> <span class="n">MSE</span><span class="p">)</span>
+    <span class="n">MSE_STD</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">std</span><span class="p">((</span><span class="n">Ytrue</span> <span class="o">-</span> <span class="n">Ypred_mean</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;MSE_STD: &#39;</span><span class="p">,</span> <span class="n">MSE_STD</span><span class="p">)</span>
+    <span class="c1"># p-value &#39;not entirely reliable, reasonable for datasets &gt; 500&#39;</span>
+    <span class="n">spearman_cc</span><span class="p">,</span> <span class="n">pval</span> <span class="o">=</span> <span class="n">spearmanr</span><span class="p">(</span><span class="n">Ytrue</span><span class="p">,</span> <span class="n">Ypred_mean</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Spearman CC: </span><span class="si">%f</span><span class="s1">, p-value: </span><span class="si">%e</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">spearman_cc</span><span class="p">,</span> <span class="n">pval</span><span class="p">))</span>
+
+    <span class="k">return</span> <span class="n">Ytrue</span><span class="p">,</span> <span class="n">Ypred_mean</span><span class="p">,</span> <span class="n">yerror</span><span class="p">,</span> <span class="n">sigma</span><span class="p">,</span> <span class="n">Ypred_std</span><span class="p">,</span> <span class="n">pred_name</span><span class="p">,</span> <span class="n">Ypred_Lp_mean</span><span class="p">,</span> <span class="n">Ypred_Hp_mean</span></div>
+
+
+<div class="viewcode-block" id="split_data_for_empirical_calibration"><a class="viewcode-back" href="../candle_lib/uq_utils.html#uq_utils.split_data_for_empirical_calibration">[docs]</a><span class="k">def</span> <span class="nf">split_data_for_empirical_calibration</span><span class="p">(</span><span class="n">Ytrue</span><span class="p">,</span> <span class="n">Ypred</span><span class="p">,</span> <span class="n">sigma</span><span class="p">,</span> <span class="n">cal_split</span><span class="o">=</span><span class="mf">0.8</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; Extracts a portion of the arrays provided for the computation</span>
+<span class="sd">        of the calibration and reserves the remainder portion</span>
+<span class="sd">        for testing.</span>
+<span class="sd">        </span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        Ytrue : numpy array</span>
+<span class="sd">            Array with true (observed) values</span>
+<span class="sd">        Ypred : numpy array</span>
+<span class="sd">            Array with predicted values.</span>
+<span class="sd">        sigma : numpy array</span>
+<span class="sd">            Array with standard deviations learned with deep learning</span>
+<span class="sd">            model (or std value computed from prediction if homoscedastic</span>
+<span class="sd">            inference).</span>
+<span class="sd">        cal_split : float</span>
+<span class="sd">             Split of data to use for estimating the calibration relationship.</span>
+<span class="sd">             It is assumet that it will be a value in (0, 1).</span>
+<span class="sd">             (Default: use 80% of predictions to generate empirical</span>
+<span class="sd">             calibration).</span>
+<span class="sd">            </span>
+<span class="sd">        Return</span>
+<span class="sd">        ----------</span>
+<span class="sd">        index_perm_total : numpy array</span>
+<span class="sd">            Random permutation of the array indices. The first &#39;num_cal&#39;</span>
+<span class="sd">            of the indices correspond to the samples that are used for</span>
+<span class="sd">            calibration, while the remainder are the samples reserved </span>
+<span class="sd">            for calibration testing.</span>
+<span class="sd">        pSigma_cal : numpy array</span>
+<span class="sd">            Part of the input sigma array to use for calibration.</span>
+<span class="sd">        pSigma_test : numpy array</span>
+<span class="sd">            Part of the input sigma array to reserve for testing.</span>
+<span class="sd">        pPred_cal : numpy array</span>
+<span class="sd">            Part of the input Ypred array to use for calibration.</span>
+<span class="sd">        pPred_test : numpy array</span>
+<span class="sd">            Part of the input Ypred array to reserve for testing.</span>
+<span class="sd">        true_cal : numpy array</span>
+<span class="sd">            Part of the input Ytrue array to use for calibration.</span>
+<span class="sd">        true_test : numpy array</span>
+<span class="sd">            Part of the input Ytrue array to reserve for testing.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1"># shuffle data for calibration</span>
+    <span class="n">num_pred_total</span> <span class="o">=</span> <span class="n">sigma</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">num_cal</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">int</span><span class="p">(</span><span class="n">num_pred_total</span> <span class="o">*</span> <span class="n">cal_split</span><span class="p">)</span>
+    <span class="n">index_perm_total</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">permutation</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">num_pred_total</span><span class="p">))</span>
+
+    <span class="c1"># Permute data</span>
+    <span class="n">pSigma_perm_all</span> <span class="o">=</span> <span class="n">sigma</span><span class="p">[</span><span class="n">index_perm_total</span><span class="p">]</span>
+    <span class="n">pPred_perm_all</span> <span class="o">=</span> <span class="n">Ypred</span><span class="p">[</span><span class="n">index_perm_total</span><span class="p">]</span>
+    <span class="n">true_perm_all</span> <span class="o">=</span> <span class="n">Ytrue</span><span class="p">[</span><span class="n">index_perm_total</span><span class="p">]</span>
+
+    <span class="c1"># Split in calibration and testing</span>
+    <span class="n">pSigma_cal</span> <span class="o">=</span> <span class="n">pSigma_perm_all</span><span class="p">[:</span><span class="n">num_cal</span><span class="p">]</span>
+    <span class="n">pSigma_test</span> <span class="o">=</span> <span class="n">pSigma_perm_all</span><span class="p">[</span><span class="n">num_cal</span><span class="p">:]</span>
+    <span class="n">pPred_cal</span> <span class="o">=</span> <span class="n">pPred_perm_all</span><span class="p">[:</span><span class="n">num_cal</span><span class="p">]</span>
+    <span class="n">pPred_test</span> <span class="o">=</span> <span class="n">pPred_perm_all</span><span class="p">[</span><span class="n">num_cal</span><span class="p">:]</span>
+    <span class="n">true_cal</span> <span class="o">=</span> <span class="n">true_perm_all</span><span class="p">[:</span><span class="n">num_cal</span><span class="p">]</span>
+    <span class="n">true_test</span> <span class="o">=</span> <span class="n">true_perm_all</span><span class="p">[</span><span class="n">num_cal</span><span class="p">:]</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Size of calibration set: &#39;</span><span class="p">,</span> <span class="n">true_cal</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Size of test set: &#39;</span><span class="p">,</span> <span class="n">true_test</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">index_perm_total</span><span class="p">,</span> <span class="n">pSigma_cal</span><span class="p">,</span> <span class="n">pSigma_test</span><span class="p">,</span> <span class="n">pPred_cal</span><span class="p">,</span> <span class="n">pPred_test</span><span class="p">,</span> <span class="n">true_cal</span><span class="p">,</span> <span class="n">true_test</span></div>
+
+
+<div class="viewcode-block" id="compute_empirical_calibration"><a class="viewcode-back" href="../candle_lib/uq_utils.html#uq_utils.compute_empirical_calibration">[docs]</a><span class="k">def</span> <span class="nf">compute_empirical_calibration</span><span class="p">(</span><span class="n">pSigma_cal</span><span class="p">,</span> <span class="n">pPred_cal</span><span class="p">,</span> <span class="n">true_cal</span><span class="p">,</span> <span class="n">bins</span><span class="p">,</span> <span class="n">coverage_percentile</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; Use the arrays provided to estimate an empirical mapping</span>
+<span class="sd">        between standard deviation and absolute value of error,</span>
+<span class="sd">        both of which have been observed during inference. Since</span>
+<span class="sd">        most of the times the raw statistics per bin are very noisy,</span>
+<span class="sd">        a smoothing step (based on scipy&#39;s savgol filter) is performed.</span>
+<span class="sd">        </span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        pSigma_cal : numpy array</span>
+<span class="sd">            Part of the standard deviations array to use for calibration.</span>
+<span class="sd">        pPred_cal : numpy array</span>
+<span class="sd">            Part of the predictions array to use for calibration.</span>
+<span class="sd">        true_cal : numpy array</span>
+<span class="sd">            Part of the true (observed) values array to use for calibration.</span>
+<span class="sd">        bins : int</span>
+<span class="sd">            Number of bins to split the range of standard deviations</span>
+<span class="sd">            included in pSigma_cal array.</span>
+<span class="sd">        coverage_percentile : float</span>
+<span class="sd">            Value to use for estimating coverage when evaluating the percentiles </span>
+<span class="sd">            of the observed absolute value of errors.</span>
+<span class="sd">            </span>
+<span class="sd">        Return</span>
+<span class="sd">        ----------</span>
+<span class="sd">        mean_sigma : numpy array</span>
+<span class="sd">            Array with the mean standard deviations computed per bin.</span>
+<span class="sd">        min_sigma : numpy array</span>
+<span class="sd">            Array with the minimum standard deviations computed per bin.</span>
+<span class="sd">        max_sigma : numpy array</span>
+<span class="sd">            Array with the maximum standard deviations computed per bin.</span>
+<span class="sd">        error_thresholds : numpy array</span>
+<span class="sd">            Thresholds of the errors computed to attain a certain</span>
+<span class="sd">            error coverage per bin.</span>
+<span class="sd">        err_err : numpy array</span>
+<span class="sd">            Error bars in errors (one standard deviation for a binomial</span>
+<span class="sd">            distribution estimated by bin vs. the other bins) for the </span>
+<span class="sd">            calibration error.</span>
+<span class="sd">        error_thresholds_smooth : numpy array</span>
+<span class="sd">            Thresholds of the errors computed to attain a certain</span>
+<span class="sd">            error coverage per bin after a smoothed operation is applied</span>
+<span class="sd">            to the frequently noisy bin-based estimations.</span>
+<span class="sd">        sigma_start_index : non-negative integer</span>
+<span class="sd">            Index in the mean_sigma array that defines the start of</span>
+<span class="sd">            the valid empirical calibration interval (i.e. index to</span>
+<span class="sd">            the smallest std for which a meaningful error mapping</span>
+<span class="sd">            is obtained).</span>
+<span class="sd">        sigma_end_index : non-negative integer</span>
+<span class="sd">            Index in the mean_sigma array that defines the end of</span>
+<span class="sd">            the valid empirical calibration interval (i.e. index to</span>
+<span class="sd">            the largest std for which a meaningful error mappping </span>
+<span class="sd">            is obtained).</span>
+<span class="sd">        s_interpolate : scipy.interpolate python object</span>
+<span class="sd">            A python object from scipy.interpolate that computes a</span>
+<span class="sd">            univariate spline (InterpolatedUnivariateSpline) constructed</span>
+<span class="sd">            to express the mapping from standard deviation to error. This</span>
+<span class="sd">            spline is generated during the computational empirical</span>
+<span class="sd">            calibration procedure.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">index_sigma_cal</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argsort</span><span class="p">(</span><span class="n">pSigma_cal</span><span class="p">)</span>
+    <span class="n">pSigma_cal_ordered_</span> <span class="o">=</span> <span class="n">pSigma_cal</span><span class="p">[</span><span class="n">index_sigma_cal</span><span class="p">]</span>
+    <span class="n">Er_vect_cal_</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">true_cal</span> <span class="o">-</span> <span class="n">pPred_cal</span><span class="p">)</span>
+    <span class="n">Er_vect_cal_orderedSigma_</span> <span class="o">=</span> <span class="n">Er_vect_cal_</span><span class="p">[</span><span class="n">index_sigma_cal</span><span class="p">]</span>
+
+    <span class="n">minL_sigma</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">pSigma_cal_ordered_</span><span class="p">)</span>
+    <span class="n">maxL_sigma</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">pSigma_cal_ordered_</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Complete Sigma range --&gt; Min: </span><span class="si">%f</span><span class="s1">, Max: </span><span class="si">%f</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">minL_sigma</span><span class="p">,</span> <span class="n">maxL_sigma</span><span class="p">))</span>
+
+    <span class="c1"># Bin statistics for error and sigma</span>
+    <span class="n">mean_sigma</span><span class="p">,</span> <span class="n">min_sigma</span><span class="p">,</span> <span class="n">max_sigma</span><span class="p">,</span> <span class="n">error_thresholds</span><span class="p">,</span> <span class="n">err_err</span> <span class="o">=</span> <span class="n">bining_for_calibration</span><span class="p">(</span><span class="n">pSigma_cal_ordered_</span><span class="p">,</span>
+                                <span class="n">minL_sigma</span><span class="p">,</span>
+                                <span class="n">maxL_sigma</span><span class="p">,</span>
+                                <span class="n">Er_vect_cal_orderedSigma_</span><span class="p">,</span>
+                                <span class="n">bins</span><span class="p">,</span>
+                                <span class="n">coverage_percentile</span><span class="p">)</span>
+
+    <span class="c1"># smooth error function</span>
+    <span class="c1">#scipy.signal.savgol_filter(x, window_length, polyorder,</span>
+    <span class="c1">#deriv=0, delta=1.0, axis=-1, mode=&#39;interp&#39;, cval=0.0)</span>
+    <span class="c1">#error_thresholds_smooth = signal.savgol_filter(error_thresholds, 5, 1)</span>
+    <span class="n">error_thresholds_smooth</span> <span class="o">=</span> <span class="n">signal</span><span class="o">.</span><span class="n">savgol_filter</span><span class="p">(</span><span class="n">error_thresholds</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;nearest&#39;</span><span class="p">)</span>
+
+    <span class="c1"># Build Interpolant over smooth plot (this will become the calibration function)</span>
+    <span class="n">s_interpolate</span> <span class="o">=</span> <span class="n">InterpolatedUnivariateSpline</span><span class="p">(</span><span class="n">mean_sigma</span><span class="p">,</span> <span class="n">error_thresholds_smooth</span><span class="p">)</span>
+    <span class="c1"># Determine limits of calibration (i.e. monotonicity range)</span>
+    <span class="n">sigma_start_index</span><span class="p">,</span> <span class="n">sigma_end_index</span> <span class="o">=</span> <span class="n">computation_of_valid_calibration_interval</span><span class="p">(</span><span class="n">error_thresholds</span><span class="p">,</span> <span class="n">error_thresholds_smooth</span><span class="p">,</span> <span class="n">err_err</span><span class="p">)</span>
+    
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Range of valid sigma: </span><span class="si">%.6f</span><span class="s1"> --&gt; </span><span class="si">%.6f</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">mean_sigma</span><span class="p">[</span><span class="n">sigma_start_index</span><span class="p">],</span> <span class="n">mean_sigma</span><span class="p">[</span><span class="n">sigma_end_index</span><span class="p">]))</span>
+
+    <span class="k">return</span> <span class="n">mean_sigma</span><span class="p">,</span> <span class="n">min_sigma</span><span class="p">,</span> <span class="n">max_sigma</span><span class="p">,</span> <span class="n">error_thresholds</span><span class="p">,</span> <span class="n">err_err</span><span class="p">,</span> <span class="n">error_thresholds_smooth</span><span class="p">,</span> <span class="n">sigma_start_index</span><span class="p">,</span> <span class="n">sigma_end_index</span><span class="p">,</span> <span class="n">s_interpolate</span></div>
+
+
+
+<div class="viewcode-block" id="bining_for_calibration"><a class="viewcode-back" href="../candle_lib/uq_utils.html#uq_utils.bining_for_calibration">[docs]</a><span class="k">def</span> <span class="nf">bining_for_calibration</span><span class="p">(</span><span class="n">pSigma_cal_ordered_</span><span class="p">,</span> <span class="n">minL_sigma</span><span class="p">,</span>
+                            <span class="n">maxL_sigma</span><span class="p">,</span> <span class="n">Er_vect_cal_orderedSigma_</span><span class="p">,</span>
+                            <span class="n">bins</span><span class="p">,</span> <span class="n">coverage_percentile</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; Bin the values of the standard deviations observed during</span>
+<span class="sd">        inference and estimate a specified coverage percentile</span>
+<span class="sd">        in the absolute error (observed during inference as well).</span>
+<span class="sd">        Bins that have less than 50 samples are merged until they </span>
+<span class="sd">        surpass this threshold.</span>
+<span class="sd">        </span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        pSigma_cal_ordered_ : numpy array</span>
+<span class="sd">            Array of standard deviations ordered in ascending way.</span>
+<span class="sd">        minL_sigma : float</span>
+<span class="sd">            Minimum value of standard deviations included in </span>
+<span class="sd">            pSigma_cal_ordered_ array.</span>
+<span class="sd">        maxL_sigma : numpy array</span>
+<span class="sd">            Maximum value of standard deviations included in</span>
+<span class="sd">            pSigma_cal_ordered_ array.</span>
+<span class="sd">        Er_vect_cal_orderedSigma_ : numpy array</span>
+<span class="sd">            Array ob absolute value of errors corresponding with</span>
+<span class="sd">            the array of ordered standard deviations.</span>
+<span class="sd">        bins : int</span>
+<span class="sd">            Number of bins to split the range of standard deviations</span>
+<span class="sd">            included in pSigma_cal_ordered_ array.</span>
+<span class="sd">        coverage_percentile : float</span>
+<span class="sd">            Value to use for estimating coverage when evaluating the percentiles </span>
+<span class="sd">            of the observed absolute value of errors.</span>
+<span class="sd">            </span>
+<span class="sd">        Return</span>
+<span class="sd">        ----------</span>
+<span class="sd">        mean_sigma : numpy array</span>
+<span class="sd">            Array with the mean standard deviations computed per bin.</span>
+<span class="sd">        min_sigma : numpy array</span>
+<span class="sd">            Array with the minimum standard deviations computed per bin.</span>
+<span class="sd">        max_sigma : numpy array</span>
+<span class="sd">            Array with the maximum standard deviations computed per bin.</span>
+<span class="sd">        error_thresholds : numpy array</span>
+<span class="sd">            Thresholds of the errors computed to attain a certain</span>
+<span class="sd">            error coverage per bin.</span>
+<span class="sd">        err_err : numpy array</span>
+<span class="sd">            Error bars in errors (one standard deviation for a binomial</span>
+<span class="sd">            distribution estimated by bin vs. the other bins) for the </span>
+<span class="sd">            calibration error.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1">#thresholds = np.logspace(np.log10(minL_sigma), np.log10(maxL_sigma), num=bins)</span>
+    <span class="n">thresholds</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">minL_sigma</span><span class="p">,</span> <span class="n">maxL_sigma</span><span class="p">,</span> <span class="n">num</span><span class="o">=</span><span class="n">bins</span><span class="p">)</span>
+    <span class="n">classes</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">digitize</span><span class="p">(</span><span class="n">pSigma_cal_ordered_</span><span class="p">,</span> <span class="n">thresholds</span><span class="p">)</span>
+    <span class="n">Nbin</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">bins</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">bins</span><span class="o">+</span><span class="mi">1</span><span class="p">):</span>
+        <span class="n">indices</span> <span class="o">=</span> <span class="p">(</span><span class="n">classes</span> <span class="o">==</span> <span class="n">i</span><span class="p">)</span>
+        <span class="n">Nbin</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">indices</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+
+    <span class="c1"># Repair bins</span>
+    <span class="n">new_thresholds_l</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">new_nbins_l</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">sumN</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">Nbin</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
+        <span class="n">sumN</span> <span class="o">+=</span> <span class="n">Nbin</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">sumN</span> <span class="o">&gt;</span> <span class="mi">50</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">i</span> <span class="o">&gt;</span> <span class="p">(</span><span class="n">thresholds</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="mi">1</span><span class="p">):</span>
+                <span class="n">new_thresholds_l</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">thresholds</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">new_thresholds_l</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">thresholds</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+            <span class="n">new_nbins_l</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">sumN</span><span class="p">)</span>
+            <span class="n">sumN</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">new_thresholds</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">new_thresholds_l</span><span class="p">)</span>
+    <span class="n">new_nbins</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">new_nbins_l</span><span class="p">)</span>
+    <span class="n">new_thresholds</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">thresholds</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">new_nbins</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">+=</span> <span class="n">sumN</span>
+
+    <span class="c1">#</span>
+    <span class="n">classes</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">digitize</span><span class="p">(</span><span class="n">pSigma_cal_ordered_</span><span class="p">,</span> <span class="n">new_thresholds</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+    <span class="n">error_thresholds</span> <span class="o">=</span> <span class="o">-</span><span class="mf">1.</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">new_nbins</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+    <span class="n">mean_sigma</span> <span class="o">=</span> <span class="o">-</span><span class="mf">1.</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">new_nbins</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+    <span class="n">min_sigma</span> <span class="o">=</span> <span class="o">-</span><span class="mf">1.</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">new_nbins</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+    <span class="n">max_sigma</span> <span class="o">=</span> <span class="o">-</span><span class="mf">1.</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">new_nbins</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+    <span class="n">err_err</span> <span class="o">=</span> <span class="o">-</span><span class="mf">1.</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">new_nbins</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+    <span class="n">Ncal</span> <span class="o">=</span> <span class="n">pSigma_cal_ordered_</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">error_thresholds</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
+        <span class="n">indices</span> <span class="o">=</span> <span class="p">(</span><span class="n">classes</span> <span class="o">==</span> <span class="n">i</span><span class="p">)</span>
+        <span class="n">n_aux</span> <span class="o">=</span> <span class="n">indices</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+        <span class="k">assert</span> <span class="n">n_aux</span> <span class="o">==</span> <span class="n">new_nbins</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Points in bin </span><span class="si">%d</span><span class="s1">: </span><span class="si">%d</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">n_aux</span><span class="p">))</span>
+        <span class="n">mean_sigma</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">pSigma_cal_ordered_</span><span class="p">[</span><span class="n">indices</span><span class="p">])</span>
+        <span class="n">min_sigma</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">pSigma_cal_ordered_</span><span class="p">[</span><span class="n">indices</span><span class="p">])</span>
+        <span class="n">max_sigma</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">pSigma_cal_ordered_</span><span class="p">[</span><span class="n">indices</span><span class="p">])</span>
+        <span class="n">error_thresholds</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">percentile</span><span class="p">(</span><span class="n">Er_vect_cal_orderedSigma_</span><span class="p">[</span><span class="n">indices</span><span class="p">],</span> <span class="n">coverage_percentile</span><span class="p">)</span>
+        <span class="n">err_err</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">new_nbins</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">*</span> <span class="p">(</span><span class="n">Ncal</span> <span class="o">-</span> <span class="n">new_nbins</span><span class="p">[</span><span class="n">i</span><span class="p">]))</span> <span class="o">/</span> <span class="n">Ncal</span> <span class="o">*</span> <span class="n">error_thresholds</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+
+    <span class="k">return</span> <span class="n">mean_sigma</span><span class="p">,</span> <span class="n">min_sigma</span><span class="p">,</span> <span class="n">max_sigma</span><span class="p">,</span> <span class="n">error_thresholds</span><span class="p">,</span> <span class="n">err_err</span></div>
+
+
+<div class="viewcode-block" id="computation_of_valid_calibration_interval"><a class="viewcode-back" href="../candle_lib/uq_utils.html#uq_utils.computation_of_valid_calibration_interval">[docs]</a><span class="k">def</span> <span class="nf">computation_of_valid_calibration_interval</span><span class="p">(</span><span class="n">error_thresholds</span><span class="p">,</span> <span class="n">error_thresholds_smooth</span><span class="p">,</span> <span class="n">err_err</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; Function that estimates the empirical range in which a </span>
+<span class="sd">        monotonic relation is observed between standard deviation </span>
+<span class="sd">        and coverage of absolute value of error. Since the </span>
+<span class="sd">        statistics computed per bin are relatively noisy, the </span>
+<span class="sd">        application of a greedy criterion (e.g. guarantee a</span>
+<span class="sd">        monotonically increasing relationship) does not yield </span>
+<span class="sd">        good results. Therefore, a softer version is constructed</span>
+<span class="sd">        based on the satisfaction of certain criteria depending</span>
+<span class="sd">        on: the values of the error coverage computed per bin,</span>
+<span class="sd">        a smoothed version of them and the assocatiate error</span>
+<span class="sd">        estimated (based on one standard deviation for a binomial</span>
+<span class="sd">        distribution estimated by bin vs. the other bins).</span>
+<span class="sd">        A minimal validation requiring the end idex to be</span>
+<span class="sd">        largest than the starting index is performed before</span>
+<span class="sd">        the function return.</span>
+<span class="sd">        </span>
+<span class="sd">        Current criteria:</span>
+<span class="sd">        - the smoothed errors are inside the error bars AND</span>
+<span class="sd">          they are almost increasing (a small tolerance is</span>
+<span class="sd">          allowed, so a small wobbliness in the smoother</span>
+<span class="sd">          values is permitted).</span>
+<span class="sd">        OR</span>
+<span class="sd">        - both the raw values for the bins (with a small tolerance)</span>
+<span class="sd">          are increasing, AND the smoothed value is greater than the</span>
+<span class="sd">          raw value.</span>
+<span class="sd">        OR</span>
+<span class="sd">        - the current smoothed value is greater than the previous AND </span>
+<span class="sd">          the smoothed values for the next been are inside the error</span>
+<span class="sd">          bars.</span>
+<span class="sd">        </span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        error_thresholds : numpy array</span>
+<span class="sd">            Thresholds of the errors computed to attain a certain</span>
+<span class="sd">            error coverage per bin.</span>
+<span class="sd">        error_thresholds_smooth : numpy array</span>
+<span class="sd">            Thresholds of the errors computed to attain a certain</span>
+<span class="sd">            error coverage per bin after a smoothed operation is applied</span>
+<span class="sd">            to the frequently noisy bin-based estimations.</span>
+<span class="sd">        err_err : numpy array</span>
+<span class="sd">            Error bars in errors (one standard deviation for a binomial</span>
+<span class="sd">            distribution estimated by bin vs. the other bins) for the </span>
+<span class="sd">            calibration error.</span>
+<span class="sd">            </span>
+<span class="sd">        Return</span>
+<span class="sd">        ----------</span>
+<span class="sd">        sigma_start_index : non-negative integer</span>
+<span class="sd">            Index estimated in the mean_sigma array corresponing to</span>
+<span class="sd">            the value that defines the start of the valid empirical </span>
+<span class="sd">            calibration interval (i.e. index to the smallest std for </span>
+<span class="sd">            which a meaningful error mapping is obtained, according</span>
+<span class="sd">            to the criteria explained before).</span>
+<span class="sd">        sigma_end_index : non-negative integer</span>
+<span class="sd">            Index estimated in the mean_sigma array corresponing to</span>
+<span class="sd">            the value that defines the end of the valid empirical</span>
+<span class="sd">            calibration interval (i.e. index to the largest std for</span>
+<span class="sd">            which a meaningful error mapping is obtained, according</span>
+<span class="sd">            to the criteria explained before).</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1"># Computation of the calibration interval</span>
+    <span class="n">limitH</span> <span class="o">=</span> <span class="n">error_thresholds</span> <span class="o">+</span> <span class="n">err_err</span>
+    <span class="n">limitL</span> <span class="o">=</span> <span class="n">error_thresholds</span> <span class="o">-</span> <span class="n">err_err</span>
+
+    <span class="c1"># search for starting point</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">err_err</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
+        <span class="k">if</span> <span class="p">((</span><span class="n">error_thresholds_smooth</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="n">limitL</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="ow">and</span>
+         <span class="p">(</span><span class="n">error_thresholds_smooth</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="n">limitH</span><span class="p">[</span><span class="n">i</span><span class="p">])):</span> <span class="c1"># Ask if the current is in the interval</span>
+            <span class="n">sigma_start_index</span> <span class="o">=</span> <span class="n">i</span>
+            <span class="k">break</span>
+    <span class="n">sigma_end_index</span> <span class="o">=</span> <span class="n">sigma_start_index</span> <span class="o">-</span> <span class="mi">1</span>
+
+    <span class="n">restart</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">sigma_start_index</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">restart</span><span class="p">,</span> <span class="n">err_err</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">-</span><span class="mi">1</span><span class="p">):</span>
+        <span class="k">if</span> <span class="p">(((</span><span class="n">error_thresholds_smooth</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="n">limitL</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="ow">and</span>
+            <span class="p">(</span><span class="n">error_thresholds_smooth</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="n">limitH</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="ow">and</span>
+            <span class="p">((</span><span class="n">error_thresholds_smooth</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">*</span> <span class="mf">1.005</span> <span class="o">&gt;</span> <span class="n">error_thresholds_smooth</span><span class="p">[</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span> <span class="ow">or</span>
+            <span class="p">((</span><span class="n">error_thresholds</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">*</span> <span class="mf">1.01</span> <span class="o">&gt;</span> <span class="n">error_thresholds</span><span class="p">[</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span> <span class="ow">and</span>
+            <span class="p">(</span><span class="n">error_thresholds_smooth</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">error_thresholds</span><span class="p">[</span><span class="n">i</span><span class="p">]))))</span> <span class="c1"># Ask if the current is in the interval with slightly increasing trend</span>
+            <span class="ow">or</span> <span class="c1"># Ask if the current is greater than the previous and the next is in the interval</span>
+            <span class="p">((</span><span class="n">error_thresholds_smooth</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">error_thresholds_smooth</span><span class="p">[</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span> <span class="ow">and</span>
+            <span class="p">((</span><span class="n">error_thresholds_smooth</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="n">limitL</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">])</span> <span class="ow">and</span>
+            <span class="p">(</span><span class="n">error_thresholds_smooth</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="n">limitH</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">])))):</span>
+
+            <span class="n">sigma_end_index</span> <span class="o">=</span> <span class="n">i</span>
+        <span class="k">else</span><span class="p">:</span> <span class="c1"># Finalize search for monotonic range</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">sigma_end_index</span> <span class="o">-</span> <span class="n">sigma_start_index</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">4</span><span class="p">:</span>
+                <span class="k">break</span>
+            <span class="k">else</span><span class="p">:</span> <span class="c1"># Reset indices</span>
+                <span class="n">sigma_start_index</span> <span class="o">=</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span>
+                <span class="n">sigma_end_index</span> <span class="o">=</span> <span class="n">i</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Range of valid sigma indices (inclusive): </span><span class="si">%d</span><span class="s1"> --&gt; </span><span class="si">%d</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">sigma_start_index</span><span class="p">,</span> <span class="n">sigma_end_index</span><span class="p">))</span>
+
+    <span class="k">assert</span> <span class="p">(</span><span class="n">sigma_end_index</span> <span class="o">&gt;</span> <span class="n">sigma_start_index</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">sigma_start_index</span><span class="p">,</span> <span class="n">sigma_end_index</span></div>
+
+
+<div class="viewcode-block" id="applying_calibration"><a class="viewcode-back" href="../candle_lib/uq_utils.html#uq_utils.applying_calibration">[docs]</a><span class="k">def</span> <span class="nf">applying_calibration</span><span class="p">(</span><span class="n">pSigma_test</span><span class="p">,</span> <span class="n">pPred_test</span><span class="p">,</span> <span class="n">true_test</span><span class="p">,</span> <span class="n">s_interpolate</span><span class="p">,</span> <span class="n">minL_sigma_auto</span><span class="p">,</span> <span class="n">maxL_sigma_auto</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; Use the empirical mapping between standard deviation and</span>
+<span class="sd">        absolute value of error estimated during calibration (i.e.</span>
+<span class="sd">        apply the univariate spline computed) to estimate the error</span>
+<span class="sd">        for the part of the standard deviation array that was reserved</span>
+<span class="sd">        for testing the empirical calibration. The resulting error array</span>
+<span class="sd">        (yp_test) should overestimate the true observed error (eabs_red).</span>
+<span class="sd">        All the computations are restricted to the valid calibration</span>
+<span class="sd">        interval: [minL_sigma_auto, maxL_sigma_auto].</span>
+<span class="sd">        </span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        pSigma_test : numpy array</span>
+<span class="sd">            Part of the standard deviations array to use for calibration testing.</span>
+<span class="sd">        pPred_test : numpy array</span>
+<span class="sd">            Part of the predictions array to use for calibration testing.</span>
+<span class="sd">        true_test : numpy array</span>
+<span class="sd">            Part of the true (observed) values array to use for calibration testing.</span>
+<span class="sd">        s_interpolate : scipy.interpolate python object</span>
+<span class="sd">            A python object from scipy.interpolate that computes a</span>
+<span class="sd">            univariate spline (InterpolatedUnivariateSpline) expressing</span>
+<span class="sd">            the mapping from standard deviation to error. This</span>
+<span class="sd">            spline is generated during the computational empirical</span>
+<span class="sd">            calibration procedure.</span>
+<span class="sd">        minL_sigma_auto : float</span>
+<span class="sd">            Starting value of the valid empirical calibration interval</span>
+<span class="sd">            (i.e. smallest std for which a meaningful error mapping</span>
+<span class="sd">            is obtained).</span>
+<span class="sd">        maxL_sigma_auto : float</span>
+<span class="sd">            Ending value of the valid empirical calibration interval</span>
+<span class="sd">            (i.e. largest std for which a meaningful error mappping</span>
+<span class="sd">            is obtained).</span>
+
+<span class="sd">        Return</span>
+<span class="sd">        ----------</span>
+<span class="sd">        index_sigma_range_test : numpy array</span>
+<span class="sd">            Indices of the pSigma_test array that are included in the</span>
+<span class="sd">            valid calibration interval, given by:</span>
+<span class="sd">            [minL_sigma_auto, maxL_sigma_auto].</span>
+<span class="sd">        xp_test : numpy array</span>
+<span class="sd">            Array with the mean standard deviations in the calibration</span>
+<span class="sd">            testing array.</span>
+<span class="sd">        yp_test : numpy array</span>
+<span class="sd">            Mapping of the given standard deviation to error computed</span>
+<span class="sd">            from the interpolation spline constructed by empirical</span>
+<span class="sd">            calibration.</span>
+<span class="sd">        eabs_red : numpy array</span>
+<span class="sd">            Array with the observed abolute errors in the part of the testing</span>
+<span class="sd">            array for which the observed standard deviations are in the</span>
+<span class="sd">            valid interval of calibration.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1"># Filter to appropriate range</span>
+    <span class="n">index_sigma_range_test</span> <span class="o">=</span> <span class="p">(</span><span class="n">pSigma_test</span> <span class="o">&gt;=</span> <span class="n">minL_sigma_auto</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">pSigma_test</span> <span class="o">&lt;</span> <span class="n">maxL_sigma_auto</span><span class="p">)</span>
+    <span class="n">xp_test</span> <span class="o">=</span> <span class="n">pSigma_test</span><span class="p">[</span><span class="n">index_sigma_range_test</span><span class="p">]</span>
+    <span class="n">yp_test</span> <span class="o">=</span> <span class="n">s_interpolate</span><span class="p">(</span><span class="n">xp_test</span><span class="p">)</span>
+    <span class="n">Er_vect_</span> <span class="o">=</span> <span class="n">true_test</span>  <span class="o">-</span> <span class="n">pPred_test</span>
+    <span class="n">eabs_</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">Er_vect_</span><span class="p">)</span>
+    <span class="n">eabs_red</span> <span class="o">=</span> <span class="n">eabs_</span><span class="p">[</span><span class="n">index_sigma_range_test</span><span class="p">]</span>
+
+    <span class="k">return</span> <span class="n">index_sigma_range_test</span><span class="p">,</span> <span class="n">xp_test</span><span class="p">,</span> <span class="n">yp_test</span><span class="p">,</span> <span class="n">eabs_red</span></div>
+
+
+<div class="viewcode-block" id="overprediction_check"><a class="viewcode-back" href="../candle_lib/uq_utils.html#uq_utils.overprediction_check">[docs]</a><span class="k">def</span> <span class="nf">overprediction_check</span><span class="p">(</span><span class="n">yp_test</span><span class="p">,</span> <span class="n">eabs_red</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; Compute the percentage of overestimated absoulte error</span>
+<span class="sd">        predictions for the arrays reserved for calibration testing</span>
+<span class="sd">        and whose corresponding standard deviations are included</span>
+<span class="sd">        in the valid calibration interval.</span>
+<span class="sd">        </span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        yp_test : numpy array</span>
+<span class="sd">            Mapping of the standard deviation to error computed</span>
+<span class="sd">            from the interpolation spline constructed by empirical</span>
+<span class="sd">            calibration.</span>
+<span class="sd">        eabs_red : numpy array</span>
+<span class="sd">            Array with the observed abolute errors in the part of the testing</span>
+<span class="sd">            array for which the observed standard deviations are in the</span>
+<span class="sd">            valid interval of calibration.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">over_pred_error_index</span> <span class="o">=</span>  <span class="p">(</span><span class="n">yp_test</span> <span class="o">&gt;=</span> <span class="n">eabs_red</span><span class="p">)</span>
+    <span class="n">percentage_over_predicted</span> <span class="o">=</span> <span class="p">(</span><span class="n">over_pred_error_index</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span> <span class="o">/</span> <span class="n">yp_test</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;percentage over predicted: &quot;</span><span class="p">,</span> <span class="n">percentage_over_predicted</span><span class="p">)</span></div>
 
 
 
@@ -497,7 +1249,7 @@
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2018, ANL.gov.
+        &copy; Copyright 2020, ANL.gov
 
     </p>
   </div>
@@ -514,33 +1266,16 @@
   
 
 
-  
-
-    <script type="text/javascript">
-        var DOCUMENTATION_OPTIONS = {
-            URL_ROOT:'../',
-            VERSION:'',
-            LANGUAGE:'None',
-            COLLAPSE_INDEX:false,
-            FILE_SUFFIX:'.html',
-            HAS_SOURCE:  true,
-            SOURCELINK_SUFFIX: '.txt'
-        };
-    </script>
-      <script type="text/javascript" src="../_static/jquery.js"></script>
-      <script type="text/javascript" src="../_static/underscore.js"></script>
-      <script type="text/javascript" src="../_static/doctools.js"></script>
-      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-
-  
-
-  <script type="text/javascript" src="../_static/js/theme.js"></script>
-
   <script type="text/javascript">
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script> 
+  </script>
+
+  
+  
+    
+   
 
 </body>
 </html>

@@ -17,32 +17,34 @@
   
 
   
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
 
-  
-  
     
 
   
-
   <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" /> 
-
-  
-  <script src="../_static/js/modernizr.min.js"></script>
-
 </head>
 
 <body class="wy-body-for-nav">
 
    
   <div class="wy-grid-for-nav">
-
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search">
+        <div class="wy-side-nav-search" >
           
 
           
@@ -145,18 +147,20 @@
            <div itemprop="articleBody">
             
   <h1>Source code for file_utils</h1><div class="highlight"><pre>
-<span></span><span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">absolute_import</span>
-<span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">print_function</span>
+<span></span><span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">absolute_import</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">print_function</span>
 
 <span class="kn">import</span> <span class="nn">tarfile</span>
 <span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">import</span> <span class="nn">sys</span>
 <span class="kn">import</span> <span class="nn">shutil</span>
 <span class="kn">import</span> <span class="nn">hashlib</span>
-<span class="kn">from</span> <span class="nn">six.moves.urllib.request</span> <span class="k">import</span> <span class="n">urlopen</span>
-<span class="kn">from</span> <span class="nn">six.moves.urllib.error</span> <span class="k">import</span> <span class="n">URLError</span><span class="p">,</span> <span class="n">HTTPError</span>
+<span class="kn">from</span> <span class="nn">six.moves.urllib.request</span> <span class="kn">import</span> <span class="n">urlopen</span>
+<span class="kn">from</span> <span class="nn">six.moves.urllib.error</span> <span class="kn">import</span> <span class="n">URLError</span><span class="p">,</span> <span class="n">HTTPError</span>
 
-<span class="kn">from</span> <span class="nn">generic_utils</span> <span class="k">import</span> <span class="n">Progbar</span>
+<span class="kn">import</span> <span class="nn">wget</span>
+<span class="kn">import</span> <span class="nn">requests</span>
+<span class="kn">from</span> <span class="nn">generic_utils</span> <span class="kn">import</span> <span class="n">Progbar</span>
 
 
 <span class="c1"># Under Python 2, &#39;urlretrieve&#39; relies on FancyURLopener from legacy</span>
@@ -182,11 +186,13 @@
             <span class="k">for</span> <span class="n">chunk</span> <span class="ow">in</span> <span class="n">chunk_read</span><span class="p">(</span><span class="n">response</span><span class="p">,</span> <span class="n">reporthook</span><span class="o">=</span><span class="n">reporthook</span><span class="p">):</span>
                 <span class="n">fd</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">chunk</span><span class="p">)</span>
 <span class="k">else</span><span class="p">:</span>
-    <span class="kn">from</span> <span class="nn">six.moves.urllib.request</span> <span class="k">import</span> <span class="n">urlretrieve</span>
+    <span class="kn">from</span> <span class="nn">six.moves.urllib.request</span> <span class="kn">import</span> <span class="n">urlretrieve</span>
 
 
 <div class="viewcode-block" id="get_file"><a class="viewcode-back" href="../candle_lib/file_utils.html#file_utils.get_file">[docs]</a><span class="k">def</span> <span class="nf">get_file</span><span class="p">(</span><span class="n">fname</span><span class="p">,</span> <span class="n">origin</span><span class="p">,</span> <span class="n">untar</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
-             <span class="n">md5_hash</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">cache_subdir</span><span class="o">=</span><span class="s1">&#39;common&#39;</span><span class="p">):</span>
+             <span class="c1">#md5_hash=None, datadir=&#39;../Data/common&#39;):</span>
+             <span class="c1">#md5_hash=None, cache_subdir=&#39;common&#39;, datadir=&#39;../Data/common&#39;):</span>
+             <span class="n">md5_hash</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">cache_subdir</span><span class="o">=</span><span class="s1">&#39;common&#39;</span><span class="p">,</span> <span class="n">datadir</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span> <span class="c1"># datadir argument was never actually used so changing it to None</span>
     <span class="sd">&quot;&quot;&quot; Downloads a file from a URL if it not already in the cache.</span>
 <span class="sd">        Passing the MD5 hash will verify the file after download as well</span>
 <span class="sd">        as if it is already present in the cache.</span>
@@ -203,15 +209,19 @@
 <span class="sd">            MD5 hash of the file for verification</span>
 <span class="sd">        cache_subdir : string</span>
 <span class="sd">            directory being used as the cache</span>
+<span class="sd">        datadir : string</span>
+<span class="sd">            if set, datadir becomes its setting (which could be e.g. an absolute path) and cache_subdir no longer matters</span>
 
 <span class="sd">        Returns</span>
 <span class="sd">        ----------</span>
 <span class="sd">        Path to the downloaded file</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="n">file_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">realpath</span><span class="p">(</span><span class="vm">__file__</span><span class="p">))</span>
-    <span class="n">datadir_base</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">expanduser</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">file_path</span><span class="p">,</span> <span class="s1">&#39;..&#39;</span><span class="p">,</span> <span class="s1">&#39;Data&#39;</span><span class="p">))</span>
-    <span class="n">datadir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">datadir_base</span><span class="p">,</span> <span class="n">cache_subdir</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">datadir</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">file_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">realpath</span><span class="p">(</span><span class="vm">__file__</span><span class="p">))</span>
+        <span class="n">datadir_base</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">expanduser</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">file_path</span><span class="p">,</span> <span class="s1">&#39;..&#39;</span><span class="p">,</span> <span class="s1">&#39;Data&#39;</span><span class="p">))</span>
+        <span class="n">datadir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">datadir_base</span><span class="p">,</span> <span class="n">cache_subdir</span><span class="p">)</span>
+
     <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">datadir</span><span class="p">):</span>
         <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">datadir</span><span class="p">)</span>
 
@@ -231,7 +241,7 @@
     <span class="n">fpath</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">datadir</span><span class="p">,</span> <span class="n">fname</span><span class="p">)</span>
 
     <span class="n">download</span> <span class="o">=</span> <span class="kc">False</span>
-    <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">fpath</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">fpath</span><span class="p">)</span> <span class="ow">or</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">untar_fpath</span><span class="p">):</span>
         <span class="c1"># file found; verify integrity if a hash was provided</span>
         <span class="k">if</span> <span class="n">md5_hash</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">if</span> <span class="ow">not</span> <span class="n">validate_file</span><span class="p">(</span><span class="n">fpath</span><span class="p">,</span> <span class="n">md5_hash</span><span class="p">):</span>
@@ -240,6 +250,14 @@
                 <span class="n">download</span> <span class="o">=</span> <span class="kc">True</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="n">download</span> <span class="o">=</span> <span class="kc">True</span>
+
+    <span class="c1"># fix ftp protocol if needed</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    if origin.startswith(&#39;ftp://&#39;):</span>
+<span class="sd">        new_url = origin.replace(&#39;ftp://&#39;,&#39;http://&#39;)</span>
+<span class="sd">        origin = new_url</span>
+<span class="sd">    print(&#39;Origin = &#39;, origin)</span>
+<span class="sd">    &#39;&#39;&#39;</span>
 
     <span class="k">if</span> <span class="n">download</span><span class="p">:</span>
         <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Downloading data from&#39;</span><span class="p">,</span> <span class="n">origin</span><span class="p">)</span>
@@ -257,6 +275,7 @@
         <span class="k">try</span><span class="p">:</span>
             <span class="k">try</span><span class="p">:</span>
                 <span class="n">urlretrieve</span><span class="p">(</span><span class="n">origin</span><span class="p">,</span> <span class="n">fpath</span><span class="p">,</span> <span class="n">dl_progress</span><span class="p">)</span>
+                <span class="c1">#fpath = wget.download(origin)</span>
             <span class="k">except</span> <span class="n">URLError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
                 <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="n">error_msg</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">origin</span><span class="p">,</span> <span class="n">e</span><span class="o">.</span><span class="n">errno</span><span class="p">,</span> <span class="n">e</span><span class="o">.</span><span class="n">reason</span><span class="p">))</span>
             <span class="k">except</span> <span class="n">HTTPError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
@@ -323,7 +342,7 @@
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2018, ANL.gov.
+        &copy; Copyright 2020, ANL.gov
 
     </p>
   </div>
@@ -340,33 +359,16 @@
   
 
 
-  
-
-    <script type="text/javascript">
-        var DOCUMENTATION_OPTIONS = {
-            URL_ROOT:'../',
-            VERSION:'',
-            LANGUAGE:'None',
-            COLLAPSE_INDEX:false,
-            FILE_SUFFIX:'.html',
-            HAS_SOURCE:  true,
-            SOURCELINK_SUFFIX: '.txt'
-        };
-    </script>
-      <script type="text/javascript" src="../_static/jquery.js"></script>
-      <script type="text/javascript" src="../_static/underscore.js"></script>
-      <script type="text/javascript" src="../_static/doctools.js"></script>
-      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-
-  
-
-  <script type="text/javascript" src="../_static/js/theme.js"></script>
-
   <script type="text/javascript">
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script> 
+  </script>
+
+  
+  
+    
+   
 
 </body>
 </html>

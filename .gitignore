@@ -1,4 +1,6 @@
+**/.DS_Store
 .idea
 .vscode/
 *.pyc
 __pycache__/
+docs_/source/_build/

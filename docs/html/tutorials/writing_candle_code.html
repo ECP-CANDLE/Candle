@@ -17,34 +17,36 @@
   
 
   
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
 
-  
-  
     
 
   
-
   <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Example of Parameters" href="default_parameters.html" />
     <link rel="prev" title="Tutorials" href="index.html" /> 
-
-  
-  <script src="../_static/js/modernizr.min.js"></script>
-
 </head>
 
 <body class="wy-body-for-nav">
 
    
   <div class="wy-grid-for-nav">
-
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search">
+        <div class="wy-side-nav-search" >
           
 
           
@@ -193,7 +195,7 @@ and have values, if needed.</p>
 you will extend to configure your parameters. If you don’t have any
 additional parameters to define, you can use this code as is (see <a class="reference external" href="https://github.com/ECP-CANDLE/Candle/blob/master/examples/mnist/mnist.py">MNIST
 example</a>).</p>
-<div class="code python highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># mnist.py</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># mnist.py</span>
 <span class="n">additional_definitions</span> <span class="o">=</span> <span class="kc">None</span>
 <span class="n">required</span> <span class="o">=</span> <span class="kc">None</span>
 
@@ -206,7 +208,7 @@ example</a>).</p>
 </pre></div>
 </div>
 <ul class="simple">
-<li># 1: Create a new class by extending <code class="docutils literal notranslate"><span class="pre">candle.Benchmark</span></code></li>
+<li><p># 1: Create a new class by extending <code class="docutils literal notranslate"><span class="pre">candle.Benchmark</span></code></p></li>
 </ul>
 <div class="section" id="additional-parameters">
 <h4>Additional Parameters<a class="headerlink" href="#additional-parameters" title="Permalink to this headline">¶</a></h4>
@@ -224,10 +226,10 @@ The example illustrates how to define an integer type parameter,
 </pre></div>
 </div>
 <ul class="simple">
-<li># 1: required. Name of parameter.</li>
-<li># 2: optional. The number of command-line arguments.</li>
-<li># 3: required. The type to which the command-line arguments should be converted.</li>
-<li># 4: optional. A brief description of what the argument does.</li>
+<li><p># 1: required. Name of parameter.</p></li>
+<li><p># 2: optional. The number of command-line arguments.</p></li>
+<li><p># 3: required. The type to which the command-line arguments should be converted.</p></li>
+<li><p># 4: optional. A brief description of what the argument does.</p></li>
 </ul>
 </div>
 <div class="section" id="mandatory-parameters">
@@ -255,7 +257,7 @@ example</a>,
 which sets appropriate parameters in a tensorflow session.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># thread optimization</span>
 <span class="kn">import</span> <span class="nn">os</span>
-<span class="kn">from</span> <span class="nn">keras</span> <span class="k">import</span> <span class="n">backend</span> <span class="k">as</span> <span class="n">K</span>
+<span class="kn">from</span> <span class="nn">keras</span> <span class="kn">import</span> <span class="n">backend</span> <span class="k">as</span> <span class="n">K</span>
 <span class="k">if</span> <span class="n">K</span><span class="o">.</span><span class="n">backend</span><span class="p">()</span> <span class="o">==</span> <span class="s1">&#39;tensorflow&#39;</span> <span class="ow">and</span> <span class="s1">&#39;NUM_INTRA_THREADS&#39;</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">:</span>
     <span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="nn">tf</span>
     <span class="n">sess</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">Session</span><span class="p">(</span><span class="n">config</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">ConfigProto</span><span class="p">(</span><span class="n">inter_op_parallelism_threads</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s1">&#39;NUM_INTER_THREADS&#39;</span><span class="p">]),</span>
@@ -273,7 +275,7 @@ parameters in addition to the default parameters (
 <code class="docutils literal notranslate"><span class="pre">default_utils.initialize_parameters()</span></code>). The
 <code class="docutils literal notranslate"><span class="pre">initialize_parameters()</span></code> method should return a python dictionary,
 which will be passed to the <code class="docutils literal notranslate"><span class="pre">run()</span></code> method.</p>
-<div class="code python highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># this is a part of mnist_mlp_candle.py</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># this is a part of mnist_mlp_candle.py</span>
 
 <span class="kn">import</span> <span class="nn">mnist</span>
 <span class="kn">import</span> <span class="nn">candle_keras</span> <span class="k">as</span> <span class="nn">candle</span>
@@ -294,10 +296,10 @@ which will be passed to the <code class="docutils literal notranslate"><span cla
 </pre></div>
 </div>
 <ul class="simple">
-<li># 1: instantiate base class</li>
-<li># 2: build argument parser</li>
-<li># 3: initialize_parameters() should return a dictionary</li>
-<li># 4: a file that contains default values for the given parameters. See below for example.</li>
+<li><p># 1: instantiate base class</p></li>
+<li><p># 2: build argument parser</p></li>
+<li><p># 3: initialize_parameters() should return a dictionary</p></li>
+<li><p># 4: a file that contains default values for the given parameters. See below for example.</p></li>
 </ul>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">Global_Params</span><span class="p">]</span>
 <span class="n">epochs</span><span class="o">=</span><span class="mi">20</span>
@@ -324,7 +326,7 @@ neural network was transplanted in the <code class="docutils literal notranslate
 <p>Finally, the <code class="docutils literal notranslate"><span class="pre">run()</span></code> method returns a keras history object. This can
 be omitted for upf workflow, but required for HPO workflow. (see upf and
 mbo explanation below)</p>
-<div class="code python highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># this is a part of mnist_mlp_candle.py</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># this is a part of mnist_mlp_candle.py</span>
 
 <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="n">gParameters</span><span class="p">):</span> <span class="c1"># 1</span>
     <span class="c1">##########################################</span>
@@ -354,14 +356,13 @@ mbo explanation below)</p>
 </pre></div>
 </div>
 <ul>
-<li><p class="first"># 1: run method receives parameter dictionary</p>
-</li>
-<li><p class="first"># 2: returns keras history object or None.</p>
+<li><p># 1: run method receives parameter dictionary</p></li>
+<li><p># 2: returns keras history object or None.</p>
 <blockquote>
 <div><ul class="simple">
-<li>The mlrMBO workflow requires returning a keras history object so
+<li><p>The mlrMBO workflow requires returning a keras history object so
 that the workflow can evaluate the model. The upf workflow does
-not have the evaluation process, so you can return <code class="docutils literal notranslate"><span class="pre">None</span></code>.</li>
+not have the evaluation process, so you can return <code class="docutils literal notranslate"><span class="pre">None</span></code>.</p></li>
 </ul>
 </div></blockquote>
 </li>
@@ -381,7 +382,7 @@ not have the evaluation process, so you can return <code class="docutils literal
         <a href="default_parameters.html" class="btn btn-neutral float-right" title="Example of Parameters" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="index.html" class="btn btn-neutral" title="Tutorials" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="index.html" class="btn btn-neutral float-left" title="Tutorials" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -390,7 +391,7 @@ not have the evaluation process, so you can return <code class="docutils literal
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2018, ANL.gov.
+        &copy; Copyright 2020, ANL.gov
 
     </p>
   </div>
@@ -407,33 +408,16 @@ not have the evaluation process, so you can return <code class="docutils literal
   
 
 
-  
-
-    <script type="text/javascript">
-        var DOCUMENTATION_OPTIONS = {
-            URL_ROOT:'../',
-            VERSION:'',
-            LANGUAGE:'None',
-            COLLAPSE_INDEX:false,
-            FILE_SUFFIX:'.html',
-            HAS_SOURCE:  true,
-            SOURCELINK_SUFFIX: '.txt'
-        };
-    </script>
-      <script type="text/javascript" src="../_static/jquery.js"></script>
-      <script type="text/javascript" src="../_static/underscore.js"></script>
-      <script type="text/javascript" src="../_static/doctools.js"></script>
-      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-
-  
-
-  <script type="text/javascript" src="../_static/js/theme.js"></script>
-
   <script type="text/javascript">
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script> 
+  </script>
+
+  
+  
+    
+   
 
 </body>
 </html>
