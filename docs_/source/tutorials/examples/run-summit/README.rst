@@ -11,7 +11,7 @@ This mode uses a locally-compiled MPICH.
 
 Make sure ``TURBINE_LAUNCH_OPTIONS`` is empty (check cfg-sys) (these options are passed directly to ``mpiexec``.
 
-Examples with ``Supervisor/workflows/upf``:: bash
+Examples with ``Supervisor/workflows/upf``::
 
    $ timeout 60 nice test/upf-1.sh nt3 summit-login
 
@@ -26,7 +26,7 @@ Examples with ``Supervisor/workflows/upf``.
 
 You can use ``summit-tf1`` or ``summit-tf2``
 
-In the interactive session, run:: bash
+In the interactive session, run::
 
    $ test/upf-1.sh nt3 summit-tf1
 
@@ -42,6 +42,6 @@ Examples with ``Supervisor/workflows/upf``.
 
 You can use ``summit-tf1`` or ``summit-tf2``
 
-From a normal login node session, run:: bash
+From a normal login node session, run::
 
    $ test/upf-1.sh nt3 summit-tf1
