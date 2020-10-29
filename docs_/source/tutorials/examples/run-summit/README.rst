@@ -9,7 +9,7 @@ Do not abuse the login nodes.
 
 This mode uses a locally-compiled MPICH.
 
-Make sure ``TURBINE_LAUNCH_OPTIONS`` is empty (check cfg-sys) (these options are passed directly to ``mpiexec``.
+Make sure ``TURBINE_LAUNCH_OPTIONS`` is empty (check ``cfg-sys``) (these options are passed directly to ``mpiexec``.
 
 Examples with ``Supervisor/workflows/upf``::
 
