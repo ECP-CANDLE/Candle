@@ -1,38 +1,41 @@
 
 
 <!DOCTYPE html>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8">
+  <meta charset="utf-8" />
   
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
   <title>solr_keras module &mdash; CANDLE  documentation</title>
   
 
   
-  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+
   
   
 
   
-  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
         <script src="../_static/doctools.js"></script>
-        <script src="../_static/language_data.js"></script>
     
     <script type="text/javascript" src="../_static/js/theme.js"></script>
 
     
-
-  
-  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="uq_utils module" href="uq_utils.html" />
@@ -73,6 +76,7 @@
           
         </div>
 
+        
         <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
           
             
@@ -110,6 +114,7 @@
             
           
         </div>
+        
       </div>
     </nav>
 
@@ -144,11 +149,13 @@
 
 
 
+
+
 <div role="navigation" aria-label="breadcrumbs navigation">
 
   <ul class="wy-breadcrumbs">
     
-      <li><a href="../index.html">Docs</a> &raquo;</li>
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
         
           <li><a href="../candle_lib.html">CANDLE Library API</a> &raquo;</li>
         
@@ -157,7 +164,7 @@
     
       <li class="wy-breadcrumbs-aside">
         
-            
+          
             <a href="../_sources/candle_lib/solr_keras.rst.txt" rel="nofollow"> View page source</a>
           
         
@@ -175,32 +182,32 @@
 <span id="solr-keras-module"></span><h1>solr_keras module<a class="headerlink" href="#module-solr_keras" title="Permalink to this headline">¶</a></h1>
 <dl class="py class">
 <dt id="solr_keras.CandleRemoteMonitor">
-<em class="property">class </em><code class="sig-prename descclassname">solr_keras.</code><code class="sig-name descname">CandleRemoteMonitor</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">params</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/solr_keras.html#CandleRemoteMonitor"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#solr_keras.CandleRemoteMonitor" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">solr_keras.</span></code><code class="sig-name descname"><span class="pre">CandleRemoteMonitor</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">params</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/solr_keras.html#CandleRemoteMonitor"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#solr_keras.CandleRemoteMonitor" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">keras.callbacks.Callback</span></code></p>
 <p>Capture Run level output and store/send for monitoring</p>
 <dl class="py method">
 <dt id="solr_keras.CandleRemoteMonitor.on_epoch_begin">
-<code class="sig-name descname">on_epoch_begin</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">epoch</span></em>, <em class="sig-param"><span class="n">logs</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/solr_keras.html#CandleRemoteMonitor.on_epoch_begin"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#solr_keras.CandleRemoteMonitor.on_epoch_begin" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">on_epoch_begin</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">epoch</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">logs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/solr_keras.html#CandleRemoteMonitor.on_epoch_begin"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#solr_keras.CandleRemoteMonitor.on_epoch_begin" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
 <dt id="solr_keras.CandleRemoteMonitor.on_epoch_end">
-<code class="sig-name descname">on_epoch_end</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">epoch</span></em>, <em class="sig-param"><span class="n">logs</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/solr_keras.html#CandleRemoteMonitor.on_epoch_end"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#solr_keras.CandleRemoteMonitor.on_epoch_end" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">on_epoch_end</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">epoch</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">logs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/solr_keras.html#CandleRemoteMonitor.on_epoch_end"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#solr_keras.CandleRemoteMonitor.on_epoch_end" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
 <dt id="solr_keras.CandleRemoteMonitor.on_train_begin">
-<code class="sig-name descname">on_train_begin</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">logs</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/solr_keras.html#CandleRemoteMonitor.on_train_begin"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#solr_keras.CandleRemoteMonitor.on_train_begin" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">on_train_begin</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">logs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/solr_keras.html#CandleRemoteMonitor.on_train_begin"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#solr_keras.CandleRemoteMonitor.on_train_begin" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
 <dt id="solr_keras.CandleRemoteMonitor.on_train_end">
-<code class="sig-name descname">on_train_end</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">logs</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/solr_keras.html#CandleRemoteMonitor.on_train_end"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#solr_keras.CandleRemoteMonitor.on_train_end" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">on_train_end</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">logs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/solr_keras.html#CandleRemoteMonitor.on_train_end"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#solr_keras.CandleRemoteMonitor.on_train_end" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
 <dt id="solr_keras.CandleRemoteMonitor.save">
-<code class="sig-name descname">save</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/solr_keras.html#CandleRemoteMonitor.save"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#solr_keras.CandleRemoteMonitor.save" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">save</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/solr_keras.html#CandleRemoteMonitor.save"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#solr_keras.CandleRemoteMonitor.save" title="Permalink to this definition">¶</a></dt>
 <dd><p>Save log_messages to file</p>
 </dd></dl>
 
@@ -208,19 +215,19 @@
 
 <dl class="py class">
 <dt id="solr_keras.TerminateOnTimeOut">
-<em class="property">class </em><code class="sig-prename descclassname">solr_keras.</code><code class="sig-name descname">TerminateOnTimeOut</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">timeout_in_sec</span><span class="o">=</span><span class="default_value">10</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/solr_keras.html#TerminateOnTimeOut"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#solr_keras.TerminateOnTimeOut" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">solr_keras.</span></code><code class="sig-name descname"><span class="pre">TerminateOnTimeOut</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">timeout_in_sec</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/solr_keras.html#TerminateOnTimeOut"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#solr_keras.TerminateOnTimeOut" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">keras.callbacks.Callback</span></code></p>
 <p>This class implements timeout on model training. When the script reaches timeout,
 this class sets model.stop_training = True</p>
 <dl class="py method">
 <dt id="solr_keras.TerminateOnTimeOut.on_epoch_end">
-<code class="sig-name descname">on_epoch_end</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">epoch</span></em>, <em class="sig-param"><span class="n">logs</span><span class="o">=</span><span class="default_value">{}</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/solr_keras.html#TerminateOnTimeOut.on_epoch_end"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#solr_keras.TerminateOnTimeOut.on_epoch_end" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">on_epoch_end</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">epoch</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">logs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">{}</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/solr_keras.html#TerminateOnTimeOut.on_epoch_end"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#solr_keras.TerminateOnTimeOut.on_epoch_end" title="Permalink to this definition">¶</a></dt>
 <dd><p>On every epoch end, check whether it exceeded timeout and terminate training if necessary</p>
 </dd></dl>
 
 <dl class="py method">
 <dt id="solr_keras.TerminateOnTimeOut.on_train_begin">
-<code class="sig-name descname">on_train_begin</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">logs</span><span class="o">=</span><span class="default_value">{}</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/solr_keras.html#TerminateOnTimeOut.on_train_begin"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#solr_keras.TerminateOnTimeOut.on_train_begin" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">on_train_begin</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">logs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">{}</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/solr_keras.html#TerminateOnTimeOut.on_train_begin"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#solr_keras.TerminateOnTimeOut.on_train_begin" title="Permalink to this definition">¶</a></dt>
 <dd><p>Start clock to calculate timeout</p>
 </dd></dl>
 
@@ -228,7 +235,7 @@ this class sets model.stop_training = True</p>
 
 <dl class="py function">
 <dt id="solr_keras.compute_trainable_params">
-<code class="sig-prename descclassname">solr_keras.</code><code class="sig-name descname">compute_trainable_params</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">model</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/solr_keras.html#compute_trainable_params"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#solr_keras.compute_trainable_params" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname"><span class="pre">solr_keras.</span></code><code class="sig-name descname"><span class="pre">compute_trainable_params</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/solr_keras.html#compute_trainable_params"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#solr_keras.compute_trainable_params" title="Permalink to this definition">¶</a></dt>
 <dd><p>Extract number of parameters from the given Keras model</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -247,29 +254,29 @@ this class sets model.stop_training = True</p>
            
           </div>
           <footer>
-  
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-      
-        <a href="uq_utils.html" class="btn btn-neutral float-right" title="uq_utils module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
-      
-      
-        <a href="pytorch_utils.html" class="btn btn-neutral float-left" title="pytorch_utils module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
-      
+        <a href="uq_utils.html" class="btn btn-neutral float-right" title="uq_utils module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="pytorch_utils.html" class="btn btn-neutral float-left" title="pytorch_utils module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
     </div>
-  
 
   <hr/>
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2020, ANL.gov
+        &#169; Copyright 2020, ANL.gov.
 
     </p>
   </div>
-  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
 </footer>
-
         </div>
       </div>
 
@@ -277,7 +284,6 @@ this class sets model.stop_training = True</p>
 
   </div>
   
-
 
   <script type="text/javascript">
       jQuery(function () {

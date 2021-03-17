@@ -34,3 +34,4 @@ Examples
    examples/darts/README
    examples/mnist/README
    examples/unet/README
+   examples/run-summit/README
