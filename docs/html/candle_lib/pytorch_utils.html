@@ -1,31 +1,23 @@
 
 
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" >
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
 <head>
-  <meta charset="utf-8" />
+  <meta charset="utf-8">
   
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
   <title>pytorch_utils module &mdash; CANDLE  documentation</title>
   
 
   
-  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-
+  
   
   
 
   
-  
-
-  
-
-  
-  <!--[if lt IE 9]>
-    <script src="../_static/js/html5shiv.min.js"></script>
-  <![endif]-->
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
@@ -36,6 +28,10 @@
     <script type="text/javascript" src="../_static/js/theme.js"></script>
 
     
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="solr_keras module" href="solr_keras.html" />
@@ -76,7 +72,6 @@
           
         </div>
 
-        
         <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
           
             
@@ -114,7 +109,6 @@
             
           
         </div>
-        
       </div>
     </nav>
 
@@ -149,13 +143,11 @@
 
 
 
-
-
 <div role="navigation" aria-label="breadcrumbs navigation">
 
   <ul class="wy-breadcrumbs">
     
-      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+      <li><a href="../index.html">Docs</a> &raquo;</li>
         
           <li><a href="../candle_lib.html">CANDLE Library API</a> &raquo;</li>
         
@@ -164,7 +156,7 @@
     
       <li class="wy-breadcrumbs-aside">
         
-          
+            
             <a href="../_sources/candle_lib/pytorch_utils.rst.txt" rel="nofollow"> View page source</a>
           
         
@@ -178,8 +170,54 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="pytorch-utils-module">
-<h1>pytorch_utils module<a class="headerlink" href="#pytorch-utils-module" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="module-pytorch_utils">
+<span id="pytorch-utils-module"></span><h1>pytorch_utils module<a class="headerlink" href="#module-pytorch_utils" title="Permalink to this headline">¶</a></h1>
+<dl class="py function">
+<dt id="pytorch_utils.build_activation">
+<code class="sig-prename descclassname"><span class="pre">pytorch_utils.</span></code><code class="sig-name descname"><span class="pre">build_activation</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">type</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pytorch_utils.html#build_activation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pytorch_utils.build_activation" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt id="pytorch_utils.build_optimizer">
+<code class="sig-prename descclassname"><span class="pre">pytorch_utils.</span></code><code class="sig-name descname"><span class="pre">build_optimizer</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lr</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">kerasDefaults</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">trainable_only</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pytorch_utils.html#build_optimizer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pytorch_utils.build_optimizer" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt id="pytorch_utils.get_function">
+<code class="sig-prename descclassname"><span class="pre">pytorch_utils.</span></code><code class="sig-name descname"><span class="pre">get_function</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pytorch_utils.html#get_function"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pytorch_utils.get_function" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt id="pytorch_utils.initialize">
+<code class="sig-prename descclassname"><span class="pre">pytorch_utils.</span></code><code class="sig-name descname"><span class="pre">initialize</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">weights</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">kerasDefaults</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">constant</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pytorch_utils.html#initialize"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pytorch_utils.initialize" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt id="pytorch_utils.mse">
+<code class="sig-prename descclassname"><span class="pre">pytorch_utils.</span></code><code class="sig-name descname"><span class="pre">mse</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">y_true</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_pred</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pytorch_utils.html#mse"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pytorch_utils.mse" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt id="pytorch_utils.set_parallelism_threads">
+<code class="sig-prename descclassname"><span class="pre">pytorch_utils.</span></code><code class="sig-name descname"><span class="pre">set_parallelism_threads</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pytorch_utils.html#set_parallelism_threads"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pytorch_utils.set_parallelism_threads" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt id="pytorch_utils.set_seed">
+<code class="sig-prename descclassname"><span class="pre">pytorch_utils.</span></code><code class="sig-name descname"><span class="pre">set_seed</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">seed</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pytorch_utils.html#set_seed"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pytorch_utils.set_seed" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the random number seed to the desired value</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>seed</strong> (<em>integer</em>) – Random number seed.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="pytorch_utils.xent">
+<code class="sig-prename descclassname"><span class="pre">pytorch_utils.</span></code><code class="sig-name descname"><span class="pre">xent</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">y_true</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_pred</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pytorch_utils.html#xent"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pytorch_utils.xent" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
 </div>
 
 
@@ -187,29 +225,29 @@
            
           </div>
           <footer>
+  
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-        <a href="solr_keras.html" class="btn btn-neutral float-right" title="solr_keras module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
-        <a href="profiling_utils.html" class="btn btn-neutral float-left" title="profiling_utils module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+      
+        <a href="solr_keras.html" class="btn btn-neutral float-right" title="solr_keras module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="profiling_utils.html" class="btn btn-neutral float-left" title="profiling_utils module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
     </div>
+  
 
   <hr/>
 
   <div role="contentinfo">
     <p>
-        &#169; Copyright 2020, ANL.gov.
+        &copy; Copyright 2020, ANL.gov
 
     </p>
   </div>
-    
-    
-    
-    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
-    
-    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
-    
-    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
 </footer>
+
         </div>
       </div>
 
@@ -217,6 +255,7 @@
 
   </div>
   
+
 
   <script type="text/javascript">
       jQuery(function () {

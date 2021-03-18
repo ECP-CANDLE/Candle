@@ -1,31 +1,23 @@
 
 
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" >
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
 <head>
-  <meta charset="utf-8" />
+  <meta charset="utf-8">
   
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
   <title>keras_utils module &mdash; CANDLE  documentation</title>
   
 
   
-  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-
+  
   
   
 
   
-  
-
-  
-
-  
-  <!--[if lt IE 9]>
-    <script src="../_static/js/html5shiv.min.js"></script>
-  <![endif]-->
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
@@ -36,6 +28,10 @@
     <script type="text/javascript" src="../_static/js/theme.js"></script>
 
     
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="P1_utils module" href="P1_utils.html" />
@@ -76,7 +72,6 @@
           
         </div>
 
-        
         <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
           
             
@@ -114,7 +109,6 @@
             
           
         </div>
-        
       </div>
     </nav>
 
@@ -149,13 +143,11 @@
 
 
 
-
-
 <div role="navigation" aria-label="breadcrumbs navigation">
 
   <ul class="wy-breadcrumbs">
     
-      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+      <li><a href="../index.html">Docs</a> &raquo;</li>
         
           <li><a href="../candle_lib.html">CANDLE Library API</a> &raquo;</li>
         
@@ -164,7 +156,7 @@
     
       <li class="wy-breadcrumbs-aside">
         
-          
+            
             <a href="../_sources/candle_lib/keras_utils.rst.txt" rel="nofollow"> View page source</a>
           
         
@@ -178,8 +170,171 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="keras-utils-module">
-<h1>keras_utils module<a class="headerlink" href="#keras-utils-module" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="module-keras_utils">
+<span id="keras-utils-module"></span><h1>keras_utils module<a class="headerlink" href="#module-keras_utils" title="Permalink to this headline">¶</a></h1>
+<dl class="py class">
+<dt id="keras_utils.LoggingCallback">
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">keras_utils.</span></code><code class="sig-name descname"><span class="pre">LoggingCallback</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="pre">print_fcn=&lt;built-in</span> <span class="pre">function</span> <span class="pre">print&gt;</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/keras_utils.html#LoggingCallback"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#keras_utils.LoggingCallback" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">keras.callbacks.callbacks.Callback</span></code></p>
+<dl class="py method">
+<dt id="keras_utils.LoggingCallback.on_epoch_end">
+<code class="sig-name descname"><span class="pre">on_epoch_end</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">epoch</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">logs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">{}</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/keras_utils.html#LoggingCallback.on_epoch_end"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#keras_utils.LoggingCallback.on_epoch_end" title="Permalink to this definition">¶</a></dt>
+<dd><p>Called at the end of an epoch.</p>
+<p>Subclasses should override for any actions to run. This function should only
+be called during train mode.</p>
+<dl>
+<dt># Arguments</dt><dd><p>epoch: integer, index of epoch.
+logs: dict, metric results for this training epoch, and for the</p>
+<blockquote>
+<div><p>validation epoch if validation is performed. Validation result keys
+are prefixed with <cite>val_</cite>.</p>
+</div></blockquote>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="keras_utils.MultiGPUCheckpoint">
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">keras_utils.</span></code><code class="sig-name descname"><span class="pre">MultiGPUCheckpoint</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filepath</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">monitor</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'val_loss'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save_best_only</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save_weights_only</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mode</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'auto'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">period</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/keras_utils.html#MultiGPUCheckpoint"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#keras_utils.MultiGPUCheckpoint" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">keras.callbacks.callbacks.ModelCheckpoint</span></code></p>
+<dl class="py method">
+<dt id="keras_utils.MultiGPUCheckpoint.set_model">
+<code class="sig-name descname"><span class="pre">set_model</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/keras_utils.html#MultiGPUCheckpoint.set_model"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#keras_utils.MultiGPUCheckpoint.set_model" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="keras_utils.PermanentDropout">
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">keras_utils.</span></code><code class="sig-name descname"><span class="pre">PermanentDropout</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">rate</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/keras_utils.html#PermanentDropout"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#keras_utils.PermanentDropout" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">keras.layers.core.Dropout</span></code></p>
+<dl class="py method">
+<dt id="keras_utils.PermanentDropout.call">
+<code class="sig-name descname"><span class="pre">call</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mask</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/keras_utils.html#PermanentDropout.call"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#keras_utils.PermanentDropout.call" title="Permalink to this definition">¶</a></dt>
+<dd><p>This is where the layer’s logic lives.</p>
+<dl class="simple">
+<dt># Arguments</dt><dd><p>inputs: Input tensor, or list/tuple of input tensors.
+<a href="#id1"><span class="problematic" id="id2">**</span></a>kwargs: Additional keyword arguments.</p>
+</dd>
+<dt># Returns</dt><dd><p>A tensor or list/tuple of tensors.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt id="keras_utils.build_initializer">
+<code class="sig-prename descclassname"><span class="pre">keras_utils.</span></code><code class="sig-name descname"><span class="pre">build_initializer</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">kerasDefaults</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">constant</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/keras_utils.html#build_initializer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#keras_utils.build_initializer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the initializer to the appropriate Keras initializer function
+based on the input string and learning rate. Other required values
+are set to the Keras default values</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>type</strong> (<em>string</em>) – <p>String to choose the initializer</p>
+<p>Options recognized: ‘constant’, ‘uniform’, ‘normal’,
+‘glorot_uniform’, ‘lecun_uniform’, ‘he_normal’</p>
+<p>See the Keras documentation for a full description of the options</p>
+</p></li>
+<li><p><strong>kerasDefaults</strong> (<em>list</em>) – List of default parameter values to ensure consistency between frameworks</p></li>
+<li><p><strong>seed</strong> (<em>integer</em>) – Random number seed</p></li>
+<li><p><strong>constant</strong> (<em>float</em>) – Constant value (for the constant initializer only)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><em>The appropriate Keras initializer function</em></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="keras_utils.build_optimizer">
+<code class="sig-prename descclassname"><span class="pre">keras_utils.</span></code><code class="sig-name descname"><span class="pre">build_optimizer</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lr</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">kerasDefaults</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/keras_utils.html#build_optimizer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#keras_utils.build_optimizer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the optimizer to the appropriate Keras optimizer function
+based on the input string and learning rate. Other required values
+are set to the Keras default values</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>type</strong> (<em>string</em>) – <p>String to choose the optimizer</p>
+<p>Options recognized: ‘sgd’, ‘rmsprop’, ‘adagrad’, adadelta’, ‘adam’
+See the Keras documentation for a full description of the options</p>
+</p></li>
+<li><p><strong>lr</strong> (<em>float</em>) – Learning rate</p></li>
+<li><p><strong>kerasDefaults</strong> (<em>list</em>) – List of default parameter values to ensure consistency between frameworks</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><em>The appropriate Keras optimizer function</em></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="keras_utils.corr">
+<code class="sig-prename descclassname"><span class="pre">keras_utils.</span></code><code class="sig-name descname"><span class="pre">corr</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">y_true</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_pred</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/keras_utils.html#corr"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#keras_utils.corr" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt id="keras_utils.covariance">
+<code class="sig-prename descclassname"><span class="pre">keras_utils.</span></code><code class="sig-name descname"><span class="pre">covariance</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/keras_utils.html#covariance"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#keras_utils.covariance" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt id="keras_utils.evaluate_autoencoder">
+<code class="sig-prename descclassname"><span class="pre">keras_utils.</span></code><code class="sig-name descname"><span class="pre">evaluate_autoencoder</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">y_pred</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_test</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/keras_utils.html#evaluate_autoencoder"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#keras_utils.evaluate_autoencoder" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt id="keras_utils.get_function">
+<code class="sig-prename descclassname"><span class="pre">keras_utils.</span></code><code class="sig-name descname"><span class="pre">get_function</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/keras_utils.html#get_function"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#keras_utils.get_function" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt id="keras_utils.mae">
+<code class="sig-prename descclassname"><span class="pre">keras_utils.</span></code><code class="sig-name descname"><span class="pre">mae</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">y_true</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_pred</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/keras_utils.html#mae"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#keras_utils.mae" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt id="keras_utils.mse">
+<code class="sig-prename descclassname"><span class="pre">keras_utils.</span></code><code class="sig-name descname"><span class="pre">mse</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">y_true</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_pred</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/keras_utils.html#mse"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#keras_utils.mse" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt id="keras_utils.r2">
+<code class="sig-prename descclassname"><span class="pre">keras_utils.</span></code><code class="sig-name descname"><span class="pre">r2</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">y_true</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_pred</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/keras_utils.html#r2"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#keras_utils.r2" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt id="keras_utils.register_permanent_dropout">
+<code class="sig-prename descclassname"><span class="pre">keras_utils.</span></code><code class="sig-name descname"><span class="pre">register_permanent_dropout</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/keras_utils.html#register_permanent_dropout"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#keras_utils.register_permanent_dropout" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt id="keras_utils.set_parallelism_threads">
+<code class="sig-prename descclassname"><span class="pre">keras_utils.</span></code><code class="sig-name descname"><span class="pre">set_parallelism_threads</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/keras_utils.html#set_parallelism_threads"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#keras_utils.set_parallelism_threads" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the number of parallel threads according to the number available on the hardware</p>
+</dd></dl>
+
+<dl class="py function">
+<dt id="keras_utils.set_seed">
+<code class="sig-prename descclassname"><span class="pre">keras_utils.</span></code><code class="sig-name descname"><span class="pre">set_seed</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">seed</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/keras_utils.html#set_seed"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#keras_utils.set_seed" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the random number seed to the desired value</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>seed</strong> (<em>integer</em>) – Random number seed.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="keras_utils.xent">
+<code class="sig-prename descclassname"><span class="pre">keras_utils.</span></code><code class="sig-name descname"><span class="pre">xent</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">y_true</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_pred</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/keras_utils.html#xent"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#keras_utils.xent" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
 </div>
 
 
@@ -187,29 +342,29 @@
            
           </div>
           <footer>
+  
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-        <a href="P1_utils.html" class="btn btn-neutral float-right" title="P1_utils module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
-        <a href="generic_utils.html" class="btn btn-neutral float-left" title="generic_utils module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+      
+        <a href="P1_utils.html" class="btn btn-neutral float-right" title="P1_utils module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="generic_utils.html" class="btn btn-neutral float-left" title="generic_utils module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
     </div>
+  
 
   <hr/>
 
   <div role="contentinfo">
     <p>
-        &#169; Copyright 2020, ANL.gov.
+        &copy; Copyright 2020, ANL.gov
 
     </p>
   </div>
-    
-    
-    
-    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
-    
-    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
-    
-    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
 </footer>
+
         </div>
       </div>
 
@@ -217,6 +372,7 @@
 
   </div>
   
+
 
   <script type="text/javascript">
       jQuery(function () {
