@@ -1,72 +1,5 @@
--  `Documentation for the CANDLE
-   team <#documentation-for-the-candle-team>`__
-
-   -  `Terminology and scope <#terminology-and-scope>`__
-   -  `Overview of wrapper scripts
-      functionality <#overview-of-wrapper-scripts-functionality>`__
-
-      -  `For users <#for-users>`__
-      -  `For developers <#for-developers>`__
-
-   -  `Loading the ``candle`` module <#loading-the-candle-module>`__
-   -  `Quick-start examples (for
-      Summit) <#quick-start-examples-for-summit>`__
-
-      -  `Step 1: Setup <#step-1-setup>`__
-      -  `Step 2: Run sample CANDLE-compliant model
-         scripts <#step-2-run-sample-candle-compliant-model-scripts>`__
-      -  `Step 3: Run sample non-CANDLE-compliant model
-         scripts <#step-3-run-sample-non-candle-compliant-model-scripts>`__
-
-   -  `How a canonically CANDLE-compliant model script should be
-      modified for use with the wrapper
-      scripts <#how-a-canonically-candle-compliant-model-script-should-be-modified-for-use-with-the-wrapper-scripts>`__
-
-      -  `Specifically required by the wrapper scripts, by
-         example <#specifically-required-by-the-wrapper-scripts-by-example>`__
-      -  `Nothing to do with the wrapper scripts (generally no need to
-         do
-         these) <#nothing-to-do-with-the-wrapper-scripts-generally-no-need-to-do-these>`__
-
-   -  `How to minimally modify a bare model script for use with the
-      wrapper
-      scripts <#how-to-minimally-modify-a-bare-model-script-for-use-with-the-wrapper-scripts>`__
-
-      -  `Running a non-CANDLE-compliant model on its own, outside of
-         Supervisor <#running-a-non-candle-compliant-model-on-its-own-outside-of-supervisor>`__
-
-   -  `Input file format <#input-file-contents>`__
-
-      -  ```&control`` section <#control-section>`__
-      -  ```&default_model`` section <#default_model-section>`__
-      -  ```&param_space`` section <#param_space-section>`__
-
-   -  `Code organization <#code-organization>`__
-   -  `Recommendations for particular use
-      cases <#recommendations-for-particular-use-cases>`__
-
-      -  `Run ``grid`` or ``bayesian`` hyperparameter searches on an
-         already CANDLE-compliant model script such as a
-         benchmark <#run-grid-or-bayesian-hyperparameter-searches-on-an-already-candle-compliant-model-script-such-as-a-benchmark>`__
-      -  `Create a new model script on which you want to run ``grid`` or
-         ``bayesian`` hyperparameter
-         searches <#create-a-new-model-script-on-which-you-want-to-run-grid-or-bayesian-hyperparameter-searches>`__
-      -  `Run a model script written in another language such as ``R``
-         or
-         ``bash`` <#run-a-model-script-written-in-another-language-such-as-r-or-bash>`__
-      -  `Pull updates to the central installation of CANDLE that have
-         already been pulled into the main Supervisor/Benchmarks
-         repositories <#pull-updates-to-the-central-installation-of-candle-that-have-already-been-pulled-into-the-main-supervisorbenchmarks-repositories>`__
-      -  `Commit changes to the wrapper scripts or to the Supervisor or
-         Benchmarks clones in the central
-         installation <#commit-changes-to-the-wrapper-scripts-or-to-the-supervisor-or-benchmarks-clones-in-the-central-installation>`__
-
-   -  `Contribution ideas <#contribution-ideas>`__
-   -  `How to contact Andrew for help with anything
-      above <#how-to-contact-andrew-for-help-with-anything-above>`__
-
-Documentation for the CANDLE team
-=================================
+CANDLE Shared Installation
+==========================
 
 Terminology and scope
 ---------------------
@@ -436,8 +369,8 @@ Here is a list of possible ``keyword``\ s and their default ``value``\ s
 |                       |                       | CANDLE-compliance     |
 |                       |                       | only)                 |
 +-----------------------+-----------------------+-----------------------+
-| `                     | Empty string          | Actual Python         |
-| `exec_python_module`` |                       | ``module`` to use if  |
+| ``exec_python_module``| Empty string          | Actual Python         |
+|                       |                       | ``module`` to use if  |
 |                       |                       | not the Python        |
 |                       |                       | version set in        |
 |                       |                       | ``env-$SITE.sh``      |
@@ -602,7 +535,7 @@ or
 examples in the `quick-start section
 above <#quick-start-examples-for-summit>`__ or here:
 
-::
+.. code:: text
 
    &param_space
      makeDiscreteParam("batch_size", values = c(16, 32))
