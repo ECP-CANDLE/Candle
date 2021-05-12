@@ -189,7 +189,7 @@
 <p>Below I call the scripts I’m describing in this document the “wrapper
 scripts” or “wrappers,” but this still a working name. (“Interface”
 <em>may</em> be a viable alternative.) These scripts refer to the contents of
-the entire <a class="reference external" href="https://github.com/andrew-weisman/candle_wrappers">wrappers GitHub
+the entire <a class="reference external" href="https://github.com/fnlcr-bids-sdsi/candle_wrappers">wrappers GitHub
 repository</a>, and I
 named them as such because the whole point was to add functionality to
 CANDLE while “wrapping” around the current Supervisor code, leaving it
@@ -268,14 +268,14 @@ will pick up and run without dying</p></li>
 <h3>For developers<a class="headerlink" href="#for-developers" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li><p><strong>Modify only a single file
-(</strong><code class="docutils literal notranslate"><span class="pre">`candle_compliant_wrapper.py</span></code> &lt;<a class="reference external" href="https://github.com/andrew-weisman/candle_wrappers/blob/master/commands/submit-job/candle_compliant_wrapper.py">https://github.com/andrew-weisman/candle_wrappers/blob/master/commands/submit-job/candle_compliant_wrapper.py</a>&gt;`__<strong>)
+(</strong><code class="docutils literal notranslate"><span class="pre">`candle_compliant_wrapper.py</span></code> &lt;<a class="reference external" href="https://github.com/fnlcr-bids-sdsi/candle_wrappers/blob/master/commands/submit-job/candle_compliant_wrapper.py">https://github.com/fnlcr-bids-sdsi/candle_wrappers/blob/master/commands/submit-job/candle_compliant_wrapper.py</a>&gt;`__<strong>)
 whenever the CANDLE-compliance procedure changes</strong>. E.g., if the
 benchmarks used the minimal modification to the main <code class="docutils literal notranslate"><span class="pre">.py</span></code> files
 rather than the traditional CANDLE-compliance procedure, there would
 be no need to update every benchmark whenever the CANDLE-compliance
 procedure changed</p></li>
 <li><p><strong>Edit only a single file
-(</strong><code class="docutils literal notranslate"><span class="pre">`preprocess.py</span></code> &lt;<a class="reference external" href="https://github.com/andrew-weisman/candle_wrappers/blob/master/commands/submit-job/preprocess.py">https://github.com/andrew-weisman/candle_wrappers/blob/master/commands/submit-job/preprocess.py</a>&gt;`__<strong>)
+(</strong><code class="docutils literal notranslate"><span class="pre">`preprocess.py</span></code> &lt;<a class="reference external" href="https://github.com/fnlcr-bids-sdsi/candle_wrappers/blob/master/commands/submit-job/preprocess.py">https://github.com/fnlcr-bids-sdsi/candle_wrappers/blob/master/commands/submit-job/preprocess.py</a>&gt;`__<strong>)
 in order to make system-specific changes</strong> such as custom
 modification to the <code class="docutils literal notranslate"><span class="pre">$TURBINE_LAUNCH_OPTIONS</span></code> variable; no need to
 edit each Supervisor workflow’s <code class="docutils literal notranslate"><span class="pre">workflow.sh</span></code> file</p></li>
@@ -414,7 +414,7 @@ gotten fixed in subsequent versions of Keras/Tensorflow.</p>
 to add a line like
 <code class="docutils literal notranslate"><span class="pre">sys.path.append(os.path.join(os.getenv('CANDLE'),</span> <span class="pre">'Benchmarks',</span> <span class="pre">'Pilot1',</span> <span class="pre">'NT3'))</span></code>.
 This is demonstrated in
-<code class="docutils literal notranslate"><span class="pre">`$CANDLE/wrappers/examples/summit-tf1/mlrmbo/nt3_candle_wrappers_baseline_keras2.py</span></code> &lt;<a class="reference external" href="https://github.com/andrew-weisman/candle_wrappers/blob/master/examples/summit-tf1/mlrmbo/nt3_candle_wrappers_baseline_keras2.py">https://github.com/andrew-weisman/candle_wrappers/blob/master/examples/summit-tf1/mlrmbo/nt3_candle_wrappers_baseline_keras2.py</a>&gt;`__.</p>
+<code class="docutils literal notranslate"><span class="pre">`$CANDLE/wrappers/examples/summit-tf1/mlrmbo/nt3_candle_wrappers_baseline_keras2.py</span></code> &lt;<a class="reference external" href="https://github.com/fnlcr-bids-sdsi/candle_wrappers/blob/master/examples/summit-tf1/mlrmbo/nt3_candle_wrappers_baseline_keras2.py">https://github.com/fnlcr-bids-sdsi/candle_wrappers/blob/master/examples/summit-tf1/mlrmbo/nt3_candle_wrappers_baseline_keras2.py</a>&gt;`__.</p>
 </div>
 </div>
 <div class="section" id="how-to-minimally-modify-a-bare-model-script-for-use-with-the-wrapper-scripts">
@@ -429,7 +429,7 @@ the loss evaluated on a test set) is returned as a number in the
 <code class="docutils literal notranslate"><span class="pre">candle_value_to_return</span></code> variable</p></li>
 </ol>
 <p>This is demonstrated in
-<code class="docutils literal notranslate"><span class="pre">`$CANDLE/wrappers/examples/summit-tf1/grid/mnist_mlp.py</span></code> &lt;<a class="reference external" href="https://github.com/andrew-weisman/candle_wrappers/blob/master/examples/summit-tf1/grid/mnist_mlp.py">https://github.com/andrew-weisman/candle_wrappers/blob/master/examples/summit-tf1/grid/mnist_mlp.py</a>&gt;`__.</p>
+<code class="docutils literal notranslate"><span class="pre">`$CANDLE/wrappers/examples/summit-tf1/grid/mnist_mlp.py</span></code> &lt;<a class="reference external" href="https://github.com/fnlcr-bids-sdsi/candle_wrappers/blob/master/examples/summit-tf1/grid/mnist_mlp.py">https://github.com/fnlcr-bids-sdsi/candle_wrappers/blob/master/examples/summit-tf1/grid/mnist_mlp.py</a>&gt;`__.</p>
 <div class="section" id="running-a-non-candle-compliant-model-on-its-own-outside-of-supervisor">
 <h3>Running a non-CANDLE-compliant model on its own, outside of Supervisor<a class="headerlink" href="#running-a-non-candle-compliant-model-on-its-own-outside-of-supervisor" title="Permalink to this headline">¶</a></h3>
 <p>One drawback to minimally modifying a bare model script as opposed to
@@ -470,10 +470,10 @@ Espresso</a> electronic structure
 software.) Four sample input files, corresponding to the four examples
 in the <a class="reference external" href="#quick-start-examples-for-summit">quick-start examples
 above</a>, are here:
-<a class="reference external" href="https://github.com/andrew-weisman/candle_wrappers/blob/master/examples/summit-tf1/upf/upf_example.in">upf</a>,
-<a class="reference external" href="https://github.com/andrew-weisman/candle_wrappers/blob/master/examples/summit-tf1/mlrmbo/mlrmbo_example.in">mlrmbo</a>,
-<a class="reference external" href="https://github.com/andrew-weisman/candle_wrappers/blob/master/examples/summit-tf1/grid/grid_example.in">grid</a>,
-<a class="reference external" href="https://github.com/andrew-weisman/candle_wrappers/blob/master/examples/summit-tf1/bayesian/bayesian_example.in">bayesian</a>.
+<a class="reference external" href="https://github.com/fnlcr-bids-sdsi/candle_wrappers/blob/master/examples/summit-tf1/upf/upf_example.in">upf</a>,
+<a class="reference external" href="https://github.com/fnlcr-bids-sdsi/candle_wrappers/blob/master/examples/summit-tf1/mlrmbo/mlrmbo_example.in">mlrmbo</a>,
+<a class="reference external" href="https://github.com/fnlcr-bids-sdsi/candle_wrappers/blob/master/examples/summit-tf1/grid/grid_example.in">grid</a>,
+<a class="reference external" href="https://github.com/fnlcr-bids-sdsi/candle_wrappers/blob/master/examples/summit-tf1/bayesian/bayesian_example.in">bayesian</a>.
 Spaces at the beginnings of the content-containing lines are optional
 but are recommended for readability.</p>
 <div class="section" id="control-section">
@@ -487,7 +487,7 @@ is taken to be a string by default; thus, quotes are not necessary for
 string <code class="docutils literal notranslate"><span class="pre">value</span></code>s.</p>
 <p>Here is a list of possible <code class="docutils literal notranslate"><span class="pre">keyword</span></code>s and their default <code class="docutils literal notranslate"><span class="pre">value</span></code>s
 (if <code class="docutils literal notranslate"><span class="pre">None</span></code>, then the keyword is required), as specified in
-<code class="docutils literal notranslate"><span class="pre">`$CANDLE/wrappers/site-specific_settings.sh</span></code> &lt;<a class="reference external" href="https://github.com/andrew-weisman/candle_wrappers/blob/master/site-specific_settings.sh">https://github.com/andrew-weisman/candle_wrappers/blob/master/site-specific_settings.sh</a>&gt;`__:</p>
+<code class="docutils literal notranslate"><span class="pre">`$CANDLE/wrappers/site-specific_settings.sh</span></code> &lt;<a class="reference external" href="https://github.com/fnlcr-bids-sdsi/candle_wrappers/blob/master/site-specific_settings.sh">https://github.com/fnlcr-bids-sdsi/candle_wrappers/blob/master/site-specific_settings.sh</a>&gt;`__:</p>
 <table class="docutils align-default">
 <colgroup>
 <col style="width: 33%" />
@@ -723,9 +723,9 @@ combined. E.g.,
 default model text file to use, e.g.,
 <code class="docutils literal notranslate"><span class="pre">candle_default_model_file</span> <span class="pre">=</span> <span class="pre">$CANDLE/Benchmarks/Pilot1/NT3/nt3_default_model.txt</span></code>
 or the <em>contents</em> of such a default model file as, e.g., in the
-<a class="reference external" href="https://github.com/andrew-weisman/candle_wrappers/blob/master/examples/summit-tf1/grid/grid_example.in">grid</a>
+<a class="reference external" href="https://github.com/fnlcr-bids-sdsi/candle_wrappers/blob/master/examples/summit-tf1/grid/grid_example.in">grid</a>
 or
-<a class="reference external" href="https://github.com/andrew-weisman/candle_wrappers/blob/master/examples/summit-tf1/bayesian/bayesian_example.in">bayesian</a>
+<a class="reference external" href="https://github.com/fnlcr-bids-sdsi/candle_wrappers/blob/master/examples/summit-tf1/bayesian/bayesian_example.in">bayesian</a>
 examples in the <a class="reference external" href="#quick-start-examples-for-summit">quick-start section
 above</a>.</p>
 </div>
@@ -736,9 +736,9 @@ above</a>.</p>
 file specifying the hyperparameter space to use, e.g.,
 <code class="docutils literal notranslate"><span class="pre">candle_param_space_file</span> <span class="pre">=</span> <span class="pre">$CANDLE/Supervisor/workflows/mlrMBO/data/nt3_nightly.R</span></code>
 or the <em>contents</em> of such a parameter space file as, e.g., in the
-<a class="reference external" href="https://github.com/andrew-weisman/candle_wrappers/blob/master/examples/summit-tf1/grid/grid_example.in">grid</a>
+<a class="reference external" href="https://github.com/fnlcr-bids-sdsi/candle_wrappers/blob/master/examples/summit-tf1/grid/grid_example.in">grid</a>
 or
-<a class="reference external" href="https://github.com/andrew-weisman/candle_wrappers/blob/master/examples/summit-tf1/upf/upf_example.in">upf</a>
+<a class="reference external" href="https://github.com/fnlcr-bids-sdsi/candle_wrappers/blob/master/examples/summit-tf1/upf/upf_example.in">upf</a>
 examples in the <a class="reference external" href="#quick-start-examples-for-summit">quick-start section
 above</a> or here:</p>
 <div class="highlight-text notranslate"><div class="highlight"><pre><span></span>&amp;param_space
@@ -755,7 +755,7 @@ above</a> or here:</p>
 </div>
 <div class="section" id="code-organization">
 <h2>Code organization<a class="headerlink" href="#code-organization" title="Permalink to this headline">¶</a></h2>
-<p>A description of what every file does in the <a class="reference external" href="https://github.com/andrew-weisman/candle_wrappers">wrappers
+<p>A description of what every file does in the <a class="reference external" href="https://github.com/fnlcr-bids-sdsi/candle_wrappers">wrappers
 repository</a>, which
 is cloned to <code class="docutils literal notranslate"><span class="pre">$CANDLE/wrappers</span></code>, can be found
 <a class="reference external" href="./repository_organization.md">here</a>. Some particular notes:</p>
@@ -906,7 +906,7 @@ other <a class="reference external" href="#input-file-contents">input file keywo
 <code class="docutils literal notranslate"><span class="pre">propose_points</span></code>, <code class="docutils literal notranslate"><span class="pre">max_iterations</span></code>, <code class="docutils literal notranslate"><span class="pre">max_budget</span></code>) by following
 the instructions <a class="reference external" href="./README.md#how-to-add-a-new-keyword">here</a> and
 seeing their usage
-<a class="reference external" href="https://github.com/andrew-weisman/candle_wrappers/blob/master/commands/submit-job/dummy_cfg-prm.sh">here</a>
+<a class="reference external" href="https://github.com/fnlcr-bids-sdsi/candle_wrappers/blob/master/commands/submit-job/dummy_cfg-prm.sh">here</a>
 (good exercise to get familiar with the wrappers code)</p></li>
 <li><p>Anything else!</p></li>
 </ul>

@@ -8,7 +8,7 @@ Below I call the scripts I’m describing in this document the “wrapper
 scripts” or “wrappers,” but this still a working name. (“Interface”
 *may* be a viable alternative.) These scripts refer to the contents of
 the entire `wrappers GitHub
-repository <https://github.com/andrew-weisman/candle_wrappers>`__, and I
+repository <https://github.com/fnlcr-bids-sdsi/candle_wrappers>`__, and I
 named them as such because the whole point was to add functionality to
 CANDLE while “wrapping” around the current Supervisor code, leaving it
 as untouched as possible so that it wouldn’t interfere in any way with
@@ -83,14 +83,14 @@ For developers
 ~~~~~~~~~~~~~~
 
 -  **Modify only a single file
-   (**\ ```candle_compliant_wrapper.py`` <https://github.com/andrew-weisman/candle_wrappers/blob/master/commands/submit-job/candle_compliant_wrapper.py>`__\ **)
+   (**\ ```candle_compliant_wrapper.py`` <https://github.com/fnlcr-bids-sdsi/candle_wrappers/blob/master/commands/submit-job/candle_compliant_wrapper.py>`__\ **)
    whenever the CANDLE-compliance procedure changes**. E.g., if the
    benchmarks used the minimal modification to the main ``.py`` files
    rather than the traditional CANDLE-compliance procedure, there would
    be no need to update every benchmark whenever the CANDLE-compliance
    procedure changed
 -  **Edit only a single file
-   (**\ ```preprocess.py`` <https://github.com/andrew-weisman/candle_wrappers/blob/master/commands/submit-job/preprocess.py>`__\ **)
+   (**\ ```preprocess.py`` <https://github.com/fnlcr-bids-sdsi/candle_wrappers/blob/master/commands/submit-job/preprocess.py>`__\ **)
    in order to make system-specific changes** such as custom
    modification to the ``$TURBINE_LAUNCH_OPTIONS`` variable; no need to
    edit each Supervisor workflow’s ``workflow.sh`` file
@@ -240,7 +240,7 @@ In addition, if you, say, pull a Benchmark model script out of the
 to add a line like
 ``sys.path.append(os.path.join(os.getenv('CANDLE'), 'Benchmarks', 'Pilot1', 'NT3'))``.
 This is demonstrated in
-```$CANDLE/wrappers/examples/summit-tf1/mlrmbo/nt3_candle_wrappers_baseline_keras2.py`` <https://github.com/andrew-weisman/candle_wrappers/blob/master/examples/summit-tf1/mlrmbo/nt3_candle_wrappers_baseline_keras2.py>`__.
+```$CANDLE/wrappers/examples/summit-tf1/mlrmbo/nt3_candle_wrappers_baseline_keras2.py`` <https://github.com/fnlcr-bids-sdsi/candle_wrappers/blob/master/examples/summit-tf1/mlrmbo/nt3_candle_wrappers_baseline_keras2.py>`__.
 
 How to minimally modify a bare model script for use with the wrapper scripts
 ----------------------------------------------------------------------------
@@ -254,7 +254,7 @@ How to minimally modify a bare model script for use with the wrapper scripts
    ``candle_value_to_return`` variable
 
 This is demonstrated in
-```$CANDLE/wrappers/examples/summit-tf1/grid/mnist_mlp.py`` <https://github.com/andrew-weisman/candle_wrappers/blob/master/examples/summit-tf1/grid/mnist_mlp.py>`__.
+```$CANDLE/wrappers/examples/summit-tf1/grid/mnist_mlp.py`` <https://github.com/fnlcr-bids-sdsi/candle_wrappers/blob/master/examples/summit-tf1/grid/mnist_mlp.py>`__.
 
 Running a non-CANDLE-compliant model on its own, outside of Supervisor
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -298,10 +298,10 @@ Espresso <https://www.quantum-espresso.org/>`__ electronic structure
 software.) Four sample input files, corresponding to the four examples
 in the `quick-start examples
 above <#quick-start-examples-for-summit>`__, are here:
-`upf <https://github.com/andrew-weisman/candle_wrappers/blob/master/examples/summit-tf1/upf/upf_example.in>`__,
-`mlrmbo <https://github.com/andrew-weisman/candle_wrappers/blob/master/examples/summit-tf1/mlrmbo/mlrmbo_example.in>`__,
-`grid <https://github.com/andrew-weisman/candle_wrappers/blob/master/examples/summit-tf1/grid/grid_example.in>`__,
-`bayesian <https://github.com/andrew-weisman/candle_wrappers/blob/master/examples/summit-tf1/bayesian/bayesian_example.in>`__.
+`upf <https://github.com/fnlcr-bids-sdsi/candle_wrappers/blob/master/examples/summit-tf1/upf/upf_example.in>`__,
+`mlrmbo <https://github.com/fnlcr-bids-sdsi/candle_wrappers/blob/master/examples/summit-tf1/mlrmbo/mlrmbo_example.in>`__,
+`grid <https://github.com/fnlcr-bids-sdsi/candle_wrappers/blob/master/examples/summit-tf1/grid/grid_example.in>`__,
+`bayesian <https://github.com/fnlcr-bids-sdsi/candle_wrappers/blob/master/examples/summit-tf1/bayesian/bayesian_example.in>`__.
 Spaces at the beginnings of the content-containing lines are optional
 but are recommended for readability.
 
@@ -318,7 +318,7 @@ string ``value``\ s.
 
 Here is a list of possible ``keyword``\ s and their default ``value``\ s
 (if ``None``, then the keyword is required), as specified in
-```$CANDLE/wrappers/site-specific_settings.sh`` <https://github.com/andrew-weisman/candle_wrappers/blob/master/site-specific_settings.sh>`__:
+```$CANDLE/wrappers/site-specific_settings.sh`` <https://github.com/fnlcr-bids-sdsi/candle_wrappers/blob/master/site-specific_settings.sh>`__:
 
 +-----------------------+-----------------------+-----------------------+
 | ``keyword``           | Default ``value``     | Notes                 |
@@ -515,9 +515,9 @@ This can contain either a single keyword/value line containing the
 default model text file to use, e.g.,
 ``candle_default_model_file = $CANDLE/Benchmarks/Pilot1/NT3/nt3_default_model.txt``
 or the *contents* of such a default model file as, e.g., in the
-`grid <https://github.com/andrew-weisman/candle_wrappers/blob/master/examples/summit-tf1/grid/grid_example.in>`__
+`grid <https://github.com/fnlcr-bids-sdsi/candle_wrappers/blob/master/examples/summit-tf1/grid/grid_example.in>`__
 or
-`bayesian <https://github.com/andrew-weisman/candle_wrappers/blob/master/examples/summit-tf1/bayesian/bayesian_example.in>`__
+`bayesian <https://github.com/fnlcr-bids-sdsi/candle_wrappers/blob/master/examples/summit-tf1/bayesian/bayesian_example.in>`__
 examples in the `quick-start section
 above <#quick-start-examples-for-summit>`__.
 
@@ -529,9 +529,9 @@ This can contain either a single keyword/value line containing the
 file specifying the hyperparameter space to use, e.g.,
 ``candle_param_space_file = $CANDLE/Supervisor/workflows/mlrMBO/data/nt3_nightly.R``
 or the *contents* of such a parameter space file as, e.g., in the
-`grid <https://github.com/andrew-weisman/candle_wrappers/blob/master/examples/summit-tf1/grid/grid_example.in>`__
+`grid <https://github.com/fnlcr-bids-sdsi/candle_wrappers/blob/master/examples/summit-tf1/grid/grid_example.in>`__
 or
-`upf <https://github.com/andrew-weisman/candle_wrappers/blob/master/examples/summit-tf1/upf/upf_example.in>`__
+`upf <https://github.com/fnlcr-bids-sdsi/candle_wrappers/blob/master/examples/summit-tf1/upf/upf_example.in>`__
 examples in the `quick-start section
 above <#quick-start-examples-for-summit>`__ or here:
 
@@ -551,7 +551,7 @@ Code organization
 -----------------
 
 A description of what every file does in the `wrappers
-repository <https://github.com/andrew-weisman/candle_wrappers>`__, which
+repository <https://github.com/fnlcr-bids-sdsi/candle_wrappers>`__, which
 is cloned to ``$CANDLE/wrappers``, can be found
 `here <./repository_organization.md>`__. Some particular notes:
 
@@ -696,7 +696,7 @@ Below are some ideas for particular ways to contribute:
    ``propose_points``, ``max_iterations``, ``max_budget``) by following
    the instructions `here <./README.md#how-to-add-a-new-keyword>`__ and
    seeing their usage
-   `here <https://github.com/andrew-weisman/candle_wrappers/blob/master/commands/submit-job/dummy_cfg-prm.sh>`__
+   `here <https://github.com/fnlcr-bids-sdsi/candle_wrappers/blob/master/commands/submit-job/dummy_cfg-prm.sh>`__
    (good exercise to get familiar with the wrappers code)
 -  Anything else!
 

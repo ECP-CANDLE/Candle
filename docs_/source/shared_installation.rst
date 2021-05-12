@@ -4,23 +4,15 @@ CANDLE Shared Installation
 Terminology and scope
 ---------------------
 
-Below I call the scripts I’m describing in this document the “wrapper
-scripts” or “wrappers,” but this still a working name. (“Interface”
-*may* be a viable alternative.) These scripts refer to the contents of
-the entire `wrappers GitHub
-repository <https://github.com/andrew-weisman/candle_wrappers>`__, and I
-named them as such because the whole point was to add functionality to
-CANDLE while “wrapping” around the current Supervisor code, leaving it
-as untouched as possible so that it wouldn’t interfere in any way with
-how people currently run CANDLE.
+In addition to the CANDLE shared installation being a ready-to-use, central installation of CANDLE, it is further a set of scripts that adds to the functionality of CANDLE and makes it easier to use for new users. For brevity, below these scripts will be called the "wrapper scripts" or "wrappers," as they are essentially wrappers around the Supervisor/Benchmarks codebase with the aim of improving functionality while leaving the codebase as untouched as possible. These scripts should not interfere in any way with how CANDLE is currently being run; these are only enhancements. They are currently set up and tested on Biowulf and Summit.
 
-The wrapper scripts contain code that (1) helps to set up and test these
+The source code of the wrapper scripts is currently located `here <https://github.com/fnlcr-bids-sdsi/candle_wrappers>`__. This contains code that (1) helps to set up and test these
 scripts alongside new clones of the
 `Supervisor <https://github.com/ECP-CANDLE/Supervisor/tree/develop>`__
 and
 `Benchmarks <https://github.com/ECP-CANDLE/Benchmarks/tree/develop>`__
-CANDLE repos, and (2) adds various features to CANDLE. The documentation
-for setup (#1) can be found `here <./README.md>`__; the documentation
+repositories, and (2) adds various features to CANDLE. The documentation
+for setup (#1) can be found `here <https://github.com/fnlcr-bids-sdsi/candle_wrappers/blob/master/README.md>`__; the documentation
 for usage (#2) is below.
 
 Overview of wrapper scripts functionality
@@ -45,7 +37,7 @@ For users
    ``initialize_parameters()`` and ``run()`` functions (whose content
    occassionally changes) to a new model that you’d like to run using
    CANDLE. The wrapper scripts still work for canonically
-   CANDLE-compliant model scripts such as the already-written main
+   CANDLE-compliant (i.e., "candelized") model scripts such as the already-written main
    ``.py`` files used to run the benchmarks. Additional benefits of only
    minimally modifying a bare model script:
 
@@ -83,14 +75,14 @@ For developers
 ~~~~~~~~~~~~~~
 
 -  **Modify only a single file
-   (**\ ```candle_compliant_wrapper.py`` <https://github.com/andrew-weisman/candle_wrappers/blob/master/commands/submit-job/candle_compliant_wrapper.py>`__\ **)
+   (`candle_compliant_wrapper.py <https://github.com/fnlcr-bids-sdsi/candle_wrappers/blob/master/commands/submit-job/candle_compliant_wrapper.py>`__)
    whenever the CANDLE-compliance procedure changes**. E.g., if the
    benchmarks used the minimal modification to the main ``.py`` files
    rather than the traditional CANDLE-compliance procedure, there would
    be no need to update every benchmark whenever the CANDLE-compliance
    procedure changed
 -  **Edit only a single file
-   (**\ ```preprocess.py`` <https://github.com/andrew-weisman/candle_wrappers/blob/master/commands/submit-job/preprocess.py>`__\ **)
+   (`preprocess.py <https://github.com/fnlcr-bids-sdsi/candle_wrappers/blob/master/commands/submit-job/preprocess.py>`__)
    in order to make system-specific changes** such as custom
    modification to the ``$TURBINE_LAUNCH_OPTIONS`` variable; no need to
    edit each Supervisor workflow’s ``workflow.sh`` file
@@ -100,21 +92,21 @@ Loading the ``candle`` module
 
 We are currently getting CANDLE approved as user-managed software on
 Summit. Once it is approved, we will be able to load the ``candle``
-module via ``module load candle/tf1``. In the interim, do this instead:
+module via ``module load candle``. In the interim, do this instead:
 
 .. code:: bash
 
-   source /gpfs/alpine/med106/world-shared/candle/env_for_lmod-tf1.sh
+   source /gpfs/alpine/med106/world-shared/candle/env_for_lmod-tf2.sh
 
 Both methods primarily do the following:
 
 -  Sets the ``$CANDLE`` variable to
-   ``/gpfs/alpine/med106/world-shared/candle/tf1`` in order to set the
+   ``/gpfs/alpine/med106/world-shared/candle/tf2`` in order to set the
    top-level directory of the entire CANDLE file tree, including the
    ``Supervisor``, ``Benchmarks``, and ``wrappers`` GitHub repositories
 -  Appends ``$CANDLE/wrappers/bin`` to ``$PATH`` in order to be able to
    run ``candle`` from the command line
--  Sets the ``$SITE`` variable to ``summit-tf1`` in order to specify the
+-  Sets the ``$SITE`` variable to ``summit-tf2`` in order to specify the
    HPC system and environment
 -  Appends ``$CANDLE/Benchmarks/common`` to ``$PYTHONPATH`` to allow one
    to write a Python model script in an arbitrary directory and to be
@@ -129,7 +121,7 @@ Step 1: Setup
 .. code:: bash
 
    # Load the CANDLE module; do the following for the time being in lieu of "module load candle", as we are currently getting CANDLE approved as user-managed software
-   source /gpfs/alpine/med106/world-shared/candle/env_for_lmod-tf1.sh
+   source /gpfs/alpine/med106/world-shared/candle/env_for_lmod-tf2.sh
 
    # Enter a possibly empty directory that is completely outside of the Supervisor/Benchmarks repositories on the Alpine filesystem, such as $MEMBERWORK
    cd /gpfs/alpine/med106/scratch/weismana/notebook/2020-11-13/testing_candle_installation
@@ -138,8 +130,7 @@ Step 2: Run sample CANDLE-compliant model scripts
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 This refers to model scripts that the developers refer to as
-“CANDLE-compliant” as usual (what I call “*canonically*
-CANDLE-compliant”). See
+“CANDLE-compliant” or "candelized" as usual. See
 `below <#how-a-canonically-candle-compliant-model-script-should-be-modified-for-use-with-the-wrapper-scripts>`__
 for the changes that should be made to canonically CANDLE-compliant
 scripts to get them to work with the wrapper scripts.
@@ -179,7 +170,7 @@ MNIST using UPF (non-CANDLE-compliant model scripts)
 
 .. code:: bash
 
-   # Pre-fetch the MNIST data since Summit compute nodes can't access the Internet (this obviously has nothing to do with the wrapper scripts)
+   # Pre-fetch the MNIST data since Summit compute nodes can't access the Internet (this has nothing to do with the wrapper scripts)
    mkdir candle_generated_files
    /gpfs/alpine/world-shared/med106/sw/condaenv-200408/bin/python -c "from keras.datasets import mnist; import os; (x_train, y_train), (x_test, y_test) = mnist.load_data(os.path.join(os.getcwd(), 'candle_generated_files', 'mnist.npz'))"
 
@@ -215,7 +206,7 @@ Specifically required by the wrapper scripts, by example
        nt3Bmk = bmk.BenchmarkNT3(
            bmk.file_path,
            # default_model, # ORIGINAL LINE
-           os.getenv('CANDLE_DEFAULT_MODEL_FILE'), # NEW LINE
+           os.getenv('CANDLE_DEFAULT_MODEL_FILE', default_model), # NEW LINE
            'keras',
            prog='nt3_baseline',
            desc='1D CNN to classify RNA sequence data in normal or tumor classes')
@@ -240,7 +231,7 @@ In addition, if you, say, pull a Benchmark model script out of the
 to add a line like
 ``sys.path.append(os.path.join(os.getenv('CANDLE'), 'Benchmarks', 'Pilot1', 'NT3'))``.
 This is demonstrated in
-```$CANDLE/wrappers/examples/summit-tf1/mlrmbo/nt3_candle_wrappers_baseline_keras2.py`` <https://github.com/andrew-weisman/candle_wrappers/blob/master/examples/summit-tf1/mlrmbo/nt3_candle_wrappers_baseline_keras2.py>`__.
+```$CANDLE/wrappers/examples/summit-tf2/mlrmbo/nt3_candle_wrappers_baseline_keras2.py`` <https://github.com/fnlcr-bids-sdsi/candle_wrappers/blob/master/examples/summit-tf2/mlrmbo/nt3_candle_wrappers_baseline_keras2.py>`__.
 
 How to minimally modify a bare model script for use with the wrapper scripts
 ----------------------------------------------------------------------------
@@ -254,7 +245,7 @@ How to minimally modify a bare model script for use with the wrapper scripts
    ``candle_value_to_return`` variable
 
 This is demonstrated in
-```$CANDLE/wrappers/examples/summit-tf1/grid/mnist_mlp.py`` <https://github.com/andrew-weisman/candle_wrappers/blob/master/examples/summit-tf1/grid/mnist_mlp.py>`__.
+```$CANDLE/wrappers/examples/summit-tf2/grid/mnist_mlp.py`` <https://github.com/fnlcr-bids-sdsi/candle_wrappers/blob/master/examples/summit-tf2/grid/mnist_mlp.py>`__.
 
 Running a non-CANDLE-compliant model on its own, outside of Supervisor
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -298,10 +289,10 @@ Espresso <https://www.quantum-espresso.org/>`__ electronic structure
 software.) Four sample input files, corresponding to the four examples
 in the `quick-start examples
 above <#quick-start-examples-for-summit>`__, are here:
-`upf <https://github.com/andrew-weisman/candle_wrappers/blob/master/examples/summit-tf1/upf/upf_example.in>`__,
-`mlrmbo <https://github.com/andrew-weisman/candle_wrappers/blob/master/examples/summit-tf1/mlrmbo/mlrmbo_example.in>`__,
-`grid <https://github.com/andrew-weisman/candle_wrappers/blob/master/examples/summit-tf1/grid/grid_example.in>`__,
-`bayesian <https://github.com/andrew-weisman/candle_wrappers/blob/master/examples/summit-tf1/bayesian/bayesian_example.in>`__.
+`upf <https://github.com/fnlcr-bids-sdsi/candle_wrappers/blob/master/examples/summit-tf2/upf/upf_example.in>`__,
+`mlrmbo <https://github.com/fnlcr-bids-sdsi/candle_wrappers/blob/master/examples/summit-tf2/mlrmbo/mlrmbo_example.in>`__,
+`grid <https://github.com/fnlcr-bids-sdsi/candle_wrappers/blob/master/examples/summit-tf2/grid/grid_example.in>`__,
+`bayesian <https://github.com/fnlcr-bids-sdsi/candle_wrappers/blob/master/examples/summit-tf2/bayesian/bayesian_example.in>`__.
 Spaces at the beginnings of the content-containing lines are optional
 but are recommended for readability.
 
@@ -318,7 +309,7 @@ string ``value``\ s.
 
 Here is a list of possible ``keyword``\ s and their default ``value``\ s
 (if ``None``, then the keyword is required), as specified in
-```$CANDLE/wrappers/site-specific_settings.sh`` <https://github.com/andrew-weisman/candle_wrappers/blob/master/site-specific_settings.sh>`__:
+```$CANDLE/wrappers/site-specific_settings.sh`` <https://github.com/fnlcr-bids-sdsi/candle_wrappers/blob/master/site-specific_settings.sh>`__:
 
 +-----------------------+-----------------------+-----------------------+
 | ``keyword``           | Default ``value``     | Notes                 |
@@ -515,9 +506,9 @@ This can contain either a single keyword/value line containing the
 default model text file to use, e.g.,
 ``candle_default_model_file = $CANDLE/Benchmarks/Pilot1/NT3/nt3_default_model.txt``
 or the *contents* of such a default model file as, e.g., in the
-`grid <https://github.com/andrew-weisman/candle_wrappers/blob/master/examples/summit-tf1/grid/grid_example.in>`__
+`grid <https://github.com/fnlcr-bids-sdsi/candle_wrappers/blob/master/examples/summit-tf2/grid/grid_example.in>`__
 or
-`bayesian <https://github.com/andrew-weisman/candle_wrappers/blob/master/examples/summit-tf1/bayesian/bayesian_example.in>`__
+`bayesian <https://github.com/fnlcr-bids-sdsi/candle_wrappers/blob/master/examples/summit-tf2/bayesian/bayesian_example.in>`__
 examples in the `quick-start section
 above <#quick-start-examples-for-summit>`__.
 
@@ -529,9 +520,9 @@ This can contain either a single keyword/value line containing the
 file specifying the hyperparameter space to use, e.g.,
 ``candle_param_space_file = $CANDLE/Supervisor/workflows/mlrMBO/data/nt3_nightly.R``
 or the *contents* of such a parameter space file as, e.g., in the
-`grid <https://github.com/andrew-weisman/candle_wrappers/blob/master/examples/summit-tf1/grid/grid_example.in>`__
+`grid <https://github.com/fnlcr-bids-sdsi/candle_wrappers/blob/master/examples/summit-tf2/grid/grid_example.in>`__
 or
-`upf <https://github.com/andrew-weisman/candle_wrappers/blob/master/examples/summit-tf1/upf/upf_example.in>`__
+`upf <https://github.com/fnlcr-bids-sdsi/candle_wrappers/blob/master/examples/summit-tf2/upf/upf_example.in>`__
 examples in the `quick-start section
 above <#quick-start-examples-for-summit>`__ or here:
 
@@ -551,7 +542,7 @@ Code organization
 -----------------
 
 A description of what every file does in the `wrappers
-repository <https://github.com/andrew-weisman/candle_wrappers>`__, which
+repository <https://github.com/fnlcr-bids-sdsi/candle_wrappers>`__, which
 is cloned to ``$CANDLE/wrappers``, can be found
 `here <./repository_organization.md>`__. Some particular notes:
 
@@ -597,7 +588,7 @@ Run ``grid`` or ``bayesian`` hyperparameter searches on an already CANDLE-compli
 1. Enter a directory on Summit’s Alpine filesystem such as
    ``$MEMBERWORK``
 2. Load the ``candle`` module via
-   ``source /gpfs/alpine/med106/world-shared/candle/env_for_lmod-tf1.sh``
+   ``source /gpfs/alpine/med106/world-shared/candle/env_for_lmod-tf2.sh``
 3. Import one of the `templates for running canonically CANDLE-compliant
    models <#step-2-run-sample-candle-compliant-model-scripts>`__ using
    ``candle import-template {upf|mlrmbo}``; delete all but the input
@@ -624,7 +615,7 @@ Create a new model script on which you want to run ``grid`` or ``bayesian`` hype
 1. Enter a directory on Summit’s Alpine filesystem such as
    ``$MEMBERWORK``
 2. Load the ``candle`` module via
-   ``source /gpfs/alpine/med106/world-shared/candle/env_for_lmod-tf1.sh``
+   ``source /gpfs/alpine/med106/world-shared/candle/env_for_lmod-tf2.sh``
 3. Create a bare model script as usual (e.g., download a model from the
    Internet, tweak it, and apply it on your data)
 4. Make the model script *minimally* CANDLE-compliant as described
@@ -654,7 +645,7 @@ Pull updates to the central installation of CANDLE that have already been pulled
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 1. Load the ``candle`` module via
-   ``source /gpfs/alpine/med106/world-shared/candle/env_for_lmod-tf1.sh``
+   ``source /gpfs/alpine/med106/world-shared/candle/env_for_lmod-tf2.sh``
 2. Enter the clone you’d like to update via ``cd $CANDLE/Supervisor`` or
    ``cd $CANDLE/Benchmarks``
 3. Run ``git pull``, adjusting the permissions if necessary the very
@@ -666,7 +657,7 @@ Commit changes to the wrapper scripts or to the Supervisor or Benchmarks clones 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 1. Load the ``candle`` module via
-   ``source /gpfs/alpine/med106/world-shared/candle/env_for_lmod-tf1.sh``
+   ``source /gpfs/alpine/med106/world-shared/candle/env_for_lmod-tf2.sh``
 2. Enter the clone you’d like to update via
    ``cd $CANDLE/{wrappers|Supervisor|Benchmarks}``
 3. Make your modifications to the code and commit your changes,
@@ -696,7 +687,7 @@ Below are some ideas for particular ways to contribute:
    ``propose_points``, ``max_iterations``, ``max_budget``) by following
    the instructions `here <./README.md#how-to-add-a-new-keyword>`__ and
    seeing their usage
-   `here <https://github.com/andrew-weisman/candle_wrappers/blob/master/commands/submit-job/dummy_cfg-prm.sh>`__
+   `here <https://github.com/fnlcr-bids-sdsi/candle_wrappers/blob/master/commands/submit-job/dummy_cfg-prm.sh>`__
    (good exercise to get familiar with the wrappers code)
 -  Anything else!
 
