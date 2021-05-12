@@ -1,23 +1,31 @@
 
 
 <!DOCTYPE html>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8">
+  <meta charset="utf-8" />
   
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
   <title>viz_utils module &mdash; CANDLE  documentation</title>
   
 
   
-  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+
   
   
 
   
-  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
@@ -28,10 +36,6 @@
     <script type="text/javascript" src="../_static/js/theme.js"></script>
 
     
-
-  
-  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="clr_keras_utils module" href="clr_keras_utils.html" />
@@ -72,6 +76,7 @@
           
         </div>
 
+        
         <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
           
             
@@ -103,12 +108,14 @@
 <li class="toctree-l2"><a class="reference internal" href="clr_keras_utils.html">clr_keras_utils module</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="../shared_installation.html">CANDLE Shared Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../contribute.html">How to Contribute</a></li>
 </ul>
 
             
           
         </div>
+        
       </div>
     </nav>
 
@@ -143,11 +150,13 @@
 
 
 
+
+
 <div role="navigation" aria-label="breadcrumbs navigation">
 
   <ul class="wy-breadcrumbs">
     
-      <li><a href="../index.html">Docs</a> &raquo;</li>
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
         
           <li><a href="../candle_lib.html">CANDLE Library API</a> &raquo;</li>
         
@@ -156,7 +165,7 @@
     
       <li class="wy-breadcrumbs-aside">
         
-            
+          
             <a href="../_sources/candle_lib/viz_utils.rst.txt" rel="nofollow"> View page source</a>
           
         
@@ -174,7 +183,7 @@
 <span id="viz-utils-module"></span><h1>viz_utils module<a class="headerlink" href="#module-viz_utils" title="Permalink to this headline">¶</a></h1>
 <dl class="py function">
 <dt id="viz_utils.plot_2d_density_sigma_vs_error">
-<code class="sig-prename descclassname"><span class="pre">viz_utils.</span></code><code class="sig-name descname"><span class="pre">plot_2d_density_sigma_vs_error</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sigma</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">yerror</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">method</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">figprefix</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/viz_utils.html#plot_2d_density_sigma_vs_error"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#viz_utils.plot_2d_density_sigma_vs_error" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">viz_utils.</code><code class="sig-name descname">plot_2d_density_sigma_vs_error</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">sigma</span></em>, <em class="sig-param"><span class="n">yerror</span></em>, <em class="sig-param"><span class="n">method</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">figprefix</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/viz_utils.html#plot_2d_density_sigma_vs_error"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#viz_utils.plot_2d_density_sigma_vs_error" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="simple">
 <dt>Functionality to plot a 2D histogram of the distribution of</dt><dd><p>the standard deviations computed for the predictions vs. the
 computed errors (i.e. values of observed - predicted).
@@ -198,7 +207,7 @@ figprefix given.</p></li>
 
 <dl class="py function">
 <dt id="viz_utils.plot_calibration_and_errors">
-<code class="sig-prename descclassname"><span class="pre">viz_utils.</span></code><code class="sig-name descname"><span class="pre">plot_calibration_and_errors</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mean_sigma</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sigma_start_index</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sigma_end_index</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">min_sigma</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_sigma</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">error_thresholds</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">error_thresholds_smooth</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">err_err</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">s_interpolate</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">coverage_percentile</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">method</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">figprefix</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">steps</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/viz_utils.html#plot_calibration_and_errors"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#viz_utils.plot_calibration_and_errors" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">viz_utils.</code><code class="sig-name descname">plot_calibration_and_errors</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">mean_sigma</span></em>, <em class="sig-param"><span class="n">sigma_start_index</span></em>, <em class="sig-param"><span class="n">sigma_end_index</span></em>, <em class="sig-param"><span class="n">min_sigma</span></em>, <em class="sig-param"><span class="n">max_sigma</span></em>, <em class="sig-param"><span class="n">error_thresholds</span></em>, <em class="sig-param"><span class="n">error_thresholds_smooth</span></em>, <em class="sig-param"><span class="n">err_err</span></em>, <em class="sig-param"><span class="n">s_interpolate</span></em>, <em class="sig-param"><span class="n">coverage_percentile</span></em>, <em class="sig-param"><span class="n">method</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">figprefix</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">steps</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/viz_utils.html#plot_calibration_and_errors"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#viz_utils.plot_calibration_and_errors" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="simple">
 <dt>Functionality to plot empirical calibration curves</dt><dd><p>estimated by binning the statistics of computed
 standard deviations and errors.</p>
@@ -247,7 +256,7 @@ the raw bin statistics and the smoothing interpolation (step2).</p></li>
 
 <dl class="py function">
 <dt id="viz_utils.plot_density_observed_vs_predicted">
-<code class="sig-prename descclassname"><span class="pre">viz_utils.</span></code><code class="sig-name descname"><span class="pre">plot_density_observed_vs_predicted</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">Ytest</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Ypred</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pred_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">figprefix</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/viz_utils.html#plot_density_observed_vs_predicted"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#viz_utils.plot_density_observed_vs_predicted" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">viz_utils.</code><code class="sig-name descname">plot_density_observed_vs_predicted</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">Ytest</span></em>, <em class="sig-param"><span class="n">Ypred</span></em>, <em class="sig-param"><span class="n">pred_name</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">figprefix</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/viz_utils.html#plot_density_observed_vs_predicted"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#viz_utils.plot_density_observed_vs_predicted" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="simple">
 <dt>Functionality to plot a 2D histogram of the distribution of observed (ground truth)</dt><dd><p>values vs. predicted values. The plot generated is stored in a png file.</p>
 </dd>
@@ -268,12 +277,12 @@ figprefix given.</p></li>
 
 <dl class="py function">
 <dt id="viz_utils.plot_error">
-<code class="sig-prename descclassname"><span class="pre">viz_utils.</span></code><code class="sig-name descname"><span class="pre">plot_error</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">y_true</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_pred</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">batch</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file_ext</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file_pre</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'output_dir'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">subsample</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1000</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/viz_utils.html#plot_error"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#viz_utils.plot_error" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">viz_utils.</code><code class="sig-name descname">plot_error</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">y_true</span></em>, <em class="sig-param"><span class="n">y_pred</span></em>, <em class="sig-param"><span class="n">batch</span></em>, <em class="sig-param"><span class="n">file_ext</span></em>, <em class="sig-param"><span class="n">file_pre</span><span class="o">=</span><span class="default_value">'output_dir'</span></em>, <em class="sig-param"><span class="n">subsample</span><span class="o">=</span><span class="default_value">1000</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/viz_utils.html#plot_error"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#viz_utils.plot_error" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py function">
 <dt id="viz_utils.plot_histogram_error_per_sigma">
-<code class="sig-prename descclassname"><span class="pre">viz_utils.</span></code><code class="sig-name descname"><span class="pre">plot_histogram_error_per_sigma</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sigma</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">yerror</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">method</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">figprefix</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/viz_utils.html#plot_histogram_error_per_sigma"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#viz_utils.plot_histogram_error_per_sigma" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">viz_utils.</code><code class="sig-name descname">plot_histogram_error_per_sigma</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">sigma</span></em>, <em class="sig-param"><span class="n">yerror</span></em>, <em class="sig-param"><span class="n">method</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">figprefix</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/viz_utils.html#plot_histogram_error_per_sigma"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#viz_utils.plot_histogram_error_per_sigma" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="simple">
 <dt>Functionality to plot a 1D histogram of the distribution of</dt><dd><p>computed errors (i.e. values of observed - predicted) observed
 for specific values of standard deviations computed. The range of
@@ -300,12 +309,12 @@ the figprefix given.</p></li>
 
 <dl class="py function">
 <dt id="viz_utils.plot_history">
-<code class="sig-prename descclassname"><span class="pre">viz_utils.</span></code><code class="sig-name descname"><span class="pre">plot_history</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">out</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">history</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metric</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'loss'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">title</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">width</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">8</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">height</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">6</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/viz_utils.html#plot_history"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#viz_utils.plot_history" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">viz_utils.</code><code class="sig-name descname">plot_history</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">out</span></em>, <em class="sig-param"><span class="n">history</span></em>, <em class="sig-param"><span class="n">metric</span><span class="o">=</span><span class="default_value">'loss'</span></em>, <em class="sig-param"><span class="n">title</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">width</span><span class="o">=</span><span class="default_value">8</span></em>, <em class="sig-param"><span class="n">height</span><span class="o">=</span><span class="default_value">6</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/viz_utils.html#plot_history"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#viz_utils.plot_history" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py function">
 <dt id="viz_utils.plot_metrics">
-<code class="sig-prename descclassname"><span class="pre">viz_utils.</span></code><code class="sig-name descname"><span class="pre">plot_metrics</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">history</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">title</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">skip_ep</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">outdir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'.'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">add_lr</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/viz_utils.html#plot_metrics"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#viz_utils.plot_metrics" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">viz_utils.</code><code class="sig-name descname">plot_metrics</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">history</span></em>, <em class="sig-param"><span class="n">title</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">skip_ep</span><span class="o">=</span><span class="default_value">0</span></em>, <em class="sig-param"><span class="n">outdir</span><span class="o">=</span><span class="default_value">'.'</span></em>, <em class="sig-param"><span class="n">add_lr</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/viz_utils.html#plot_metrics"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#viz_utils.plot_metrics" title="Permalink to this definition">¶</a></dt>
 <dd><p>Plots keras training curves history.
 :param skip_ep: number of epochs to skip when plotting metrics
 :param add_lr: add curve of learning rate progression over epochs</p>
@@ -313,7 +322,7 @@ the figprefix given.</p></li>
 
 <dl class="py function">
 <dt id="viz_utils.plot_percentile_predictions">
-<code class="sig-prename descclassname"><span class="pre">viz_utils.</span></code><code class="sig-name descname"><span class="pre">plot_percentile_predictions</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">Ypred</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Ypred_Lp</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Ypred_Hp</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">percentile_list</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pred_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">figprefix</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/viz_utils.html#plot_percentile_predictions"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#viz_utils.plot_percentile_predictions" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">viz_utils.</code><code class="sig-name descname">plot_percentile_predictions</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">Ypred</span></em>, <em class="sig-param"><span class="n">Ypred_Lp</span></em>, <em class="sig-param"><span class="n">Ypred_Hp</span></em>, <em class="sig-param"><span class="n">percentile_list</span></em>, <em class="sig-param"><span class="n">pred_name</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">figprefix</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/viz_utils.html#plot_percentile_predictions"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#viz_utils.plot_percentile_predictions" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="simple">
 <dt>Functionality to plot the mean of the percentiles predicted.</dt><dd><p>The plot generated is stored in a png file.</p>
 </dd>
@@ -336,7 +345,7 @@ figprefix given.</p></li>
 
 <dl class="py function">
 <dt id="viz_utils.plot_scatter">
-<code class="sig-prename descclassname"><span class="pre">viz_utils.</span></code><code class="sig-name descname"><span class="pre">plot_scatter</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">classes</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">out</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">width</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">height</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">8</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/viz_utils.html#plot_scatter"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#viz_utils.plot_scatter" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">viz_utils.</code><code class="sig-name descname">plot_scatter</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">data</span></em>, <em class="sig-param"><span class="n">classes</span></em>, <em class="sig-param"><span class="n">out</span></em>, <em class="sig-param"><span class="n">width</span><span class="o">=</span><span class="default_value">10</span></em>, <em class="sig-param"><span class="n">height</span><span class="o">=</span><span class="default_value">8</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/viz_utils.html#plot_scatter"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#viz_utils.plot_scatter" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </div>
@@ -346,29 +355,29 @@ figprefix given.</p></li>
            
           </div>
           <footer>
-  
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-      
-        <a href="clr_keras_utils.html" class="btn btn-neutral float-right" title="clr_keras_utils module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
-      
-      
-        <a href="uq_keras_utils.html" class="btn btn-neutral float-left" title="uq_keras_utils module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
-      
+        <a href="clr_keras_utils.html" class="btn btn-neutral float-right" title="clr_keras_utils module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="uq_keras_utils.html" class="btn btn-neutral float-left" title="uq_keras_utils module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
     </div>
-  
 
   <hr/>
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2020, ANL.gov
+        &#169; Copyright 2021, ANL.gov.
 
     </p>
   </div>
-  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
 </footer>
-
         </div>
       </div>
 
@@ -376,7 +385,6 @@ figprefix given.</p></li>
 
   </div>
   
-
 
   <script type="text/javascript">
       jQuery(function () {

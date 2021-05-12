@@ -1,23 +1,31 @@
 
 
 <!DOCTYPE html>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8">
+  <meta charset="utf-8" />
   
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
   <title>CANDLE Documentation Home &mdash; CANDLE  documentation</title>
   
 
   
-  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+
   
   
 
   
-  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
@@ -28,10 +36,6 @@
     <script type="text/javascript" src="_static/js/theme.js"></script>
 
     
-
-  
-  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="What is CANDLE?" href="readme.html" /> 
@@ -71,6 +75,7 @@
           
         </div>
 
+        
         <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
           
             
@@ -83,12 +88,14 @@
 <li class="toctree-l1"><a class="reference internal" href="readme.html">What is CANDLE?</a></li>
 <li class="toctree-l1"><a class="reference internal" href="tutorials/index.html">Tutorials</a></li>
 <li class="toctree-l1"><a class="reference internal" href="candle_lib.html">CANDLE Library API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="shared_installation.html">CANDLE Shared Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="contribute.html">How to Contribute</a></li>
 </ul>
 
             
           
         </div>
+        
       </div>
     </nav>
 
@@ -123,18 +130,20 @@
 
 
 
+
+
 <div role="navigation" aria-label="breadcrumbs navigation">
 
   <ul class="wy-breadcrumbs">
     
-      <li><a href="#">Docs</a> &raquo;</li>
+      <li><a href="#" class="icon icon-home"></a> &raquo;</li>
         
       <li>CANDLE Documentation Home</li>
     
     
       <li class="wy-breadcrumbs-aside">
         
-            
+          
             <a href="_sources/index.rst.txt" rel="nofollow"> View page source</a>
           
         
@@ -207,6 +216,48 @@
 <li class="toctree-l2"><a class="reference internal" href="candle_lib/clr_keras_utils.html">clr_keras_utils module</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="shared_installation.html">CANDLE Shared Installation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="shared_installation.html#terminology-and-scope">Terminology and scope</a></li>
+<li class="toctree-l2"><a class="reference internal" href="shared_installation.html#overview-of-wrapper-scripts-functionality">Overview of wrapper scripts functionality</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="shared_installation.html#for-users">For users</a></li>
+<li class="toctree-l3"><a class="reference internal" href="shared_installation.html#for-developers">For developers</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="shared_installation.html#loading-the-candle-module">Loading the <code class="docutils literal notranslate"><span class="pre">candle</span></code> module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="shared_installation.html#quick-start-examples-for-summit">Quick-start examples (for Summit)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="shared_installation.html#step-1-setup">Step 1: Setup</a></li>
+<li class="toctree-l3"><a class="reference internal" href="shared_installation.html#step-2-run-sample-candle-compliant-model-scripts">Step 2: Run sample CANDLE-compliant model scripts</a></li>
+<li class="toctree-l3"><a class="reference internal" href="shared_installation.html#step-3-run-sample-non-candle-compliant-model-scripts">Step 3: Run sample <strong>non</strong>-CANDLE-compliant model scripts</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="shared_installation.html#how-a-canonically-candle-compliant-model-script-should-be-modified-for-use-with-the-wrapper-scripts">How a canonically CANDLE-compliant model script should be modified for use with the wrapper scripts</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="shared_installation.html#specifically-required-by-the-wrapper-scripts-by-example">Specifically required by the wrapper scripts, by example</a></li>
+<li class="toctree-l3"><a class="reference internal" href="shared_installation.html#nothing-to-do-with-the-wrapper-scripts-generally-no-need-to-do-these">Nothing to do with the wrapper scripts (generally no need to do these)</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="shared_installation.html#how-to-minimally-modify-a-bare-model-script-for-use-with-the-wrapper-scripts">How to minimally modify a bare model script for use with the wrapper scripts</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="shared_installation.html#running-a-non-candle-compliant-model-on-its-own-outside-of-supervisor">Running a non-CANDLE-compliant model on its own, outside of Supervisor</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="shared_installation.html#input-file-format">Input file format</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="shared_installation.html#control-section"><code class="docutils literal notranslate"><span class="pre">&amp;control</span></code> section</a></li>
+<li class="toctree-l3"><a class="reference internal" href="shared_installation.html#default-model-section"><code class="docutils literal notranslate"><span class="pre">&amp;default_model</span></code> section</a></li>
+<li class="toctree-l3"><a class="reference internal" href="shared_installation.html#param-space-section"><code class="docutils literal notranslate"><span class="pre">&amp;param_space</span></code> section</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="shared_installation.html#code-organization">Code organization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="shared_installation.html#recommendations-for-particular-use-cases">Recommendations for particular use cases</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="shared_installation.html#run-grid-or-bayesian-hyperparameter-searches-on-an-already-candle-compliant-model-script-such-as-a-benchmark">Run <code class="docutils literal notranslate"><span class="pre">grid</span></code> or <code class="docutils literal notranslate"><span class="pre">bayesian</span></code> hyperparameter searches on an already CANDLE-compliant model script such as a benchmark</a></li>
+<li class="toctree-l3"><a class="reference internal" href="shared_installation.html#create-a-new-model-script-on-which-you-want-to-run-grid-or-bayesian-hyperparameter-searches">Create a new model script on which you want to run <code class="docutils literal notranslate"><span class="pre">grid</span></code> or <code class="docutils literal notranslate"><span class="pre">bayesian</span></code> hyperparameter searches</a></li>
+<li class="toctree-l3"><a class="reference internal" href="shared_installation.html#run-a-model-script-written-in-another-language-such-as-r-or-bash">Run a model script written in another language such as <code class="docutils literal notranslate"><span class="pre">R</span></code> or <code class="docutils literal notranslate"><span class="pre">bash</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="shared_installation.html#pull-updates-to-the-central-installation-of-candle-that-have-already-been-pulled-into-the-main-supervisor-benchmarks-repositories">Pull updates to the central installation of CANDLE that have already been pulled into the main Supervisor/Benchmarks repositories</a></li>
+<li class="toctree-l3"><a class="reference internal" href="shared_installation.html#commit-changes-to-the-wrapper-scripts-or-to-the-supervisor-or-benchmarks-clones-in-the-central-installation">Commit changes to the wrapper scripts or to the Supervisor or Benchmarks clones in the central installation</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="shared_installation.html#contribution-ideas">Contribution ideas</a></li>
+<li class="toctree-l2"><a class="reference internal" href="shared_installation.html#how-to-contact-andrew-for-help-with-anything-above">How to contact Andrew for help with anything above</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="contribute.html">How to Contribute</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="contribute.html#how-to-add-a-new-document">How to add a new document</a></li>
 <li class="toctree-l2"><a class="reference internal" href="contribute.html#how-to-add-candle-library-api">How to add CANDLE Library API</a></li>
@@ -224,27 +275,28 @@
            
           </div>
           <footer>
-  
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-      
-        <a href="readme.html" class="btn btn-neutral float-right" title="What is CANDLE?" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
-      
-      
+        <a href="readme.html" class="btn btn-neutral float-right" title="What is CANDLE?" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
-  
 
   <hr/>
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2020, ANL.gov
+        &#169; Copyright 2021, ANL.gov.
 
     </p>
   </div>
-  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
 </footer>
-
         </div>
       </div>
 
@@ -252,7 +304,6 @@
 
   </div>
   
-
 
   <script type="text/javascript">
       jQuery(function () {

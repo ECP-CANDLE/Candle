@@ -1,23 +1,31 @@
 
 
 <!DOCTYPE html>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8">
+  <meta charset="utf-8" />
   
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
   <title>P1_utils module &mdash; CANDLE  documentation</title>
   
 
   
-  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+
   
   
 
   
-  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
@@ -28,10 +36,6 @@
     <script type="text/javascript" src="../_static/js/theme.js"></script>
 
     
-
-  
-  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="profiling_utils module" href="profiling_utils.html" />
@@ -72,6 +76,7 @@
           
         </div>
 
+        
         <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
           
             
@@ -103,12 +108,14 @@
 <li class="toctree-l2"><a class="reference internal" href="clr_keras_utils.html">clr_keras_utils module</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="../shared_installation.html">CANDLE Shared Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../contribute.html">How to Contribute</a></li>
 </ul>
 
             
           
         </div>
+        
       </div>
     </nav>
 
@@ -143,11 +150,13 @@
 
 
 
+
+
 <div role="navigation" aria-label="breadcrumbs navigation">
 
   <ul class="wy-breadcrumbs">
     
-      <li><a href="../index.html">Docs</a> &raquo;</li>
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
         
           <li><a href="../candle_lib.html">CANDLE Library API</a> &raquo;</li>
         
@@ -156,7 +165,7 @@
     
       <li class="wy-breadcrumbs-aside">
         
-            
+          
             <a href="../_sources/candle_lib/P1_utils.rst.txt" rel="nofollow"> View page source</a>
           
         
@@ -174,17 +183,17 @@
 <span id="p1-utils-module"></span><h1>P1_utils module<a class="headerlink" href="#module-P1_utils" title="Permalink to this headline">¶</a></h1>
 <dl class="py function">
 <dt id="P1_utils.aprior">
-<code class="sig-prename descclassname"><span class="pre">P1_utils.</span></code><code class="sig-name descname"><span class="pre">aprior</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">gamma_hat</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/P1_utils.html#aprior"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#P1_utils.aprior" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">P1_utils.</code><code class="sig-name descname">aprior</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">gamma_hat</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/P1_utils.html#aprior"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#P1_utils.aprior" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py function">
 <dt id="P1_utils.bprior">
-<code class="sig-prename descclassname"><span class="pre">P1_utils.</span></code><code class="sig-name descname"><span class="pre">bprior</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">gamma_hat</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/P1_utils.html#bprior"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#P1_utils.bprior" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">P1_utils.</code><code class="sig-name descname">bprior</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">gamma_hat</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/P1_utils.html#bprior"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#P1_utils.bprior" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py function">
 <dt id="P1_utils.calculate_concordance_correlation_coefficient">
-<code class="sig-prename descclassname"><span class="pre">P1_utils.</span></code><code class="sig-name descname"><span class="pre">calculate_concordance_correlation_coefficient</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">u</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">v</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/P1_utils.html#calculate_concordance_correlation_coefficient"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#P1_utils.calculate_concordance_correlation_coefficient" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">P1_utils.</code><code class="sig-name descname">calculate_concordance_correlation_coefficient</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">u</span></em>, <em class="sig-param"><span class="n">v</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/P1_utils.html#calculate_concordance_correlation_coefficient"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#P1_utils.calculate_concordance_correlation_coefficient" title="Permalink to this definition">¶</a></dt>
 <dd><p>This function calculates the concordance correlation coefficient between two input 1-D numpy arrays.</p>
 <p>u: 1-D numpy array of a variable
 v: 1-D numpy array of a variable</p>
@@ -193,7 +202,7 @@ v: 1-D numpy array of a variable</p>
 
 <dl class="py function">
 <dt id="P1_utils.combat_batch_effect_removal">
-<code class="sig-prename descclassname"><span class="pre">P1_utils.</span></code><code class="sig-name descname"><span class="pre">combat_batch_effect_removal</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">batch_labels</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">numerical_covariates</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/P1_utils.html#combat_batch_effect_removal"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#P1_utils.combat_batch_effect_removal" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">P1_utils.</code><code class="sig-name descname">combat_batch_effect_removal</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">data</span></em>, <em class="sig-param"><span class="n">batch_labels</span></em>, <em class="sig-param"><span class="n">model</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">numerical_covariates</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/P1_utils.html#combat_batch_effect_removal"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#P1_utils.combat_batch_effect_removal" title="Permalink to this definition">¶</a></dt>
 <dd><p>This function corrects for batch effect in data.</p>
 <p>data: pandas data frame of numeric values, with a size of (n_features, n_samples)
 batch_labels: pandas series, with a length of n_samples. It should provide the batch labels of samples.</p>
@@ -215,7 +224,7 @@ will attempt to coarsely correct just based on the information provided in “ba
 
 <dl class="py function">
 <dt id="P1_utils.coxen_multi_drug_gene_selection">
-<code class="sig-prename descclassname"><span class="pre">P1_utils.</span></code><code class="sig-name descname"><span class="pre">coxen_multi_drug_gene_selection</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">source_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">drug_response_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">drug_response_col</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tumor_col</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">drug_col</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prediction_power_measure</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'lm'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_predictive_gene</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">100</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">generalization_power_measure</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'ccc'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_generalizable_gene</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">50</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">union_of_single_drug_selection</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/P1_utils.html#coxen_multi_drug_gene_selection"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#P1_utils.coxen_multi_drug_gene_selection" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">P1_utils.</code><code class="sig-name descname">coxen_multi_drug_gene_selection</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">source_data</span></em>, <em class="sig-param"><span class="n">target_data</span></em>, <em class="sig-param"><span class="n">drug_response_data</span></em>, <em class="sig-param"><span class="n">drug_response_col</span></em>, <em class="sig-param"><span class="n">tumor_col</span></em>, <em class="sig-param"><span class="n">drug_col</span></em>, <em class="sig-param"><span class="n">prediction_power_measure</span><span class="o">=</span><span class="default_value">'lm'</span></em>, <em class="sig-param"><span class="n">num_predictive_gene</span><span class="o">=</span><span class="default_value">100</span></em>, <em class="sig-param"><span class="n">generalization_power_measure</span><span class="o">=</span><span class="default_value">'ccc'</span></em>, <em class="sig-param"><span class="n">num_generalizable_gene</span><span class="o">=</span><span class="default_value">50</span></em>, <em class="sig-param"><span class="n">union_of_single_drug_selection</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/P1_utils.html#coxen_multi_drug_gene_selection"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#P1_utils.coxen_multi_drug_gene_selection" title="Permalink to this definition">¶</a></dt>
 <dd><p>This function uses the COXEN approach to select genes for predicting the response of multiple drugs.
 It assumes no missing data exist. It works in three modes.
 (1) If union_of_single_drug_selection is True, prediction_power_measure must be either ‘pearson’ or ‘mutual_info’.
@@ -265,7 +274,7 @@ union_of_single_drug_selection: boolean, indicating whether the final gene set s
 
 <dl class="py function">
 <dt id="P1_utils.coxen_single_drug_gene_selection">
-<code class="sig-prename descclassname"><span class="pre">P1_utils.</span></code><code class="sig-name descname"><span class="pre">coxen_single_drug_gene_selection</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">source_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">drug_response_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">drug_response_col</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tumor_col</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prediction_power_measure</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'pearson'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_predictive_gene</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">100</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">generalization_power_measure</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'ccc'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_generalizable_gene</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">50</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">multi_drug_mode</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/P1_utils.html#coxen_single_drug_gene_selection"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#P1_utils.coxen_single_drug_gene_selection" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">P1_utils.</code><code class="sig-name descname">coxen_single_drug_gene_selection</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">source_data</span></em>, <em class="sig-param"><span class="n">target_data</span></em>, <em class="sig-param"><span class="n">drug_response_data</span></em>, <em class="sig-param"><span class="n">drug_response_col</span></em>, <em class="sig-param"><span class="n">tumor_col</span></em>, <em class="sig-param"><span class="n">prediction_power_measure</span><span class="o">=</span><span class="default_value">'pearson'</span></em>, <em class="sig-param"><span class="n">num_predictive_gene</span><span class="o">=</span><span class="default_value">100</span></em>, <em class="sig-param"><span class="n">generalization_power_measure</span><span class="o">=</span><span class="default_value">'ccc'</span></em>, <em class="sig-param"><span class="n">num_generalizable_gene</span><span class="o">=</span><span class="default_value">50</span></em>, <em class="sig-param"><span class="n">multi_drug_mode</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/P1_utils.html#coxen_single_drug_gene_selection"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#P1_utils.coxen_single_drug_gene_selection" title="Permalink to this definition">¶</a></dt>
 <dd><p>This function selects genes for drug response prediction using the COXEN approach. The COXEN approach is
 designed for selecting genes to predict the response of tumor cells to a specific drug. This function
 assumes no missing data exist.</p>
@@ -301,12 +310,12 @@ multi_drug_mode: boolean, indicating whether the function runs as an auxiliary f
 
 <dl class="py function">
 <dt id="P1_utils.design_mat">
-<code class="sig-prename descclassname"><span class="pre">P1_utils.</span></code><code class="sig-name descname"><span class="pre">design_mat</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mod</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">numerical_covariates</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">batch_levels</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/P1_utils.html#design_mat"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#P1_utils.design_mat" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">P1_utils.</code><code class="sig-name descname">design_mat</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">mod</span></em>, <em class="sig-param"><span class="n">numerical_covariates</span></em>, <em class="sig-param"><span class="n">batch_levels</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/P1_utils.html#design_mat"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#P1_utils.design_mat" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py function">
 <dt id="P1_utils.generalization_feature_selection">
-<code class="sig-prename descclassname"><span class="pre">P1_utils.</span></code><code class="sig-name descname"><span class="pre">generalization_feature_selection</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">measure</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cutoff</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/P1_utils.html#generalization_feature_selection"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#P1_utils.generalization_feature_selection" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">P1_utils.</code><code class="sig-name descname">generalization_feature_selection</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">data1</span></em>, <em class="sig-param"><span class="n">data2</span></em>, <em class="sig-param"><span class="n">measure</span></em>, <em class="sig-param"><span class="n">cutoff</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/P1_utils.html#generalization_feature_selection"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#P1_utils.generalization_feature_selection" title="Permalink to this definition">¶</a></dt>
 <dd><p>This function uses the Pearson correlation coefficient to select the features that are generalizable
 between data1 and data2.</p>
 <p>data1: 2D numpy array of the first dataset with a size of (n_samples_1, n_features)
@@ -325,7 +334,7 @@ integer indicating the number of features to be selected based on correlation co
 
 <dl class="py function">
 <dt id="P1_utils.generate_gene_set_data">
-<code class="sig-prename descclassname"><span class="pre">P1_utils.</span></code><code class="sig-name descname"><span class="pre">generate_gene_set_data</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">genes</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gene_name_type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'entrez'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gene_set_category</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'c6.all'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metric</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'mean'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">standardize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'../../Data/examples/Gene_Sets/MSigDB.v7.0/'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/P1_utils.html#generate_gene_set_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#P1_utils.generate_gene_set_data" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">P1_utils.</code><code class="sig-name descname">generate_gene_set_data</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">data</span></em>, <em class="sig-param"><span class="n">genes</span></em>, <em class="sig-param"><span class="n">gene_name_type</span><span class="o">=</span><span class="default_value">'entrez'</span></em>, <em class="sig-param"><span class="n">gene_set_category</span><span class="o">=</span><span class="default_value">'c6.all'</span></em>, <em class="sig-param"><span class="n">metric</span><span class="o">=</span><span class="default_value">'mean'</span></em>, <em class="sig-param"><span class="n">standardize</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">data_dir</span><span class="o">=</span><span class="default_value">'../../Data/examples/Gene_Sets/MSigDB.v7.0/'</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/P1_utils.html#generate_gene_set_data"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#P1_utils.generate_gene_set_data" title="Permalink to this definition">¶</a></dt>
 <dd><p>This function generates genomic data summarized at the gene set level.</p>
 <p>data: numpy array or pandas data frame of numeric values, with a shape of [n_samples, n_features].
 genes: 1-D array or list of gene names with a length of n_features. It indicates which gene a genomic</p>
@@ -353,17 +362,17 @@ the maximum of absolute values. Default is ‘mean’.</p>
 
 <dl class="py function">
 <dt id="P1_utils.it_sol">
-<code class="sig-prename descclassname"><span class="pre">P1_utils.</span></code><code class="sig-name descname"><span class="pre">it_sol</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sdat</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">g_hat</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">d_hat</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">g_bar</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">t2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">a</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">b</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">conv</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0001</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/P1_utils.html#it_sol"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#P1_utils.it_sol" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">P1_utils.</code><code class="sig-name descname">it_sol</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">sdat</span></em>, <em class="sig-param"><span class="n">g_hat</span></em>, <em class="sig-param"><span class="n">d_hat</span></em>, <em class="sig-param"><span class="n">g_bar</span></em>, <em class="sig-param"><span class="n">t2</span></em>, <em class="sig-param"><span class="n">a</span></em>, <em class="sig-param"><span class="n">b</span></em>, <em class="sig-param"><span class="n">conv</span><span class="o">=</span><span class="default_value">0.0001</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/P1_utils.html#it_sol"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#P1_utils.it_sol" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py function">
 <dt id="P1_utils.postmean">
-<code class="sig-prename descclassname"><span class="pre">P1_utils.</span></code><code class="sig-name descname"><span class="pre">postmean</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">g_hat</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">g_bar</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">d_star</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">t2</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/P1_utils.html#postmean"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#P1_utils.postmean" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">P1_utils.</code><code class="sig-name descname">postmean</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">g_hat</span></em>, <em class="sig-param"><span class="n">g_bar</span></em>, <em class="sig-param"><span class="n">n</span></em>, <em class="sig-param"><span class="n">d_star</span></em>, <em class="sig-param"><span class="n">t2</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/P1_utils.html#postmean"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#P1_utils.postmean" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py function">
 <dt id="P1_utils.postvar">
-<code class="sig-prename descclassname"><span class="pre">P1_utils.</span></code><code class="sig-name descname"><span class="pre">postvar</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sum2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">a</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">b</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/P1_utils.html#postvar"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#P1_utils.postvar" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">P1_utils.</code><code class="sig-name descname">postvar</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">sum2</span></em>, <em class="sig-param"><span class="n">n</span></em>, <em class="sig-param"><span class="n">a</span></em>, <em class="sig-param"><span class="n">b</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/P1_utils.html#postvar"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#P1_utils.postvar" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </div>
@@ -373,29 +382,29 @@ the maximum of absolute values. Default is ‘mean’.</p>
            
           </div>
           <footer>
-  
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-      
-        <a href="profiling_utils.html" class="btn btn-neutral float-right" title="profiling_utils module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
-      
-      
-        <a href="keras_utils.html" class="btn btn-neutral float-left" title="keras_utils module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
-      
+        <a href="profiling_utils.html" class="btn btn-neutral float-right" title="profiling_utils module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="keras_utils.html" class="btn btn-neutral float-left" title="keras_utils module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
     </div>
-  
 
   <hr/>
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2020, ANL.gov
+        &#169; Copyright 2021, ANL.gov.
 
     </p>
   </div>
-  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
 </footer>
-
         </div>
       </div>
 
@@ -403,7 +412,6 @@ the maximum of absolute values. Default is ‘mean’.</p>
 
   </div>
   
-
 
   <script type="text/javascript">
       jQuery(function () {
