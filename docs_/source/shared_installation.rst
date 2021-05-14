@@ -517,7 +517,7 @@ Code organization
 A description of what every file does in the `wrappers
 repository <https://github.com/fnlcr-bids-sdsi/candle_wrappers>`__, which
 is cloned to ``$CANDLE/wrappers``, can be found
-`here <https://github.com/fnlcr-bids-sdsi/candle_wrappers/repository_organization.md>`__. Some particular notes:
+`here <https://github.com/fnlcr-bids-sdsi/candle_wrappers/blob/master/repository_organization.md>`__. Some particular notes:
 
 -  In addition to the page you are reading, all documentation is currently in the top-level directory:
    ``README.md`` (see this file for additional notes),
@@ -525,7 +525,7 @@ is cloned to ``$CANDLE/wrappers``, can be found
    ``setup-summit.md``
 -  Directories pertaining to the **setup** of the wrappers repository
    and in general of CANDLE on a new HPC system (involved in the `setup
-   documentation <https://github.com/fnlcr-bids-sdsi/candle_wrappers/README.md>`__) are ``log_files``, ``swift-t_setup``,
+   documentation <https://github.com/fnlcr-bids-sdsi/candle_wrappers/blob/master/README.md>`__) are ``log_files``, ``swift-t_setup``,
    and ``test_files``
 -  Directories pertaining to the **usage** of the wrapper scripts
    (involved in the usage documentation that you are currently reading)
@@ -649,13 +649,13 @@ Below are some ideas for particular ways to contribute:
 
 -  Implement workflows other than ``grid`` and ``bayesian`` (UQ would be
    great!) by following the instructions
-   `here <https://github.com/fnlcr-bids-sdsi/candle_wrappers/README.md#how-to-add-new-workflows>`__
+   `here <https://github.com/fnlcr-bids-sdsi/candle_wrappers/blob/master/README.md#how-to-add-new-workflows>`__
 -  If this is something you personally want, allow for command-line
    arguments to the ``candle`` command, such as ``run_workflow`` or any
    other `input file keywords <#input-file-contents>`__
 -  Check/preprocess the four mlrMBO keywords (``design_size``,
    ``propose_points``, ``max_iterations``, ``max_budget``) by following
-   the instructions `here <https://github.com/fnlcr-bids-sdsi/candle_wrappers/README.md#how-to-add-a-new-keyword>`__ and
+   the instructions `here <https://github.com/fnlcr-bids-sdsi/candle_wrappers/blob/master/README.md#how-to-add-a-new-keyword>`__ and
    seeing their usage
    `here <https://github.com/fnlcr-bids-sdsi/candle_wrappers/blob/master/commands/submit-job/dummy_cfg-prm.sh>`__
    (good exercise to get familiar with the wrappers code)
