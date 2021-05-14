@@ -74,16 +74,15 @@ For users
 For developers
 ~~~~~~~~~~~~~~
 
--  **Modify only a single file
-   (`candle_compliant_wrapper.py <https://github.com/fnlcr-bids-sdsi/candle_wrappers/blob/master/commands/submit-job/candle_compliant_wrapper.py>`__)
-   whenever the CANDLE-compliance procedure changes**. E.g., if the
+-  **Modify only a single file whenever the CANDLE-compliance procedure changes**
+   (`candle_compliant_wrapper.py <https://github.com/fnlcr-bids-sdsi/candle_wrappers/blob/master/commands/submit-job/candle_compliant_wrapper.py>`__). E.g., if the
    benchmarks used the minimal modification to the main ``.py`` files
    rather than the traditional CANDLE-compliance procedure, there would
    be no need to update every benchmark whenever the CANDLE-compliance
    procedure changed
--  **Edit only a single file
+-  **Edit only a single file in order to make system-specific changes**
    (`preprocess.py <https://github.com/fnlcr-bids-sdsi/candle_wrappers/blob/master/commands/submit-job/preprocess.py>`__)
-   in order to make system-specific changes** such as custom
+   such as custom
    modification to the ``$TURBINE_LAUNCH_OPTIONS`` variable; no need to
    edit each Supervisor workflow’s ``workflow.sh`` file
 

@@ -280,16 +280,15 @@ will pick up and run without dying</p></li>
 <div class="section" id="for-developers">
 <h3>For developers<a class="headerlink" href="#for-developers" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
-<li><p><strong>Modify only a single file
-(`candle_compliant_wrapper.py &lt;https://github.com/fnlcr-bids-sdsi/candle_wrappers/blob/master/commands/submit-job/candle_compliant_wrapper.py&gt;`__)
-whenever the CANDLE-compliance procedure changes</strong>. E.g., if the
+<li><p><strong>Modify only a single file whenever the CANDLE-compliance procedure changes</strong>
+(<a class="reference external" href="https://github.com/fnlcr-bids-sdsi/candle_wrappers/blob/master/commands/submit-job/candle_compliant_wrapper.py">candle_compliant_wrapper.py</a>). E.g., if the
 benchmarks used the minimal modification to the main <code class="docutils literal notranslate"><span class="pre">.py</span></code> files
 rather than the traditional CANDLE-compliance procedure, there would
 be no need to update every benchmark whenever the CANDLE-compliance
 procedure changed</p></li>
-<li><p><strong>Edit only a single file
-(`preprocess.py &lt;https://github.com/fnlcr-bids-sdsi/candle_wrappers/blob/master/commands/submit-job/preprocess.py&gt;`__)
-in order to make system-specific changes</strong> such as custom
+<li><p><strong>Edit only a single file in order to make system-specific changes</strong>
+(<a class="reference external" href="https://github.com/fnlcr-bids-sdsi/candle_wrappers/blob/master/commands/submit-job/preprocess.py">preprocess.py</a>)
+such as custom
 modification to the <code class="docutils literal notranslate"><span class="pre">$TURBINE_LAUNCH_OPTIONS</span></code> variable; no need to
 edit each Supervisor workflow’s <code class="docutils literal notranslate"><span class="pre">workflow.sh</span></code> file</p></li>
 </ul>
