@@ -460,8 +460,8 @@ Here is a list of possible ``keyword``\ s and their default ``value``\ s
 | ``max_budget``        | `Not yet              | ``bayesian`` workflow |
 |                       | preprocessed <#c      | only; maximum total   |
 |                       | ontribution-ideas>`__ | number of `function   |
-|                       |                       | evalu                 |
-|                       |                       | ations <https://www.r |
+|                       |                       | evaluations           |
+|                       |                       | <https://www.r        |
 |                       |                       | documentation.org/pac |
 |                       |                       | kages/mlrMBO/versions |
 |                       |                       | /1.1.2/topics/setMBOC |
