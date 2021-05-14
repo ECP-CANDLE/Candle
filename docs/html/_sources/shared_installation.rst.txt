@@ -304,14 +304,14 @@ Here is a list of possible ``keyword``\ s and their default ``value``\ s
 |                       |                       | as is used on Summit  |
 +-----------------------+-----------------------+-----------------------+
 | ``nworkers``          | ``1``                 | workers=GPUs. The     |
-|                       |                       | number of nodes used  |
-|                       |                       | will be ``nworkers``  |
+|                       |                       | number of nodes used on Summit |
+|                       |                       | will be ceil((``nworkers`` |
 |                       |                       | + (1 (``grid``) or 2  |
-|                       |                       | (``bayesian``)),      |
+|                       |                       | (``bayesian``))) / 6), |
 |                       |                       | after which 0-5       |
 |                       |                       | workers will be added |
 |                       |                       | in order to utilize   |
-|                       |                       | all GPUs on all nodes |
+|                       |                       | all GPUs on the nodes |
 +-----------------------+-----------------------+-----------------------+
 | ``dl_backend``        | ``keras``             | Valid backends are    |
 |                       |                       | ``keras`` and         |
@@ -436,8 +436,7 @@ Here is a list of possible ``keyword``\ s and their default ``value``\ s
 |                       |                       | /versions/1.1.2/topic |
 |                       |                       | s/makeMBOControl>`__. |
 |                       |                       | E.g.,                 |
-|                       |                       | ``                    |
-|                       |                       | propose_points = 9``. |
+|                       |                       | ``propose_points = 9``. |
 |                       |                       | A reasonable value    |
 |                       |                       | for this (and for     |
 |                       |                       | ``design_size``,      |
@@ -453,8 +452,7 @@ Here is a list of possible ``keyword``\ s and their default ``value``\ s
 |                       |                       | 1.1.2/topics/setMBOCo |
 |                       |                       | ntrolTermination>`__. |
 |                       |                       | E.g.,                 |
-|                       |                       | `                     |
-|                       |                       | `max_iterations = 3`` |
+|                       |                       | ``max_iterations = 3`` |
 +-----------------------+-----------------------+-----------------------+
 | ``max_budget``        | `Not yet              | ``bayesian`` workflow |
 |                       | preprocessed <#c      | only; maximum total   |
