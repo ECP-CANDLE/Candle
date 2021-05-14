@@ -796,7 +796,7 @@ models</a> using
 <code class="docutils literal notranslate"><span class="pre">candle</span> <span class="pre">import-template</span> <span class="pre">{upf|mlrmbo}</span></code> and delete all but the copied-over input
 file</p></li>
 <li><p>Rename and tweak the input file to your liking using the
-<a class="reference external" href="#input-file-contents">documentation for input files</a> above</p></li>
+<a class="reference external" href="#input-file-format">documentation for input files</a> above</p></li>
 <li><p>Ensure your model runs on an interactive node (e.g.,
 <code class="docutils literal notranslate"><span class="pre">bsub</span> <span class="pre">-W</span> <span class="pre">1:00</span> <span class="pre">-nnodes</span> <span class="pre">1</span> <span class="pre">-P</span> <span class="pre">med106</span> <span class="pre">-q</span> <span class="pre">debug</span> <span class="pre">-Is</span> <span class="pre">/bin/bash</span></code>) by
 setting the <code class="docutils literal notranslate"><span class="pre">run_workflow=0</span></code> keyword setting in the <code class="docutils literal notranslate"><span class="pre">&amp;control</span></code>
@@ -823,7 +823,7 @@ models</a>
 using <code class="docutils literal notranslate"><span class="pre">candle</span> <span class="pre">import-template</span> <span class="pre">{grid|bayesian}</span></code>; delete all but the
 input file</p></li>
 <li><p>Rename and tweak the input file to your liking using the
-<a class="reference external" href="#input-file-contents">documentation for input files</a> above</p></li>
+<a class="reference external" href="#input-file-format">documentation for input files</a> above</p></li>
 <li><p>Ensure your model runs on an interactive node (e.g.,
 <code class="docutils literal notranslate"><span class="pre">bsub</span> <span class="pre">-W</span> <span class="pre">1:00</span> <span class="pre">-nnodes</span> <span class="pre">1</span> <span class="pre">-P</span> <span class="pre">med106</span> <span class="pre">-q</span> <span class="pre">debug</span> <span class="pre">-Is</span> <span class="pre">/bin/bash</span></code>) by
 setting the <code class="docutils literal notranslate"><span class="pre">run_workflow=0</span></code> keyword setting in the <code class="docutils literal notranslate"><span class="pre">&amp;control</span></code>
@@ -882,7 +882,7 @@ great!) by following the instructions
 <a class="reference external" href="https://github.com/fnlcr-bids-sdsi/candle_wrappers/blob/master/README.md#how-to-add-new-workflows">here</a></p></li>
 <li><p>If this is something you personally want, allow for command-line
 arguments to the <code class="docutils literal notranslate"><span class="pre">candle</span></code> command, such as <code class="docutils literal notranslate"><span class="pre">run_workflow</span></code> or any
-other <a class="reference external" href="#input-file-contents">input file keywords</a></p></li>
+other <a class="reference external" href="#input-file-format">input file keywords</a></p></li>
 <li><p>Check/preprocess the four mlrMBO keywords (<code class="docutils literal notranslate"><span class="pre">design_size</span></code>,
 <code class="docutils literal notranslate"><span class="pre">propose_points</span></code>, <code class="docutils literal notranslate"><span class="pre">max_iterations</span></code>, <code class="docutils literal notranslate"><span class="pre">max_budget</span></code>) by following
 the instructions <a class="reference external" href="https://github.com/fnlcr-bids-sdsi/candle_wrappers/blob/master/README.md#how-to-add-a-new-keyword">here</a> and

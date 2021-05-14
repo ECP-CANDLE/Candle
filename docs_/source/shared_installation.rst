@@ -569,7 +569,7 @@ the modifications there, as the templates show.
    ``candle import-template {upf|mlrmbo}`` and delete all but the copied-over input
    file
 4. Rename and tweak the input file to your liking using the
-   `documentation for input files <#input-file-contents>`__ above
+   `documentation for input files <#input-file-format>`__ above
 5. Ensure your model runs on an interactive node (e.g.,
    ``bsub -W 1:00 -nnodes 1 -P med106 -q debug -Is /bin/bash``) by
    setting the ``run_workflow=0`` keyword setting in the ``&control``
@@ -595,7 +595,7 @@ Create a new model script on which you want to run ``grid`` or ``bayesian`` hype
    using ``candle import-template {grid|bayesian}``; delete all but the
    input file
 6. Rename and tweak the input file to your liking using the
-   `documentation for input files <#input-file-contents>`__ above
+   `documentation for input files <#input-file-format>`__ above
 7. Ensure your model runs on an interactive node (e.g.,
    ``bsub -W 1:00 -nnodes 1 -P med106 -q debug -Is /bin/bash``) by
    setting the ``run_workflow=0`` keyword setting in the ``&control``
@@ -652,7 +652,7 @@ Below are some ideas for particular ways to contribute:
    `here <https://github.com/fnlcr-bids-sdsi/candle_wrappers/blob/master/README.md#how-to-add-new-workflows>`__
 -  If this is something you personally want, allow for command-line
    arguments to the ``candle`` command, such as ``run_workflow`` or any
-   other `input file keywords <#input-file-contents>`__
+   other `input file keywords <#input-file-format>`__
 -  Check/preprocess the four mlrMBO keywords (``design_size``,
    ``propose_points``, ``max_iterations``, ``max_budget``) by following
    the instructions `here <https://github.com/fnlcr-bids-sdsi/candle_wrappers/blob/master/README.md#how-to-add-a-new-keyword>`__ and
