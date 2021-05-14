@@ -111,11 +111,7 @@
 </li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="#how-a-canonically-candle-compliant-model-script-should-be-modified-for-use-with-the-wrapper-scripts">How a canonically CANDLE-compliant model script should be modified for use with the wrapper scripts</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#specifically-required-by-the-wrapper-scripts-by-example">Specifically required by the wrapper scripts, by example</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#nothing-to-do-with-the-wrapper-scripts-generally-no-need-to-do-these">Nothing to do with the wrapper scripts (generally no need to do these)</a></li>
-</ul>
-</li>
+<li class="toctree-l2"><a class="reference internal" href="#notes-on-getting-canonically-candle-compliant-model-scripts-working-with-wrapper-scripts-generally-no-need-to-do-these">Notes on getting canonically CANDLE-compliant model scripts working with wrapper scripts (generally no need to do these)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#how-to-minimally-modify-a-bare-model-script-for-use-with-the-wrapper-scripts">How to minimally modify a bare model script for use with the wrapper scripts</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#running-a-non-candle-compliant-model-on-its-own-outside-of-supervisor">Running a non-CANDLE-compliant model on its own, outside of Supervisor</a></li>
 </ul>
@@ -211,22 +207,14 @@
 <h1>CANDLE Shared Installation<a class="headerlink" href="#candle-shared-installation" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="terminology-and-scope">
 <h2>Terminology and scope<a class="headerlink" href="#terminology-and-scope" title="Permalink to this headline">¶</a></h2>
-<p>Below I call the scripts I’m describing in this document the “wrapper
-scripts” or “wrappers,” but this still a working name. (“Interface”
-<em>may</em> be a viable alternative.) These scripts refer to the contents of
-the entire <a class="reference external" href="https://github.com/fnlcr-bids-sdsi/candle_wrappers">wrappers GitHub
-repository</a>, and I
-named them as such because the whole point was to add functionality to
-CANDLE while “wrapping” around the current Supervisor code, leaving it
-as untouched as possible so that it wouldn’t interfere in any way with
-how people currently run CANDLE.</p>
-<p>The wrapper scripts contain code that (1) helps to set up and test these
+<p>In addition to the CANDLE shared installation being a ready-to-use, central installation of CANDLE, it is further a set of scripts that adds to the functionality of CANDLE and makes it easier to use for new users. For brevity, below these scripts will be called the “wrapper scripts” or “wrappers,” as they are essentially wrappers around the Supervisor/Benchmarks codebase with the aim of improving functionality while leaving the codebase as untouched as possible. These scripts should not interfere in any way with how CANDLE is currently being run; these are only enhancements. They are currently set up and tested on Biowulf and Summit.</p>
+<p>The source code of the wrapper scripts is currently located <a class="reference external" href="https://github.com/fnlcr-bids-sdsi/candle_wrappers">here</a>. This contains code that (1) helps to set up and test these
 scripts alongside new clones of the
 <a class="reference external" href="https://github.com/ECP-CANDLE/Supervisor/tree/develop">Supervisor</a>
 and
 <a class="reference external" href="https://github.com/ECP-CANDLE/Benchmarks/tree/develop">Benchmarks</a>
-CANDLE repos, and (2) adds various features to CANDLE. The documentation
-for setup (#1) can be found <a class="reference external" href="./README.md">here</a>; the documentation
+repositories, and (2) adds various features to CANDLE. The documentation
+for setup (#1) can be found <a class="reference external" href="https://github.com/fnlcr-bids-sdsi/candle_wrappers/blob/master/README.md">here</a>; the documentation
 for usage (#2) is below.</p>
 </div>
 <div class="section" id="overview-of-wrapper-scripts-functionality">
@@ -250,7 +238,7 @@ settings, etc.</p></li>
 <code class="docutils literal notranslate"><span class="pre">initialize_parameters()</span></code> and <code class="docutils literal notranslate"><span class="pre">run()</span></code> functions (whose content
 occassionally changes) to a new model that you’d like to run using
 CANDLE. The wrapper scripts still work for canonically
-CANDLE-compliant model scripts such as the already-written main
+CANDLE-compliant (i.e., “candelized”) model scripts such as the already-written main
 <code class="docutils literal notranslate"><span class="pre">.py</span></code> files used to run the benchmarks. Additional benefits of only
 minimally modifying a bare model script:</p>
 <ul class="simple">
@@ -293,14 +281,14 @@ will pick up and run without dying</p></li>
 <h3>For developers<a class="headerlink" href="#for-developers" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li><p><strong>Modify only a single file
-(</strong><code class="docutils literal notranslate"><span class="pre">`candle_compliant_wrapper.py</span></code> &lt;<a class="reference external" href="https://github.com/fnlcr-bids-sdsi/candle_wrappers/blob/master/commands/submit-job/candle_compliant_wrapper.py">https://github.com/fnlcr-bids-sdsi/candle_wrappers/blob/master/commands/submit-job/candle_compliant_wrapper.py</a>&gt;`__<strong>)
+(`candle_compliant_wrapper.py &lt;https://github.com/fnlcr-bids-sdsi/candle_wrappers/blob/master/commands/submit-job/candle_compliant_wrapper.py&gt;`__)
 whenever the CANDLE-compliance procedure changes</strong>. E.g., if the
 benchmarks used the minimal modification to the main <code class="docutils literal notranslate"><span class="pre">.py</span></code> files
 rather than the traditional CANDLE-compliance procedure, there would
 be no need to update every benchmark whenever the CANDLE-compliance
 procedure changed</p></li>
 <li><p><strong>Edit only a single file
-(</strong><code class="docutils literal notranslate"><span class="pre">`preprocess.py</span></code> &lt;<a class="reference external" href="https://github.com/fnlcr-bids-sdsi/candle_wrappers/blob/master/commands/submit-job/preprocess.py">https://github.com/fnlcr-bids-sdsi/candle_wrappers/blob/master/commands/submit-job/preprocess.py</a>&gt;`__<strong>)
+(`preprocess.py &lt;https://github.com/fnlcr-bids-sdsi/candle_wrappers/blob/master/commands/submit-job/preprocess.py&gt;`__)
 in order to make system-specific changes</strong> such as custom
 modification to the <code class="docutils literal notranslate"><span class="pre">$TURBINE_LAUNCH_OPTIONS</span></code> variable; no need to
 edit each Supervisor workflow’s <code class="docutils literal notranslate"><span class="pre">workflow.sh</span></code> file</p></li>
@@ -311,19 +299,19 @@ edit each Supervisor workflow’s <code class="docutils literal notranslate"><sp
 <h2>Loading the <code class="docutils literal notranslate"><span class="pre">candle</span></code> module<a class="headerlink" href="#loading-the-candle-module" title="Permalink to this headline">¶</a></h2>
 <p>We are currently getting CANDLE approved as user-managed software on
 Summit. Once it is approved, we will be able to load the <code class="docutils literal notranslate"><span class="pre">candle</span></code>
-module via <code class="docutils literal notranslate"><span class="pre">module</span> <span class="pre">load</span> <span class="pre">candle/tf1</span></code>. In the interim, do this instead:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">source</span> /gpfs/alpine/med106/world-shared/candle/env_for_lmod-tf1.sh
+module via <code class="docutils literal notranslate"><span class="pre">module</span> <span class="pre">load</span> <span class="pre">candle</span></code>. In the interim, do this instead:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">source</span> /gpfs/alpine/med106/world-shared/candle/env_for_lmod-tf2.sh
 </pre></div>
 </div>
 <p>Both methods primarily do the following:</p>
 <ul class="simple">
 <li><p>Sets the <code class="docutils literal notranslate"><span class="pre">$CANDLE</span></code> variable to
-<code class="docutils literal notranslate"><span class="pre">/gpfs/alpine/med106/world-shared/candle/tf1</span></code> in order to set the
+<code class="docutils literal notranslate"><span class="pre">/gpfs/alpine/med106/world-shared/candle/tf2</span></code> in order to set the
 top-level directory of the entire CANDLE file tree, including the
 <code class="docutils literal notranslate"><span class="pre">Supervisor</span></code>, <code class="docutils literal notranslate"><span class="pre">Benchmarks</span></code>, and <code class="docutils literal notranslate"><span class="pre">wrappers</span></code> GitHub repositories</p></li>
 <li><p>Appends <code class="docutils literal notranslate"><span class="pre">$CANDLE/wrappers/bin</span></code> to <code class="docutils literal notranslate"><span class="pre">$PATH</span></code> in order to be able to
 run <code class="docutils literal notranslate"><span class="pre">candle</span></code> from the command line</p></li>
-<li><p>Sets the <code class="docutils literal notranslate"><span class="pre">$SITE</span></code> variable to <code class="docutils literal notranslate"><span class="pre">summit-tf1</span></code> in order to specify the
+<li><p>Sets the <code class="docutils literal notranslate"><span class="pre">$SITE</span></code> variable to <code class="docutils literal notranslate"><span class="pre">summit-tf2</span></code> in order to specify the
 HPC system and environment</p></li>
 <li><p>Appends <code class="docutils literal notranslate"><span class="pre">$CANDLE/Benchmarks/common</span></code> to <code class="docutils literal notranslate"><span class="pre">$PYTHONPATH</span></code> to allow one
 to write a Python model script in an arbitrary directory and to be
@@ -335,7 +323,7 @@ able to run <code class="docutils literal notranslate"><span class="pre">import<
 <div class="section" id="step-1-setup">
 <h3>Step 1: Setup<a class="headerlink" href="#step-1-setup" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Load the CANDLE module; do the following for the time being in lieu of &quot;module load candle&quot;, as we are currently getting CANDLE approved as user-managed software</span>
-<span class="nb">source</span> /gpfs/alpine/med106/world-shared/candle/env_for_lmod-tf1.sh
+<span class="nb">source</span> /gpfs/alpine/med106/world-shared/candle/env_for_lmod-tf2.sh
 
 <span class="c1"># Enter a possibly empty directory that is completely outside of the Supervisor/Benchmarks repositories on the Alpine filesystem, such as $MEMBERWORK</span>
 <span class="nb">cd</span> /gpfs/alpine/med106/scratch/weismana/notebook/2020-11-13/testing_candle_installation
@@ -345,11 +333,7 @@ able to run <code class="docutils literal notranslate"><span class="pre">import<
 <div class="section" id="step-2-run-sample-candle-compliant-model-scripts">
 <h3>Step 2: Run sample CANDLE-compliant model scripts<a class="headerlink" href="#step-2-run-sample-candle-compliant-model-scripts" title="Permalink to this headline">¶</a></h3>
 <p>This refers to model scripts that the developers refer to as
-“CANDLE-compliant” as usual (what I call “<em>canonically</em>
-CANDLE-compliant”). See
-<a class="reference external" href="#how-a-canonically-candle-compliant-model-script-should-be-modified-for-use-with-the-wrapper-scripts">below</a>
-for the changes that should be made to canonically CANDLE-compliant
-scripts to get them to work with the wrapper scripts.</p>
+“CANDLE-compliant” or “candelized” as usual.</p>
 <div class="section" id="nt3-using-upf-candle-compliant-model-scripts">
 <h4>NT3 using UPF (CANDLE-compliant model scripts)<a class="headerlink" href="#nt3-using-upf-candle-compliant-model-scripts" title="Permalink to this headline">¶</a></h4>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Import the UPF example (one file will be copied over)</span>
@@ -379,7 +363,7 @@ process described
 <a class="reference external" href="#how-to-minimally-modify-a-bare-model-script-for-use-with-the-wrapper-scripts">below</a>.</p>
 <div class="section" id="mnist-using-upf-non-candle-compliant-model-scripts">
 <h4>MNIST using UPF (non-CANDLE-compliant model scripts)<a class="headerlink" href="#mnist-using-upf-non-candle-compliant-model-scripts" title="Permalink to this headline">¶</a></h4>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Pre-fetch the MNIST data since Summit compute nodes can&#39;t access the Internet (this obviously has nothing to do with the wrapper scripts)</span>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Pre-fetch the MNIST data since Summit compute nodes can&#39;t access the Internet (this has nothing to do with the wrapper scripts)</span>
 mkdir candle_generated_files
 /gpfs/alpine/world-shared/med106/sw/condaenv-200408/bin/python -c <span class="s2">&quot;from keras.datasets import mnist; import os; (x_train, y_train), (x_test, y_test) = mnist.load_data(os.path.join(os.getcwd(), &#39;candle_generated_files&#39;, &#39;mnist.npz&#39;))&quot;</span>
 
@@ -403,35 +387,13 @@ candle submit-job bayesian_example.in
 </div>
 </div>
 </div>
-<div class="section" id="how-a-canonically-candle-compliant-model-script-should-be-modified-for-use-with-the-wrapper-scripts">
-<h2>How a canonically CANDLE-compliant model script should be modified for use with the wrapper scripts<a class="headerlink" href="#how-a-canonically-candle-compliant-model-script-should-be-modified-for-use-with-the-wrapper-scripts" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="specifically-required-by-the-wrapper-scripts-by-example">
-<h3>Specifically required by the wrapper scripts, by example<a class="headerlink" href="#specifically-required-by-the-wrapper-scripts-by-example" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">initialize_parameters</span><span class="p">(</span><span class="n">default_model</span><span class="o">=</span><span class="s1">&#39;nt3_default_model.txt&#39;</span><span class="p">):</span>
-
-    <span class="kn">import</span> <span class="nn">os</span> <span class="c1"># ADD THIS LINE</span>
-
-    <span class="n">nt3Bmk</span> <span class="o">=</span> <span class="n">bmk</span><span class="o">.</span><span class="n">BenchmarkNT3</span><span class="p">(</span>
-        <span class="n">bmk</span><span class="o">.</span><span class="n">file_path</span><span class="p">,</span>
-        <span class="c1"># default_model, # ORIGINAL LINE</span>
-        <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s1">&#39;CANDLE_DEFAULT_MODEL_FILE&#39;</span><span class="p">),</span> <span class="c1"># NEW LINE</span>
-        <span class="s1">&#39;keras&#39;</span><span class="p">,</span>
-        <span class="n">prog</span><span class="o">=</span><span class="s1">&#39;nt3_baseline&#39;</span><span class="p">,</span>
-        <span class="n">desc</span><span class="o">=</span><span class="s1">&#39;1D CNN to classify RNA sequence data in normal or tumor classes&#39;</span><span class="p">)</span>
-
-    <span class="n">gParameters</span> <span class="o">=</span> <span class="n">candle</span><span class="o">.</span><span class="n">finalize_parameters</span><span class="p">(</span><span class="n">nt3Bmk</span><span class="p">)</span>
-
-    <span class="k">return</span> <span class="n">gParameters</span>
-</pre></div>
-</div>
-</div>
-<div class="section" id="nothing-to-do-with-the-wrapper-scripts-generally-no-need-to-do-these">
-<h3>Nothing to do with the wrapper scripts (generally no need to do these)<a class="headerlink" href="#nothing-to-do-with-the-wrapper-scripts-generally-no-need-to-do-these" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="notes-on-getting-canonically-candle-compliant-model-scripts-working-with-wrapper-scripts-generally-no-need-to-do-these">
+<h2>Notes on getting canonically CANDLE-compliant model scripts working with wrapper scripts (generally no need to do these)<a class="headerlink" href="#notes-on-getting-canonically-candle-compliant-model-scripts-working-with-wrapper-scripts-generally-no-need-to-do-these" title="Permalink to this headline">¶</a></h2>
 <p>You may need to add <code class="docutils literal notranslate"><span class="pre">K.clear_session()</span></code> prior to, say,
 <code class="docutils literal notranslate"><span class="pre">model</span> <span class="pre">=</span> <span class="pre">Sequential()</span></code>. Otherwise, once the same rank runs a model
 script a <em>second</em> time, we get a strange <code class="docutils literal notranslate"><span class="pre">InvalidArgumentError</span></code> error
 that kills Supervisor (see the comments in
-<code class="docutils literal notranslate"><span class="pre">`$CANDLE/Benchmarks/Pilot1/NT3/nt3_candle_wrappers_baseline_keras2.py</span></code> &lt;<a class="reference external" href="https://github.com/ECP-CANDLE/Benchmarks/blob/develop/Pilot1/NT3/nt3_candle_wrappers_baseline_keras2.py">https://github.com/ECP-CANDLE/Benchmarks/blob/develop/Pilot1/NT3/nt3_candle_wrappers_baseline_keras2.py</a>&gt;`__
+<a class="reference external" href="https://github.com/ECP-CANDLE/Benchmarks/blob/develop/Pilot1/NT3/nt3_candle_wrappers_baseline_keras2.py">$CANDLE/Benchmarks/Pilot1/NT3/nt3_candle_wrappers_baseline_keras2.py</a>
 for more details). It is wholly possible that this is a bug that has
 gotten fixed in subsequent versions of Keras/Tensorflow.</p>
 <p>In addition, if you, say, pull a Benchmark model script out of the
@@ -439,8 +401,7 @@ gotten fixed in subsequent versions of Keras/Tensorflow.</p>
 to add a line like
 <code class="docutils literal notranslate"><span class="pre">sys.path.append(os.path.join(os.getenv('CANDLE'),</span> <span class="pre">'Benchmarks',</span> <span class="pre">'Pilot1',</span> <span class="pre">'NT3'))</span></code>.
 This is demonstrated in
-<code class="docutils literal notranslate"><span class="pre">`$CANDLE/wrappers/examples/summit-tf1/mlrmbo/nt3_candle_wrappers_baseline_keras2.py</span></code> &lt;<a class="reference external" href="https://github.com/fnlcr-bids-sdsi/candle_wrappers/blob/master/examples/summit-tf1/mlrmbo/nt3_candle_wrappers_baseline_keras2.py">https://github.com/fnlcr-bids-sdsi/candle_wrappers/blob/master/examples/summit-tf1/mlrmbo/nt3_candle_wrappers_baseline_keras2.py</a>&gt;`__.</p>
-</div>
+<a class="reference external" href="https://github.com/fnlcr-bids-sdsi/candle_wrappers/blob/master/examples/summit-tf2/mlrmbo/nt3_candle_wrappers_baseline_keras2.py">$CANDLE/wrappers/examples/summit-tf2/mlrmbo/nt3_candle_wrappers_baseline_keras2.py</a>.</p>
 </div>
 <div class="section" id="how-to-minimally-modify-a-bare-model-script-for-use-with-the-wrapper-scripts">
 <h2>How to minimally modify a bare model script for use with the wrapper scripts<a class="headerlink" href="#how-to-minimally-modify-a-bare-model-script-for-use-with-the-wrapper-scripts" title="Permalink to this headline">¶</a></h2>
@@ -454,7 +415,7 @@ the loss evaluated on a test set) is returned as a number in the
 <code class="docutils literal notranslate"><span class="pre">candle_value_to_return</span></code> variable</p></li>
 </ol>
 <p>This is demonstrated in
-<code class="docutils literal notranslate"><span class="pre">`$CANDLE/wrappers/examples/summit-tf1/grid/mnist_mlp.py</span></code> &lt;<a class="reference external" href="https://github.com/fnlcr-bids-sdsi/candle_wrappers/blob/master/examples/summit-tf1/grid/mnist_mlp.py">https://github.com/fnlcr-bids-sdsi/candle_wrappers/blob/master/examples/summit-tf1/grid/mnist_mlp.py</a>&gt;`__.</p>
+<a class="reference external" href="https://github.com/fnlcr-bids-sdsi/candle_wrappers/blob/master/examples/summit-tf2/grid/mnist_mlp.py">$CANDLE/wrappers/examples/summit-tf2/grid/mnist_mlp.py</a>.</p>
 <div class="section" id="running-a-non-candle-compliant-model-on-its-own-outside-of-supervisor">
 <h3>Running a non-CANDLE-compliant model on its own, outside of Supervisor<a class="headerlink" href="#running-a-non-candle-compliant-model-on-its-own-outside-of-supervisor" title="Permalink to this headline">¶</a></h3>
 <p>One drawback to minimally modifying a bare model script as opposed to
@@ -495,10 +456,10 @@ Espresso</a> electronic structure
 software.) Four sample input files, corresponding to the four examples
 in the <a class="reference external" href="#quick-start-examples-for-summit">quick-start examples
 above</a>, are here:
-<a class="reference external" href="https://github.com/fnlcr-bids-sdsi/candle_wrappers/blob/master/examples/summit-tf1/upf/upf_example.in">upf</a>,
-<a class="reference external" href="https://github.com/fnlcr-bids-sdsi/candle_wrappers/blob/master/examples/summit-tf1/mlrmbo/mlrmbo_example.in">mlrmbo</a>,
-<a class="reference external" href="https://github.com/fnlcr-bids-sdsi/candle_wrappers/blob/master/examples/summit-tf1/grid/grid_example.in">grid</a>,
-<a class="reference external" href="https://github.com/fnlcr-bids-sdsi/candle_wrappers/blob/master/examples/summit-tf1/bayesian/bayesian_example.in">bayesian</a>.
+<a class="reference external" href="https://github.com/fnlcr-bids-sdsi/candle_wrappers/blob/master/examples/summit-tf2/upf/upf_example.in">upf</a>,
+<a class="reference external" href="https://github.com/fnlcr-bids-sdsi/candle_wrappers/blob/master/examples/summit-tf2/mlrmbo/mlrmbo_example.in">mlrmbo</a>,
+<a class="reference external" href="https://github.com/fnlcr-bids-sdsi/candle_wrappers/blob/master/examples/summit-tf2/grid/grid_example.in">grid</a>,
+<a class="reference external" href="https://github.com/fnlcr-bids-sdsi/candle_wrappers/blob/master/examples/summit-tf2/bayesian/bayesian_example.in">bayesian</a>.
 Spaces at the beginnings of the content-containing lines are optional
 but are recommended for readability.</p>
 <div class="section" id="control-section">
@@ -512,7 +473,7 @@ is taken to be a string by default; thus, quotes are not necessary for
 string <code class="docutils literal notranslate"><span class="pre">value</span></code>s.</p>
 <p>Here is a list of possible <code class="docutils literal notranslate"><span class="pre">keyword</span></code>s and their default <code class="docutils literal notranslate"><span class="pre">value</span></code>s
 (if <code class="docutils literal notranslate"><span class="pre">None</span></code>, then the keyword is required), as specified in
-<code class="docutils literal notranslate"><span class="pre">`$CANDLE/wrappers/site-specific_settings.sh</span></code> &lt;<a class="reference external" href="https://github.com/fnlcr-bids-sdsi/candle_wrappers/blob/master/site-specific_settings.sh">https://github.com/fnlcr-bids-sdsi/candle_wrappers/blob/master/site-specific_settings.sh</a>&gt;`__:</p>
+<a class="reference external" href="https://github.com/fnlcr-bids-sdsi/candle_wrappers/blob/master/site-specific_settings.sh">$CANDLE/wrappers/site-specific_settings.sh</a>:</p>
 <table class="docutils align-default">
 <colgroup>
 <col style="width: 33%" />
@@ -748,9 +709,9 @@ combined. E.g.,
 default model text file to use, e.g.,
 <code class="docutils literal notranslate"><span class="pre">candle_default_model_file</span> <span class="pre">=</span> <span class="pre">$CANDLE/Benchmarks/Pilot1/NT3/nt3_default_model.txt</span></code>
 or the <em>contents</em> of such a default model file as, e.g., in the
-<a class="reference external" href="https://github.com/fnlcr-bids-sdsi/candle_wrappers/blob/master/examples/summit-tf1/grid/grid_example.in">grid</a>
+<a class="reference external" href="https://github.com/fnlcr-bids-sdsi/candle_wrappers/blob/master/examples/summit-tf2/grid/grid_example.in">grid</a>
 or
-<a class="reference external" href="https://github.com/fnlcr-bids-sdsi/candle_wrappers/blob/master/examples/summit-tf1/bayesian/bayesian_example.in">bayesian</a>
+<a class="reference external" href="https://github.com/fnlcr-bids-sdsi/candle_wrappers/blob/master/examples/summit-tf2/bayesian/bayesian_example.in">bayesian</a>
 examples in the <a class="reference external" href="#quick-start-examples-for-summit">quick-start section
 above</a>.</p>
 </div>
@@ -761,9 +722,9 @@ above</a>.</p>
 file specifying the hyperparameter space to use, e.g.,
 <code class="docutils literal notranslate"><span class="pre">candle_param_space_file</span> <span class="pre">=</span> <span class="pre">$CANDLE/Supervisor/workflows/mlrMBO/data/nt3_nightly.R</span></code>
 or the <em>contents</em> of such a parameter space file as, e.g., in the
-<a class="reference external" href="https://github.com/fnlcr-bids-sdsi/candle_wrappers/blob/master/examples/summit-tf1/grid/grid_example.in">grid</a>
+<a class="reference external" href="https://github.com/fnlcr-bids-sdsi/candle_wrappers/blob/master/examples/summit-tf2/grid/grid_example.in">grid</a>
 or
-<a class="reference external" href="https://github.com/fnlcr-bids-sdsi/candle_wrappers/blob/master/examples/summit-tf1/upf/upf_example.in">upf</a>
+<a class="reference external" href="https://github.com/fnlcr-bids-sdsi/candle_wrappers/blob/master/examples/summit-tf2/upf/upf_example.in">upf</a>
 examples in the <a class="reference external" href="#quick-start-examples-for-summit">quick-start section
 above</a> or here:</p>
 <div class="highlight-text notranslate"><div class="highlight"><pre><span></span>&amp;param_space
@@ -783,15 +744,14 @@ above</a> or here:</p>
 <p>A description of what every file does in the <a class="reference external" href="https://github.com/fnlcr-bids-sdsi/candle_wrappers">wrappers
 repository</a>, which
 is cloned to <code class="docutils literal notranslate"><span class="pre">$CANDLE/wrappers</span></code>, can be found
-<a class="reference external" href="./repository_organization.md">here</a>. Some particular notes:</p>
+<a class="reference external" href="https://github.com/fnlcr-bids-sdsi/candle_wrappers/repository_organization.md">here</a>. Some particular notes:</p>
 <ul class="simple">
-<li><p>All documentation is currently in the top-level directory:
+<li><p>In addition to the page you are reading, all documentation is currently in the top-level directory:
 <code class="docutils literal notranslate"><span class="pre">README.md</span></code> (see this file for additional notes),
-<code class="docutils literal notranslate"><span class="pre">docs_for_candle_team.md</span></code> (this file),
 <code class="docutils literal notranslate"><span class="pre">repository_organization.md</span></code>, <code class="docutils literal notranslate"><span class="pre">setup-biowulf.md</span></code>, and
 <code class="docutils literal notranslate"><span class="pre">setup-summit.md</span></code></p></li>
 <li><p>Directories pertaining to the <strong>setup</strong> of the wrappers repository
-and in general of CANDLE on a new HPC system (involved in the <a class="reference external" href="./README.md">setup
+and in general of CANDLE on a new HPC system (involved in the <a class="reference external" href="https://github.com/fnlcr-bids-sdsi/candle_wrappers/README.md">setup
 documentation</a>) are <code class="docutils literal notranslate"><span class="pre">log_files</span></code>, <code class="docutils literal notranslate"><span class="pre">swift-t_setup</span></code>,
 and <code class="docutils literal notranslate"><span class="pre">test_files</span></code></p></li>
 <li><p>Directories pertaining to the <strong>usage</strong> of the wrapper scripts
@@ -800,7 +760,7 @@ are:</p>
 <ul>
 <li><p><code class="docutils literal notranslate"><span class="pre">lmod_modules</span></code>: contains <code class="docutils literal notranslate"><span class="pre">.lua</span></code> files used by the <code class="docutils literal notranslate"><span class="pre">lmod</span></code>
 system for loading <code class="docutils literal notranslate"><span class="pre">module</span></code>s, enabling one to run, e.g.,
-<code class="docutils literal notranslate"><span class="pre">`module</span> <span class="pre">load</span> <span class="pre">candle</span></code> &lt;#loading-the-candle-module&gt;`__</p></li>
+<a class="reference external" href="#loading-the-candle-module">module load candle</a></p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">bin</span></code>: contains a single script called <code class="docutils literal notranslate"><span class="pre">candle</span></code> that can be
 accessed by typing <code class="docutils literal notranslate"><span class="pre">candle</span></code> on the command line once the CANDLE
 module has been loaded. You can generate a usage message by simply
@@ -825,22 +785,19 @@ subdirectory</p></li>
 <h2>Recommendations for particular use cases<a class="headerlink" href="#recommendations-for-particular-use-cases" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="run-grid-or-bayesian-hyperparameter-searches-on-an-already-candle-compliant-model-script-such-as-a-benchmark">
 <h3>Run <code class="docutils literal notranslate"><span class="pre">grid</span></code> or <code class="docutils literal notranslate"><span class="pre">bayesian</span></code> hyperparameter searches on an already CANDLE-compliant model script such as a benchmark<a class="headerlink" href="#run-grid-or-bayesian-hyperparameter-searches-on-an-already-candle-compliant-model-script-such-as-a-benchmark" title="Permalink to this headline">¶</a></h3>
+<p>Note that you can copy a benchmark to your working directory and make
+the modifications there, as the templates show.</p>
 <ol class="arabic simple">
 <li><p>Enter a directory on Summit’s Alpine filesystem such as
 <code class="docutils literal notranslate"><span class="pre">$MEMBERWORK</span></code></p></li>
 <li><p>Load the <code class="docutils literal notranslate"><span class="pre">candle</span></code> module via
-<code class="docutils literal notranslate"><span class="pre">source</span> <span class="pre">/gpfs/alpine/med106/world-shared/candle/env_for_lmod-tf1.sh</span></code></p></li>
+<code class="docutils literal notranslate"><span class="pre">source</span> <span class="pre">/gpfs/alpine/med106/world-shared/candle/env_for_lmod-tf2.sh</span></code></p></li>
 <li><p>Import one of the <a class="reference external" href="#step-2-run-sample-candle-compliant-model-scripts">templates for running canonically CANDLE-compliant
 models</a> using
-<code class="docutils literal notranslate"><span class="pre">candle</span> <span class="pre">import-template</span> <span class="pre">{upf|mlrmbo}</span></code>; delete all but the input
+<code class="docutils literal notranslate"><span class="pre">candle</span> <span class="pre">import-template</span> <span class="pre">{upf|mlrmbo}</span></code> and delete all but the copied-over input
 file</p></li>
 <li><p>Rename and tweak the input file to your liking using the
 <a class="reference external" href="#input-file-contents">documentation for input files</a> above</p></li>
-<li><p>Modify the <code class="docutils literal notranslate"><span class="pre">initialize_parameters()</span></code> function of the model script
-using the instructions
-<a class="reference external" href="#how-a-canonically-candle-compliant-model-script-should-be-modified-for-use-with-the-wrapper-scripts">above</a>;
-remember you can copy a benchmark to your working directory and make
-the modifications there, as the templates show</p></li>
 <li><p>Ensure your model runs on an interactive node (e.g.,
 <code class="docutils literal notranslate"><span class="pre">bsub</span> <span class="pre">-W</span> <span class="pre">1:00</span> <span class="pre">-nnodes</span> <span class="pre">1</span> <span class="pre">-P</span> <span class="pre">med106</span> <span class="pre">-q</span> <span class="pre">debug</span> <span class="pre">-Is</span> <span class="pre">/bin/bash</span></code>) by
 setting the <code class="docutils literal notranslate"><span class="pre">run_workflow=0</span></code> keyword setting in the <code class="docutils literal notranslate"><span class="pre">&amp;control</span></code>
@@ -857,7 +814,7 @@ running <code class="docutils literal notranslate"><span class="pre">candle</spa
 <li><p>Enter a directory on Summit’s Alpine filesystem such as
 <code class="docutils literal notranslate"><span class="pre">$MEMBERWORK</span></code></p></li>
 <li><p>Load the <code class="docutils literal notranslate"><span class="pre">candle</span></code> module via
-<code class="docutils literal notranslate"><span class="pre">source</span> <span class="pre">/gpfs/alpine/med106/world-shared/candle/env_for_lmod-tf1.sh</span></code></p></li>
+<code class="docutils literal notranslate"><span class="pre">source</span> <span class="pre">/gpfs/alpine/med106/world-shared/candle/env_for_lmod-tf2.sh</span></code></p></li>
 <li><p>Create a bare model script as usual (e.g., download a model from the
 Internet, tweak it, and apply it on your data)</p></li>
 <li><p>Make the model script <em>minimally</em> CANDLE-compliant as described
@@ -880,14 +837,14 @@ running <code class="docutils literal notranslate"><span class="pre">candle</spa
 </div>
 <div class="section" id="run-a-model-script-written-in-another-language-such-as-r-or-bash">
 <h3>Run a model script written in another language such as <code class="docutils literal notranslate"><span class="pre">R</span></code> or <code class="docutils literal notranslate"><span class="pre">bash</span></code><a class="headerlink" href="#run-a-model-script-written-in-another-language-such-as-r-or-bash" title="Permalink to this headline">¶</a></h3>
-<p><a class="reference external" href="#how-to-contact-andrew-for-help-with-anything-above">Ask Andrew</a> to
+<p><a class="reference external" href="#how-to-contact-andrew-for-help-with-anything-above">Ask Andrew Weisman</a> to
 test this first because he hasn’t tested it on Summit yet.</p>
 </div>
 <div class="section" id="pull-updates-to-the-central-installation-of-candle-that-have-already-been-pulled-into-the-main-supervisor-benchmarks-repositories">
 <h3>Pull updates to the central installation of CANDLE that have already been pulled into the main Supervisor/Benchmarks repositories<a class="headerlink" href="#pull-updates-to-the-central-installation-of-candle-that-have-already-been-pulled-into-the-main-supervisor-benchmarks-repositories" title="Permalink to this headline">¶</a></h3>
 <ol class="arabic simple">
 <li><p>Load the <code class="docutils literal notranslate"><span class="pre">candle</span></code> module via
-<code class="docutils literal notranslate"><span class="pre">source</span> <span class="pre">/gpfs/alpine/med106/world-shared/candle/env_for_lmod-tf1.sh</span></code></p></li>
+<code class="docutils literal notranslate"><span class="pre">source</span> <span class="pre">/gpfs/alpine/med106/world-shared/candle/env_for_lmod-tf2.sh</span></code></p></li>
 <li><p>Enter the clone you’d like to update via <code class="docutils literal notranslate"><span class="pre">cd</span> <span class="pre">$CANDLE/Supervisor</span></code> or
 <code class="docutils literal notranslate"><span class="pre">cd</span> <span class="pre">$CANDLE/Benchmarks</span></code></p></li>
 <li><p>Run <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">pull</span></code>, adjusting the permissions if necessary the very
@@ -900,7 +857,7 @@ this)</p></li>
 <h3>Commit changes to the wrapper scripts or to the Supervisor or Benchmarks clones in the central installation<a class="headerlink" href="#commit-changes-to-the-wrapper-scripts-or-to-the-supervisor-or-benchmarks-clones-in-the-central-installation" title="Permalink to this headline">¶</a></h3>
 <ol class="arabic simple">
 <li><p>Load the <code class="docutils literal notranslate"><span class="pre">candle</span></code> module via
-<code class="docutils literal notranslate"><span class="pre">source</span> <span class="pre">/gpfs/alpine/med106/world-shared/candle/env_for_lmod-tf1.sh</span></code></p></li>
+<code class="docutils literal notranslate"><span class="pre">source</span> <span class="pre">/gpfs/alpine/med106/world-shared/candle/env_for_lmod-tf2.sh</span></code></p></li>
 <li><p>Enter the clone you’d like to update via
 <code class="docutils literal notranslate"><span class="pre">cd</span> <span class="pre">$CANDLE/{wrappers|Supervisor|Benchmarks}</span></code></p></li>
 <li><p>Make your modifications to the code and commit your changes,
@@ -923,13 +880,13 @@ Below are some ideas for particular ways to contribute:</p>
 <ul class="simple">
 <li><p>Implement workflows other than <code class="docutils literal notranslate"><span class="pre">grid</span></code> and <code class="docutils literal notranslate"><span class="pre">bayesian</span></code> (UQ would be
 great!) by following the instructions
-<a class="reference external" href="./README.md#how-to-add-new-workflows">here</a></p></li>
+<a class="reference external" href="https://github.com/fnlcr-bids-sdsi/candle_wrappers/README.md#how-to-add-new-workflows">here</a></p></li>
 <li><p>If this is something you personally want, allow for command-line
 arguments to the <code class="docutils literal notranslate"><span class="pre">candle</span></code> command, such as <code class="docutils literal notranslate"><span class="pre">run_workflow</span></code> or any
 other <a class="reference external" href="#input-file-contents">input file keywords</a></p></li>
 <li><p>Check/preprocess the four mlrMBO keywords (<code class="docutils literal notranslate"><span class="pre">design_size</span></code>,
 <code class="docutils literal notranslate"><span class="pre">propose_points</span></code>, <code class="docutils literal notranslate"><span class="pre">max_iterations</span></code>, <code class="docutils literal notranslate"><span class="pre">max_budget</span></code>) by following
-the instructions <a class="reference external" href="./README.md#how-to-add-a-new-keyword">here</a> and
+the instructions <a class="reference external" href="https://github.com/fnlcr-bids-sdsi/candle_wrappers/README.md#how-to-add-a-new-keyword">here</a> and
 seeing their usage
 <a class="reference external" href="https://github.com/fnlcr-bids-sdsi/candle_wrappers/blob/master/commands/submit-job/dummy_cfg-prm.sh">here</a>
 (good exercise to get familiar with the wrappers code)</p></li>
