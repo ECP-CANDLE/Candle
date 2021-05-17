@@ -643,30 +643,12 @@ Below are some ideas for particular ways to contribute:
    (good exercise to get familiar with the wrappers code)
 -  Anything else!
 
-Potential issues
+Known issues
 ------------------------------------------------------------------------------------------------------------------------
 
--  If, when running on an interactive node (using ``run_workflow=0`` in the input file), you get an error like
-
-.. code:: text
-
-   tensorflow.python.framework.errors_impl.InternalError: cudaGetDevice() failed. Status: CUDA driver version is insufficient for CUDA runtime version
-   Input file submission failed
-
-then likely you need to load the CUDA module corresponding to that which is automatically in batch mode, based on the contents of ``$CANDLE/Supervisor/workflows/common/sh/env-summit-tf2.sh``; currently, this means that you need to run ``module load cuda/10.2.89``. When following the interactive protocol for testing, only the default version of Python is loaded prior to running the model using the default model settings, as opposed to the CUDA module being loaded as well. Note: This is a relatively new issue.
--  You may need to add ``K.clear_session()`` prior to, say,
-``model = Sequential()``. Otherwise, once the same rank runs a model
-script a *second* time, we get a strange ``InvalidArgumentError`` error
-that kills Supervisor (see the comments in
-`$CANDLE/Benchmarks/Pilot1/NT3/nt3_candle_wrappers_baseline_keras2.py <https://github.com/ECP-CANDLE/Benchmarks/blob/develop/Pilot1/NT3/nt3_candle_wrappers_baseline_keras2.py>`__
-for more details). It is wholly possible that this is a bug that has
-gotten fixed in subsequent versions of Keras/Tensorflow.
--  In addition, if you, say, pull a Benchmark model script out of the
-``Benchmarks`` repository into your own separate directory, you may need
-to add a line like
-``sys.path.append(os.path.join(os.getenv('CANDLE'), 'Benchmarks', 'Pilot1', 'NT3'))``.
-This is demonstrated in
-`$CANDLE/wrappers/examples/summit-tf2/mlrmbo/nt3_candle_wrappers_baseline_keras2.py <https://github.com/fnlcr-bids-sdsi/candle_wrappers/blob/master/examples/summit-tf2/mlrmbo/nt3_candle_wrappers_baseline_keras2.py>`__.
+-  **CUDA driver.** If, when running on an interactive node (using ``run_workflow=0`` in the input file), you get an error like ``tensorflow.python.framework.errors_impl.InternalError: cudaGetDevice() failed. Status: CUDA driver version is insufficient for CUDA runtime version`` then likely you need to load the CUDA module corresponding to that which is automatically in batch mode, based on the contents of ``$CANDLE/Supervisor/workflows/common/sh/env-summit-tf2.sh``; currently, this means that you need to run ``module load cuda/10.2.89``. Explanation: When following the interactive protocol for testing, only the default version of Python is loaded prior to running the model using the default model settings, as opposed to the CUDA module being loaded as well. Note: This is a relatively new issue.
+-  **``InvalidArgumentError``.** You may need to add ``K.clear_session()`` prior to, say, ``model = Sequential()``. Otherwise, once the same rank runs a model script a *second* time, we get a strange ``InvalidArgumentError`` error that kills Supervisor (see the comments in `$CANDLE/Benchmarks/Pilot1/NT3/nt3_candle_wrappers_baseline_keras2.py <https://github.com/ECP-CANDLE/Benchmarks/blob/develop/Pilot1/NT3/nt3_candle_wrappers_baseline_keras2.py>`__ for more details). It is wholly possible that this is a bug that has gotten fixed in subsequent versions of Keras/Tensorflow.
+-  **Path to CANDLE library.** In addition, if you, say, pull a Benchmark model script out of the ``Benchmarks`` repository into your own separate directory, you may need to add a line like ``sys.path.append(os.path.join(os.getenv('CANDLE'), 'Benchmarks', 'Pilot1', 'NT3'))``. This is demonstrated in `$CANDLE/wrappers/examples/summit-tf2/mlrmbo/nt3_candle_wrappers_baseline_keras2.py <https://github.com/fnlcr-bids-sdsi/candle_wrappers/blob/master/examples/summit-tf2/mlrmbo/nt3_candle_wrappers_baseline_keras2.py>`__.
 
 How to contact Andrew for help with anything above
 --------------------------------------------------
