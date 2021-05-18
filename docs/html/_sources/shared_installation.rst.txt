@@ -528,7 +528,7 @@ is cloned to ``$CANDLE/wrappers``, can be found
       scripts for different ``$SITE``\ s
    -  ``commands``: contains one directory so-named for each command to
       the ``candle`` program, each containing all files related to the
-      command. The file called ``command_script.sh`` in each command’s
+      command. Possible commands are ``import-template``, ``generate-grid``, ``submit-job``, and ``aggregate-results``. The file called ``command_script.sh`` in each command’s
       directory is the main file called when the command is run using
       ``candle <COMMAND> ...``. The only command not currently tested on
       Summit is ``aggregate-results``. The bulk of the files involved in
