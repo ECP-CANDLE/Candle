@@ -61,7 +61,10 @@ For users
       file keyword setting of ``run_workflow=0`` on an interactive node
       (e.g.,
       ``bsub -W 1:00 -nnodes 1 -P med106 -q debug -Is /bin/bash``) for
-      testing modifications to a model script. **Note:** See `here <#known-issues>`__ if you encounter an issue with the CUDA driver when testing a model in this interactive mode.
+      testing modifications to a model script
+      
+   -  **Note:** See `here <#known-issues>`__ if you encounter an issue with the CUDA driver when testing a model in this interactive mode
+
    2. *Production:* Using ``candle submit-job <INPUT-FILE>`` this time
       with the default keyword setting of ``run_workflow=1`` on a login
       node for submitting a CANDLE job as usual

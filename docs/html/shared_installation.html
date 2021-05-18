@@ -263,7 +263,12 @@ i.e.:</p>
 file keyword setting of <code class="docutils literal notranslate"><span class="pre">run_workflow=0</span></code> on an interactive node
 (e.g.,
 <code class="docutils literal notranslate"><span class="pre">bsub</span> <span class="pre">-W</span> <span class="pre">1:00</span> <span class="pre">-nnodes</span> <span class="pre">1</span> <span class="pre">-P</span> <span class="pre">med106</span> <span class="pre">-q</span> <span class="pre">debug</span> <span class="pre">-Is</span> <span class="pre">/bin/bash</span></code>) for
-testing modifications to a model script. <strong>Note:</strong> See <a class="reference external" href="#known-issues">here</a> if you encounter an issue with the CUDA driver when testing a model in this interactive mode.</p></li>
+testing modifications to a model script</p></li>
+</ol>
+<ul class="simple">
+<li><p><strong>Note:</strong> See <a class="reference external" href="#known-issues">here</a> if you encounter an issue with the CUDA driver when testing a model in this interactive mode</p></li>
+</ul>
+<ol class="arabic simple" start="2">
 <li><p><em>Production:</em> Using <code class="docutils literal notranslate"><span class="pre">candle</span> <span class="pre">submit-job</span> <span class="pre">&lt;INPUT-FILE&gt;</span></code> this time
 with the default keyword setting of <code class="docutils literal notranslate"><span class="pre">run_workflow=1</span></code> on a login
 node for submitting a CANDLE job as usual</p></li>
