@@ -47,7 +47,7 @@ For users
       model script using e.g. the keywords ``supp_modules``,
       ``python_bin_path``, ``exec_python_module``, ``supp_pythonpath``,
       described further in the `section on input file
-      keywords <#control-section>`__ below for keywords noted to apply
+      keywords <#input-file-format>`__ below for keywords noted to apply
       for “minimal CANDLE-compliance only”
 
 -  **Run model scripts written in other languages** such as ``R`` and
