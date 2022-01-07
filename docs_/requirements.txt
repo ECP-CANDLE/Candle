@@ -1,0 +1,14 @@
+sphinx_rtd_theme
+tensorflow
+torch
+scikit-learn
+numpy==1.20.3
+pandas
+scipy
+matplotlib
+wget
+astropy
+numba
+matplotlib
+tqdm
+patsy
