@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DARTS Examples &mdash; CANDLE  documentation</title><link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  <script id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/language_data.js"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="MNIST Example" href="../mnist/README.html" />
+    <link rel="prev" title="Data preprocessing - feature selection examples" href="../M16/README.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../../index.html" class="icon icon-home"> CANDLE
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../../readme.html">What is CANDLE?</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../index.html">Tutorials</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../index.html#preparation">Preparation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../index.html#running-workflows">Running workflows</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../../index.html#examples">Examples</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../ADRP/README.html">Pilot1 ADRP Benchmark</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../M16/README.html">Data preprocessing - feature selection examples</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">DARTS Examples</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#tldr">TLDR</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#setup">Setup</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#the-algorithm">The Algorithm</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../mnist/README.html">MNIST Example</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../unet/README.html">U-NET Example</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../run-summit/README.html">Run Modes: Summit</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../candle_lib.html">CANDLE Library API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../shared_installation.html">CANDLE Shared Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../contribute.html">How to Contribute</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">CANDLE</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="../../index.html">Tutorials</a> &raquo;</li>
+      <li>DARTS Examples</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../../_sources/tutorials/examples/darts/README.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <div class="section" id="darts-examples">
+<h1>DARTS Examples<a class="headerlink" href="#darts-examples" title="Permalink to this headline">¶</a></h1>
+<p>Differentiable architecture search</p>
+<div class="section" id="tldr">
+<h2>TLDR<a class="headerlink" href="#tldr" title="Permalink to this headline">¶</a></h2>
+<p>Our recommended ordering of examples:</p>
+<ol class="arabic simple">
+<li><p><strong>Uno</strong>: learn how to use the neural network building blocks in DARTS to
+define a fully connected model using DARTS.</p></li>
+<li><p><strong>Advanced</strong>: how to define our own neural network primitives to be optimized
+by DARTS.</p></li>
+</ol>
+</div>
+<div class="section" id="setup">
+<h2>Setup<a class="headerlink" href="#setup" title="Permalink to this headline">¶</a></h2>
+<p>Darts makes use of Pytorch. You can find binaries for both Pytorch and Torchvision (used in the advanced
+example) at the <a class="reference external" href="https://pytorch.org/">pytorch website</a>.</p>
+</div>
+<div class="section" id="the-algorithm">
+<h2>The Algorithm<a class="headerlink" href="#the-algorithm" title="Permalink to this headline">¶</a></h2>
+<p>This is an adaptation of Hanxiao Liu et al’s DARTS algorithm, extending
+the work to handle convolutional neural networks for NLP problems and more.
+Details of the original authors’ approach can be found in their 2019 ICLR <a class="reference external" href="https://openreview.net/forum?id=S1eYHoC5FX">paper</a>.</p>
+<p>DARTS works by composing various neural net primitives, defined as Pytorch <em>nn.Modules</em>,
+to create a larger directed acyclic graph (DAG) that is to be your model. This
+composition is differentiable as we take the softmax of the choice of primitive types
+at each layer of the network. To make this more clear, let’s first define a few abstractions
+in the algorithm:</p>
+<ol class="arabic simple">
+<li><p><strong>Primitve</strong>: this is the fundamental block of computation, defined as an <em>nn.Module</em>.
+At each layer of your network, one of these primitves will be chosen by taking the
+softmax of all possible primitives at that layer. Examples could be a convolution block,
+a linear layer, a skip connect, or anything that you can come up with (subject to a few
+constraints).</p></li>
+<li><p><strong>Cell</strong>: this is an abstraction that holds each of the primitive types for level of your
+network. This is where we perform the softmax over the possible primitive types.</p></li>
+<li><p><strong>Nodes</strong>: this is the level of abstraction that would normally be considered a layer in
+your network. It can contain one or more <em>Cells</em>.</p></li>
+<li><p><strong>Architecture</strong>: The abstraction that contains all nodes in the graph. This computes a
+Hessian product with respect to the <em>alpha</em> parameters as defined in the paper.</p></li>
+<li><p><strong>Genotype</strong>: genotypes are instances of a particular configuration of the graph. As the
+optimization runs, and each cell computes the softmax over their primitive types, the final
+configuration of all nodes with their resulting primitive is a genotype.</p></li>
+</ol>
+<p>In the DARTS algorithm, we define a number of primitives that we would like to compose together
+to form our neural network. The original paper started with 8 primitive types. These types
+were originally designed for a vision task, and largely consist of convolution type operations.
+We have since adapted these types for the <em>P3B5</em> benchmark, creating 1D convolution types for
+our NLP tasks. If you would like to see how these primitives are defined, along with their
+necessary constructors used by DARTS, you can find them in
+<a class="reference external" href="../../../common/darts/modules/operations/conv.py">darts.modules.operations.conv.py</a>.</p>
+<p>These primitives are then contained within a cell, and one or more cells are contained within a
+node in the graph. DARTS then works by composing these nodes together and taking the softmax over
+their primitives in each cell. Finally, the <em>Architecture</em> abstraction contains all nodes, and is
+responsible for differentiating the composition of the nodes with respect to two <em>alpha</em> parameters
+as defined in the paper. The end result is that we have a differentiable model that composes its
+components as the model is training.</p>
+<p>As the optimization runs, the model will print the resulting loss with respect to a given <em>Genotype</em>.
+The final model will be the <em>Genotype</em> with corresponding to the lowest loss.</p>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../M16/README.html" class="btn btn-neutral float-left" title="Data preprocessing - feature selection examples" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../mnist/README.html" class="btn btn-neutral float-right" title="MNIST Example" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2021, ANL.gov.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

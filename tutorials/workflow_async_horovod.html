@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>&lt;no title&gt; &mdash; CANDLE  documentation</title><link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../index.html" class="icon icon-home"> CANDLE
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../readme.html">What is CANDLE?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="index.html">Tutorials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../candle_lib.html">CANDLE Library API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../shared_installation.html">CANDLE Shared Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contribute.html">How to Contribute</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">CANDLE</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+      <li>&lt;no title&gt;</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/tutorials/workflow_async_horovod.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <p>== Async Local</p>
+<p>A straightforward implementation of a skopt workflow that runs
+everything in a Python subprocess.</p>
+<p>Uses asynchronous background processes for tasks.</p>
+<p>Works fine with aprun on Theta.</p>
+<p>== Overview</p>
+<p>. The search algorithm is set up using the normal skopt API. . The
+workflow starts points_init tasks . As each task exits, it is replaced
+by a new one from skopt . When points_max tasks have been issued, the
+workflow issues no more tasks, but waits for the outstanding ones to
+complete. . If any task fails (non-zero exit code), the workflow issues
+no more tasks, but waits for the outstanding ones to complete. It also
+may print a Python stack trace.</p>
+<p>== Implementation notes</p>
+<p>These details will change rapidly as the workflow becomes more generic.</p>
+<p>. If OUTPUT is in the environment, this is used as an output directory,
+else the workflow uses $PWD . . The workflow tasks are each assigned a
+unique integer number. . The output for each task goes to a file with
+the given number in the output directory.</p>
+<p>== File index</p>
+<p>main.sh:: Shell interface for the Python program.</p>
+<p>main.py:: The main Python program. Sets up and runs the search loop.</p>
+<p>Task.py:: The Python task (objective function). Currently hard-coded to
+run task.sh. Needs to become a plug-in.</p>
+<p>Problem.py:: The bounding box for the skopt search. Needs to become a
+plug-in.</p>
+<p>task.sh:: A dummy task. Can be replaced by any shell script, including
+the ff Horovod script.</p>
+<p>utils.py:: Misc. Python utilities.</p>
+<p>=== System-specific scripts</p>
+<p>submit-theta.sh:: Submits main.sh on Theta</p>
+<p>== Concepts</p>
+<p>NODES:: The number of nodes in the allocation</p>
+<p>Task:: An execution of the objective function in the search</p>
+<p>PARALLELISM:: The number of nodes in each task (per Horovod invocation)</p>
+<p>CONCURRENCY:: The number of (parallel) tasks running at a point in time</p>
+<p>== Quick start</p>
+<p>. Edit the cfg file, uno-1.json . Set environment variable BENCHMARKS to
+your Benchmarks clone . Optionally set environment variable DRYRUN=1</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 100%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>export BENCHMARKS=$HOME/proj/Benchmarks</p></td>
+</tr>
+</tbody>
+</table>
+<p>== Sample output</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 100%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>$
+./
+ma
+in
+.s
+h
+se
+ar
+ch
+st
+ar
+t:
+st
+ar
+te
+d:
+16
+58
+6
+st
+ar
+te
+d:
+16
+58
+7
+st
+ar
+te
+d:
+16
+59
+2
+TA
+SK
+:
+16
+58
+6
+dr
+op
+0.
+36
+90
+93
+56
+29
+67
+98
+24
+ba
+tc
+<a href="#id1"><span class="problematic" id="id2">h_</span></a>
+si
+ze
+25
+6
+de
+la
+y
+2</p></td>
+</tr>
+<tr class="row-even"><td><p>TA
+SK
+:
+16
+58
+7
+st
+ar
+te
+d:
+16
+60
+1
+ta
+sk
+<a href="#id3"><span class="problematic" id="id4">s_</span></a>
+ru
+nn
+in
+g:
+4
+dr
+op
+0.
+83
+95
+81
+19
+89
+63
+05
+04
+ba
+tc
+<a href="#id5"><span class="problematic" id="id6">h_</span></a>
+si
+ze
+32
+de
+la
+y
+1</p></td>
+</tr>
+<tr class="row-odd"><td><p>TA
+SK
+:
+16
+59
+2
+dr
+op
+0.
+60
+31
+33
+15
+34
+42
+04
+12
+ba
+tc
+<a href="#id7"><span class="problematic" id="id8">h_</span></a>
+si
+ze
+64
+de
+la
+y
+1</p></td>
+</tr>
+<tr class="row-even"><td><p>TA
+SK
+:
+16
+60
+1
+dr
+op
+0.
+31
+58
+38
+20
+14
+09
+22
+96
+4
+ba
+tc
+<a href="#id9"><span class="problematic" id="id10">h_</span></a>
+si
+ze
+25
+6
+de
+la
+y
+0</p></td>
+</tr>
+<tr class="row-odd"><td><p>st
+ar
+te
+d:
+16
+63
+0
+ta
+sk
+<a href="#id11"><span class="problematic" id="id12">s_</span></a>
+ru
+nn
+in
+g:
+4
+TA
+SK
+:
+16
+63
+0
+dr
+op
+0.
+75
+36
+49
+51
+99
+97
+95
+58
+ba
+tc
+<a href="#id13"><span class="problematic" id="id14">h_</span></a>
+si
+ze
+51
+2
+de
+la
+y
+1</p></td>
+</tr>
+<tr class="row-even"><td><p>st
+ar
+te
+d:
+16
+64
+1
+ta
+sk
+<a href="#id15"><span class="problematic" id="id16">s_</span></a>
+ru
+nn
+in
+g:
+4
+TA
+SK
+:
+16
+64
+1
+dr
+op
+0.
+40
+03
+49
+26
+10
+71
+03
+66
+3
+ba
+tc
+<a href="#id17"><span class="problematic" id="id18">h_</span></a>
+si
+ze
+51
+2
+de
+la
+y
+1</p></td>
+</tr>
+<tr class="row-odd"><td><p>st
+ar
+te
+d:
+16
+65
+2
+ta
+sk
+<a href="#id19"><span class="problematic" id="id20">s_</span></a>
+ru
+nn
+in
+g:
+4
+TA
+SK
+:
+16
+65
+2
+dr
+op
+0.
+73
+11
+56
+38
+95
+21
+62
+7
+ba
+tc
+<a href="#id21"><span class="problematic" id="id22">h_</span></a>
+si
+ze
+32
+de
+la
+y
+0</p></td>
+</tr>
+<tr class="row-even"><td><p>st
+ar
+te
+d:
+16
+66
+3
+ta
+sk
+<a href="#id23"><span class="problematic" id="id24">s_</span></a>
+ru
+nn
+in
+g:
+4
+TA
+SK
+:
+16
+66
+3
+dr
+op
+0.
+71
+95
+98
+09
+74
+46
+45
+58
+ba
+tc
+<a href="#id25"><span class="problematic" id="id26">h_</span></a>
+si
+ze
+64
+de
+la
+y
+1</p></td>
+</tr>
+<tr class="row-odd"><td><p>ta
+sk
+<a href="#id27"><span class="problematic" id="id28">s_</span></a>
+ru
+nn
+in
+g:
+3
+ta
+sk
+<a href="#id29"><span class="problematic" id="id30">s_</span></a>
+ru
+nn
+in
+g:
+2
+ta
+sk
+<a href="#id31"><span class="problematic" id="id32">s_</span></a>
+ru
+nn
+in
+g:
+1
+ta
+sk
+<a href="#id33"><span class="problematic" id="id34">s_</span></a>
+ru
+nn
+in
+g:
+0
+Wo
+rk
+fl
+ow
+co
+mp
+le
+te
+!</p></td>
+</tr>
+</tbody>
+</table>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2021, ANL.gov.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

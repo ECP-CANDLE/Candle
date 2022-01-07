@@ -1,0 +1,1165 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>data_utils &mdash; CANDLE  documentation</title><link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../index.html" class="icon icon-home"> CANDLE
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../readme.html">What is CANDLE?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorials/index.html">Tutorials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../candle_lib.html">CANDLE Library API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../shared_installation.html">CANDLE Shared Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contribute.html">How to Contribute</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">CANDLE</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="index.html">Module code</a> &raquo;</li>
+      <li>data_utils</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for data_utils</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">absolute_import</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+
+<span class="c1">## Adding conditional import for compatibility between</span>
+<span class="c1">## sklearn versions</span>
+<span class="c1">## The second commented line corresponds to a more recent version</span>
+<span class="c1">#from sklearn.preprocessing import Imputer</span>
+<span class="c1">#from sklearn.impute import SimpleImputer</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="kn">from</span> <span class="nn">sklearn.impute</span> <span class="kn">import</span> <span class="n">SimpleImputer</span> <span class="k">as</span> <span class="n">Imputer</span>
+<span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
+    <span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">Imputer</span>
+<span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">StandardScaler</span><span class="p">,</span> <span class="n">MinMaxScaler</span><span class="p">,</span> <span class="n">MaxAbsScaler</span>
+
+<span class="kn">from</span> <span class="nn">default_utils</span> <span class="kn">import</span> <span class="n">DEFAULT_SEED</span>
+<span class="kn">from</span> <span class="nn">default_utils</span> <span class="kn">import</span> <span class="n">DEFAULT_DATATYPE</span>
+
+
+<span class="c1"># TAKEN from tensorflow</span>
+<div class="viewcode-block" id="to_categorical"><a class="viewcode-back" href="../candle_lib/data_utils.html#data_utils.to_categorical">[docs]</a><span class="k">def</span> <span class="nf">to_categorical</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">num_classes</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+  <span class="sd">&quot;&quot;&quot;Converts a class vector (integers) to binary class matrix.</span>
+<span class="sd">  E.g. for use with categorical_crossentropy.</span>
+<span class="sd">  Arguments:</span>
+<span class="sd">      y: class vector to be converted into a matrix</span>
+<span class="sd">          (integers from 0 to num_classes).</span>
+<span class="sd">      num_classes: total number of classes.</span>
+<span class="sd">  Returns:</span>
+<span class="sd">      A binary matrix representation of the input. The classes axis is placed</span>
+<span class="sd">      last.</span>
+<span class="sd">  &quot;&quot;&quot;</span>
+  <span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="s1">&#39;int&#39;</span><span class="p">)</span>
+  <span class="n">input_shape</span> <span class="o">=</span> <span class="n">y</span><span class="o">.</span><span class="n">shape</span>
+  <span class="k">if</span> <span class="n">input_shape</span> <span class="ow">and</span> <span class="n">input_shape</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">input_shape</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+    <span class="n">input_shape</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">input_shape</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+  <span class="n">y</span> <span class="o">=</span> <span class="n">y</span><span class="o">.</span><span class="n">ravel</span><span class="p">()</span>
+  <span class="k">if</span> <span class="ow">not</span> <span class="n">num_classes</span><span class="p">:</span>
+    <span class="n">num_classes</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">y</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span>
+  <span class="n">n</span> <span class="o">=</span> <span class="n">y</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+  <span class="n">categorical</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">n</span><span class="p">,</span> <span class="n">num_classes</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
+  <span class="n">categorical</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">n</span><span class="p">),</span> <span class="n">y</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+  <span class="n">output_shape</span> <span class="o">=</span> <span class="n">input_shape</span> <span class="o">+</span> <span class="p">(</span><span class="n">num_classes</span><span class="p">,)</span>
+  <span class="n">categorical</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">categorical</span><span class="p">,</span> <span class="n">output_shape</span><span class="p">)</span>
+  <span class="k">return</span> <span class="n">categorical</span></div>
+
+
+<div class="viewcode-block" id="convert_to_class"><a class="viewcode-back" href="../candle_lib/data_utils.html#data_utils.convert_to_class">[docs]</a><span class="k">def</span> <span class="nf">convert_to_class</span><span class="p">(</span><span class="n">y_one_hot</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; Converts a one-hot class encoding (array with as many positions as total</span>
+<span class="sd">        classes, with 1 in the corresponding class position, 0 in the other positions),</span>
+<span class="sd">        or soft-max class encoding (array with as many positions as total</span>
+<span class="sd">        classes, whose largest valued position is used as class membership)</span>
+<span class="sd">        to an integer class encoding.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        y_one_hot : numpy array</span>
+<span class="sd">            Input array with one-hot or soft-max class encoding.</span>
+<span class="sd">        dtype : data type</span>
+<span class="sd">            Data type to use for the output numpy array.</span>
+<span class="sd">            (Default: int, integer data is used to represent the</span>
+<span class="sd">            class membership).</span>
+
+<span class="sd">        Return</span>
+<span class="sd">        ----------</span>
+<span class="sd">        Returns a numpy array with an integer class encoding.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">maxi</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">a</span><span class="p">:</span> <span class="n">a</span><span class="o">.</span><span class="n">argmax</span><span class="p">()</span>
+    <span class="n">iter_to_na</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">i</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">fromiter</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">dtype</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">maxi</span><span class="p">(</span><span class="n">a</span><span class="p">)</span> <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="n">y_one_hot</span><span class="p">])</span></div>
+
+
+<div class="viewcode-block" id="scale_array"><a class="viewcode-back" href="../candle_lib/data_utils.html#data_utils.scale_array">[docs]</a><span class="k">def</span> <span class="nf">scale_array</span><span class="p">(</span><span class="n">mat</span><span class="p">,</span> <span class="n">scaling</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; Scale data included in numpy array.</span>
+<span class="sd">        </span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        mat : numpy array</span>
+<span class="sd">            Array to scale</span>
+<span class="sd">        scaling : string</span>
+<span class="sd">            String describing type of scaling to apply.</span>
+<span class="sd">            Options recognized: &#39;maxabs&#39;, &#39;minmax&#39;, &#39;std&#39;.</span>
+<span class="sd">            &#39;maxabs&#39; : scales data to range [-1 to 1].</span>
+<span class="sd">            &#39;minmax&#39; : scales data to range [-1 to 1].</span>
+<span class="sd">            &#39;std&#39;    : scales data to normal variable with mean 0 and standard deviation 1.</span>
+<span class="sd">            (Default: None, no scaling).</span>
+
+<span class="sd">        Return</span>
+<span class="sd">        ----------</span>
+<span class="sd">        Returns the numpy array scaled by the method specified. \</span>
+<span class="sd">        If no scaling method is specified, it returns the numpy \</span>
+<span class="sd">        array unmodified.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="k">if</span> <span class="n">scaling</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">scaling</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="s1">&#39;none&#39;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">mat</span>
+
+    <span class="c1"># Scaling data</span>
+    <span class="k">if</span> <span class="n">scaling</span> <span class="o">==</span> <span class="s1">&#39;maxabs&#39;</span><span class="p">:</span>
+        <span class="c1"># Scaling to [-1, 1]</span>
+        <span class="n">scaler</span> <span class="o">=</span> <span class="n">MaxAbsScaler</span><span class="p">(</span><span class="n">copy</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">scaling</span> <span class="o">==</span> <span class="s1">&#39;minmax&#39;</span><span class="p">:</span>
+        <span class="c1"># Scaling to [0,1]</span>
+        <span class="n">scaler</span> <span class="o">=</span> <span class="n">MinMaxScaler</span><span class="p">(</span><span class="n">copy</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="c1"># Standard normalization</span>
+        <span class="n">scaler</span> <span class="o">=</span> <span class="n">StandardScaler</span><span class="p">(</span><span class="n">copy</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    
+    <span class="k">return</span> <span class="n">scaler</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">mat</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="impute_and_scale_array"><a class="viewcode-back" href="../candle_lib/data_utils.html#data_utils.impute_and_scale_array">[docs]</a><span class="k">def</span> <span class="nf">impute_and_scale_array</span><span class="p">(</span><span class="n">mat</span><span class="p">,</span> <span class="n">scaling</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; Impute missing values with mean and scale data included in numpy array.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        mat : numpy array</span>
+<span class="sd">            Array to scale</span>
+<span class="sd">        scaling : string</span>
+<span class="sd">            String describing type of scaling to apply.</span>
+<span class="sd">            Options recognized: &#39;maxabs&#39;, &#39;minmax&#39;, &#39;std&#39;.</span>
+<span class="sd">            &#39;maxabs&#39; : scales data to range [-1 to 1].</span>
+<span class="sd">            &#39;minmax&#39; : scales data to range [-1 to 1].</span>
+<span class="sd">            &#39;std&#39;    : scales data to normal variable with mean 0 and standard deviation 1.</span>
+<span class="sd">            (Default: None, no scaling).</span>
+
+<span class="sd">        Return</span>
+<span class="sd">        ----------</span>
+<span class="sd">        Returns the numpy array imputed with the mean value of the \</span>
+<span class="sd">        column and scaled by the method specified. If no scaling method is specified, \</span>
+<span class="sd">        it returns the imputed numpy array.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+<span class="c1">#    imputer = Imputer(strategy=&#39;mean&#39;, axis=0, copy=False)</span>
+<span class="c1">#    imputer = SimpleImputer(strategy=&#39;mean&#39;, copy=False)</span>
+    <span class="c1"># Next line is from conditional import. axis=0 is default</span>
+    <span class="c1"># in old version so it is not necessary.</span>
+    <span class="n">imputer</span> <span class="o">=</span> <span class="n">Imputer</span><span class="p">(</span><span class="n">strategy</span><span class="o">=</span><span class="s1">&#39;mean&#39;</span><span class="p">,</span> <span class="n">copy</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="n">imputer</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">mat</span><span class="p">)</span>
+    
+    <span class="k">return</span> <span class="n">scale_array</span><span class="p">(</span><span class="n">mat</span><span class="p">,</span> <span class="n">scaling</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="drop_impute_and_scale_dataframe"><a class="viewcode-back" href="../candle_lib/data_utils.html#data_utils.drop_impute_and_scale_dataframe">[docs]</a><span class="k">def</span> <span class="nf">drop_impute_and_scale_dataframe</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">scaling</span><span class="o">=</span><span class="s1">&#39;std&#39;</span><span class="p">,</span> <span class="n">imputing</span><span class="o">=</span><span class="s1">&#39;mean&#39;</span><span class="p">,</span> <span class="n">dropna</span><span class="o">=</span><span class="s1">&#39;all&#39;</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Impute missing values with mean and scale data included in pandas dataframe.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    df : pandas dataframe</span>
+<span class="sd">        dataframe to process</span>
+<span class="sd">    scaling : string</span>
+<span class="sd">        String describing type of scaling to apply.</span>
+<span class="sd">        &#39;maxabs&#39; [-1,1], &#39;minmax&#39; [0,1], &#39;std&#39;, or None, optional</span>
+<span class="sd">        (Default &#39;std&#39;)</span>
+<span class="sd">    imputing : string</span>
+<span class="sd">        String describing type of imputation to apply.</span>
+<span class="sd">        &#39;mean&#39; replace missing values with mean value along the column,</span>
+<span class="sd">        &#39;median&#39; replace missing values with median value along the column,</span>
+<span class="sd">        &#39;most_frequent&#39; replace missing values with most frequent value along column</span>
+<span class="sd">        (Default: &#39;mean&#39;).</span>
+<span class="sd">    dropna : string</span>
+<span class="sd">        String describing strategy for handling missing values.</span>
+<span class="sd">        &#39;all&#39; if all values are NA, drop that column.</span>
+<span class="sd">        &#39;any&#39; if any NA values are present, dropt that column.</span>
+<span class="sd">        (Default: &#39;all&#39;).</span>
+
+<span class="sd">    Return</span>
+<span class="sd">    ----------</span>
+<span class="sd">    Returns the data frame after handling missing values and scaling.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">if</span> <span class="n">dropna</span><span class="p">:</span>
+        <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">dropna</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">how</span><span class="o">=</span><span class="n">dropna</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">empty_cols</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="p">[</span><span class="n">df</span><span class="o">.</span><span class="n">notnull</span><span class="p">()</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span> <span class="o">==</span> <span class="mi">0</span><span class="p">]</span>
+        <span class="n">df</span><span class="p">[</span><span class="n">empty_cols</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+
+    <span class="k">if</span> <span class="n">imputing</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">imputing</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="s1">&#39;none&#39;</span><span class="p">:</span>
+        <span class="n">mat</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">values</span>
+    <span class="k">else</span><span class="p">:</span>
+<span class="c1">#        imputer = Imputer(strategy=imputing, axis=0)</span>
+<span class="c1">#        imputer = SimpleImputer(strategy=imputing)</span>
+        <span class="c1"># Next line is from conditional import. axis=0 is default</span>
+        <span class="c1"># in old version so it is not necessary.</span>
+        <span class="n">imputer</span> <span class="o">=</span> <span class="n">Imputer</span><span class="p">(</span><span class="n">strategy</span><span class="o">=</span><span class="n">imputing</span><span class="p">)</span>
+        <span class="n">mat</span> <span class="o">=</span> <span class="n">imputer</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">scaling</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">scaling</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="s1">&#39;none&#39;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">mat</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">scaling</span> <span class="o">==</span> <span class="s1">&#39;maxabs&#39;</span><span class="p">:</span>
+        <span class="n">scaler</span> <span class="o">=</span> <span class="n">MaxAbsScaler</span><span class="p">()</span>
+    <span class="k">elif</span> <span class="n">scaling</span> <span class="o">==</span> <span class="s1">&#39;minmax&#39;</span><span class="p">:</span>
+        <span class="n">scaler</span> <span class="o">=</span> <span class="n">MinMaxScaler</span><span class="p">()</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">scaler</span> <span class="o">=</span> <span class="n">StandardScaler</span><span class="p">()</span>
+
+    <span class="n">mat</span> <span class="o">=</span> <span class="n">scaler</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">mat</span><span class="p">)</span>
+    <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">mat</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">df</span></div>
+
+
+<div class="viewcode-block" id="discretize_dataframe"><a class="viewcode-back" href="../candle_lib/data_utils.html#data_utils.discretize_dataframe">[docs]</a><span class="k">def</span> <span class="nf">discretize_dataframe</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">col</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">cutoffs</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Discretize values of given column in pandas dataframe.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    df : pandas dataframe</span>
+<span class="sd">        dataframe to process.</span>
+<span class="sd">    col : int</span>
+<span class="sd">        Index of column to bin.</span>
+<span class="sd">    bins : int</span>
+<span class="sd">        Number of bins for distributing column values.</span>
+<span class="sd">    cutoffs : list</span>
+<span class="sd">        List of bin limits.</span>
+<span class="sd">        If None, the limits are computed as percentiles.</span>
+<span class="sd">        (Default: None).</span>
+
+<span class="sd">    Return</span>
+<span class="sd">    ----------</span>
+<span class="sd">    Returns the data frame with the values of the specified column binned, i.e. the values</span>
+<span class="sd">    are replaced by the associated bin number.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">y</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">col</span><span class="p">]</span>
+    <span class="n">thresholds</span> <span class="o">=</span> <span class="n">cutoffs</span>
+    <span class="k">if</span> <span class="n">thresholds</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">percentiles</span> <span class="o">=</span> <span class="p">[</span><span class="mi">100</span> <span class="o">/</span> <span class="n">bins</span> <span class="o">*</span> <span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">bins</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)]</span>
+        <span class="n">thresholds</span> <span class="o">=</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">percentile</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">percentiles</span><span class="p">]</span>
+    <span class="n">classes</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">digitize</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">thresholds</span><span class="p">)</span>
+    <span class="n">df</span><span class="p">[</span><span class="n">col</span><span class="p">]</span> <span class="o">=</span> <span class="n">classes</span>
+    
+    <span class="k">return</span> <span class="n">df</span></div>
+
+
+<div class="viewcode-block" id="discretize_array"><a class="viewcode-back" href="../candle_lib/data_utils.html#data_utils.discretize_array">[docs]</a><span class="k">def</span> <span class="nf">discretize_array</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">5</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Discretize values of given array.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    y : numpy array</span>
+<span class="sd">        array to discretize.</span>
+<span class="sd">    bins : int</span>
+<span class="sd">        Number of bins for distributing column values.</span>
+
+<span class="sd">    Return</span>
+<span class="sd">    ----------</span>
+<span class="sd">    Returns an array with the bin number associated to the values in the</span>
+<span class="sd">    original array.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">percentiles</span> <span class="o">=</span> <span class="p">[</span><span class="mi">100</span> <span class="o">/</span> <span class="n">bins</span> <span class="o">*</span> <span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">bins</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)]</span>
+    <span class="n">thresholds</span> <span class="o">=</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">percentile</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">percentiles</span><span class="p">]</span>
+    <span class="n">classes</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">digitize</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">thresholds</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">classes</span></div>
+
+
+
+<div class="viewcode-block" id="lookup"><a class="viewcode-back" href="../candle_lib/data_utils.html#data_utils.lookup">[docs]</a><span class="k">def</span> <span class="nf">lookup</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">query</span><span class="p">,</span> <span class="n">ret</span><span class="p">,</span> <span class="n">keys</span><span class="p">,</span> <span class="n">match</span><span class="o">=</span><span class="s1">&#39;match&#39;</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Dataframe lookup.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    df : pandas dataframe</span>
+<span class="sd">        dataframe for retrieving values.</span>
+<span class="sd">    query : string</span>
+<span class="sd">        String for searching.</span>
+<span class="sd">    ret : int/string or list</span>
+<span class="sd">        Names or indices of columns to be returned.</span>
+<span class="sd">    keys : list</span>
+<span class="sd">        List of strings or integers specifying the names or</span>
+<span class="sd">        indices of columns to look into.</span>
+<span class="sd">    match : string</span>
+<span class="sd">        String describing strategy for matching keys to query.</span>
+
+<span class="sd">    Return</span>
+<span class="sd">    ----------</span>
+<span class="sd">    Returns a list of the values in the dataframe whose columns match</span>
+<span class="sd">    the specified query and have been selected to be returned.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">mask</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="kc">False</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="nb">range</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
+    <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">keys</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">match</span> <span class="o">==</span> <span class="s1">&#39;contains&#39;</span><span class="p">:</span>
+            <span class="n">mask</span> <span class="o">|=</span> <span class="n">df</span><span class="p">[</span><span class="n">key</span><span class="p">]</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">contains</span><span class="p">(</span><span class="n">query</span><span class="o">.</span><span class="n">upper</span><span class="p">(),</span> <span class="n">case</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">mask</span> <span class="o">|=</span> <span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="n">key</span><span class="p">]</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span> <span class="o">==</span> <span class="n">query</span><span class="o">.</span><span class="n">upper</span><span class="p">())</span>
+
+    <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="n">mask</span><span class="p">][</span><span class="n">ret</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span><span class="o">.</span><span class="n">tolist</span><span class="p">()))</span></div>
+
+
+<div class="viewcode-block" id="load_X_data"><a class="viewcode-back" href="../candle_lib/data_utils.html#data_utils.load_X_data">[docs]</a><span class="k">def</span> <span class="nf">load_X_data</span><span class="p">(</span><span class="n">train_file</span><span class="p">,</span> <span class="n">test_file</span><span class="p">,</span>
+                <span class="n">drop_cols</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">n_cols</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">scaling</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                <span class="n">dtype</span><span class="o">=</span><span class="n">DEFAULT_DATATYPE</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="n">DEFAULT_SEED</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; Load training and testing unlabeleled data from the files specified</span>
+<span class="sd">        and construct corresponding training and testing pandas DataFrames.</span>
+<span class="sd">        Columns to load can be selected or dropped. Order of rows</span>
+<span class="sd">        can be shuffled. Data can be rescaled.</span>
+<span class="sd">        Training and testing partitions (coming from the respective files)</span>
+<span class="sd">        are preserved.</span>
+<span class="sd">        This function assumes that the files contain a header with column names.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        train_file : filename</span>
+<span class="sd">            Name of the file to load the training data.</span>
+<span class="sd">        test_file : filename</span>
+<span class="sd">            Name of the file to load the testing data.</span>
+<span class="sd">        drop_cols : list</span>
+<span class="sd">            List of column names to drop from the files being loaded.</span>
+<span class="sd">            (Default: None, all the columns are used).</span>
+<span class="sd">        n_cols : integer</span>
+<span class="sd">            Number of columns to load from the files.</span>
+<span class="sd">            (Default: None, all the columns are used).</span>
+<span class="sd">        shuffle : boolean</span>
+<span class="sd">            Boolean flag to indicate row shuffling. If True the rows are</span>
+<span class="sd">            re-ordered, if False the order in which rows are read is</span>
+<span class="sd">            preserved.</span>
+<span class="sd">            (Default: False, no permutation of the loading row order).</span>
+<span class="sd">        scaling : string</span>
+<span class="sd">            String describing type of scaling to apply.</span>
+<span class="sd">            Options recognized: &#39;maxabs&#39;, &#39;minmax&#39;, &#39;std&#39;.</span>
+<span class="sd">            &#39;maxabs&#39; : scales data to range [-1 to 1].</span>
+<span class="sd">            &#39;minmax&#39; : scales data to range [-1 to 1].</span>
+<span class="sd">            &#39;std&#39;    : scales data to normal variable with \</span>
+<span class="sd">                       mean 0 and standard deviation 1.</span>
+<span class="sd">            (Default: None, no scaling).</span>
+<span class="sd">        dtype : data type</span>
+<span class="sd">            Data type to use for the output pandas DataFrames.</span>
+<span class="sd">            (Default: DEFAULT_DATATYPE defined in default_utils).</span>
+<span class="sd">        seed : int</span>
+<span class="sd">            Value to intialize or re-seed the generator.</span>
+<span class="sd">            (Default: DEFAULT_SEED defined in default_utils).</span>
+
+<span class="sd">        Return</span>
+<span class="sd">        ----------</span>
+<span class="sd">        X_train : pandas DataFrame</span>
+<span class="sd">            Data for training loaded in a pandas DataFrame and pre-processed as specified.</span>
+<span class="sd">        X_test : pandas DataFrame</span>
+<span class="sd">            Data for testing loaded in a pandas DataFrame and pre-processed as specified.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1"># compensates for the columns to drop if there is a feature subselection</span>
+    <span class="n">usecols</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">n_cols</span> <span class="o">+</span> <span class="nb">len</span><span class="p">(</span><span class="n">drop_cols</span><span class="p">)))</span> <span class="k">if</span> <span class="n">n_cols</span> <span class="k">else</span> <span class="kc">None</span>
+        
+    <span class="n">df_train</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">train_file</span><span class="p">,</span> <span class="n">engine</span><span class="o">=</span><span class="s1">&#39;c&#39;</span><span class="p">,</span> <span class="n">usecols</span><span class="o">=</span><span class="n">usecols</span><span class="p">)</span>
+    <span class="n">df_test</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">test_file</span><span class="p">,</span> <span class="n">engine</span><span class="o">=</span><span class="s1">&#39;c&#39;</span><span class="p">,</span> <span class="n">usecols</span><span class="o">=</span><span class="n">usecols</span><span class="p">)</span>
+
+    <span class="c1"># Drop specified columns</span>
+    <span class="k">if</span> <span class="n">drop_cols</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">drop_cols</span><span class="p">:</span>
+            <span class="n">df_train</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">col</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+            <span class="n">df_test</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">col</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">shuffle</span><span class="p">:</span>
+        <span class="n">df_train</span> <span class="o">=</span> <span class="n">df_train</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">frac</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="n">seed</span><span class="p">)</span>
+        <span class="n">df_test</span> <span class="o">=</span> <span class="n">df_test</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">frac</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="n">seed</span><span class="p">)</span>
+
+    <span class="n">X_train</span> <span class="o">=</span> <span class="n">df_train</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">dtype</span><span class="p">)</span>
+    <span class="n">X_test</span> <span class="o">=</span> <span class="n">df_test</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">dtype</span><span class="p">)</span>
+
+    <span class="n">mat</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">((</span><span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="c1"># Scale data</span>
+    <span class="k">if</span> <span class="n">scaling</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">mat</span> <span class="o">=</span> <span class="n">scale_array</span><span class="p">(</span><span class="n">mat</span><span class="p">,</span> <span class="n">scaling</span><span class="p">)</span>
+
+    <span class="n">X_train</span> <span class="o">=</span> <span class="n">mat</span><span class="p">[:</span><span class="n">X_train</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="p">:]</span>
+    <span class="n">X_test</span> <span class="o">=</span> <span class="n">mat</span><span class="p">[</span><span class="n">X_train</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]:,</span> <span class="p">:]</span>
+
+    <span class="k">return</span> <span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span></div>
+
+
+<div class="viewcode-block" id="load_X_data2"><a class="viewcode-back" href="../candle_lib/data_utils.html#data_utils.load_X_data2">[docs]</a><span class="k">def</span> <span class="nf">load_X_data2</span><span class="p">(</span><span class="n">train_file</span><span class="p">,</span> <span class="n">test_file</span><span class="p">,</span>
+                <span class="n">drop_cols</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">n_cols</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">scaling</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                <span class="n">validation_split</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">DEFAULT_DATATYPE</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="n">DEFAULT_SEED</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; Load training and testing unlabeleled data from the files specified.</span>
+<span class="sd">        Further split trainig data into training and validation partitions,</span>
+<span class="sd">        and construct corresponding training, validation and testing pandas DataFrames.</span>
+<span class="sd">        Columns to load can be selected or dropped. Order of rows</span>
+<span class="sd">        can be shuffled. Data can be rescaled.</span>
+<span class="sd">        Training and testing partitions (coming from the respective files)</span>
+<span class="sd">        are preserved, but training is split into training and validation partitions.</span>
+<span class="sd">        This function assumes that the files contain a header with column names.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        train_file : filename</span>
+<span class="sd">            Name of the file to load the training data.</span>
+<span class="sd">        test_file : filename</span>
+<span class="sd">            Name of the file to load the testing data.</span>
+<span class="sd">        drop_cols : list</span>
+<span class="sd">            List of column names to drop from the files being loaded.</span>
+<span class="sd">            (Default: None, all the columns are used).</span>
+<span class="sd">        n_cols : integer</span>
+<span class="sd">            Number of columns to load from the files.</span>
+<span class="sd">            (Default: None, all the columns are used).</span>
+<span class="sd">        shuffle : boolean</span>
+<span class="sd">            Boolean flag to indicate row shuffling. If True the rows are</span>
+<span class="sd">            re-ordered, if False the order in which rows are read is</span>
+<span class="sd">            preserved.</span>
+<span class="sd">            (Default: False, no permutation of the loading row order).</span>
+<span class="sd">        scaling : string</span>
+<span class="sd">            String describing type of scaling to apply.</span>
+<span class="sd">            Options recognized: &#39;maxabs&#39;, &#39;minmax&#39;, &#39;std&#39;.</span>
+<span class="sd">            &#39;maxabs&#39; : scales data to range [-1 to 1].</span>
+<span class="sd">            &#39;minmax&#39; : scales data to range [-1 to 1].</span>
+<span class="sd">            &#39;std&#39;    : scales data to normal variable with mean 0 and standard deviation 1.</span>
+<span class="sd">            (Default: None, no scaling).</span>
+<span class="sd">        validation_split : float</span>
+<span class="sd">            Fraction of training data to set aside for validation.</span>
+<span class="sd">            (Default: 0.1, ten percent of the training data is</span>
+<span class="sd">            used for the validation partition).</span>
+<span class="sd">        dtype : data type</span>
+<span class="sd">            Data type to use for the output pandas DataFrames.</span>
+<span class="sd">            (Default: DEFAULT_DATATYPE defined in default_utils).</span>
+<span class="sd">        seed : int</span>
+<span class="sd">            Value to intialize or re-seed the generator.</span>
+<span class="sd">            (Default: DEFAULT_SEED defined in default_utils).</span>
+
+
+<span class="sd">        Return</span>
+<span class="sd">        ----------</span>
+<span class="sd">        X_train : pandas DataFrame</span>
+<span class="sd">            Data for training loaded in a pandas DataFrame and</span>
+<span class="sd">            pre-processed as specified.</span>
+<span class="sd">        X_val : pandas DataFrame</span>
+<span class="sd">            Data for validation loaded in a pandas DataFrame and</span>
+<span class="sd">            pre-processed as specified.</span>
+<span class="sd">        X_test : pandas DataFrame</span>
+<span class="sd">            Data for testing loaded in a pandas DataFrame and</span>
+<span class="sd">            pre-processed as specified.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1"># compensates for the columns to drop if there is a feature subselection</span>
+    <span class="n">usecols</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">n_cols</span> <span class="o">+</span> <span class="nb">len</span><span class="p">(</span><span class="n">drop_cols</span><span class="p">)))</span> <span class="k">if</span> <span class="n">n_cols</span> <span class="k">else</span> <span class="kc">None</span>
+
+    <span class="n">df_train</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">train_file</span><span class="p">,</span> <span class="n">engine</span><span class="o">=</span><span class="s1">&#39;c&#39;</span><span class="p">,</span> <span class="n">usecols</span><span class="o">=</span><span class="n">usecols</span><span class="p">)</span>
+    <span class="n">df_test</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">test_file</span><span class="p">,</span> <span class="n">engine</span><span class="o">=</span><span class="s1">&#39;c&#39;</span><span class="p">,</span> <span class="n">usecols</span><span class="o">=</span><span class="n">usecols</span><span class="p">)</span>
+
+    <span class="c1"># Drop specified columns</span>
+    <span class="k">if</span> <span class="n">drop_cols</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">drop_cols</span><span class="p">:</span>
+            <span class="n">df_train</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">col</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+            <span class="n">df_test</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">col</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">shuffle</span><span class="p">:</span>
+        <span class="n">df_train</span> <span class="o">=</span> <span class="n">df_train</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">frac</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="n">seed</span><span class="p">)</span>
+        <span class="n">df_test</span> <span class="o">=</span> <span class="n">df_test</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">frac</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="n">seed</span><span class="p">)</span>
+
+    <span class="n">X_train</span> <span class="o">=</span> <span class="n">df_train</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">dtype</span><span class="p">)</span>
+    <span class="n">X_test</span> <span class="o">=</span> <span class="n">df_test</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">dtype</span><span class="p">)</span>
+
+    <span class="n">mat</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">((</span><span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="c1"># Scale data</span>
+    <span class="k">if</span> <span class="n">scaling</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">mat</span> <span class="o">=</span> <span class="n">scale_array</span><span class="p">(</span><span class="n">mat</span><span class="p">,</span> <span class="n">scaling</span><span class="p">)</span>
+
+    <span class="c1"># Separate training in training and validation splits after scaling</span>
+    <span class="n">sizeTrain</span> <span class="o">=</span> <span class="n">X_train</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">X_test</span> <span class="o">=</span> <span class="n">mat</span><span class="p">[</span><span class="n">sizeTrain</span><span class="p">:,</span> <span class="p">:]</span>
+    <span class="n">numVal</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">sizeTrain</span> <span class="o">*</span> <span class="n">validation_split</span><span class="p">)</span>
+    <span class="n">X_val</span> <span class="o">=</span> <span class="n">mat</span><span class="p">[:</span><span class="n">numVal</span><span class="p">,</span> <span class="p">:]</span>
+    <span class="n">X_train</span> <span class="o">=</span> <span class="n">mat</span><span class="p">[</span><span class="n">numVal</span><span class="p">:</span><span class="n">sizeTrain</span><span class="p">,</span> <span class="p">:]</span>
+
+    <span class="k">return</span> <span class="n">X_train</span><span class="p">,</span> <span class="n">X_val</span><span class="p">,</span> <span class="n">X_test</span></div>
+
+
+<div class="viewcode-block" id="load_Xy_one_hot_data"><a class="viewcode-back" href="../candle_lib/data_utils.html#data_utils.load_Xy_one_hot_data">[docs]</a><span class="k">def</span> <span class="nf">load_Xy_one_hot_data</span><span class="p">(</span><span class="n">train_file</span><span class="p">,</span> <span class="n">test_file</span><span class="p">,</span>
+                        <span class="n">class_col</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">drop_cols</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">n_cols</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">scaling</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                        <span class="n">dtype</span><span class="o">=</span><span class="n">DEFAULT_DATATYPE</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="n">DEFAULT_SEED</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; Load training and testing data from the files specified, with a column indicated to use as label.</span>
+<span class="sd">        Construct corresponding training and testing pandas DataFrames,</span>
+<span class="sd">        separated into data (i.e. features) and labels. Labels to output are one-hot encoded (categorical).</span>
+<span class="sd">        Columns to load can be selected or dropped. Order of rows</span>
+<span class="sd">        can be shuffled. Data can be rescaled.</span>
+<span class="sd">        Training and testing partitions (coming from the respective files)</span>
+<span class="sd">        are preserved.</span>
+<span class="sd">        This function assumes that the files contain a header with column names.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        train_file : filename</span>
+<span class="sd">            Name of the file to load the training data.</span>
+<span class="sd">        test_file : filename</span>
+<span class="sd">            Name of the file to load the testing data.</span>
+<span class="sd">        class_col : integer</span>
+<span class="sd">            Index of the column to use as the label.</span>
+<span class="sd">            (Default: None, this would cause the function to fail, a label</span>
+<span class="sd">            has to be indicated at calling).</span>
+<span class="sd">        drop_cols : list</span>
+<span class="sd">            List of column names to drop from the files being loaded.</span>
+<span class="sd">            (Default: None, all the columns are used).</span>
+<span class="sd">        n_cols : integer</span>
+<span class="sd">            Number of columns to load from the files.</span>
+<span class="sd">            (Default: None, all the columns are used).</span>
+<span class="sd">        shuffle : boolean</span>
+<span class="sd">            Boolean flag to indicate row shuffling. If True the rows are</span>
+<span class="sd">            re-ordered, if False the order in which rows are read is</span>
+<span class="sd">            preserved.</span>
+<span class="sd">            (Default: False, no permutation of the loading row order).</span>
+<span class="sd">        scaling : string</span>
+<span class="sd">            String describing type of scaling to apply.</span>
+<span class="sd">            Options recognized: &#39;maxabs&#39;, &#39;minmax&#39;, &#39;std&#39;.</span>
+<span class="sd">            &#39;maxabs&#39; : scales data to range [-1 to 1].</span>
+<span class="sd">            &#39;minmax&#39; : scales data to range [-1 to 1].</span>
+<span class="sd">            &#39;std&#39;    : scales data to normal variable with mean 0 and standard deviation 1.</span>
+<span class="sd">            (Default: None, no scaling).</span>
+<span class="sd">        dtype : data type</span>
+<span class="sd">            Data type to use for the output pandas DataFrames.</span>
+<span class="sd">            (Default: DEFAULT_DATATYPE defined in default_utils).</span>
+<span class="sd">        seed : int</span>
+<span class="sd">            Value to intialize or re-seed the generator.</span>
+<span class="sd">            (Default: DEFAULT_SEED defined in default_utils).</span>
+
+
+<span class="sd">        Return</span>
+<span class="sd">        ----------</span>
+<span class="sd">        X_train : pandas DataFrame</span>
+<span class="sd">            Data features for training loaded in a pandas DataFrame and</span>
+<span class="sd">            pre-processed as specified.</span>
+<span class="sd">        y_train : pandas DataFrame</span>
+<span class="sd">            Data labels for training loaded in a pandas DataFrame.</span>
+<span class="sd">            One-hot encoding (categorical) is used.</span>
+<span class="sd">        X_test : pandas DataFrame</span>
+<span class="sd">            Data features for testing loaded in a pandas DataFrame and</span>
+<span class="sd">            pre-processed as specified.</span>
+<span class="sd">        y_test : pandas DataFrame</span>
+<span class="sd">            Data labels for testing loaded in a pandas DataFrame.</span>
+<span class="sd">            One-hot encoding (categorical) is used.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">assert</span> <span class="n">class_col</span> <span class="o">!=</span> <span class="kc">None</span>
+    
+    <span class="c1"># compensates for the columns to drop if there is a feature subselection</span>
+    <span class="n">usecols</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">n_cols</span> <span class="o">+</span> <span class="nb">len</span><span class="p">(</span><span class="n">drop_cols</span><span class="p">)))</span> <span class="k">if</span> <span class="n">n_cols</span> <span class="k">else</span> <span class="kc">None</span>
+
+    <span class="n">df_train</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">train_file</span><span class="p">,</span> <span class="n">engine</span><span class="o">=</span><span class="s1">&#39;c&#39;</span><span class="p">,</span> <span class="n">usecols</span><span class="o">=</span><span class="n">usecols</span><span class="p">)</span>
+    <span class="n">df_test</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">test_file</span><span class="p">,</span> <span class="n">engine</span><span class="o">=</span><span class="s1">&#39;c&#39;</span><span class="p">,</span> <span class="n">usecols</span><span class="o">=</span><span class="n">usecols</span><span class="p">)</span>
+    
+    <span class="k">if</span> <span class="n">shuffle</span><span class="p">:</span>
+        <span class="n">df_train</span> <span class="o">=</span> <span class="n">df_train</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">frac</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="n">seed</span><span class="p">)</span>
+        <span class="n">df_test</span> <span class="o">=</span> <span class="n">df_test</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">frac</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="n">seed</span><span class="p">)</span>
+
+    <span class="c1"># Get class</span>
+    <span class="n">y_train</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">get_dummies</span><span class="p">(</span><span class="n">df_train</span><span class="p">[</span><span class="n">class_col</span><span class="p">])</span><span class="o">.</span><span class="n">values</span>
+    <span class="n">y_test</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">get_dummies</span><span class="p">(</span><span class="n">df_test</span><span class="p">[</span><span class="n">class_col</span><span class="p">])</span><span class="o">.</span><span class="n">values</span>
+
+    <span class="c1"># Drop specified columns</span>
+    <span class="k">if</span> <span class="n">drop_cols</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">drop_cols</span><span class="p">:</span>
+            <span class="n">df_train</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">col</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+            <span class="n">df_test</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">col</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+
+    <span class="c1"># Convert from pandas dataframe to numpy array</span>
+    <span class="n">X_train</span> <span class="o">=</span> <span class="n">df_train</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">dtype</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;X_train dtype: &quot;</span><span class="p">,</span> <span class="n">X_train</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span>
+    <span class="n">X_test</span> <span class="o">=</span> <span class="n">df_test</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">dtype</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;X_test dtype: &quot;</span><span class="p">,</span> <span class="n">X_test</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span>
+    <span class="c1"># Concatenate training and testing to scale data</span>
+    <span class="n">mat</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">((</span><span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;mat dtype: &quot;</span><span class="p">,</span> <span class="n">mat</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span>
+    <span class="c1"># Scale data</span>
+    <span class="k">if</span> <span class="n">scaling</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">mat</span> <span class="o">=</span> <span class="n">scale_array</span><span class="p">(</span><span class="n">mat</span><span class="p">,</span> <span class="n">scaling</span><span class="p">)</span>
+    <span class="c1"># Recover training and testing splits after scaling</span>
+    <span class="n">X_train</span> <span class="o">=</span> <span class="n">mat</span><span class="p">[:</span><span class="n">X_train</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="p">:]</span>
+    <span class="n">X_test</span> <span class="o">=</span> <span class="n">mat</span><span class="p">[</span><span class="n">X_train</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]:,</span> <span class="p">:]</span>
+
+    <span class="k">return</span> <span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">),</span> <span class="p">(</span><span class="n">X_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="load_Xy_one_hot_data2"><a class="viewcode-back" href="../candle_lib/data_utils.html#data_utils.load_Xy_one_hot_data2">[docs]</a><span class="k">def</span> <span class="nf">load_Xy_one_hot_data2</span><span class="p">(</span><span class="n">train_file</span><span class="p">,</span> <span class="n">test_file</span><span class="p">,</span>
+                    <span class="n">class_col</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">drop_cols</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">n_cols</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">scaling</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                    <span class="n">validation_split</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">DEFAULT_DATATYPE</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="n">DEFAULT_SEED</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; Load training and testing data from the files specified, with a column indicated to use as label.</span>
+<span class="sd">        Further split trainig data into training and validation partitions,</span>
+<span class="sd">        and construct corresponding training, validation and testing pandas DataFrames,</span>
+<span class="sd">        separated into data (i.e. features) and labels. Labels to output are one-hot encoded (categorical).</span>
+<span class="sd">        Columns to load can be selected or dropped. Order of rows</span>
+<span class="sd">        can be shuffled. Data can be rescaled.</span>
+<span class="sd">        Training and testing partitions (coming from the respective files)</span>
+<span class="sd">        are preserved, but training is split into training and validation partitions.</span>
+<span class="sd">        This function assumes that the files contain a header with column names.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        train_file : filename</span>
+<span class="sd">            Name of the file to load the training data.</span>
+<span class="sd">        test_file : filename</span>
+<span class="sd">            Name of the file to load the testing data.</span>
+<span class="sd">        class_col : integer</span>
+<span class="sd">            Index of the column to use as the label.</span>
+<span class="sd">            (Default: None, this would cause the function to fail, a label</span>
+<span class="sd">            has to be indicated at calling).</span>
+<span class="sd">        drop_cols : list</span>
+<span class="sd">            List of column names to drop from the files being loaded.</span>
+<span class="sd">            (Default: None, all the columns are used).</span>
+<span class="sd">        n_cols : integer</span>
+<span class="sd">            Number of columns to load from the files.</span>
+<span class="sd">            (Default: None, all the columns are used).</span>
+<span class="sd">        shuffle : boolean</span>
+<span class="sd">            Boolean flag to indicate row shuffling. If True the rows are</span>
+<span class="sd">            re-ordered, if False the order in which rows are loaded is</span>
+<span class="sd">            preserved.</span>
+<span class="sd">            (Default: False, no permutation of the loading row order).</span>
+<span class="sd">        scaling : string</span>
+<span class="sd">            String describing type of scaling to apply.</span>
+<span class="sd">            Options recognized: &#39;maxabs&#39;, &#39;minmax&#39;, &#39;std&#39;.</span>
+<span class="sd">            &#39;maxabs&#39; : scales data to range [-1 to 1].</span>
+<span class="sd">            &#39;minmax&#39; : scales data to range [-1 to 1].</span>
+<span class="sd">            &#39;std&#39;    : scales data to normal variable with mean 0 and standard deviation 1.</span>
+<span class="sd">            (Default: None, no scaling).</span>
+<span class="sd">        validation_split : float</span>
+<span class="sd">            Fraction of training data to set aside for validation.</span>
+<span class="sd">            (Default: 0.1, ten percent of the training data is</span>
+<span class="sd">            used for the validation partition).</span>
+<span class="sd">        dtype : data type</span>
+<span class="sd">            Data type to use for the output pandas DataFrames.</span>
+<span class="sd">            (Default: DEFAULT_DATATYPE defined in default_utils).</span>
+<span class="sd">        seed : int</span>
+<span class="sd">            Value to intialize or re-seed the generator.</span>
+<span class="sd">            (Default: DEFAULT_SEED defined in default_utils).</span>
+
+
+<span class="sd">        Return</span>
+<span class="sd">        ----------</span>
+<span class="sd">        X_train : pandas DataFrame</span>
+<span class="sd">            Data features for training loaded in a pandas DataFrame and</span>
+<span class="sd">            pre-processed as specified.</span>
+<span class="sd">        y_train : pandas DataFrame</span>
+<span class="sd">            Data labels for training loaded in a pandas DataFrame.</span>
+<span class="sd">            One-hot encoding (categorical) is used.</span>
+<span class="sd">        X_val : pandas DataFrame</span>
+<span class="sd">            Data features for validation loaded in a pandas DataFrame and</span>
+<span class="sd">            pre-processed as specified.</span>
+<span class="sd">        y_val : pandas DataFrame</span>
+<span class="sd">            Data labels for validation loaded in a pandas DataFrame.</span>
+<span class="sd">            One-hot encoding (categorical) is used.</span>
+<span class="sd">        X_test : pandas DataFrame</span>
+<span class="sd">            Data features for testing loaded in a pandas DataFrame and</span>
+<span class="sd">            pre-processed as specified.</span>
+<span class="sd">        y_test : pandas DataFrame</span>
+<span class="sd">            Data labels for testing loaded in a pandas DataFrame.</span>
+<span class="sd">            One-hot encoding (categorical) is used.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">assert</span> <span class="n">class_col</span> <span class="o">!=</span> <span class="kc">None</span>
+    
+    <span class="c1"># compensates for the columns to drop if there is a feature subselection</span>
+    <span class="n">usecols</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">n_cols</span> <span class="o">+</span> <span class="nb">len</span><span class="p">(</span><span class="n">drop_cols</span><span class="p">)))</span> <span class="k">if</span> <span class="n">n_cols</span> <span class="k">else</span> <span class="kc">None</span>
+    
+    <span class="n">df_train</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">train_file</span><span class="p">,</span> <span class="n">engine</span><span class="o">=</span><span class="s1">&#39;c&#39;</span><span class="p">,</span> <span class="n">usecols</span><span class="o">=</span><span class="n">usecols</span><span class="p">)</span>
+    <span class="n">df_test</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">test_file</span><span class="p">,</span> <span class="n">engine</span><span class="o">=</span><span class="s1">&#39;c&#39;</span><span class="p">,</span> <span class="n">usecols</span><span class="o">=</span><span class="n">usecols</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">shuffle</span><span class="p">:</span>
+        <span class="n">df_train</span> <span class="o">=</span> <span class="n">df_train</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">frac</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="n">seed</span><span class="p">)</span>
+        <span class="n">df_test</span> <span class="o">=</span> <span class="n">df_test</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">frac</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="n">seed</span><span class="p">)</span>
+
+    <span class="c1"># Get class</span>
+    <span class="n">y_train</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">get_dummies</span><span class="p">(</span><span class="n">df_train</span><span class="p">[</span><span class="n">class_col</span><span class="p">])</span><span class="o">.</span><span class="n">values</span>
+    <span class="n">y_test</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">get_dummies</span><span class="p">(</span><span class="n">df_test</span><span class="p">[</span><span class="n">class_col</span><span class="p">])</span><span class="o">.</span><span class="n">values</span>
+    
+    <span class="c1"># Drop specified columns</span>
+    <span class="k">if</span> <span class="n">drop_cols</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">drop_cols</span><span class="p">:</span>
+            <span class="n">df_train</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">col</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+            <span class="n">df_test</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">col</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="c1"># Convert from pandas dataframe to numpy array</span>
+    <span class="n">X_train</span> <span class="o">=</span> <span class="n">df_train</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">dtype</span><span class="p">)</span>
+    <span class="n">X_test</span> <span class="o">=</span> <span class="n">df_test</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">dtype</span><span class="p">)</span>
+    <span class="c1"># Concatenate training and testing to scale data</span>
+    <span class="n">mat</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">((</span><span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="c1"># Scale data</span>
+    <span class="k">if</span> <span class="n">scaling</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">mat</span> <span class="o">=</span> <span class="n">scale_array</span><span class="p">(</span><span class="n">mat</span><span class="p">,</span> <span class="n">scaling</span><span class="p">)</span>
+    <span class="c1"># Separate training in training and validation splits after scaling</span>
+    <span class="n">sizeTrain</span> <span class="o">=</span> <span class="n">X_train</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">X_test</span> <span class="o">=</span> <span class="n">mat</span><span class="p">[</span><span class="n">sizeTrain</span><span class="p">:,</span> <span class="p">:]</span>
+    <span class="n">numVal</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">sizeTrain</span> <span class="o">*</span> <span class="n">validation_split</span><span class="p">)</span>
+    <span class="n">X_val</span> <span class="o">=</span> <span class="n">mat</span><span class="p">[:</span><span class="n">numVal</span><span class="p">,</span> <span class="p">:]</span>
+    <span class="n">X_train</span> <span class="o">=</span> <span class="n">mat</span><span class="p">[</span><span class="n">numVal</span><span class="p">:</span><span class="n">sizeTrain</span><span class="p">,</span> <span class="p">:]</span>
+    <span class="c1"># Analogously separate y in training in training and validation splits</span>
+    <span class="n">y_val</span> <span class="o">=</span> <span class="n">y_train</span><span class="p">[:</span><span class="n">numVal</span><span class="p">,</span> <span class="p">:]</span>
+    <span class="n">y_train</span> <span class="o">=</span> <span class="n">y_train</span><span class="p">[</span><span class="n">numVal</span><span class="p">:</span><span class="n">sizeTrain</span><span class="p">,</span> <span class="p">:]</span>
+
+    <span class="k">return</span> <span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">),</span> <span class="p">(</span><span class="n">X_val</span><span class="p">,</span> <span class="n">y_val</span><span class="p">),</span> <span class="p">(</span><span class="n">X_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="load_Xy_data2"><a class="viewcode-back" href="../candle_lib/data_utils.html#data_utils.load_Xy_data2">[docs]</a><span class="k">def</span> <span class="nf">load_Xy_data2</span><span class="p">(</span><span class="n">train_file</span><span class="p">,</span> <span class="n">test_file</span><span class="p">,</span> <span class="n">class_col</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">drop_cols</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">n_cols</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">scaling</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                  <span class="n">validation_split</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">DEFAULT_DATATYPE</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="n">DEFAULT_SEED</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; Load training and testing data from the files specified, with a column indicated to use as label.</span>
+<span class="sd">        Further split trainig data into training and validation partitions,</span>
+<span class="sd">        and construct corresponding training, validation and testing pandas DataFrames,</span>
+<span class="sd">        separated into data (i.e. features) and labels.</span>
+<span class="sd">        Labels to output can be integer labels (for classification) or</span>
+<span class="sd">        continuous labels (for regression).</span>
+<span class="sd">        Columns to load can be selected or dropped. Order of rows</span>
+<span class="sd">        can be shuffled. Data can be rescaled.</span>
+<span class="sd">        Training and testing partitions (coming from the respective files)</span>
+<span class="sd">        are preserved, but training is split into training and validation partitions.</span>
+<span class="sd">        This function assumes that the files contain a header with column names.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        train_file : filename</span>
+<span class="sd">            Name of the file to load the training data.</span>
+<span class="sd">        test_file : filename</span>
+<span class="sd">            Name of the file to load the testing data.</span>
+<span class="sd">        class_col : integer</span>
+<span class="sd">            Index of the column to use as the label.</span>
+<span class="sd">            (Default: None, this would cause the function to fail, a label</span>
+<span class="sd">            has to be indicated at calling).</span>
+<span class="sd">        drop_cols : list</span>
+<span class="sd">            List of column names to drop from the files being loaded.</span>
+<span class="sd">            (Default: None, all the columns are used).</span>
+<span class="sd">        n_cols : integer</span>
+<span class="sd">            Number of columns to load from the files.</span>
+<span class="sd">            (Default: None, all the columns are used).</span>
+<span class="sd">        shuffle : boolean</span>
+<span class="sd">            Boolean flag to indicate row shuffling. If True the rows are</span>
+<span class="sd">            re-ordered, if False the order in which rows are loaded is</span>
+<span class="sd">            preserved.</span>
+<span class="sd">            (Default: False, no permutation of the loading row order).</span>
+<span class="sd">        scaling : string</span>
+<span class="sd">            String describing type of scaling to apply.</span>
+<span class="sd">            Options recognized: &#39;maxabs&#39;, &#39;minmax&#39;, &#39;std&#39;.</span>
+<span class="sd">            &#39;maxabs&#39; : scales data to range [-1 to 1].</span>
+<span class="sd">            &#39;minmax&#39; : scales data to range [-1 to 1].</span>
+<span class="sd">            &#39;std&#39;    : scales data to normal variable with mean 0 and standard deviation 1.</span>
+<span class="sd">            (Default: None, no scaling).</span>
+<span class="sd">        validation_split : float</span>
+<span class="sd">            Fraction of training data to set aside for validation.</span>
+<span class="sd">            (Default: 0.1, ten percent of the training data is</span>
+<span class="sd">            used for the validation partition).</span>
+<span class="sd">        dtype : data type</span>
+<span class="sd">            Data type to use for the output pandas DataFrames.</span>
+<span class="sd">            (Default: DEFAULT_DATATYPE defined in default_utils).</span>
+<span class="sd">        seed : int</span>
+<span class="sd">            Value to intialize or re-seed the generator.</span>
+<span class="sd">            (Default: DEFAULT_SEED defined in default_utils).</span>
+
+
+<span class="sd">        Return</span>
+<span class="sd">        ----------</span>
+<span class="sd">        X_train : pandas DataFrame</span>
+<span class="sd">            Data features for training loaded in a pandas DataFrame and</span>
+<span class="sd">            pre-processed as specified.</span>
+<span class="sd">        y_train : pandas DataFrame</span>
+<span class="sd">            Data labels for training loaded in a pandas DataFrame.</span>
+<span class="sd">        X_val : pandas DataFrame</span>
+<span class="sd">            Data features for validation loaded in a pandas DataFrame and</span>
+<span class="sd">            pre-processed as specified.</span>
+<span class="sd">        y_val : pandas DataFrame</span>
+<span class="sd">            Data labels for validation loaded in a pandas DataFrame.</span>
+<span class="sd">        X_test : pandas DataFrame</span>
+<span class="sd">            Data features for testing loaded in a pandas DataFrame and</span>
+<span class="sd">            pre-processed as specified.</span>
+<span class="sd">        y_test : pandas DataFrame</span>
+<span class="sd">            Data labels for testing loaded in a pandas DataFrame.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">assert</span> <span class="n">class_col</span> <span class="o">!=</span> <span class="kc">None</span>
+    
+    <span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train_oh</span><span class="p">),</span> <span class="p">(</span><span class="n">X_val</span><span class="p">,</span> <span class="n">y_val_oh</span><span class="p">),</span> <span class="p">(</span><span class="n">X_test</span><span class="p">,</span> <span class="n">y_test_oh</span><span class="p">)</span> <span class="o">=</span> <span class="n">load_Xy_one_hot_data2</span><span class="p">(</span><span class="n">train_file</span><span class="p">,</span> <span class="n">test_file</span><span class="p">,</span>
+                                                                                 <span class="n">class_col</span><span class="p">,</span> <span class="n">drop_cols</span><span class="p">,</span> <span class="n">n_cols</span><span class="p">,</span> <span class="n">shuffle</span><span class="p">,</span> <span class="n">scaling</span><span class="p">,</span>
+                                                                                 <span class="n">validation_split</span><span class="p">,</span> <span class="n">dtype</span><span class="p">,</span> <span class="n">seed</span><span class="p">)</span>
+
+    <span class="n">y_train</span> <span class="o">=</span> <span class="n">convert_to_class</span><span class="p">(</span><span class="n">y_train_oh</span><span class="p">)</span>
+    <span class="n">y_val</span> <span class="o">=</span> <span class="n">convert_to_class</span><span class="p">(</span><span class="n">y_val_oh</span><span class="p">)</span>
+    <span class="n">y_test</span> <span class="o">=</span> <span class="n">convert_to_class</span><span class="p">(</span><span class="n">y_test_oh</span><span class="p">)</span>
+    
+
+    <span class="k">return</span> <span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">),</span> <span class="p">(</span><span class="n">X_val</span><span class="p">,</span> <span class="n">y_val</span><span class="p">),</span> <span class="p">(</span><span class="n">X_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="load_Xy_data_noheader"><a class="viewcode-back" href="../candle_lib/data_utils.html#data_utils.load_Xy_data_noheader">[docs]</a><span class="k">def</span> <span class="nf">load_Xy_data_noheader</span><span class="p">(</span><span class="n">train_file</span><span class="p">,</span> <span class="n">test_file</span><span class="p">,</span> <span class="n">classes</span><span class="p">,</span> <span class="n">usecols</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">scaling</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">DEFAULT_DATATYPE</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; Load training and testing data from the files specified, with the first column to use as label.</span>
+<span class="sd">        Construct corresponding training and testing pandas DataFrames,</span>
+<span class="sd">        separated into data (i.e. features) and labels.</span>
+<span class="sd">        Labels to output are one-hot encoded (categorical).</span>
+<span class="sd">        Columns to load can be selected. Data can be rescaled.</span>
+<span class="sd">        Training and testing partitions (coming from the respective files)</span>
+<span class="sd">        are preserved.</span>
+<span class="sd">        This function assumes that the files do not contain a header.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        train_file : filename</span>
+<span class="sd">            Name of the file to load the training data.</span>
+<span class="sd">        test_file : filename</span>
+<span class="sd">            Name of the file to load the testing data.</span>
+<span class="sd">        classes : integer</span>
+<span class="sd">            Number of total classes to consider when</span>
+<span class="sd">            building the categorical (one-hot) label encoding.</span>
+<span class="sd">        usecols : list</span>
+<span class="sd">            List of column indices to load from the files.</span>
+<span class="sd">            (Default: None, all the columns are used).</span>
+<span class="sd">        scaling : string</span>
+<span class="sd">            String describing type of scaling to apply.</span>
+<span class="sd">            Options recognized: &#39;maxabs&#39;, &#39;minmax&#39;, &#39;std&#39;.</span>
+<span class="sd">            &#39;maxabs&#39; : scales data to range [-1 to 1].</span>
+<span class="sd">            &#39;minmax&#39; : scales data to range [-1 to 1].</span>
+<span class="sd">            &#39;std&#39;    : scales data to normal variable with mean 0 and standard deviation 1.</span>
+<span class="sd">            (Default: None, no scaling).</span>
+<span class="sd">        dtype : data type</span>
+<span class="sd">            Data type to use for the output pandas DataFrames.</span>
+<span class="sd">            (Default: DEFAULT_DATATYPE defined in default_utils).</span>
+
+<span class="sd">        Return</span>
+<span class="sd">        ----------</span>
+<span class="sd">        X_train : pandas DataFrame</span>
+<span class="sd">            Data features for training loaded in a pandas DataFrame and</span>
+<span class="sd">            pre-processed as specified.</span>
+<span class="sd">        Y_train : pandas DataFrame</span>
+<span class="sd">            Data labels for training loaded in a pandas DataFrame.</span>
+<span class="sd">            One-hot encoding (categorical) is used.</span>
+<span class="sd">        X_test : pandas DataFrame</span>
+<span class="sd">            Data features for testing loaded in a pandas DataFrame and</span>
+<span class="sd">            pre-processed as specified.</span>
+<span class="sd">        Y_test : pandas DataFrame</span>
+<span class="sd">            Data labels for testing loaded in a pandas DataFrame.</span>
+<span class="sd">            One-hot encoding (categorical) is used.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Loading data...&#39;</span><span class="p">)</span>
+    <span class="n">df_train</span> <span class="o">=</span> <span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">train_file</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">usecols</span><span class="o">=</span><span class="n">usecols</span><span class="p">)</span><span class="o">.</span><span class="n">values</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">dtype</span><span class="p">)</span>
+    <span class="n">df_test</span> <span class="o">=</span> <span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">test_file</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">usecols</span><span class="o">=</span><span class="n">usecols</span><span class="p">)</span><span class="o">.</span><span class="n">values</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">dtype</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;done&#39;</span><span class="p">)</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;df_train shape:&#39;</span><span class="p">,</span> <span class="n">df_train</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;df_test shape:&#39;</span><span class="p">,</span> <span class="n">df_test</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+
+    <span class="n">seqlen</span> <span class="o">=</span> <span class="n">df_train</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+
+    <span class="n">df_y_train</span> <span class="o">=</span> <span class="n">df_train</span><span class="p">[:,</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">&#39;int&#39;</span><span class="p">)</span>
+    <span class="n">df_y_test</span> <span class="o">=</span> <span class="n">df_test</span><span class="p">[:,</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">&#39;int&#39;</span><span class="p">)</span>
+
+    <span class="n">Y_train</span> <span class="o">=</span> <span class="n">to_categorical</span><span class="p">(</span><span class="n">df_y_train</span><span class="p">,</span> <span class="n">classes</span><span class="p">)</span>
+    <span class="n">Y_test</span> <span class="o">=</span> <span class="n">to_categorical</span><span class="p">(</span><span class="n">df_y_test</span><span class="p">,</span> <span class="n">classes</span><span class="p">)</span>
+
+    <span class="n">df_x_train</span> <span class="o">=</span> <span class="n">df_train</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">:</span><span class="n">seqlen</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">dtype</span><span class="p">)</span>
+    <span class="n">df_x_test</span> <span class="o">=</span> <span class="n">df_test</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">:</span><span class="n">seqlen</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">dtype</span><span class="p">)</span>
+
+<span class="c1">#        X_train = df_x_train.as_matrix()</span>
+<span class="c1">#        X_test = df_x_test.as_matrix()</span>
+
+    <span class="n">X_train</span> <span class="o">=</span> <span class="n">df_x_train</span>
+    <span class="n">X_test</span> <span class="o">=</span> <span class="n">df_x_test</span>
+
+    <span class="n">mat</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">((</span><span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="c1"># Scale data</span>
+    <span class="k">if</span> <span class="n">scaling</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">mat</span> <span class="o">=</span> <span class="n">scale_array</span><span class="p">(</span><span class="n">mat</span><span class="p">,</span> <span class="n">scaling</span><span class="p">)</span>
+
+    <span class="n">X_train</span> <span class="o">=</span> <span class="n">mat</span><span class="p">[:</span><span class="n">X_train</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="p">:]</span>
+    <span class="n">X_test</span> <span class="o">=</span> <span class="n">mat</span><span class="p">[</span><span class="n">X_train</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]:,</span> <span class="p">:]</span>
+
+    <span class="k">return</span> <span class="n">X_train</span><span class="p">,</span> <span class="n">Y_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">Y_test</span></div>
+
+
+<div class="viewcode-block" id="load_csv_data"><a class="viewcode-back" href="../candle_lib/data_utils.html#data_utils.load_csv_data">[docs]</a><span class="k">def</span> <span class="nf">load_csv_data</span><span class="p">(</span><span class="n">train_path</span><span class="p">,</span> <span class="n">test_path</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s1">&#39;,&#39;</span><span class="p">,</span> <span class="n">nrows</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                  <span class="n">x_cols</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">y_cols</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">drop_cols</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                  <span class="n">onehot_cols</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">n_cols</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">random_cols</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                  <span class="n">shuffle</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">scaling</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                  <span class="n">validation_split</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">return_dataframe</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                  <span class="n">return_header</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="n">DEFAULT_SEED</span><span class="p">):</span>
+
+    <span class="sd">&quot;&quot;&quot; Load data from the files specified.</span>
+<span class="sd">        Columns corresponding to data features and labels can be specified. A one-hot</span>
+<span class="sd">        encoding can be used for either features or labels.</span>
+<span class="sd">        If validation_split is specified, trainig data is further split into training</span>
+<span class="sd">        and validation partitions.</span>
+<span class="sd">        pandas DataFrames are used to load and pre-process the data. If specified,</span>
+<span class="sd">        those DataFrames are returned. Otherwise just values are returned.</span>
+<span class="sd">        Labels to output can be integer labels (for classification) or</span>
+<span class="sd">        continuous labels (for regression).</span>
+<span class="sd">        Columns to load can be specified, randomly selected or a subset can be dropped.</span>
+<span class="sd">        Order of rows can be shuffled. Data can be rescaled.</span>
+<span class="sd">        This function assumes that the files contain a header with column names.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        train_path : filename</span>
+<span class="sd">            Name of the file to load the training data.</span>
+<span class="sd">        test_path : filename</span>
+<span class="sd">            Name of the file to load the testing data. (Optional).</span>
+<span class="sd">        sep : character</span>
+<span class="sd">            Character used as column separator.</span>
+<span class="sd">            (Default: &#39;,&#39;, comma separated values).</span>
+<span class="sd">        nrows : integer</span>
+<span class="sd">            Number of rows to load from the files.</span>
+<span class="sd">            (Default: None, all the rows are used).</span>
+<span class="sd">        x_cols : list</span>
+<span class="sd">            List of columns to use as features.</span>
+<span class="sd">            (Default: None).</span>
+<span class="sd">        y_cols : list</span>
+<span class="sd">            List of columns to use as labels.</span>
+<span class="sd">            (Default: None).</span>
+<span class="sd">        drop_cols : list</span>
+<span class="sd">            List of columns to drop from the files being loaded.</span>
+<span class="sd">            (Default: None, all the columns are used).</span>
+<span class="sd">        onehot_cols : list</span>
+<span class="sd">            List of columns to one-hot encode.</span>
+<span class="sd">            (Default: None).</span>
+<span class="sd">        n_cols : integer</span>
+<span class="sd">            Number of columns to load from the files.</span>
+<span class="sd">            (Default: None).</span>
+<span class="sd">        random_cols : boolean</span>
+<span class="sd">            Boolean flag to indicate random selection of columns.</span>
+<span class="sd">            If True a number of n_cols columns is randomly selected, if False</span>
+<span class="sd">            the specified columns are used.</span>
+<span class="sd">            (Default: False).</span>
+<span class="sd">        shuffle : boolean</span>
+<span class="sd">            Boolean flag to indicate row shuffling. If True the rows are</span>
+<span class="sd">            re-ordered, if False the order in which rows are read is</span>
+<span class="sd">            preserved.</span>
+<span class="sd">            (Default: False, no permutation of the loading row order).</span>
+<span class="sd">        scaling : string</span>
+<span class="sd">            String describing type of scaling to apply.</span>
+<span class="sd">            Options recognized: &#39;maxabs&#39;, &#39;minmax&#39;, &#39;std&#39;.</span>
+<span class="sd">            &#39;maxabs&#39; : scales data to range [-1 to 1].</span>
+<span class="sd">            &#39;minmax&#39; : scales data to range [-1 to 1].</span>
+<span class="sd">            &#39;std&#39;    : scales data to normal variable with mean 0 and standard deviation 1.</span>
+<span class="sd">            (Default: None, no scaling).</span>
+<span class="sd">        dtype : data type</span>
+<span class="sd">            Data type to use for the output pandas DataFrames.</span>
+<span class="sd">            (Default: None).</span>
+<span class="sd">        validation_split : float</span>
+<span class="sd">            Fraction of training data to set aside for validation.</span>
+<span class="sd">            (Default: None, no validation partition is constructed).</span>
+<span class="sd">        return_dataframe : boolean</span>
+<span class="sd">            Boolean flag to indicate that the pandas DataFrames</span>
+<span class="sd">            used for data pre-processing are to be returned.</span>
+<span class="sd">            (Default: True, pandas DataFrames are returned).</span>
+<span class="sd">        return_header : boolean</span>
+<span class="sd">            Boolean flag to indicate if the column headers are</span>
+<span class="sd">            to be returned.</span>
+<span class="sd">            (Default: False, no column headers are separetely returned).</span>
+<span class="sd">        seed : int</span>
+<span class="sd">            Value to intialize or re-seed the generator.</span>
+<span class="sd">            (Default: DEFAULT_SEED defined in default_utils).</span>
+
+
+<span class="sd">        Return</span>
+<span class="sd">        ----------</span>
+<span class="sd">        Tuples of data features and labels are returned, for \</span>
+<span class="sd">        train, validation and testing partitions, together with the column \</span>
+<span class="sd">        names (headers). The specific objects to return depend \</span>
+<span class="sd">        on the options selected.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">if</span> <span class="n">x_cols</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">drop_cols</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">n_cols</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">usecols</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="n">y_names</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">df_cols</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">train_path</span><span class="p">,</span> <span class="n">engine</span><span class="o">=</span><span class="s1">&#39;c&#39;</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="n">sep</span><span class="p">,</span> <span class="n">nrows</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+        <span class="n">df_x_cols</span> <span class="o">=</span> <span class="n">df_cols</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+        <span class="c1"># drop columns by name or index</span>
+        <span class="k">if</span> <span class="n">y_cols</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">df_x_cols</span> <span class="o">=</span> <span class="n">df_x_cols</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">df_cols</span><span class="p">[</span><span class="n">y_cols</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">drop_cols</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">df_x_cols</span> <span class="o">=</span> <span class="n">df_x_cols</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">df_cols</span><span class="p">[</span><span class="n">drop_cols</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+        <span class="n">reserved</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">if</span> <span class="n">onehot_cols</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">reserved</span> <span class="o">+=</span> <span class="n">onehot_cols</span>
+        <span class="k">if</span> <span class="n">x_cols</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">reserved</span> <span class="o">+=</span> <span class="n">x_cols</span>
+
+        <span class="n">nx</span> <span class="o">=</span> <span class="n">df_x_cols</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">n_cols</span> <span class="ow">and</span> <span class="n">n_cols</span> <span class="o">&lt;</span> <span class="n">nx</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">random_cols</span><span class="p">:</span>
+                <span class="n">indexes</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">nx</span><span class="p">)),</span> <span class="n">n_cols</span><span class="p">,</span> <span class="n">replace</span><span class="o">=</span><span class="kc">False</span><span class="p">))</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">indexes</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">n_cols</span><span class="p">))</span>
+            <span class="n">x_names</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">df_x_cols</span><span class="p">[</span><span class="n">indexes</span><span class="p">])</span>
+            <span class="n">unreserved</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">x_names</span> <span class="k">if</span> <span class="n">x</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">reserved</span><span class="p">]</span>
+            <span class="n">n_keep</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">maximum</span><span class="p">(</span><span class="n">n_cols</span> <span class="o">-</span> <span class="nb">len</span><span class="p">(</span><span class="n">reserved</span><span class="p">),</span> <span class="mi">0</span><span class="p">)</span>
+            <span class="n">combined</span> <span class="o">=</span> <span class="n">reserved</span> <span class="o">+</span> <span class="n">unreserved</span><span class="p">[:</span><span class="n">n_keep</span><span class="p">]</span>
+            <span class="n">x_names</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">df_x_cols</span> <span class="k">if</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">combined</span><span class="p">]</span>
+        <span class="k">elif</span> <span class="n">x_cols</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">x_names</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">df_x_cols</span><span class="p">[</span><span class="n">x_cols</span><span class="p">])</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">x_names</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">df_x_cols</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span>
+
+        <span class="n">usecols</span> <span class="o">=</span> <span class="n">x_names</span>
+        <span class="k">if</span> <span class="n">y_cols</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">y_names</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">df_cols</span><span class="p">[</span><span class="n">y_cols</span><span class="p">])</span>
+            <span class="n">usecols</span> <span class="o">=</span> <span class="n">y_names</span> <span class="o">+</span> <span class="n">x_names</span>
+
+    <span class="n">df_train</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">train_path</span><span class="p">,</span> <span class="n">engine</span><span class="o">=</span><span class="s1">&#39;c&#39;</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="n">sep</span><span class="p">,</span> <span class="n">nrows</span><span class="o">=</span><span class="n">nrows</span><span class="p">,</span> <span class="n">usecols</span><span class="o">=</span><span class="n">usecols</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">test_path</span><span class="p">:</span>
+        <span class="n">df_test</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">test_path</span><span class="p">,</span> <span class="n">engine</span><span class="o">=</span><span class="s1">&#39;c&#39;</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="n">sep</span><span class="p">,</span> <span class="n">nrows</span><span class="o">=</span><span class="n">nrows</span><span class="p">,</span> <span class="n">usecols</span><span class="o">=</span><span class="n">usecols</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">df_test</span> <span class="o">=</span> <span class="n">df_train</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+
+    <span class="k">if</span> <span class="n">y_cols</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">y_names</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">elif</span> <span class="n">y_names</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">y_names</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">df_train</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">0</span><span class="p">][</span><span class="n">y_cols</span><span class="p">])</span>
+
+    <span class="k">if</span> <span class="n">shuffle</span><span class="p">:</span>
+        <span class="n">df_train</span> <span class="o">=</span> <span class="n">df_train</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">frac</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="n">seed</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">test_path</span><span class="p">:</span>
+            <span class="n">df_test</span> <span class="o">=</span> <span class="n">df_test</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">frac</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="n">seed</span><span class="p">)</span>
+
+    <span class="n">df_cat</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">df_train</span><span class="p">,</span> <span class="n">df_test</span><span class="p">])</span>
+    <span class="n">df_y</span> <span class="o">=</span> <span class="n">df_cat</span><span class="p">[</span><span class="n">y_names</span><span class="p">]</span>
+    <span class="n">df_x</span> <span class="o">=</span> <span class="n">df_cat</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">y_names</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">onehot_cols</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">onehot_cols</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">y_names</span><span class="p">:</span>
+                <span class="n">df_dummy</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">get_dummies</span><span class="p">(</span><span class="n">df_y</span><span class="p">[</span><span class="n">col</span><span class="p">],</span> <span class="n">prefix</span><span class="o">=</span><span class="n">col</span><span class="p">,</span> <span class="n">prefix_sep</span><span class="o">=</span><span class="s1">&#39;:&#39;</span><span class="p">)</span>
+                <span class="n">df_y</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">df_dummy</span><span class="p">,</span> <span class="n">df_y</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">col</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+                <span class="c1"># print(df_dummy.columns)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">df_dummy</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">get_dummies</span><span class="p">(</span><span class="n">df_x</span><span class="p">[</span><span class="n">col</span><span class="p">],</span> <span class="n">prefix</span><span class="o">=</span><span class="n">col</span><span class="p">,</span> <span class="n">prefix_sep</span><span class="o">=</span><span class="s1">&#39;:&#39;</span><span class="p">)</span>
+                <span class="n">df_x</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">df_dummy</span><span class="p">,</span> <span class="n">df_x</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">col</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">scaling</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">mat</span> <span class="o">=</span> <span class="n">scale_array</span><span class="p">(</span><span class="n">df_x</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="n">scaling</span><span class="p">)</span>
+        <span class="n">df_x</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">mat</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="n">df_x</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="n">df_x</span><span class="o">.</span><span class="n">columns</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">dtype</span><span class="p">)</span>
+
+    <span class="n">n_train</span> <span class="o">=</span> <span class="n">df_train</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+    <span class="n">x_train</span> <span class="o">=</span> <span class="n">df_x</span><span class="p">[:</span><span class="n">n_train</span><span class="p">]</span>
+    <span class="n">y_train</span> <span class="o">=</span> <span class="n">df_y</span><span class="p">[:</span><span class="n">n_train</span><span class="p">]</span>
+    <span class="n">x_test</span> <span class="o">=</span> <span class="n">df_x</span><span class="p">[</span><span class="n">n_train</span><span class="p">:]</span>
+    <span class="n">y_test</span> <span class="o">=</span> <span class="n">df_y</span><span class="p">[</span><span class="n">n_train</span><span class="p">:]</span>
+
+    <span class="n">return_y</span> <span class="o">=</span> <span class="n">y_cols</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+    <span class="n">return_val</span> <span class="o">=</span> <span class="n">validation_split</span> <span class="ow">and</span> <span class="n">validation_split</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">validation_split</span> <span class="o">&lt;</span> <span class="mi">1</span>
+    <span class="n">return_test</span> <span class="o">=</span> <span class="n">test_path</span>
+
+    <span class="k">if</span> <span class="n">return_val</span><span class="p">:</span>
+        <span class="n">n_val</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">n_train</span> <span class="o">*</span> <span class="n">validation_split</span><span class="p">)</span>
+        <span class="n">x_val</span> <span class="o">=</span> <span class="n">x_train</span><span class="p">[</span><span class="o">-</span><span class="n">n_val</span><span class="p">:]</span>
+        <span class="n">y_val</span> <span class="o">=</span> <span class="n">y_train</span><span class="p">[</span><span class="o">-</span><span class="n">n_val</span><span class="p">:]</span>
+        <span class="n">x_train</span> <span class="o">=</span> <span class="n">x_train</span><span class="p">[:</span><span class="o">-</span><span class="n">n_val</span><span class="p">]</span>
+        <span class="n">y_train</span> <span class="o">=</span> <span class="n">y_train</span><span class="p">[:</span><span class="o">-</span><span class="n">n_val</span><span class="p">]</span>
+
+    <span class="n">ret</span> <span class="o">=</span> <span class="p">[</span><span class="n">x_train</span><span class="p">]</span>
+    <span class="n">ret</span> <span class="o">=</span> <span class="n">ret</span> <span class="o">+</span> <span class="p">[</span><span class="n">y_train</span><span class="p">]</span> <span class="k">if</span> <span class="n">return_y</span> <span class="k">else</span> <span class="n">ret</span>
+    <span class="n">ret</span> <span class="o">=</span> <span class="n">ret</span> <span class="o">+</span> <span class="p">[</span><span class="n">x_val</span><span class="p">]</span> <span class="k">if</span> <span class="n">return_val</span> <span class="k">else</span> <span class="n">ret</span>
+    <span class="n">ret</span> <span class="o">=</span> <span class="n">ret</span> <span class="o">+</span> <span class="p">[</span><span class="n">y_val</span><span class="p">]</span> <span class="k">if</span> <span class="n">return_y</span> <span class="ow">and</span> <span class="n">return_val</span> <span class="k">else</span> <span class="n">ret</span>
+    <span class="n">ret</span> <span class="o">=</span> <span class="n">ret</span> <span class="o">+</span> <span class="p">[</span><span class="n">x_test</span><span class="p">]</span> <span class="k">if</span> <span class="n">return_test</span> <span class="k">else</span> <span class="n">ret</span>
+    <span class="n">ret</span> <span class="o">=</span> <span class="n">ret</span> <span class="o">+</span> <span class="p">[</span><span class="n">y_test</span><span class="p">]</span> <span class="k">if</span> <span class="n">return_y</span> <span class="ow">and</span> <span class="n">return_test</span> <span class="k">else</span> <span class="n">ret</span>
+
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">return_dataframe</span><span class="p">:</span>
+        <span class="n">ret</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span><span class="o">.</span><span class="n">values</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">ret</span><span class="p">]</span>
+
+    <span class="k">if</span> <span class="n">return_header</span><span class="p">:</span>
+        <span class="n">ret</span> <span class="o">=</span> <span class="n">ret</span> <span class="o">+</span> <span class="p">[</span><span class="n">df_x</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">tolist</span><span class="p">(),</span> <span class="n">df_y</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">tolist</span><span class="p">()]</span>
+
+    <span class="k">return</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">ret</span><span class="p">)</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">ret</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span> <span class="k">else</span> <span class="n">ret</span></div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2021, ANL.gov.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

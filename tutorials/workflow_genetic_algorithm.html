@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>GA (genetic algorithm) based based hyperparameter optimization on CANDLE Benchmarks &mdash; CANDLE  documentation</title><link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Run Asynchronous Search based hyperparameter optimization on CANDLE Benchmarks" href="workflow_async_search.html" />
+    <link rel="prev" title="Overview of CANDLE/Supervisor" href="supervisor.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../index.html" class="icon icon-home"> CANDLE
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../readme.html">What is CANDLE?</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Tutorials</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="index.html#preparation">Preparation</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="index.html#running-workflows">Running workflows</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="running_on_theta.html">How to run CANDLE compliant code in Theta</a></li>
+<li class="toctree-l3"><a class="reference internal" href="supervisor.html">Overview of CANDLE/Supervisor</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">GA (genetic algorithm) based based hyperparameter optimization on CANDLE Benchmarks</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#running">Running</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#user-requirements">User requirements</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#calling-sequence">Calling sequence</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#making-changes">Making Changes</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="workflow_async_search.html">Run Asynchronous Search based hyperparameter optimization on CANDLE Benchmarks</a></li>
+<li class="toctree-l3"><a class="reference internal" href="workflow_mlrMBO.html">Run mlrMBO based hyperparameter optimization on CANDLE Benchmarks</a></li>
+<li class="toctree-l3"><a class="reference internal" href="workflow_pbt.html">PBT Workflow</a></li>
+<li class="toctree-l3"><a class="reference internal" href="workflow_upf.html">Evaluate an Unrolled Parameter File (UPF)</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="index.html#examples">Examples</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../candle_lib.html">CANDLE Library API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../shared_installation.html">CANDLE Shared Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contribute.html">How to Contribute</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">CANDLE</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="index.html">Tutorials</a> &raquo;</li>
+      <li>GA (genetic algorithm) based based hyperparameter optimization on CANDLE Benchmarks</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/tutorials/workflow_genetic_algorithm.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <div class="section" id="ga-genetic-algorithm-based-based-hyperparameter-optimization-on-candle-benchmarks">
+<h1>GA (genetic algorithm) based based hyperparameter optimization on CANDLE Benchmarks<a class="headerlink" href="#ga-genetic-algorithm-based-based-hyperparameter-optimization-on-candle-benchmarks" title="Permalink to this headline">¶</a></h1>
+<p>The GA workflow uses the Python deap package
+(<a class="reference external" href="http://deap.readthedocs.io/en/master">http://deap.readthedocs.io/en/master</a>) to optimize hyperparameters using
+a genetic algorithm.</p>
+<div class="section" id="running">
+<h2>Running<a class="headerlink" href="#running" title="Permalink to this headline">¶</a></h2>
+<ol class="arabic simple">
+<li><p>cd into the <strong>Supervisor/workflows/GA/test</strong> directory</p></li>
+<li><p>Specify the GA parameters in the <strong>cfg-prm-1.sh</strong> file (see
+<a class="reference external" href="#structure">below</a> for more information on the GA parameters)</p></li>
+<li><p>Specify the PROCS, QUEUE etc. in <strong>cfg-sys-1.sh</strong> file</p></li>
+<li><p>You will pass the MODEL_NAME, SITE, and optional experiment id
+arguments to <strong>test-1.sh</strong> file when launching:
+<code class="docutils literal notranslate"><span class="pre">./test-1.sh</span> <span class="pre">&lt;model_name&gt;</span> <span class="pre">&lt;machine_name&gt;</span> <span class="pre">[expid]</span></code> where
+<code class="docutils literal notranslate"><span class="pre">model_name</span></code> can be tc1 etc., <code class="docutils literal notranslate"><span class="pre">machine_name</span></code> can be local, cori,
+theta, titan etc. (see <a class="reference external" href="#making_changes">NOTE</a> below on creating
+new SITE files.)</p></li>
+<li><p>Update the parameter space json file if necessary. The parameter
+space is defined in json file (see
+<strong>workflows/GA/data/tc1_param_space_ga.json</strong> for an example with
+tc1). The <strong>cfg-prm-1.sh</strong> script will attempt to select the correct
+json given the model name. Edit that file as appropriate. The
+parameter space json file is further described <a class="reference external" href="#config">here</a></p></li>
+<li><p>The benchmark will be run for the number of processors specified</p></li>
+<li><p>Final objective function values, along with parameters, will be
+available in the experiments directory in a <strong>finals_results</strong> file
+and also printed to standard out.</p></li>
+</ol>
+</div>
+<div class="section" id="user-requirements">
+<h2>User requirements<a class="headerlink" href="#user-requirements" title="Permalink to this headline">¶</a></h2>
+<p>What you need to install to run the workflow:</p>
+<ul class="simple">
+<li><p>This workflow - <code class="docutils literal notranslate"><span class="pre">git&#64;github.com:ECP-CANDLE/Supervisor.git</span></code> . Clone
+and switch to the <code class="docutils literal notranslate"><span class="pre">master</span></code> branch. Then <code class="docutils literal notranslate"><span class="pre">cd</span></code> to <code class="docutils literal notranslate"><span class="pre">workflows/GA</span></code>
+(the directory containing this README).</p></li>
+<li><p>TC1 or other benchmark - <code class="docutils literal notranslate"><span class="pre">git&#64;github.com:ECP-CANDLE/Benchmarks.git</span></code>
+. Clone and switch to the <code class="docutils literal notranslate"><span class="pre">frameworks</span></code> branch.</p></li>
+<li><p>benchmark data - See the individual benchmarks README for obtaining
+the initial data</p></li>
+</ul>
+<p>Python specific installation requirements:</p>
+<ol class="arabic simple">
+<li><p>pandas</p></li>
+<li><p>deap</p></li>
+</ol>
+<p>These may be already part of the existing python installation. If not
+these can be installed using <code class="docutils literal notranslate"><span class="pre">conda</span></code> or <code class="docutils literal notranslate"><span class="pre">pip</span></code>. They must be
+installed using the same python installation used by swift-t. A
+<code class="docutils literal notranslate"><span class="pre">swift-t</span> <span class="pre">-v</span></code> will print the python that swift-t has embedded.</p>
+<p>If any required python packages must be installed locally, then you will
+probably need to add your local site-packages directory to the
+PYTHONPATH specified in <strong>cfg-sys-1.sh</strong>. For example,</p>
+<p><code class="docutils literal notranslate"><span class="pre">export</span> <span class="pre">PYTHONPATH=/global/u1/n/ncollier/.local/cori/deeplearning2.7/lib/python2.7/site-packages</span></code></p>
+</div>
+<div class="section" id="calling-sequence">
+<h2>Calling sequence<a class="headerlink" href="#calling-sequence" title="Permalink to this headline">¶</a></h2>
+<p>Function calls:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">test</span><span class="o">-</span><span class="mf">1.</span><span class="n">sh</span> <span class="o">-&gt;</span> <span class="n">swift</span><span class="o">/</span><span class="n">workflow</span><span class="o">.</span><span class="n">sh</span> <span class="o">-&gt;</span>
+
+      <span class="p">(</span><span class="n">GA</span> <span class="n">via</span> <span class="n">EQPy</span><span class="p">)</span>
+      <span class="n">swift</span><span class="o">/</span><span class="n">workflow</span><span class="o">.</span><span class="n">swift</span> <span class="o">-&gt;</span> <span class="n">common</span><span class="o">/</span><span class="n">python</span><span class="o">/</span><span class="n">deap_ga</span><span class="o">.</span><span class="n">py</span>
+
+      <span class="p">(</span><span class="n">Benchmark</span><span class="p">)</span>
+      <span class="n">swift</span><span class="o">/</span><span class="n">workflow</span><span class="o">.</span><span class="n">swift</span> <span class="o">-&gt;</span> <span class="n">common</span><span class="o">/</span><span class="n">swift</span><span class="o">/</span><span class="n">obj_app</span><span class="o">.</span><span class="n">swift</span> <span class="o">-&gt;</span>
+      <span class="n">common</span><span class="o">/</span><span class="n">sh</span><span class="o">/</span><span class="n">model</span><span class="o">.</span><span class="n">sh</span> <span class="o">-&gt;</span> <span class="n">common</span><span class="o">/</span><span class="n">python</span><span class="o">/</span><span class="n">model_runner</span><span class="o">.</span><span class="n">py</span> <span class="o">-&gt;</span> <span class="s1">&#39;calls Benchmark&#39;</span>
+
+      <span class="p">(</span><span class="n">Results</span> <span class="kn">from</span> <span class="nn">Benchmark</span> <span class="n">returned</span> <span class="n">to</span> <span class="n">the</span> <span class="n">GA</span> <span class="n">via</span> <span class="n">EQPy</span><span class="p">)</span>
+      <span class="n">common</span><span class="o">/</span><span class="n">swift</span><span class="o">/</span><span class="n">obj_app</span><span class="o">.</span><span class="n">swift</span> <span class="o">-&gt;</span> <span class="n">swift</span><span class="o">/</span><span class="n">workflow</span><span class="o">.</span><span class="n">swift</span> <span class="o">-&gt;</span>
+      <span class="n">common</span><span class="o">/</span><span class="n">python</span><span class="o">/</span><span class="n">deap_ga</span><span class="o">.</span><span class="n">py</span>
+</pre></div>
+</div>
+<p>Scheduling scripts:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">test</span><span class="o">-</span><span class="mf">1.</span><span class="n">sh</span> <span class="o">-&gt;</span> <span class="n">cfg</span><span class="o">-</span><span class="n">sys</span><span class="o">-</span><span class="mf">1.</span><span class="n">sh</span> <span class="o">-&gt;</span>
+      <span class="n">common</span><span class="o">/</span><span class="n">sh</span><span class="o">/&lt;</span><span class="n">machine_name</span><span class="o">&gt;</span> <span class="o">-</span> <span class="n">module</span><span class="p">,</span> <span class="n">scheduling</span><span class="p">,</span> <span class="n">langs</span> <span class="o">.</span><span class="n">sh</span> <span class="n">files</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="making-changes">
+<h2>Making Changes<a class="headerlink" href="#making-changes" title="Permalink to this headline">¶</a></h2>
+<p>To create your own SITE files in workflows/common/sh/: - langs-SITE.sh -
+langs-app-SITE.sh - modules-SITE.sh - sched-SITE.sh config</p>
+<p>copy existing ones but modify the langs-SITE.sh file to define the EQPy
+location (see workflows/common/sh/langs-local-as.sh for an example).</p>
+<div class="section" id="structure">
+<h3>Structure<a class="headerlink" href="#structure" title="Permalink to this headline">¶</a></h3>
+<p>The point of the script structure is that it is easy to make copy and
+modify the <code class="docutils literal notranslate"><span class="pre">test-*.sh</span></code> script, and the <code class="docutils literal notranslate"><span class="pre">cfg-*.sh</span></code> scripts. These can
+be checked back into the repo for use by others. The <code class="docutils literal notranslate"><span class="pre">test-*.sh</span></code>
+script and the <code class="docutils literal notranslate"><span class="pre">cfg-*.sh</span></code> scripts should simply contain environment
+variables that control how <code class="docutils literal notranslate"><span class="pre">workflow.sh</span></code> and <code class="docutils literal notranslate"><span class="pre">workflow.swift</span></code>
+operate.</p>
+<p><code class="docutils literal notranslate"><span class="pre">test-1.sh</span></code> and <code class="docutils literal notranslate"><span class="pre">cfg-{sys,prm}-1.sh</span></code> should be unmodified for simple
+testing.</p>
+<p>The relevant parameters for the GA algorithm are defined in
+<code class="docutils literal notranslate"><span class="pre">cfg-prm-*.sh</span></code> scripts (see example in <code class="docutils literal notranslate"><span class="pre">cfg-prm-1.sh</span></code>). These are: -
+SEED: The random seed used by deap in the GA. - NUM_ITERATIONS: The
+number of iterations the GA should perform. - POPULATION_SIZE: The
+maximum number of hyperparameter sets to evaluate in each iteration.
+GA_STRATEGY: The algorithm used by the GA. Can be one of “simple” or
+“mu_plus_lambda”. See eaSimple and eaMuPlusLambda at
+<a class="reference external" href="https://deap.readthedocs.io/en/master/api/algo.html?highlight=eaSimple#module-deap.algorithms">https://deap.readthedocs.io/en/master/api/algo.html?highlight=eaSimple#module-deap.algorithms</a>
+for more information.</p>
+</div>
+<div class="section" id="hyperparameter-configuration-file">
+<h3>Hyperparameter Configuration File<a class="headerlink" href="#hyperparameter-configuration-file" title="Permalink to this headline">¶</a></h3>
+<p>The GA workflow uses a json format file for defining the hyperparameter
+space. The GA workflow comes with 4 sample hyperparameter spaces in the
+<code class="docutils literal notranslate"><span class="pre">GA/data</span></code> directory, one each for the combo, nt3, p1b1 and tc1
+benchmarkts.</p>
+<p>The hyperparameter configuration file has a json format consisting of a
+list of json dictionaries, each one of which defines a hyperparameter.
+Each dictionary has the following required keys:</p>
+<ul class="simple">
+<li><p>name: the name of the hyperparameter (e.g. <em>epochs</em>)</p></li>
+<li><p>type: determines how the initial population (i.e. the hyperparameter
+sets) are initialized from the named parameter and how those values
+are subsequently mutated by the GA. Type is one of <code class="docutils literal notranslate"><span class="pre">constant</span></code>,
+<code class="docutils literal notranslate"><span class="pre">int</span></code>, <code class="docutils literal notranslate"><span class="pre">float</span></code>, <code class="docutils literal notranslate"><span class="pre">logical</span></code>, <code class="docutils literal notranslate"><span class="pre">categorical</span></code>, or <code class="docutils literal notranslate"><span class="pre">ordered</span></code>.</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">constant</span></code>:</p>
+<ul>
+<li><p>each model is initialized with the same specifed value</p></li>
+<li><p>mutation always returns the same specified value</p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">int</span></code>:</p>
+<ul>
+<li><p>each model is initialized with an int randomly drawn from the
+range defined by <code class="docutils literal notranslate"><span class="pre">lower</span></code> and <code class="docutils literal notranslate"><span class="pre">upper</span></code> bounds</p></li>
+<li><p>mutation is peformed by adding the results of a random draw
+from a gaussian distribution to the current value, where the
+gaussian distribution’s mu is 0 and its sigma is specified by
+the <code class="docutils literal notranslate"><span class="pre">sigma</span></code> entry.</p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">float</span></code>:</p>
+<ul>
+<li><p>each model is initialized with a float randomly drawn from the
+range defined by <code class="docutils literal notranslate"><span class="pre">lower</span></code> and <code class="docutils literal notranslate"><span class="pre">upper</span></code> bounds</p></li>
+<li><p>mutation is peformed by adding the results of a random draw
+from a gaussian distribution to the current value, where the
+gaussian distribution’s mu is 0 and its sigma is specified by
+the <code class="docutils literal notranslate"><span class="pre">sigma</span></code> entry.</p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">logical</span></code>:</p>
+<ul>
+<li><p>each model is initialized with a random boolean.</p></li>
+<li><p>mutation flips the logical value</p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">categorical</span></code>:</p>
+<ul>
+<li><p>each model is initialized with an element chosen at random from
+the list of elements in <code class="docutils literal notranslate"><span class="pre">values</span></code>.</p></li>
+<li><p>mutation chooses an element from the <code class="docutils literal notranslate"><span class="pre">values</span></code> list at random</p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ordered</span></code>:</p>
+<ul>
+<li><p>each model is inititalized with an element chosen at random
+from the list of elements in <code class="docutils literal notranslate"><span class="pre">values</span></code>.</p></li>
+<li><p>given the index of the current value in the list of <code class="docutils literal notranslate"><span class="pre">values</span></code>,
+mutation selects the element <em>n</em> number of indices away, where
+n is the result of a random draw between 1 and <code class="docutils literal notranslate"><span class="pre">sigma</span></code> and
+then is negated with a 0.5 probability.</p></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>The following keys are required depending on value of the <code class="docutils literal notranslate"><span class="pre">type</span></code> key.</p>
+<p>If the <code class="docutils literal notranslate"><span class="pre">type</span></code> is <code class="docutils literal notranslate"><span class="pre">constant</span></code>: * <code class="docutils literal notranslate"><span class="pre">value</span></code>: the constant value</p>
+<p>If the <code class="docutils literal notranslate"><span class="pre">type</span></code> is <code class="docutils literal notranslate"><span class="pre">int</span></code>, or <code class="docutils literal notranslate"><span class="pre">float</span></code>: * <code class="docutils literal notranslate"><span class="pre">lower</span></code>: the lower bound
+of the range to draw from * <code class="docutils literal notranslate"><span class="pre">upper</span></code>: the upper bound of the range to
+draw from * <code class="docutils literal notranslate"><span class="pre">sigma</span></code>: the sigma value used by the mutation operator
+(see above).</p>
+<p>If the <code class="docutils literal notranslate"><span class="pre">type</span></code> is <code class="docutils literal notranslate"><span class="pre">categorical</span></code>: * <code class="docutils literal notranslate"><span class="pre">values</span></code>: the list of elements
+to choose from * <code class="docutils literal notranslate"><span class="pre">element_type</span></code>: the type of the elements to choose
+from. One of <code class="docutils literal notranslate"><span class="pre">int</span></code>, <code class="docutils literal notranslate"><span class="pre">float</span></code>, <code class="docutils literal notranslate"><span class="pre">string</span></code>, or <code class="docutils literal notranslate"><span class="pre">logical</span></code></p>
+<p>If the <code class="docutils literal notranslate"><span class="pre">type</span></code> is <code class="docutils literal notranslate"><span class="pre">ordered</span></code>: * <code class="docutils literal notranslate"><span class="pre">values</span></code>: the list of elements to
+choose from * <code class="docutils literal notranslate"><span class="pre">element_type</span></code>: the type of the elements to choose
+from. One of <code class="docutils literal notranslate"><span class="pre">int</span></code>, <code class="docutils literal notranslate"><span class="pre">float</span></code>, <code class="docutils literal notranslate"><span class="pre">string</span></code>, or <code class="docutils literal notranslate"><span class="pre">logical</span></code> *
+<code class="docutils literal notranslate"><span class="pre">sigma</span></code>: the sigma value used by the mutation operator (see above).</p>
+<p>A sample hyperparameter definition file:</p>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="p">[</span>
+  <span class="p">{</span>
+    <span class="s2">&quot;name&quot;</span><span class="o">:</span> <span class="s2">&quot;activation&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;type&quot;</span><span class="o">:</span> <span class="s2">&quot;categorical&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;element_type&quot;</span><span class="o">:</span> <span class="s2">&quot;string&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;values&quot;</span><span class="o">:</span> <span class="p">[</span><span class="s2">&quot;softmax&quot;</span><span class="p">,</span> <span class="s2">&quot;elu&quot;</span><span class="p">,</span> <span class="s2">&quot;softplus&quot;</span><span class="p">,</span> <span class="s2">&quot;softsign&quot;</span><span class="p">,</span> <span class="s2">&quot;relu&quot;</span><span class="p">,</span> <span class="s2">&quot;tanh&quot;</span><span class="p">,</span> <span class="s2">&quot;sigmoid&quot;</span><span class="p">,</span> <span class="s2">&quot;hard_sigmoid&quot;</span><span class="p">,</span> <span class="s2">&quot;linear&quot;</span><span class="p">]</span>
+  <span class="p">},</span>
+
+  <span class="p">{</span>
+    <span class="s2">&quot;name&quot;</span><span class="o">:</span> <span class="s2">&quot;optimizer&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;type&quot;</span><span class="o">:</span> <span class="s2">&quot;categorical&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;element_type&quot;</span><span class="o">:</span> <span class="s2">&quot;string&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;values&quot;</span><span class="o">:</span> <span class="p">[</span><span class="s2">&quot;adam&quot;</span><span class="p">,</span> <span class="s2">&quot;rmsprop&quot;</span><span class="p">]</span>
+  <span class="p">},</span>
+
+  <span class="p">{</span>
+    <span class="s2">&quot;name&quot;</span><span class="o">:</span> <span class="s2">&quot;lr&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;type&quot;</span><span class="o">:</span> <span class="s2">&quot;float&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;lower&quot;</span><span class="o">:</span> <span class="mf">0.0001</span><span class="p">,</span>
+    <span class="s2">&quot;upper&quot;</span><span class="o">:</span> <span class="mf">0.01</span><span class="p">,</span>
+    <span class="s2">&quot;sigma&quot;</span><span class="o">:</span> <span class="s2">&quot;0.000495&quot;</span>
+  <span class="p">},</span>
+
+  <span class="p">{</span>
+    <span class="s2">&quot;name&quot;</span><span class="o">:</span> <span class="s2">&quot;batch_size&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;type&quot;</span><span class="o">:</span> <span class="s2">&quot;ordered&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;element_type&quot;</span><span class="o">:</span> <span class="s2">&quot;int&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;values&quot;</span><span class="o">:</span> <span class="p">[</span><span class="mi">16</span><span class="p">,</span> <span class="mi">32</span><span class="p">,</span> <span class="mi">64</span><span class="p">,</span> <span class="mi">128</span><span class="p">,</span> <span class="mi">256</span><span class="p">],</span>
+    <span class="s2">&quot;sigma&quot;</span><span class="o">:</span> <span class="mi">1</span>
+  <span class="p">}</span>
+<span class="p">]</span>
+</pre></div>
+</div>
+<p>Note that any other keys are ignored by the workflow but can be used to
+add additional information about the hyperparameter. For example, the
+sample files contain a <code class="docutils literal notranslate"><span class="pre">comment</span></code> entry that contains additional
+information about that hyperparameter.</p>
+</div>
+<div class="section" id="where-to-check-for-output">
+<h3>Where to check for output<a class="headerlink" href="#where-to-check-for-output" title="Permalink to this headline">¶</a></h3>
+<p>This includes error output.</p>
+<p>When you run the test script, you will get a message about
+<code class="docutils literal notranslate"><span class="pre">TURBINE_OUTPUT</span></code> . This will be the main output directory for your
+run.</p>
+<ul class="simple">
+<li><p>On a local system, stdout/stderr for the workflow will go to your
+terminal.</p></li>
+<li><p>On a scheduled system, stdout/stderr for the workflow will go to
+<code class="docutils literal notranslate"><span class="pre">TURBINE_OUTPUT/output.txt</span></code></p></li>
+</ul>
+<p>The individual objective function (model) runs stdout/stderr go into
+directories of the form:</p>
+<p><code class="docutils literal notranslate"><span class="pre">TURBINE_OUTPUT/EXPID/run/RUNID/model.log</span></code></p>
+<p>where <code class="docutils literal notranslate"><span class="pre">EXPID</span></code> is the user-provided experiment ID, and <code class="docutils literal notranslate"><span class="pre">RUNID</span></code> are
+the various model runs generated by async-search, one per parameter set,
+of the form <code class="docutils literal notranslate"><span class="pre">R_I_J</span></code> where <code class="docutils literal notranslate"><span class="pre">R</span></code> is the restart number, <code class="docutils literal notranslate"><span class="pre">I</span></code> is the
+iteration number, and <code class="docutils literal notranslate"><span class="pre">J</span></code> is the sample within the iteration.</p>
+<p>Each successful run of the workflow will produce a <code class="docutils literal notranslate"><span class="pre">final_results_2</span></code>
+file. The first line of the file contains the GA’s final population,
+that is, the final hyperparameter sets. The second line contains the
+final score (e.g. val loss) for each parameter set. The remainder of the
+file reports the GA’s per iteration statistics. The columns are:</p>
+<ul class="simple">
+<li><p>gen: the generation / iteration</p></li>
+<li><p>nevals: the number of evaluations performed in this generation. In
+generations after the first, this may be less the total population
+size as some combinations will already have been evaluated.</p></li>
+<li><p>avg: the average score</p></li>
+<li><p>std: the standard deviation</p></li>
+<li><p>min: the minimum score</p></li>
+<li><p>max: the maximum score</p></li>
+<li><p>ts: a timestamp recording when this generation finished. The value is
+the number of seconds since the epoch in floating point format</p></li>
+</ul>
+</div>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="supervisor.html" class="btn btn-neutral float-left" title="Overview of CANDLE/Supervisor" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="workflow_async_search.html" class="btn btn-neutral float-right" title="Run Asynchronous Search based hyperparameter optimization on CANDLE Benchmarks" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2021, ANL.gov.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
