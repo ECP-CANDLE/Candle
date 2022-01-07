@@ -57,6 +57,12 @@
 <li class="toctree-l2"><a class="reference internal" href="uq_keras_utils.html">uq_keras_utils module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="viz_utils.html">viz_utils module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="clr_keras_utils.html">clr_keras_utils module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="helper_utils.html">helper_utils module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="modac_utils.html">modac_utils module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="noise_utils.html">noise_utils module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="parsing_utils.html">parsing_utils module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ckpt_keras_utils.html">ckpt_keras_utils module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="benchmark_def.html">benchmark_def module</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../shared_installation.html">CANDLE Shared Installation</a></li>
@@ -91,208 +97,44 @@
   <div class="section" id="module-uq_utils">
 <span id="uq-utils-module"></span><h1>uq_utils module<a class="headerlink" href="#module-uq_utils" title="Permalink to this headline">¶</a></h1>
 <dl class="function">
-<dt id="uq_utils.applying_calibration">
-<code class="sig-prename descclassname">uq_utils.</code><code class="sig-name descname">applying_calibration</code><span class="sig-paren">(</span><em class="sig-param">pSigma_test</em>, <em class="sig-param">pPred_test</em>, <em class="sig-param">true_test</em>, <em class="sig-param">s_interpolate</em>, <em class="sig-param">minL_sigma_auto</em>, <em class="sig-param">maxL_sigma_auto</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/uq_utils.html#applying_calibration"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#uq_utils.applying_calibration" title="Permalink to this definition">¶</a></dt>
-<dd><p>Use the empirical mapping between standard deviation and
-absolute value of error estimated during calibration (i.e.
-apply the univariate spline computed) to estimate the error
-for the part of the standard deviation array that was reserved
-for testing the empirical calibration. The resulting error array
-(yp_test) should overestimate the true observed error (eabs_red).
-All the computations are restricted to the valid calibration
-interval: [minL_sigma_auto, maxL_sigma_auto].</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>pSigma_test</strong> (<em>numpy array</em>) – Part of the standard deviations array to use for calibration testing.</p></li>
-<li><p><strong>pPred_test</strong> (<em>numpy array</em>) – Part of the predictions array to use for calibration testing.</p></li>
-<li><p><strong>true_test</strong> (<em>numpy array</em>) – Part of the true (observed) values array to use for calibration testing.</p></li>
-<li><p><strong>s_interpolate</strong> (<em>scipy.interpolate python object</em>) – A python object from scipy.interpolate that computes a
-univariate spline (InterpolatedUnivariateSpline) expressing
-the mapping from standard deviation to error. This
-spline is generated during the computational empirical
-calibration procedure.</p></li>
-<li><p><strong>minL_sigma_auto</strong> (<em>float</em>) – Starting value of the valid empirical calibration interval
-(i.e. smallest std for which a meaningful error mapping
-is obtained).</p></li>
-<li><p><strong>maxL_sigma_auto</strong> (<em>float</em>) – Ending value of the valid empirical calibration interval
-(i.e. largest std for which a meaningful error mappping
-is obtained).</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p><ul class="simple">
-<li><p><strong>index_sigma_range_test</strong> (<em>numpy array</em>) – Indices of the pSigma_test array that are included in the
-valid calibration interval, given by:
-[minL_sigma_auto, maxL_sigma_auto].</p></li>
-<li><p><strong>xp_test</strong> (<em>numpy array</em>) – Array with the mean standard deviations in the calibration
-testing array.</p></li>
-<li><p><strong>yp_test</strong> (<em>numpy array</em>) – Mapping of the given standard deviation to error computed
-from the interpolation spline constructed by empirical
-calibration.</p></li>
-<li><p><strong>eabs_red</strong> (<em>numpy array</em>) – Array with the observed abolute errors in the part of the testing
-array for which the observed standard deviations are in the
-valid interval of calibration.</p></li>
-</ul>
-</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="function">
-<dt id="uq_utils.bining_for_calibration">
-<code class="sig-prename descclassname">uq_utils.</code><code class="sig-name descname">bining_for_calibration</code><span class="sig-paren">(</span><em class="sig-param">pSigma_cal_ordered_</em>, <em class="sig-param">minL_sigma</em>, <em class="sig-param">maxL_sigma</em>, <em class="sig-param">Er_vect_cal_orderedSigma_</em>, <em class="sig-param">bins</em>, <em class="sig-param">coverage_percentile</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/uq_utils.html#bining_for_calibration"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#uq_utils.bining_for_calibration" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bin the values of the standard deviations observed during
-inference and estimate a specified coverage percentile
-in the absolute error (observed during inference as well).
-Bins that have less than 50 samples are merged until they
-surpass this threshold.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>pSigma_cal_ordered_</strong> (<em>numpy array</em>) – Array of standard deviations ordered in ascending way.</p></li>
-<li><p><strong>minL_sigma</strong> (<em>float</em>) – Minimum value of standard deviations included in
-<a href="#id1"><span class="problematic" id="id2">pSigma_cal_ordered_</span></a> array.</p></li>
-<li><p><strong>maxL_sigma</strong> (<em>numpy array</em>) – Maximum value of standard deviations included in
-<a href="#id3"><span class="problematic" id="id4">pSigma_cal_ordered_</span></a> array.</p></li>
-<li><p><strong>Er_vect_cal_orderedSigma_</strong> (<em>numpy array</em>) – Array ob absolute value of errors corresponding with
-the array of ordered standard deviations.</p></li>
-<li><p><strong>bins</strong> (<em>int</em>) – Number of bins to split the range of standard deviations
-included in <a href="#id5"><span class="problematic" id="id6">pSigma_cal_ordered_</span></a> array.</p></li>
-<li><p><strong>coverage_percentile</strong> (<em>float</em>) – Value to use for estimating coverage when evaluating the percentiles
-of the observed absolute value of errors.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p><ul class="simple">
-<li><p><strong>mean_sigma</strong> (<em>numpy array</em>) – Array with the mean standard deviations computed per bin.</p></li>
-<li><p><strong>min_sigma</strong> (<em>numpy array</em>) – Array with the minimum standard deviations computed per bin.</p></li>
-<li><p><strong>max_sigma</strong> (<em>numpy array</em>) – Array with the maximum standard deviations computed per bin.</p></li>
-<li><p><strong>error_thresholds</strong> (<em>numpy array</em>) – Thresholds of the errors computed to attain a certain
-error coverage per bin.</p></li>
-<li><p><strong>err_err</strong> (<em>numpy array</em>) – Error bars in errors (one standard deviation for a binomial
-distribution estimated by bin vs. the other bins) for the
-calibration error.</p></li>
-</ul>
-</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="function">
-<dt id="uq_utils.computation_of_valid_calibration_interval">
-<code class="sig-prename descclassname">uq_utils.</code><code class="sig-name descname">computation_of_valid_calibration_interval</code><span class="sig-paren">(</span><em class="sig-param">error_thresholds</em>, <em class="sig-param">error_thresholds_smooth</em>, <em class="sig-param">err_err</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/uq_utils.html#computation_of_valid_calibration_interval"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#uq_utils.computation_of_valid_calibration_interval" title="Permalink to this definition">¶</a></dt>
-<dd><p>Function that estimates the empirical range in which a
-monotonic relation is observed between standard deviation
-and coverage of absolute value of error. Since the
-statistics computed per bin are relatively noisy, the
-application of a greedy criterion (e.g. guarantee a
-monotonically increasing relationship) does not yield
-good results. Therefore, a softer version is constructed
-based on the satisfaction of certain criteria depending
-on: the values of the error coverage computed per bin,
-a smoothed version of them and the assocatiate error
-estimated (based on one standard deviation for a binomial
-distribution estimated by bin vs. the other bins).
-A minimal validation requiring the end idex to be
-largest than the starting index is performed before
-the function return.</p>
-<p>Current criteria:
-- the smoothed errors are inside the error bars AND</p>
-<blockquote>
-<div><p>they are almost increasing (a small tolerance is
-allowed, so a small wobbliness in the smoother
-values is permitted).</p>
-</div></blockquote>
-<p>OR
-- both the raw values for the bins (with a small tolerance)</p>
-<blockquote>
-<div><p>are increasing, AND the smoothed value is greater than the
-raw value.</p>
-</div></blockquote>
-<p>OR
-- the current smoothed value is greater than the previous AND</p>
-<blockquote>
-<div><p>the smoothed values for the next been are inside the error
-bars.</p>
-</div></blockquote>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>error_thresholds</strong> (<em>numpy array</em>) – Thresholds of the errors computed to attain a certain
-error coverage per bin.</p></li>
-<li><p><strong>error_thresholds_smooth</strong> (<em>numpy array</em>) – Thresholds of the errors computed to attain a certain
-error coverage per bin after a smoothed operation is applied
-to the frequently noisy bin-based estimations.</p></li>
-<li><p><strong>err_err</strong> (<em>numpy array</em>) – Error bars in errors (one standard deviation for a binomial
-distribution estimated by bin vs. the other bins) for the
-calibration error.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p><ul class="simple">
-<li><p><strong>sigma_start_index</strong> (<em>non-negative integer</em>) – Index estimated in the mean_sigma array corresponing to
-the value that defines the start of the valid empirical
-calibration interval (i.e. index to the smallest std for
-which a meaningful error mapping is obtained, according
-to the criteria explained before).</p></li>
-<li><p><strong>sigma_end_index</strong> (<em>non-negative integer</em>) – Index estimated in the mean_sigma array corresponing to
-the value that defines the end of the valid empirical
-calibration interval (i.e. index to the largest std for
-which a meaningful error mapping is obtained, according
-to the criteria explained before).</p></li>
-</ul>
-</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="function">
-<dt id="uq_utils.compute_empirical_calibration">
-<code class="sig-prename descclassname">uq_utils.</code><code class="sig-name descname">compute_empirical_calibration</code><span class="sig-paren">(</span><em class="sig-param">pSigma_cal</em>, <em class="sig-param">pPred_cal</em>, <em class="sig-param">true_cal</em>, <em class="sig-param">bins</em>, <em class="sig-param">coverage_percentile</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/uq_utils.html#compute_empirical_calibration"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#uq_utils.compute_empirical_calibration" title="Permalink to this definition">¶</a></dt>
+<dt id="uq_utils.compute_empirical_calibration_interpolation">
+<code class="sig-prename descclassname">uq_utils.</code><code class="sig-name descname">compute_empirical_calibration_interpolation</code><span class="sig-paren">(</span><em class="sig-param">pSigma_cal</em>, <em class="sig-param">pPred_cal</em>, <em class="sig-param">true_cal</em>, <em class="sig-param">cv=10</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/uq_utils.html#compute_empirical_calibration_interpolation"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#uq_utils.compute_empirical_calibration_interpolation" title="Permalink to this definition">¶</a></dt>
 <dd><p>Use the arrays provided to estimate an empirical mapping
 between standard deviation and absolute value of error,
 both of which have been observed during inference. Since
-most of the times the raw statistics per bin are very noisy,
-a smoothing step (based on scipy’s savgol filter) is performed.</p>
+most of the times the prediction statistics are very noisy,
+two smoothing steps (based on scipy’s savgol filter) are performed.
+Cubic Hermite splines (PchipInterpolator) are constructed for
+interpolation. This type of splines preserves the monotonicity
+in the interpolation data and does not overshoot if the data is
+not smooth. The overall process of constructing a spline
+to express the mapping from standard deviation to error is
+composed of smoothing-interpolation-smoothing-interpolation.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>pSigma_cal</strong> (<em>numpy array</em>) – Part of the standard deviations array to use for calibration.</p></li>
 <li><p><strong>pPred_cal</strong> (<em>numpy array</em>) – Part of the predictions array to use for calibration.</p></li>
 <li><p><strong>true_cal</strong> (<em>numpy array</em>) – Part of the true (observed) values array to use for calibration.</p></li>
-<li><p><strong>bins</strong> (<em>int</em>) – Number of bins to split the range of standard deviations
-included in pSigma_cal array.</p></li>
-<li><p><strong>coverage_percentile</strong> (<em>float</em>) – Value to use for estimating coverage when evaluating the percentiles
-of the observed absolute value of errors.</p></li>
+<li><p><strong>cv</strong> (<em>int</em>) – Number of cross validations folds to run to determine a ‘good’
+fit.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p><ul class="simple">
-<li><p><strong>mean_sigma</strong> (<em>numpy array</em>) – Array with the mean standard deviations computed per bin.</p></li>
-<li><p><strong>min_sigma</strong> (<em>numpy array</em>) – Array with the minimum standard deviations computed per bin.</p></li>
-<li><p><strong>max_sigma</strong> (<em>numpy array</em>) – Array with the maximum standard deviations computed per bin.</p></li>
-<li><p><strong>error_thresholds</strong> (<em>numpy array</em>) – Thresholds of the errors computed to attain a certain
-error coverage per bin.</p></li>
-<li><p><strong>err_err</strong> (<em>numpy array</em>) – Error bars in errors (one standard deviation for a binomial
-distribution estimated by bin vs. the other bins) for the
-calibration error.</p></li>
-<li><p><strong>error_thresholds_smooth</strong> (<em>numpy array</em>) – Thresholds of the errors computed to attain a certain
-error coverage per bin after a smoothed operation is applied
-to the frequently noisy bin-based estimations.</p></li>
-<li><p><strong>sigma_start_index</strong> (<em>non-negative integer</em>) – Index in the mean_sigma array that defines the start of
-the valid empirical calibration interval (i.e. index to
-the smallest std for which a meaningful error mapping
-is obtained).</p></li>
-<li><p><strong>sigma_end_index</strong> (<em>non-negative integer</em>) – Index in the mean_sigma array that defines the end of
-the valid empirical calibration interval (i.e. index to
-the largest std for which a meaningful error mappping
-is obtained).</p></li>
-<li><p><strong>s_interpolate</strong> (<em>scipy.interpolate python object</em>) – A python object from scipy.interpolate that computes a
-univariate spline (InterpolatedUnivariateSpline) constructed
+<li><p><strong>splineobj_best</strong> (<em>scipy.interpolate python object</em>) – A python object from scipy.interpolate that computes a
+cubic Hermite splines (PchipInterpolator) constructed
+to express the mapping from standard deviation to error after a
+‘drastic’ smoothing of the predictions. A ‘good’ fit is
+determined by taking the spline for the fold that produces
+the smaller mean absolute error in testing data (not used
+for the smoothing / interpolation).</p></li>
+<li><p><strong>splineobj2</strong> (<em>scipy.interpolate python object</em>) – A python object from scipy.interpolate that computes a
+cubic Hermite splines (PchipInterpolator) constructed
 to express the mapping from standard deviation to error. This
-spline is generated during the computational empirical
-calibration procedure.</p></li>
+spline is generated for interpolating the samples generated
+after the smoothing of the first interpolation spline (i.e.
+splineobj_best).</p></li>
 </ul>
 </p>
 </dd>
@@ -328,7 +170,7 @@ last block to take the extra chunk.</p>
 <dl class="function">
 <dt id="uq_utils.compute_statistics_heteroscedastic">
 <code class="sig-prename descclassname">uq_utils.</code><code class="sig-name descname">compute_statistics_heteroscedastic</code><span class="sig-paren">(</span><em class="sig-param">df_data</em>, <em class="sig-param">col_true=4</em>, <em class="sig-param">col_pred_start=6</em>, <em class="sig-param">col_std_pred_start=7</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/uq_utils.html#compute_statistics_heteroscedastic"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#uq_utils.compute_statistics_heteroscedastic" title="Permalink to this definition">¶</a></dt>
-<dd><p>Extracts ground truth, mean predition, error, standard
+<dd><p>Extracts ground truth, mean prediction, error, standard
 deviation of prediction and predicted (learned) standard
 deviation from inference data frame. The latter includes
 all the individual inference realizations.</p>
@@ -354,7 +196,46 @@ during inference are stored and are interspaced with predictions
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p><ul class="simple">
 <li><p><strong>Ytrue</strong> (<em>numpy array</em>) – Array with true (observed) values</p></li>
-<li><p><strong>Ypred</strong> (<em>numpy array</em>) – Array with predicted values.</p></li>
+<li><p><strong>Ypred_mean</strong> (<em>numpy array</em>) – Array with predicted values (mean of predictions).</p></li>
+<li><p><strong>yerror</strong> (<em>numpy array</em>) – Array with errors computed (observed - predicted).</p></li>
+<li><p><strong>sigma</strong> (<em>numpy array</em>) – Array with standard deviations learned with deep learning
+model. For heteroscedastic inference this corresponds to the
+sqrt(exp(s^2)) with s^2 predicted value.</p></li>
+<li><p><strong>Ypred_std</strong> (<em>numpy array</em>) – Array with standard deviations computed from regular
+(homoscedastic) inference.</p></li>
+<li><p><strong>pred_name</strong> (<em>string</em>) – Name of data colum or quantity predicted (as extracted
+from the data frame using the col_true index).</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="uq_utils.compute_statistics_homoscedastic">
+<code class="sig-prename descclassname">uq_utils.</code><code class="sig-name descname">compute_statistics_homoscedastic</code><span class="sig-paren">(</span><em class="sig-param">df_data</em>, <em class="sig-param">col_true=4</em>, <em class="sig-param">col_pred_start=6</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/uq_utils.html#compute_statistics_homoscedastic"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#uq_utils.compute_statistics_homoscedastic" title="Permalink to this definition">¶</a></dt>
+<dd><p>Extracts ground truth, mean prediction, error and
+standard deviation of prediction from inference
+data frame. The latter includes all the individual
+inference realizations.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>df_data</strong> (<em>pandas data frame</em>) – Data frame generated by current CANDLE inference
+experiments. Indices are hard coded to agree with
+current CANDLE version. (The inference file usually
+has the name: &lt;model&gt;.predicted_INFER.tsv).</p></li>
+<li><p><strong>col_true</strong> (<em>integer</em>) – Index of the column in the data frame where the true
+value is stored (Default: 4, index in current HOM format).</p></li>
+<li><p><strong>col_pred_start</strong> (<em>integer</em>) – Index of the column in the data frame where the first predicted
+value is stored. All the predicted values during inference
+are stored (Default: 6 index, in current HOM format).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><strong>Ytrue</strong> (<em>numpy array</em>) – Array with true (observed) values</p></li>
+<li><p><strong>Ypred_mean</strong> (<em>numpy array</em>) – Array with predicted values (mean of predictions).</p></li>
 <li><p><strong>yerror</strong> (<em>numpy array</em>) – Array with errors computed (observed - predicted).</p></li>
 <li><p><strong>sigma</strong> (<em>numpy array</em>) – Array with standard deviations learned with deep learning
 model. For homoscedastic inference this corresponds to the
@@ -371,9 +252,9 @@ from the data frame using the col_true index).</p></li>
 </dd></dl>
 
 <dl class="function">
-<dt id="uq_utils.compute_statistics_homoscedastic">
-<code class="sig-prename descclassname">uq_utils.</code><code class="sig-name descname">compute_statistics_homoscedastic</code><span class="sig-paren">(</span><em class="sig-param">df_data</em>, <em class="sig-param">col_true=0</em>, <em class="sig-param">col_pred=6</em>, <em class="sig-param">col_std_pred=7</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/uq_utils.html#compute_statistics_homoscedastic"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#uq_utils.compute_statistics_homoscedastic" title="Permalink to this definition">¶</a></dt>
-<dd><p>Extracts ground truth, mean predition, error and
+<dt id="uq_utils.compute_statistics_homoscedastic_summary">
+<code class="sig-prename descclassname">uq_utils.</code><code class="sig-name descname">compute_statistics_homoscedastic_summary</code><span class="sig-paren">(</span><em class="sig-param">df_data</em>, <em class="sig-param">col_true=0</em>, <em class="sig-param">col_pred=6</em>, <em class="sig-param">col_std_pred=7</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/uq_utils.html#compute_statistics_homoscedastic_summary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#uq_utils.compute_statistics_homoscedastic_summary" title="Permalink to this definition">¶</a></dt>
+<dd><p>Extracts ground truth, mean prediction, error and
 standard deviation of prediction from inference
 data frame. The latter includes the statistics
 over all the inference realizations.</p>
@@ -396,47 +277,7 @@ index in current CANDLE format).</p></li>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p><ul class="simple">
 <li><p><strong>Ytrue</strong> (<em>numpy array</em>) – Array with true (observed) values</p></li>
-<li><p><strong>Ypred</strong> (<em>numpy array</em>) – Array with predicted values.</p></li>
-<li><p><strong>yerror</strong> (<em>numpy array</em>) – Array with errors computed (observed - predicted).</p></li>
-<li><p><strong>sigma</strong> (<em>numpy array</em>) – Array with standard deviations learned with deep learning
-model. For homoscedastic inference this corresponds to the
-std value computed from prediction (and is equal to the
-following returned variable).</p></li>
-<li><p><strong>Ypred_std</strong> (<em>numpy array</em>) – Array with standard deviations computed from regular
-(homoscedastic) inference.</p></li>
-<li><p><strong>pred_name</strong> (<em>string</em>) – Name of data colum or quantity predicted (as extracted
-from the data frame using the col_true index).</p></li>
-</ul>
-</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="function">
-<dt id="uq_utils.compute_statistics_homoscedastic_all">
-<code class="sig-prename descclassname">uq_utils.</code><code class="sig-name descname">compute_statistics_homoscedastic_all</code><span class="sig-paren">(</span><em class="sig-param">df_data</em>, <em class="sig-param">col_true=4</em>, <em class="sig-param">col_pred_start=6</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/uq_utils.html#compute_statistics_homoscedastic_all"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#uq_utils.compute_statistics_homoscedastic_all" title="Permalink to this definition">¶</a></dt>
-<dd><p>Extracts ground truth, mean predition, error and
-standard deviation of prediction from inference
-data frame. The latter includes all the individual
-inference realizations.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>df_data</strong> (<em>pandas data frame</em>) – Data frame generated by current CANDLE inference
-experiments. Indices are hard coded to agree with
-current CANDLE version. (The inference file usually
-has the name: &lt;model&gt;.predicted_INFER.tsv).</p></li>
-<li><p><strong>col_true</strong> (<em>integer</em>) – Index of the column in the data frame where the true
-value is stored (Default: 4, index in current HOM format).</p></li>
-<li><p><strong>col_pred_start</strong> (<em>integer</em>) – Index of the column in the data frame where the first predicted
-value is stored. All the predicted values during inference
-are stored (Default: 6 index, in current HOM format).</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p><ul class="simple">
-<li><p><strong>Ytrue</strong> (<em>numpy array</em>) – Array with true (observed) values</p></li>
-<li><p><strong>Ypred</strong> (<em>numpy array</em>) – Array with predicted values.</p></li>
+<li><p><strong>Ypred_mean</strong> (<em>numpy array</em>) – Array with predicted values (mean from summary).</p></li>
 <li><p><strong>yerror</strong> (<em>numpy array</em>) – Array with errors computed (observed - predicted).</p></li>
 <li><p><strong>sigma</strong> (<em>numpy array</em>) – Array with standard deviations learned with deep learning
 model. For homoscedastic inference this corresponds to the
@@ -455,11 +296,11 @@ from the data frame using the col_true index).</p></li>
 <dl class="function">
 <dt id="uq_utils.compute_statistics_quantile">
 <code class="sig-prename descclassname">uq_utils.</code><code class="sig-name descname">compute_statistics_quantile</code><span class="sig-paren">(</span><em class="sig-param">df_data</em>, <em class="sig-param">sigma_divisor=2.56</em>, <em class="sig-param">col_true=4</em>, <em class="sig-param">col_pred_start=6</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/uq_utils.html#compute_statistics_quantile"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#uq_utils.compute_statistics_quantile" title="Permalink to this definition">¶</a></dt>
-<dd><p>Extracts ground truth, 50th percentile mean predition,
+<dd><p>Extracts ground truth, 50th percentile mean prediction,
 low percentile and high percentile mean prediction
-(usually 10th percentile and 90th percentile respectively),
-error (using 50th percentile), standard deviation of
-prediction (using 50th percentile) and predicted (learned)
+(usually 1st decile and 9th decile respectively),
+error (using 5th decile), standard deviation of
+prediction (using 5th decile) and predicted (learned)
 standard deviation from interdecile range in inference data frame.
 The latter includes all the individual inference realizations.</p>
 <dl class="field-list simple">
@@ -472,7 +313,7 @@ has the name: &lt;model&gt;.predicted_INFER_QTL.tsv).</p></li>
 <li><p><strong>sigma_divisor</strong> (<em>float</em>) – Divisor to convert from the intercedile range to the corresponding
 standard deviation for a Gaussian distribution.
 (Default: 2.56, consisten with an interdecile range computed from
-the difference between the 90th and 10th percentiles).</p></li>
+the difference between the 9th and 1st deciles).</p></li>
 <li><p><strong>col_true</strong> (<em>integer</em>) – Index of the column in the data frame where the true
 value is stored (Default: 4, index in current QTL format).</p></li>
 <li><p><strong>col_pred_start</strong> (<em>integer</em>) – Index of the column in the data frame where the first predicted
@@ -494,9 +335,9 @@ by the sigma divisor.</p></li>
 <li><p><strong>pred_name</strong> (<em>string</em>) – Name of data colum or quantity predicted (as extracted
 from the data frame using the col_true index).</p></li>
 <li><p><strong>Ypred_Lp_mean</strong> (<em>numpy array</em>) – Array with predicted values of the lower percentile
-(usually the 10th percentile).</p></li>
+(usually the 1st decile).</p></li>
 <li><p><strong>Ypred_Hp_mean</strong> (<em>numpy array</em>) – Array with predicted values of the higher percentile
-(usually the 90th percentile).</p></li>
+(usually the 9th decile).</p></li>
 </ul>
 </p>
 </dd>
@@ -635,27 +476,6 @@ It checks that the fractions provided are (0, 1) and add up to 1.</p>
 <li><p><strong>indexTest</strong> (<em>int numpy array</em>) – Indices for data in testing (if merging)</p></li>
 </ul>
 </p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="function">
-<dt id="uq_utils.overprediction_check">
-<code class="sig-prename descclassname">uq_utils.</code><code class="sig-name descname">overprediction_check</code><span class="sig-paren">(</span><em class="sig-param">yp_test</em>, <em class="sig-param">eabs_red</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/uq_utils.html#overprediction_check"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#uq_utils.overprediction_check" title="Permalink to this definition">¶</a></dt>
-<dd><p>Compute the percentage of overestimated absoulte error
-predictions for the arrays reserved for calibration testing
-and whose corresponding standard deviations are included
-in the valid calibration interval.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>yp_test</strong> (<em>numpy array</em>) – Mapping of the standard deviation to error computed
-from the interpolation spline constructed by empirical
-calibration.</p></li>
-<li><p><strong>eabs_red</strong> (<em>numpy array</em>) – Array with the observed abolute errors in the part of the testing
-array for which the observed standard deviations are in the
-valid interval of calibration.</p></li>
-</ul>
 </dd>
 </dl>
 </dd></dl>

@@ -57,6 +57,12 @@
 <li class="toctree-l2"><a class="reference internal" href="uq_keras_utils.html">uq_keras_utils module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="viz_utils.html">viz_utils module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="clr_keras_utils.html">clr_keras_utils module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="helper_utils.html">helper_utils module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="modac_utils.html">modac_utils module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="noise_utils.html">noise_utils module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="parsing_utils.html">parsing_utils module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ckpt_keras_utils.html">ckpt_keras_utils module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="benchmark_def.html">benchmark_def module</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../shared_installation.html">CANDLE Shared Installation</a></li>
@@ -238,68 +244,6 @@ PARAMETERS_CANDLE : python list</p>
 </dd></dl>
 
 <dl class="function">
-<dt id="default_utils.eval_string_as_list">
-<code class="sig-prename descclassname">default_utils.</code><code class="sig-name descname">eval_string_as_list</code><span class="sig-paren">(</span><em class="sig-param">str_read</em>, <em class="sig-param">separator</em>, <em class="sig-param">dtype</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/default_utils.html#eval_string_as_list"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#default_utils.eval_string_as_list" title="Permalink to this definition">¶</a></dt>
-<dd><p>Parse a string and convert it into a list of lists.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>str_read</strong> (<em>string</em>) – String read (from configuration file or command line, for example)</p></li>
-<li><p><strong>separator</strong> (<em>character</em>) – Character that specifies the separation between the lists</p></li>
-<li><p><strong>dtype</strong> (<em>data type</em>) – Data type to decode the elements of the list</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p><strong>decoded_list</strong> (<em>list</em>) – List extracted from string and with elements of the
-specified type.</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="function">
-<dt id="default_utils.eval_string_as_list_of_lists">
-<code class="sig-prename descclassname">default_utils.</code><code class="sig-name descname">eval_string_as_list_of_lists</code><span class="sig-paren">(</span><em class="sig-param">str_read</em>, <em class="sig-param">separator_out</em>, <em class="sig-param">separator_in</em>, <em class="sig-param">dtype</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/default_utils.html#eval_string_as_list_of_lists"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#default_utils.eval_string_as_list_of_lists" title="Permalink to this definition">¶</a></dt>
-<dd><p>Parse a string and convert it into a list of lists.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>str_read</strong> (<em>string</em>) – String read (from configuration file or command line, for example)</p></li>
-<li><p><strong>separator_out</strong> (<em>character</em>) – Character that specifies the separation between the outer level lists</p></li>
-<li><p><strong>separator_in</strong> (<em>character</em>) – Character that specifies the separation between the inner level lists</p></li>
-<li><p><strong>dtype</strong> (<em>data type</em>) – Data type to decode the elements of the lists</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p><strong>decoded_list</strong> (<em>list</em>) – List of lists extracted from string and with elements of the specified type.</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="function">
-<dt id="default_utils.fetch_file">
-<code class="sig-prename descclassname">default_utils.</code><code class="sig-name descname">fetch_file</code><span class="sig-paren">(</span><em class="sig-param">link</em>, <em class="sig-param">subdir</em>, <em class="sig-param">untar=False</em>, <em class="sig-param">md5_hash=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/default_utils.html#fetch_file"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#default_utils.fetch_file" title="Permalink to this definition">¶</a></dt>
-<dd><p>Convert URL to file path and download the file
-if it is not already present in spedified cache.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>link</strong> (<em>link path</em>) – URL of the file to download</p></li>
-<li><p><strong>subdir</strong> (<em>directory path</em>) – Local path to check for cached file.</p></li>
-<li><p><strong>untar</strong> (<em>boolean</em>) – Flag to specify if the file to download should
-be decompressed too.
-(default: False, no decompression)</p></li>
-<li><p><strong>md5_hash</strong> (<em>MD5 hash</em>) – Hash used as a checksum to verify data integrity.
-Verification is carried out if a hash is provided.
-(default: None, no verification)</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p><em>local path to the downloaded, or cached, file.</em></p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="function">
 <dt id="default_utils.finalize_parameters">
 <code class="sig-prename descclassname">default_utils.</code><code class="sig-name descname">finalize_parameters</code><span class="sig-paren">(</span><em class="sig-param">bmk</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/default_utils.html#finalize_parameters"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#default_utils.finalize_parameters" title="Permalink to this definition">¶</a></dt>
 <dd><p>Utility to parse parameters in common as well as parameters
@@ -358,64 +302,6 @@ This helps to keep consistency in parameters between frameworks.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><p><strong>seed</strong> (<em>int</em>) – Value to intialize or re-seed the generator.</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="function">
-<dt id="default_utils.set_up_logger">
-<code class="sig-prename descclassname">default_utils.</code><code class="sig-name descname">set_up_logger</code><span class="sig-paren">(</span><em class="sig-param">logfile</em>, <em class="sig-param">logger</em>, <em class="sig-param">verbose</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/default_utils.html#set_up_logger"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#default_utils.set_up_logger" title="Permalink to this definition">¶</a></dt>
-<dd><p>Set up the event logging system. Two handlers are created.
-One to send log records to a specified file and
-one to send log records to the (defaulf) sys.stderr stream.
-The logger and the file handler are set to DEBUG logging level.
-The stream handler is set to INFO logging level, or to DEBUG
-logging level if the verbose flag is specified.
-Logging messages which are less severe than the level set will
-be ignored.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>logfile</strong> (<em>filename</em>) – File to store the log records</p></li>
-<li><p><strong>logger</strong> (<em>logger object</em>) – Python object for the logging interface</p></li>
-<li><p><strong>verbose</strong> (<em>boolean</em>) – Flag to increase the logging level from INFO to DEBUG. It
-only applies to the stream handler.</p></li>
-</ul>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="function">
-<dt id="default_utils.str2bool">
-<code class="sig-prename descclassname">default_utils.</code><code class="sig-name descname">str2bool</code><span class="sig-paren">(</span><em class="sig-param">v</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/default_utils.html#str2bool"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#default_utils.str2bool" title="Permalink to this definition">¶</a></dt>
-<dd><p>This is taken from:
-<a class="reference external" href="https://stackoverflow.com/questions/15008758/parsing-boolean-values-with-argparse">https://stackoverflow.com/questions/15008758/parsing-boolean-values-with-argparse</a>
-Because type=bool is not interpreted as a bool and action=’store_true’ cannot be
-undone.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>v</strong> (<em>string</em>) – String to interpret</p>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p><ul class="simple">
-<li><p><em>Boolean value. It raises and exception if the provided string cannot         be interpreted as a boolean type.</em></p></li>
-<li><p><em>Strings recognized as boolean True</em> – ‘yes’, ‘true’, ‘t’, ‘y’, ‘1’ and uppercase versions (where applicable).</p></li>
-<li><p><em>Strings recognized as boolean False</em> – ‘no’, ‘false’, ‘f’, ‘n’, ‘0’ and uppercase versions (where applicable).</p></li>
-</ul>
-</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="function">
-<dt id="default_utils.verify_path">
-<code class="sig-prename descclassname">default_utils.</code><code class="sig-name descname">verify_path</code><span class="sig-paren">(</span><em class="sig-param">path</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/default_utils.html#verify_path"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#default_utils.verify_path" title="Permalink to this definition">¶</a></dt>
-<dd><p>Verify if a directory path exists locally. If the path
-does not exist, but is a valid path, it recursivelly creates
-the specified directory path structure.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>path</strong> (<em>directory path</em>) – Description of local directory path</p>
 </dd>
 </dl>
 </dd></dl>

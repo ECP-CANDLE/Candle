@@ -69,12 +69,10 @@
   <h1>Source code for solr_keras</h1><div class="highlight"><pre>
 <span></span><span class="kn">import</span> <span class="nn">json</span>
 <span class="kn">import</span> <span class="nn">os</span>
-<span class="kn">import</span> <span class="nn">warnings</span>
 <span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span>
 
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">import</span> <span class="nn">requests</span>
-<span class="kn">from</span> <span class="nn">keras.callbacks</span> <span class="kn">import</span> <span class="n">Callback</span>
+<span class="kn">from</span> <span class="nn">tensorflow.keras.callbacks</span> <span class="kn">import</span> <span class="n">Callback</span>
 
 
 <div class="viewcode-block" id="compute_trainable_params"><a class="viewcode-back" href="../candle_lib/solr_keras.html#solr_keras.compute_trainable_params">[docs]</a><span class="k">def</span> <span class="nf">compute_trainable_params</span><span class="p">(</span><span class="n">model</span><span class="p">):</span>
@@ -92,7 +90,7 @@
         <span class="kn">from</span> <span class="nn">keras</span> <span class="kn">import</span> <span class="n">backend</span> <span class="k">as</span> <span class="n">K</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="kn">import</span> <span class="nn">tensorflow.keras.backend</span> <span class="k">as</span> <span class="nn">K</span>
-   
+
     <span class="n">trainable_count</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span>
         <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">([</span><span class="n">K</span><span class="o">.</span><span class="n">count_params</span><span class="p">(</span><span class="n">w</span><span class="p">)</span> <span class="k">for</span> <span class="n">w</span> <span class="ow">in</span> <span class="n">model</span><span class="o">.</span><span class="n">trainable_weights</span><span class="p">])</span>
     <span class="p">)</span>
@@ -137,7 +135,7 @@
                 <span class="s1">&#39;parameters&#39;</span><span class="p">:</span> <span class="n">run_params</span><span class="p">,</span>
                 <span class="s1">&#39;start_time&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">run_timestamp</span><span class="p">),</span>
                 <span class="s1">&#39;status&#39;</span><span class="p">:</span> <span class="s1">&#39;Started&#39;</span>
-               <span class="p">}</span>
+                <span class="p">}</span>
         <span class="c1"># print(&quot;on_train_begin&quot;, send)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">log_messages</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">send</span><span class="p">)</span></div>
 
@@ -159,7 +157,7 @@
                 <span class="s1">&#39;training_loss&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;set&#39;</span><span class="p">:</span> <span class="n">loss</span><span class="p">},</span>
                 <span class="s1">&#39;validation_loss&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;set&#39;</span><span class="p">:</span> <span class="n">val_loss</span><span class="p">},</span>
                 <span class="s1">&#39;run_progress&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;add&#39;</span><span class="p">:</span> <span class="p">[</span><span class="n">epoch_line</span><span class="p">]}</span>
-               <span class="p">}</span>
+                <span class="p">}</span>
         <span class="c1"># print(&quot;on_epoch_end&quot;, send)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">log_messages</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">send</span><span class="p">)</span></div>
 
@@ -174,7 +172,7 @@
                 <span class="s1">&#39;end_time&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;set&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">run_end</span><span class="p">)},</span>
                 <span class="s1">&#39;status&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;set&#39;</span><span class="p">:</span> <span class="s1">&#39;Finished&#39;</span><span class="p">},</span>
                 <span class="s1">&#39;date_modified&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;set&#39;</span><span class="p">:</span> <span class="s1">&#39;NOW&#39;</span><span class="p">}</span>
-               <span class="p">}</span>
+                <span class="p">}</span>
         <span class="c1"># print(&quot;on_train_end&quot;, send)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">log_messages</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">send</span><span class="p">)</span>
 
@@ -185,7 +183,7 @@
         <span class="sd">&quot;&quot;&quot;Save log_messages to file</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="c1"># path = os.getenv(&#39;TURBINE_OUTPUT&#39;) if &#39;TURBINE_OUTPUT&#39; in os.environ else &#39;.&#39;</span>
-        <span class="n">path</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">global_params</span><span class="p">[</span><span class="s1">&#39;save&#39;</span><span class="p">]</span> <span class="k">if</span> <span class="s1">&#39;save&#39;</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">global_params</span> <span class="k">else</span> <span class="s1">&#39;.&#39;</span>
+        <span class="n">path</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">global_params</span><span class="p">[</span><span class="s1">&#39;output_dir&#39;</span><span class="p">]</span> <span class="k">if</span> <span class="s1">&#39;output_dir&#39;</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">global_params</span> <span class="k">else</span> <span class="s1">&#39;.&#39;</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
             <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
 
@@ -193,11 +191,12 @@
         <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">path</span> <span class="o">+</span> <span class="n">filename</span><span class="p">,</span> <span class="s2">&quot;a&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file_run_json</span><span class="p">:</span>
             <span class="n">file_run_json</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">log_messages</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">separators</span><span class="o">=</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="p">,</span> <span class="s1">&#39;: &#39;</span><span class="p">)))</span></div></div>
 
+
 <div class="viewcode-block" id="TerminateOnTimeOut"><a class="viewcode-back" href="../candle_lib/solr_keras.html#solr_keras.TerminateOnTimeOut">[docs]</a><span class="k">class</span> <span class="nc">TerminateOnTimeOut</span><span class="p">(</span><span class="n">Callback</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot; This class implements timeout on model training. When the script reaches timeout,</span>
 <span class="sd">       this class sets model.stop_training = True</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">timeout_in_sec</span> <span class="o">=</span> <span class="mi">10</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">timeout_in_sec</span><span class="o">=</span><span class="mi">10</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Initialize TerminateOnTimeOut class.</span>
 
 <span class="sd">            Parameters</span>
@@ -210,27 +209,22 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">run_timestamp</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">timeout_in_sec</span> <span class="o">=</span> <span class="n">timeout_in_sec</span>
 
-
 <div class="viewcode-block" id="TerminateOnTimeOut.on_train_begin"><a class="viewcode-back" href="../candle_lib/solr_keras.html#solr_keras.TerminateOnTimeOut.on_train_begin">[docs]</a>    <span class="k">def</span> <span class="nf">on_train_begin</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">logs</span><span class="o">=</span><span class="p">{}):</span>
         <span class="sd">&quot;&quot;&quot; Start clock to calculate timeout</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">run_timestamp</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span></div>
-
 
 <div class="viewcode-block" id="TerminateOnTimeOut.on_epoch_end"><a class="viewcode-back" href="../candle_lib/solr_keras.html#solr_keras.TerminateOnTimeOut.on_epoch_end">[docs]</a>    <span class="k">def</span> <span class="nf">on_epoch_end</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">epoch</span><span class="p">,</span> <span class="n">logs</span><span class="o">=</span><span class="p">{}):</span>
         <span class="sd">&quot;&quot;&quot; On every epoch end, check whether it exceeded timeout and terminate training if necessary</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">run_end</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
         <span class="n">run_duration</span> <span class="o">=</span> <span class="n">run_end</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">run_timestamp</span>
-        <span class="n">run_in_sec</span> <span class="o">=</span> <span class="n">run_duration</span><span class="o">.</span><span class="n">total_seconds</span><span class="p">()</span> <span class="c1">#/ (60 * 60)</span>
+        <span class="n">run_in_sec</span> <span class="o">=</span> <span class="n">run_duration</span><span class="o">.</span><span class="n">total_seconds</span><span class="p">()</span>
         <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Current time ....</span><span class="si">%2.3f</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">run_in_sec</span><span class="p">)</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">timeout_in_sec</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">run_in_sec</span> <span class="o">&gt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">timeout_in_sec</span><span class="p">:</span>
                 <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Timeout==&gt;Runtime: </span><span class="si">%2.3f</span><span class="s1">s, Maxtime: </span><span class="si">%2.3f</span><span class="s1">s&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">run_in_sec</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">timeout_in_sec</span><span class="p">))</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">stop_training</span> <span class="o">=</span> <span class="kc">True</span></div></div>
-
-
-
 </pre></div>
 
            </div>

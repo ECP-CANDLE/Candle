@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>modac_utils &mdash; CANDLE  documentation</title><link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../index.html" class="icon icon-home"> CANDLE
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../readme.html">What is CANDLE?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorials/index.html">Tutorials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../candle_lib.html">CANDLE Library API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../shared_installation.html">CANDLE Shared Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contribute.html">How to Contribute</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">CANDLE</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="index.html">Module code</a> &raquo;</li>
+      <li>modac_utils</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for modac_utils</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">import</span> <span class="nn">requests</span>
+<span class="kn">from</span> <span class="nn">tqdm</span> <span class="kn">import</span> <span class="n">tqdm</span>
+<span class="kn">import</span> <span class="nn">os</span>
+
+
+<div class="viewcode-block" id="get_file_from_modac"><a class="viewcode-back" href="../candle_lib/modac_utils.html#modac_utils.get_file_from_modac">[docs]</a><span class="k">def</span> <span class="nf">get_file_from_modac</span><span class="p">(</span><span class="n">fname</span><span class="p">,</span> <span class="n">origin</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; Downloads a file from the &quot;Model and Data Clearning House&quot; (MoDAC)</span>
+<span class="sd">    repository. Users should already have a MoDAC account to download the data.</span>
+<span class="sd">    Accounts can be created on modac.cancer.gov</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        fname : string</span>
+<span class="sd">            path on disk to save the file</span>
+<span class="sd">        origin : string</span>
+<span class="sd">            original MoDAC URL of the file</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        ----------</span>
+<span class="sd">        string</span>
+<span class="sd">            Path to the downloaded file</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Downloading data from modac.cancer.gov, make sure you have an account first.&#39;</span><span class="p">)</span>
+    <span class="n">total_size_in_bytes</span> <span class="o">=</span> <span class="n">get_dataObject_modac_filesize</span><span class="p">(</span><span class="n">origin</span><span class="p">)</span>
+    <span class="n">modac_user</span><span class="p">,</span> <span class="n">modac_token</span> <span class="o">=</span> <span class="n">authenticate_modac</span><span class="p">()</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">({})</span>
+    <span class="n">headers</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="n">headers</span><span class="p">[</span><span class="s2">&quot;Content-Type&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;application/json&quot;</span>
+    <span class="n">headers</span><span class="p">[</span><span class="s2">&quot;Authorization&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;Bearer </span><span class="si">{0}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">modac_token</span><span class="p">)</span>
+
+    <span class="n">post_url</span> <span class="o">=</span> <span class="n">origin</span> <span class="o">+</span> <span class="s1">&#39;/download&#39;</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Downloading: &quot;</span> <span class="o">+</span> <span class="n">post_url</span> <span class="o">+</span> <span class="s2">&quot; ...&quot;</span><span class="p">)</span>
+    <span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="n">post_url</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">,</span> <span class="n">stream</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">response</span><span class="o">.</span><span class="n">status_code</span> <span class="o">!=</span> <span class="mi">200</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Error downloading from modac.cancer.gov&quot;</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;Response code: </span><span class="si">{0}</span><span class="s2">, Response message: </span><span class="si">{1}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">status_code</span><span class="p">,</span> <span class="n">response</span><span class="o">.</span><span class="n">text</span><span class="p">))</span>
+    <span class="n">block_size</span> <span class="o">=</span> <span class="mi">1024</span>  <span class="c1"># 1 Kibibyte</span>
+    <span class="n">progress_bar</span> <span class="o">=</span> <span class="n">tqdm</span><span class="p">(</span><span class="n">total</span><span class="o">=</span><span class="n">total_size_in_bytes</span><span class="p">,</span> <span class="n">unit</span><span class="o">=</span><span class="s1">&#39;iB&#39;</span><span class="p">,</span> <span class="n">unit_scale</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">fname</span><span class="p">,</span> <span class="s1">&#39;wb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">data</span> <span class="ow">in</span> <span class="n">response</span><span class="o">.</span><span class="n">iter_content</span><span class="p">(</span><span class="n">block_size</span><span class="p">):</span>
+            <span class="n">progress_bar</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">))</span>
+            <span class="n">file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+    <span class="n">progress_bar</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">total_size_in_bytes</span> <span class="o">!=</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">progress_bar</span><span class="o">.</span><span class="n">n</span> <span class="o">!=</span> <span class="n">total_size_in_bytes</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;ERROR, something went wrong while downloading &quot;</span><span class="p">,</span> <span class="n">post_url</span><span class="p">)</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Saved file to: &#39;</span> <span class="o">+</span> <span class="n">fname</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">fname</span></div>
+
+
+<div class="viewcode-block" id="register_file_to_modac"><a class="viewcode-back" href="../candle_lib/modac_utils.html#modac_utils.register_file_to_modac">[docs]</a><span class="k">def</span> <span class="nf">register_file_to_modac</span><span class="p">(</span><span class="n">file_path</span><span class="p">,</span> <span class="n">metadata</span><span class="p">,</span> <span class="n">destination_path</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; Register a file in the &quot;Model and Data Clearning House&quot; (MoDAC).</span>
+<span class="sd">        The file size is limited to 2GBs</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        file_path : string</span>
+<span class="sd">            path on disk for the file to be uploaded</span>
+<span class="sd">        metadata: dictionary</span>
+<span class="sd">            dictionary of attribute/value pairs of metadata to associate with</span>
+<span class="sd">            the file in MoDaC</span>
+<span class="sd">        destination : string</span>
+<span class="sd">            The path on MoDaC in form of collection/filename</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        ----------</span>
+<span class="sd">        integer</span>
+<span class="sd">            The returned code from the PUT request</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Registering the file </span><span class="si">{0}</span><span class="s1"> at MoDaC location:</span><span class="si">{1}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">file_path</span><span class="p">,</span> <span class="n">destination_path</span><span class="p">))</span>
+    <span class="n">register_url</span> <span class="o">=</span> <span class="s2">&quot;https://modac.cancer.gov/api/v2/dataObject/&quot;</span> <span class="o">+</span> <span class="n">destination_path</span>
+    <span class="n">formated_metadata</span> <span class="o">=</span> <span class="p">[</span><span class="nb">dict</span><span class="p">([(</span><span class="s2">&quot;attribute&quot;</span><span class="p">,</span> <span class="n">attribute</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;value&quot;</span><span class="p">,</span> <span class="n">metadata</span><span class="p">[</span><span class="n">attribute</span><span class="p">])])</span> <span class="k">for</span> <span class="n">attribute</span> <span class="ow">in</span> <span class="n">metadata</span><span class="o">.</span><span class="n">keys</span><span class="p">()]</span>
+    <span class="n">metadata_dict</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;metadataEntries&quot;</span><span class="p">:</span> <span class="n">formated_metadata</span><span class="p">}</span>
+
+    <span class="c1"># Based on: https://www.tutorialspoint.com/requests/requests_file_upload.htm</span>
+    <span class="n">files</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="n">files</span><span class="p">[</span><span class="s1">&#39;dataObjectRegistration&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;attributes&#39;</span><span class="p">,</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">metadata_dict</span><span class="p">),</span> <span class="s2">&quot;application/json&quot;</span><span class="p">)</span>
+    <span class="n">files</span><span class="p">[</span><span class="s2">&quot;dataObject&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">file_path</span><span class="p">,</span> <span class="nb">open</span><span class="p">(</span><span class="n">file_path</span><span class="p">,</span> <span class="s1">&#39;rb&#39;</span><span class="p">))</span>
+    <span class="n">modac_user</span><span class="p">,</span> <span class="n">modac_token</span> <span class="o">=</span> <span class="n">authenticate_modac</span><span class="p">()</span>
+    <span class="n">headers</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="n">headers</span><span class="p">[</span><span class="s2">&quot;Authorization&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;Bearer </span><span class="si">{0}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">modac_token</span><span class="p">)</span>
+
+    <span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="n">register_url</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">,</span> <span class="n">files</span><span class="o">=</span><span class="n">files</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">response</span><span class="o">.</span><span class="n">status_code</span> <span class="o">!=</span> <span class="mi">200</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">headers</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Error registering file to modac.cancer.gov&quot;</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;Response code: </span><span class="si">{0}</span><span class="s2">, Response message: </span><span class="si">{1}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">status_code</span><span class="p">,</span> <span class="n">response</span><span class="o">.</span><span class="n">text</span><span class="p">))</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">text</span><span class="p">,</span> <span class="n">response</span><span class="o">.</span><span class="n">status_code</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">response</span><span class="o">.</span><span class="n">status_code</span></div>
+
+
+<div class="viewcode-block" id="authenticate_modac"><a class="viewcode-back" href="../candle_lib/modac_utils.html#modac_utils.authenticate_modac">[docs]</a><span class="k">def</span> <span class="nf">authenticate_modac</span><span class="p">(</span><span class="n">generate_token</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Authenticates a user on modac.cancer.gov</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        generate_token : Bool</span>
+<span class="sd">            Either generate a new token, or read saved token if it exists</span>
+
+
+<span class="sd">        Returns</span>
+<span class="sd">        ----------</span>
+<span class="sd">        tuple(string,string)</span>
+<span class="sd">            tuple with the modac credentials</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="kn">from</span> <span class="nn">os.path</span> <span class="kn">import</span> <span class="n">expanduser</span>
+    <span class="n">home</span> <span class="o">=</span> <span class="n">expanduser</span><span class="p">(</span><span class="s2">&quot;~&quot;</span><span class="p">)</span>
+    <span class="n">modac_token_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">home</span><span class="p">,</span> <span class="s2">&quot;.nci-modac&quot;</span><span class="p">))</span>
+    <span class="n">modac_token_file</span> <span class="o">=</span> <span class="s2">&quot;credentials.json&quot;</span>
+    <span class="n">user_attr</span> <span class="o">=</span> <span class="s2">&quot;modac_user&quot;</span>
+    <span class="n">token_attr</span> <span class="o">=</span> <span class="s2">&quot;modac_token&quot;</span>
+    <span class="n">modac_token_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">modac_token_dir</span><span class="p">,</span> <span class="n">modac_token_file</span><span class="p">)</span>
+    <span class="n">credentials_dic</span> <span class="o">=</span> <span class="p">{}</span>
+
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">generate_token</span> <span class="ow">and</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">modac_token_path</span><span class="p">):</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">modac_token_path</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+            <span class="n">credentials_dic</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+
+    <span class="k">else</span><span class="p">:</span>
+        <span class="c1"># Get credentials</span>
+        <span class="n">modac_user</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="s2">&quot;MoDaC Username: &quot;</span><span class="p">)</span>
+        <span class="kn">import</span> <span class="nn">getpass</span>
+        <span class="n">modac_pass</span> <span class="o">=</span> <span class="n">getpass</span><span class="o">.</span><span class="n">getpass</span><span class="p">(</span><span class="s2">&quot;MoDaC Password: &quot;</span><span class="p">)</span>
+
+        <span class="c1"># Generate token</span>
+        <span class="n">auth</span> <span class="o">=</span> <span class="p">(</span><span class="n">modac_user</span><span class="p">,</span> <span class="n">modac_pass</span><span class="p">)</span>
+        <span class="n">auth_url</span> <span class="o">=</span> <span class="s1">&#39;https://modac.cancer.gov/api/authenticate&#39;</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Authenticating &quot;</span> <span class="o">+</span> <span class="n">modac_user</span> <span class="o">+</span> <span class="s2">&quot; ...&quot;</span><span class="p">)</span>
+        <span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">auth_url</span><span class="p">,</span> <span class="n">auth</span><span class="o">=</span><span class="n">auth</span><span class="p">,</span> <span class="n">stream</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">response</span><span class="o">.</span><span class="n">status_code</span> <span class="o">!=</span> <span class="mi">200</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Error authenticating modac user:</span><span class="si">{0}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">modac_user</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;Response code: </span><span class="si">{0}</span><span class="s2">, Response message: </span><span class="si">{1}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">status_code</span><span class="p">,</span> <span class="n">response</span><span class="o">.</span><span class="n">text</span><span class="p">))</span>
+
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">token</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">text</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">modac_token_path</span><span class="p">):</span>
+                <span class="n">save_question</span> <span class="o">=</span> <span class="s2">&quot;Save MoDaC token in </span><span class="si">{0}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">modac_token_path</span><span class="p">)</span>
+                <span class="n">save_token</span> <span class="o">=</span> <span class="n">query_yes_no</span><span class="p">(</span><span class="n">save_question</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">save_token</span> <span class="o">=</span> <span class="kc">True</span>
+            <span class="k">if</span> <span class="n">save_token</span><span class="p">:</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="n">modac_token_dir</span><span class="p">):</span>
+                    <span class="n">os</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">modac_token_dir</span><span class="p">)</span>
+                <span class="n">credentials_dic</span><span class="p">[</span><span class="n">user_attr</span><span class="p">]</span> <span class="o">=</span> <span class="n">modac_user</span>
+                <span class="n">credentials_dic</span><span class="p">[</span><span class="n">token_attr</span><span class="p">]</span> <span class="o">=</span> <span class="n">token</span>
+                <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">modac_token_path</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">outfile</span><span class="p">:</span>
+                    <span class="n">json</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">credentials_dic</span><span class="p">,</span> <span class="n">outfile</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="p">(</span><span class="n">credentials_dic</span><span class="p">[</span><span class="n">user_attr</span><span class="p">],</span> <span class="n">credentials_dic</span><span class="p">[</span><span class="n">token_attr</span><span class="p">])</span></div>
+
+
+<div class="viewcode-block" id="query_yes_no"><a class="viewcode-back" href="../candle_lib/modac_utils.html#modac_utils.query_yes_no">[docs]</a><span class="k">def</span> <span class="nf">query_yes_no</span><span class="p">(</span><span class="n">question</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="s2">&quot;yes&quot;</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Ask a yes/no question via raw_input() and return their answer.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        question: string</span>
+<span class="sd">            string that is presented to the user.</span>
+<span class="sd">        default: boolean</span>
+<span class="sd">            The presumed boolean answer if the user just hits &lt;Enter&gt;.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        ----------</span>
+<span class="sd">        boolean</span>
+<span class="sd">            True for &quot;yes&quot; or False for &quot;no&quot;.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">valid</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;yes&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span> <span class="s2">&quot;y&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span> <span class="s2">&quot;ye&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+             <span class="s2">&quot;no&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span> <span class="s2">&quot;n&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">}</span>
+    <span class="k">if</span> <span class="n">default</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">prompt</span> <span class="o">=</span> <span class="s2">&quot; [y/n] &quot;</span>
+    <span class="k">elif</span> <span class="n">default</span> <span class="o">==</span> <span class="s2">&quot;yes&quot;</span><span class="p">:</span>
+        <span class="n">prompt</span> <span class="o">=</span> <span class="s2">&quot; [Y/n] &quot;</span>
+    <span class="k">elif</span> <span class="n">default</span> <span class="o">==</span> <span class="s2">&quot;no&quot;</span><span class="p">:</span>
+        <span class="n">prompt</span> <span class="o">=</span> <span class="s2">&quot; [y/N] &quot;</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;invalid default answer: &#39;</span><span class="si">%s</span><span class="s2">&#39;&quot;</span> <span class="o">%</span> <span class="n">default</span><span class="p">)</span>
+
+    <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">question</span> <span class="o">+</span> <span class="n">prompt</span><span class="p">)</span>
+        <span class="n">choice</span> <span class="o">=</span> <span class="nb">input</span><span class="p">()</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">default</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">choice</span> <span class="o">==</span> <span class="s1">&#39;&#39;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">valid</span><span class="p">[</span><span class="n">default</span><span class="p">]</span>
+        <span class="k">elif</span> <span class="n">choice</span> <span class="ow">in</span> <span class="n">valid</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">valid</span><span class="p">[</span><span class="n">choice</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Please respond with &#39;yes&#39; or &#39;no&#39; (or &#39;y&#39; or &#39;n&#39;).</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="get_dataObject_modac_filesize"><a class="viewcode-back" href="../candle_lib/modac_utils.html#modac_utils.get_dataObject_modac_filesize">[docs]</a><span class="k">def</span> <span class="nf">get_dataObject_modac_filesize</span><span class="p">(</span><span class="n">data_object_path</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Return the file size in bytes for a modac file</span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        data_object_path : string</span>
+<span class="sd">            The path of the file on MoDAC</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        ----------</span>
+<span class="sd">        integer</span>
+<span class="sd">            file size in bytes</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">self_dic</span> <span class="o">=</span> <span class="n">get_dataObject_modac_meta</span><span class="p">(</span><span class="n">data_object_path</span><span class="p">)</span>
+    <span class="k">if</span> <span class="s2">&quot;source_file_size&quot;</span> <span class="ow">in</span> <span class="n">self_dic</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+        <span class="k">return</span> <span class="nb">int</span><span class="p">(</span><span class="n">self_dic</span><span class="p">[</span><span class="s2">&quot;source_file_size&quot;</span><span class="p">])</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">None</span></div>
+
+
+<div class="viewcode-block" id="get_dataObject_modac_md5sum"><a class="viewcode-back" href="../candle_lib/modac_utils.html#modac_utils.get_dataObject_modac_md5sum">[docs]</a><span class="k">def</span> <span class="nf">get_dataObject_modac_md5sum</span><span class="p">(</span><span class="n">data_object_path</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Return the md5sum for a modac file</span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        data_object_path : string</span>
+<span class="sd">            The path of the file on MoDAC</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        ----------</span>
+<span class="sd">        string</span>
+<span class="sd">            The md5sum of the file</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">self_dic</span> <span class="o">=</span> <span class="n">get_dataObject_modac_meta</span><span class="p">(</span><span class="n">data_object_path</span><span class="p">)</span>
+    <span class="k">if</span> <span class="s2">&quot;checksum&quot;</span> <span class="ow">in</span> <span class="n">self_dic</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+        <span class="k">return</span> <span class="n">self_dic</span><span class="p">[</span><span class="s2">&quot;checksum&quot;</span><span class="p">]</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">None</span></div>
+
+
+<div class="viewcode-block" id="get_dataObject_modac_meta"><a class="viewcode-back" href="../candle_lib/modac_utils.html#modac_utils.get_dataObject_modac_meta">[docs]</a><span class="k">def</span> <span class="nf">get_dataObject_modac_meta</span><span class="p">(</span><span class="n">data_object_path</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Return the self metadata values for a file (data_object)</span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        data_object_path : string</span>
+<span class="sd">            The path of the file on MoDAC</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        ----------</span>
+<span class="sd">        dictionary</span>
+<span class="sd">            Dictonary of all metadata for the file in MoDAC</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># data_object_path = encode_path(data_object_path)</span>
+    <span class="n">modac_user</span><span class="p">,</span> <span class="n">modac_token</span> <span class="o">=</span> <span class="n">authenticate_modac</span><span class="p">()</span>
+    <span class="n">headers</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="n">headers</span><span class="p">[</span><span class="s2">&quot;Authorization&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;Bearer </span><span class="si">{0}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">modac_token</span><span class="p">)</span>
+    <span class="n">get_response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">data_object_path</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">get_response</span><span class="o">.</span><span class="n">status_code</span> <span class="o">!=</span> <span class="mi">200</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Error downloading from modac.cancer.gov&quot;</span><span class="p">,</span> <span class="n">data_object_path</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;Response code: </span><span class="si">{0}</span><span class="s2">, Response message: </span><span class="si">{1}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">get_response</span><span class="o">.</span><span class="n">status_code</span><span class="p">,</span> <span class="n">get_response</span><span class="o">.</span><span class="n">text</span><span class="p">))</span>
+
+    <span class="n">metadata_dic</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">get_response</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
+    <span class="n">self_metadata</span> <span class="o">=</span> <span class="n">metadata_dic</span><span class="p">[</span><span class="s1">&#39;metadataEntries&#39;</span><span class="p">][</span><span class="s1">&#39;selfMetadataEntries&#39;</span><span class="p">][</span><span class="s1">&#39;systemMetadataEntries&#39;</span><span class="p">]</span>
+    <span class="n">self_dic</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">for</span> <span class="n">pair</span> <span class="ow">in</span> <span class="n">self_metadata</span><span class="p">:</span>
+        <span class="n">self_dic</span><span class="p">[</span><span class="n">pair</span><span class="p">[</span><span class="s1">&#39;attribute&#39;</span><span class="p">]]</span> <span class="o">=</span> <span class="n">pair</span><span class="p">[</span><span class="s1">&#39;value&#39;</span><span class="p">]</span>
+
+    <span class="k">return</span> <span class="n">self_dic</span></div>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="kn">import</span> <span class="nn">argparse</span>
+    <span class="n">parser</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">()</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;-a&#39;</span><span class="p">,</span> <span class="s1">&#39;--authenticate&#39;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s1">&#39;store_true&#39;</span><span class="p">,</span>
+                        <span class="n">help</span><span class="o">=</span><span class="s1">&#39;Authenticate MoDaC user and create token&#39;</span><span class="p">)</span>
+
+    <span class="n">args</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">authenticate</span><span class="p">:</span>
+        <span class="n">authenticate_modac</span><span class="p">(</span><span class="n">generate_token</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2021, ANL.gov.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

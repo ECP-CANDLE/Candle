@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>parsing_utils module &mdash; CANDLE  documentation</title><link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="ckpt_keras_utils module" href="ckpt_keras_utils.html" />
+    <link rel="prev" title="noise_utils module" href="noise_utils.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../index.html" class="icon icon-home"> CANDLE
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../readme.html">What is CANDLE?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorials/index.html">Tutorials</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../candle_lib.html">CANDLE Library API</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="candle_keras.html">candle_keras package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="data_preprocessing_utils.html">data_preprocessing_utils module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="data_utils.html">data_utils module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="default_utils.html">default_utils module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="exp_logger.html">exp_logger module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="feature_selection_utils.html">feature_selection_utils module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_utils.html">file_utils module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="generic_utils.html">generic_utils module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="keras_utils.html">keras_utils module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="P1_utils.html">P1_utils module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="profiling_utils.html">profiling_utils module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pytorch_utils.html">pytorch_utils module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="solr_keras.html">solr_keras module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="uq_utils.html">uq_utils module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="uq_keras_utils.html">uq_keras_utils module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="viz_utils.html">viz_utils module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="clr_keras_utils.html">clr_keras_utils module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="helper_utils.html">helper_utils module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="modac_utils.html">modac_utils module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="noise_utils.html">noise_utils module</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">parsing_utils module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ckpt_keras_utils.html">ckpt_keras_utils module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="benchmark_def.html">benchmark_def module</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../shared_installation.html">CANDLE Shared Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contribute.html">How to Contribute</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">CANDLE</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="../candle_lib.html">CANDLE Library API</a> &raquo;</li>
+      <li>parsing_utils module</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/candle_lib/parsing_utils.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <div class="section" id="module-parsing_utils">
+<span id="parsing-utils-module"></span><h1>parsing_utils module<a class="headerlink" href="#module-parsing_utils" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="parsing_utils.ArgumentStruct">
+<em class="property">class </em><code class="sig-prename descclassname">parsing_utils.</code><code class="sig-name descname">ArgumentStruct</code><span class="sig-paren">(</span><em class="sig-param">**entries</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/parsing_utils.html#ArgumentStruct"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#parsing_utils.ArgumentStruct" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Class that converts a python dictionary into an object with
+named entries given by the dictionary keys.
+This structure simplifies the calling convention for accessing
+the dictionary values (corresponding to problem parameters).
+After the object instantiation both modes of access (dictionary
+or object entries) can be used.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="parsing_utils.ListOfListsAction">
+<em class="property">class </em><code class="sig-prename descclassname">parsing_utils.</code><code class="sig-name descname">ListOfListsAction</code><span class="sig-paren">(</span><em class="sig-param">option_strings</em>, <em class="sig-param">dest</em>, <em class="sig-param">type</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/parsing_utils.html#ListOfListsAction"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#parsing_utils.ListOfListsAction" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">argparse.Action</span></code></p>
+<p>This class extends the argparse.Action class by instantiating
+an argparser that constructs a list-of-lists from an input
+(command-line option or argument) given as a string.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="parsing_utils.args_overwrite_config">
+<code class="sig-prename descclassname">parsing_utils.</code><code class="sig-name descname">args_overwrite_config</code><span class="sig-paren">(</span><em class="sig-param">args</em>, <em class="sig-param">config</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/parsing_utils.html#args_overwrite_config"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#parsing_utils.args_overwrite_config" title="Permalink to this definition">¶</a></dt>
+<dd><p>Overwrite configuration parameters with
+parameters specified via command-line.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>args</strong> (<em>ArgumentParser object</em>) – Parameters specified via command-line</p></li>
+<li><p><strong>config</strong> (<em>python dictionary</em>) – Parameters read from configuration file</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="parsing_utils.check_file_parameters_exists">
+<code class="sig-prename descclassname">parsing_utils.</code><code class="sig-name descname">check_file_parameters_exists</code><span class="sig-paren">(</span><em class="sig-param">params_parser</em>, <em class="sig-param">params_benchmark</em>, <em class="sig-param">params_file</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/parsing_utils.html#check_file_parameters_exists"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#parsing_utils.check_file_parameters_exists" title="Permalink to this definition">¶</a></dt>
+<dd><p>Functionality to verify that the parameters defined in the configuraion file are recognizable by the command line parser (i.e. no uknown keywords are used in the configuration file).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>params_parser</strong> (<em>python dictionary</em>) – Includes parameters set via the command line.</p></li>
+<li><p><strong>params_benchmark</strong> (<em>python list</em>) – Includes additional parameters defined in the benchmark.</p></li>
+<li><p><strong>params_file</strong> (<em>python dictionary</em>) – <p>Includes parameters read from the configuration file.</p>
+<p>Global:
+PARAMETERS_CANDLE : python list</p>
+<blockquote>
+<div><p>Includes all the core keywords that are specified in CANDLE.</p>
+</div></blockquote>
+</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="parsing_utils.check_flag_conflicts">
+<code class="sig-prename descclassname">parsing_utils.</code><code class="sig-name descname">check_flag_conflicts</code><span class="sig-paren">(</span><em class="sig-param">params</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/parsing_utils.html#check_flag_conflicts"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#parsing_utils.check_flag_conflicts" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="simple">
+<dt>Check if parameters that must be exclusive are used in conjunction.</dt><dd><p>The check is made against CONFLICT_LIST, a global list that
+describes parameter pairs that should be exclusive.
+Raises an exception if pairs of parameters in CONFLICT_LIST are
+specified simulataneously.</p>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>params</strong> (<em>python dictionary</em>) – list to extract keywords from</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="parsing_utils.extract_keywords">
+<code class="sig-prename descclassname">parsing_utils.</code><code class="sig-name descname">extract_keywords</code><span class="sig-paren">(</span><em class="sig-param">lst_dict</em>, <em class="sig-param">kw</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/parsing_utils.html#extract_keywords"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#parsing_utils.extract_keywords" title="Permalink to this definition">¶</a></dt>
+<dd><p>Extract the value associated to a specific keyword in a list of dictionaries. Returns the list of values extracted from the keywords.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>lst_dict</strong> (<em>python list of dictionaries</em>) – list to extract keywords from</p></li>
+<li><p><strong>kw</strong> (<em>string</em>) – keyword to extract from dictionary</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="parsing_utils.finalize_parameters">
+<code class="sig-prename descclassname">parsing_utils.</code><code class="sig-name descname">finalize_parameters</code><span class="sig-paren">(</span><em class="sig-param">bmk</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/parsing_utils.html#finalize_parameters"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#parsing_utils.finalize_parameters" title="Permalink to this definition">¶</a></dt>
+<dd><p>Utility to parse parameters in common as well as parameters
+particular to each benchmark.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>bmk</strong> (<em>benchmark object</em>) – Object that has benchmark filepaths and specifications</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>gParameters</strong> (<em>python dictionary</em>) – Dictionary with all the parameters necessary to run the benchmark.
+Command line overwrites config file specifications</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="parsing_utils.get_choice">
+<code class="sig-prename descclassname">parsing_utils.</code><code class="sig-name descname">get_choice</code><span class="sig-paren">(</span><em class="sig-param">name</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/parsing_utils.html#get_choice"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#parsing_utils.get_choice" title="Permalink to this definition">¶</a></dt>
+<dd><p>Maps name string to the right type of argument</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="parsing_utils.parse_common">
+<code class="sig-prename descclassname">parsing_utils.</code><code class="sig-name descname">parse_common</code><span class="sig-paren">(</span><em class="sig-param">parser</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/parsing_utils.html#parse_common"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#parsing_utils.parse_common" title="Permalink to this definition">¶</a></dt>
+<dd><p>Functionality to parse options.
+:param parser: Current parser
+:type parser: ArgumentParser object</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="parsing_utils.parse_from_dictlist">
+<code class="sig-prename descclassname">parsing_utils.</code><code class="sig-name descname">parse_from_dictlist</code><span class="sig-paren">(</span><em class="sig-param">dictlist</em>, <em class="sig-param">parser</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/parsing_utils.html#parse_from_dictlist"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#parsing_utils.parse_from_dictlist" title="Permalink to this definition">¶</a></dt>
+<dd><p>Functionality to parse options.
+:param pardict: Specification of parameters
+:type pardict: python list of dictionaries
+:param parser: Current parser
+:type parser: ArgumentParser object</p>
+</dd></dl>
+
+</div>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="noise_utils.html" class="btn btn-neutral float-left" title="noise_utils module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="ckpt_keras_utils.html" class="btn btn-neutral float-right" title="ckpt_keras_utils module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2021, ANL.gov.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

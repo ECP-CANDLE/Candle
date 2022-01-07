@@ -77,8 +77,10 @@
 
 <span class="kn">from</span> <span class="nn">default_utils</span> <span class="kn">import</span> <span class="n">set_seed</span> <span class="k">as</span> <span class="n">set_seed_defaultUtils</span>
 
-<div class="viewcode-block" id="set_parallelism_threads"><a class="viewcode-back" href="../candle_lib/pytorch_utils.html#pytorch_utils.set_parallelism_threads">[docs]</a><span class="k">def</span> <span class="nf">set_parallelism_threads</span><span class="p">():</span> <span class="c1"># for compatibility</span>
+
+<div class="viewcode-block" id="set_parallelism_threads"><a class="viewcode-back" href="../candle_lib/pytorch_utils.html#pytorch_utils.set_parallelism_threads">[docs]</a><span class="k">def</span> <span class="nf">set_parallelism_threads</span><span class="p">():</span>  <span class="c1"># for compatibility</span>
     <span class="k">pass</span></div>
+
 
 <div class="viewcode-block" id="set_seed"><a class="viewcode-back" href="../candle_lib/pytorch_utils.html#pytorch_utils.set_seed">[docs]</a><span class="k">def</span> <span class="nf">set_seed</span><span class="p">(</span><span class="n">seed</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot; Set the random number seed to the desired value</span>
@@ -95,90 +97,84 @@
 
 <div class="viewcode-block" id="get_function"><a class="viewcode-back" href="../candle_lib/pytorch_utils.html#pytorch_utils.get_function">[docs]</a><span class="k">def</span> <span class="nf">get_function</span><span class="p">(</span><span class="n">name</span><span class="p">):</span>
     <span class="n">mapping</span> <span class="o">=</span> <span class="p">{}</span>
-    
+
     <span class="c1"># loss</span>
     <span class="n">mapping</span><span class="p">[</span><span class="s1">&#39;mse&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">MSELoss</span><span class="p">()</span>
     <span class="n">mapping</span><span class="p">[</span><span class="s1">&#39;binary_crossentropy&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">BCELoss</span><span class="p">()</span>
     <span class="n">mapping</span><span class="p">[</span><span class="s1">&#39;categorical_crossentropy&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">CrossEntropyLoss</span><span class="p">()</span>
     <span class="n">mapping</span><span class="p">[</span><span class="s1">&#39;smoothL1&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">SmoothL1Loss</span><span class="p">()</span>
-    
+
     <span class="n">mapped</span> <span class="o">=</span> <span class="n">mapping</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="n">mapped</span><span class="p">:</span>
         <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s1">&#39;No pytorch function found for &quot;</span><span class="si">{}</span><span class="s1">&quot;&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">name</span><span class="p">))</span>
-    
+
     <span class="k">return</span> <span class="n">mapped</span></div>
 
 
 <div class="viewcode-block" id="build_activation"><a class="viewcode-back" href="../candle_lib/pytorch_utils.html#pytorch_utils.build_activation">[docs]</a><span class="k">def</span> <span class="nf">build_activation</span><span class="p">(</span><span class="nb">type</span><span class="p">):</span>
 
     <span class="c1"># activation</span>
-    
-    <span class="k">if</span> <span class="nb">type</span><span class="o">==</span><span class="s1">&#39;relu&#39;</span><span class="p">:</span>
-         <span class="k">return</span> <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">ReLU</span><span class="p">()</span>
-    <span class="k">elif</span> <span class="nb">type</span><span class="o">==</span><span class="s1">&#39;sigmoid&#39;</span><span class="p">:</span>
-         <span class="k">return</span> <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">Sigmoid</span><span class="p">()</span>
-    <span class="k">elif</span> <span class="nb">type</span><span class="o">==</span><span class="s1">&#39;tanh&#39;</span><span class="p">:</span>
-         <span class="k">return</span> <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">Tanh</span><span class="p">()</span></div>
+    <span class="k">if</span> <span class="nb">type</span> <span class="o">==</span> <span class="s1">&#39;relu&#39;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">ReLU</span><span class="p">()</span>
+    <span class="k">elif</span> <span class="nb">type</span> <span class="o">==</span> <span class="s1">&#39;sigmoid&#39;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">Sigmoid</span><span class="p">()</span>
+    <span class="k">elif</span> <span class="nb">type</span> <span class="o">==</span> <span class="s1">&#39;tanh&#39;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">Tanh</span><span class="p">()</span></div>
 
 
 <div class="viewcode-block" id="build_optimizer"><a class="viewcode-back" href="../candle_lib/pytorch_utils.html#pytorch_utils.build_optimizer">[docs]</a><span class="k">def</span> <span class="nf">build_optimizer</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="nb">type</span><span class="p">,</span> <span class="n">lr</span><span class="p">,</span> <span class="n">kerasDefaults</span><span class="p">,</span> <span class="n">trainable_only</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
-    
     <span class="k">if</span> <span class="n">trainable_only</span><span class="p">:</span>
         <span class="n">params</span> <span class="o">=</span> <span class="nb">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">p</span><span class="p">:</span> <span class="n">p</span><span class="o">.</span><span class="n">requires_grad</span><span class="p">,</span> <span class="n">model</span><span class="o">.</span><span class="n">parameters</span><span class="p">())</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="n">params</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">parameters</span><span class="p">()</span>
-    
-    <span class="c1">#schedule = optimizers.optimizer.Schedule() # constant lr (equivalent to default keras setting)</span>
+
+    <span class="c1"># schedule = optimizers.optimizer.Schedule() # constant lr (equivalent to default keras setting)</span>
 
     <span class="k">if</span> <span class="nb">type</span> <span class="o">==</span> <span class="s1">&#39;sgd&#39;</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">torch</span><span class="o">.</span><span class="n">optim</span><span class="o">.</span><span class="n">GradientDescentMomentum</span><span class="p">(</span><span class="n">params</span><span class="p">,</span>
-                                                  <span class="n">lr</span><span class="o">=</span><span class="n">lr</span><span class="p">,</span>
-                                                  <span class="n">momentum_coef</span><span class="o">=</span><span class="n">kerasDefaults</span><span class="p">[</span><span class="s1">&#39;momentum_sgd&#39;</span><span class="p">],</span>
-                                                  <span class="n">nesterov</span><span class="o">=</span><span class="n">kerasDefaults</span><span class="p">[</span><span class="s1">&#39;nesterov_sgd&#39;</span><span class="p">])</span>
-                                                  <span class="c1">#schedule=schedule)</span>
+                                                   <span class="n">lr</span><span class="o">=</span><span class="n">lr</span><span class="p">,</span>
+                                                   <span class="n">momentum_coef</span><span class="o">=</span><span class="n">kerasDefaults</span><span class="p">[</span><span class="s1">&#39;momentum_sgd&#39;</span><span class="p">],</span>
+                                                   <span class="n">nesterov</span><span class="o">=</span><span class="n">kerasDefaults</span><span class="p">[</span><span class="s1">&#39;nesterov_sgd&#39;</span><span class="p">])</span>
 
     <span class="k">elif</span> <span class="nb">type</span> <span class="o">==</span> <span class="s1">&#39;rmsprop&#39;</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">torch</span><span class="o">.</span><span class="n">optim</span><span class="o">.</span><span class="n">RMSprop</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">parameters</span><span class="p">(),</span>
-                                  <span class="n">lr</span><span class="o">=</span><span class="n">lr</span><span class="p">,</span>
-                                  <span class="n">alpha</span><span class="o">=</span><span class="n">kerasDefaults</span><span class="p">[</span><span class="s1">&#39;rho&#39;</span><span class="p">],</span>
-                                  <span class="n">eps</span><span class="o">=</span><span class="n">kerasDefaults</span><span class="p">[</span><span class="s1">&#39;epsilon&#39;</span><span class="p">])</span>
-                                  <span class="c1">#schedule=schedule)</span>
+                                   <span class="n">lr</span><span class="o">=</span><span class="n">lr</span><span class="p">,</span>
+                                   <span class="n">alpha</span><span class="o">=</span><span class="n">kerasDefaults</span><span class="p">[</span><span class="s1">&#39;rho&#39;</span><span class="p">],</span>
+                                   <span class="n">eps</span><span class="o">=</span><span class="n">kerasDefaults</span><span class="p">[</span><span class="s1">&#39;epsilon&#39;</span><span class="p">])</span>
 
     <span class="k">elif</span> <span class="nb">type</span> <span class="o">==</span> <span class="s1">&#39;adagrad&#39;</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">torch</span><span class="o">.</span><span class="n">optim</span><span class="o">.</span><span class="n">Adagrad</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">parameters</span><span class="p">(),</span>
-                              <span class="n">lr</span><span class="o">=</span><span class="n">lr</span><span class="p">,</span>
-                              <span class="n">eps</span><span class="o">=</span><span class="n">kerasDefaults</span><span class="p">[</span><span class="s1">&#39;epsilon&#39;</span><span class="p">])</span>
+                                   <span class="n">lr</span><span class="o">=</span><span class="n">lr</span><span class="p">,</span>
+                                   <span class="n">eps</span><span class="o">=</span><span class="n">kerasDefaults</span><span class="p">[</span><span class="s1">&#39;epsilon&#39;</span><span class="p">])</span>
 
     <span class="k">elif</span> <span class="nb">type</span> <span class="o">==</span> <span class="s1">&#39;adadelta&#39;</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">torch</span><span class="o">.</span><span class="n">optim</span><span class="o">.</span><span class="n">Adadelta</span><span class="p">(</span><span class="n">params</span><span class="p">,</span>
-                              <span class="n">eps</span><span class="o">=</span><span class="n">kerasDefaults</span><span class="p">[</span><span class="s1">&#39;epsilon&#39;</span><span class="p">],</span>
-                              <span class="n">rho</span><span class="o">=</span><span class="n">kerasDefaults</span><span class="p">[</span><span class="s1">&#39;rho&#39;</span><span class="p">])</span>
+                                    <span class="n">eps</span><span class="o">=</span><span class="n">kerasDefaults</span><span class="p">[</span><span class="s1">&#39;epsilon&#39;</span><span class="p">],</span>
+                                    <span class="n">rho</span><span class="o">=</span><span class="n">kerasDefaults</span><span class="p">[</span><span class="s1">&#39;rho&#39;</span><span class="p">])</span>
 
     <span class="k">elif</span> <span class="nb">type</span> <span class="o">==</span> <span class="s1">&#39;adam&#39;</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">torch</span><span class="o">.</span><span class="n">optim</span><span class="o">.</span><span class="n">Adam</span><span class="p">(</span><span class="n">params</span><span class="p">,</span>
-                               <span class="n">lr</span><span class="o">=</span><span class="n">lr</span><span class="p">,</span>
-                               <span class="n">betas</span><span class="o">=</span><span class="p">[</span><span class="n">kerasDefaults</span><span class="p">[</span><span class="s1">&#39;beta_1&#39;</span><span class="p">],</span> <span class="n">kerasDefaults</span><span class="p">[</span><span class="s1">&#39;beta_2&#39;</span><span class="p">]],</span>
-                               <span class="n">eps</span><span class="o">=</span><span class="n">kerasDefaults</span><span class="p">[</span><span class="s1">&#39;epsilon&#39;</span><span class="p">])</span></div>
-
+                                <span class="n">lr</span><span class="o">=</span><span class="n">lr</span><span class="p">,</span>
+                                <span class="n">betas</span><span class="o">=</span><span class="p">[</span><span class="n">kerasDefaults</span><span class="p">[</span><span class="s1">&#39;beta_1&#39;</span><span class="p">],</span> <span class="n">kerasDefaults</span><span class="p">[</span><span class="s1">&#39;beta_2&#39;</span><span class="p">]],</span>
+                                <span class="n">eps</span><span class="o">=</span><span class="n">kerasDefaults</span><span class="p">[</span><span class="s1">&#39;epsilon&#39;</span><span class="p">])</span></div>
 
 
 <div class="viewcode-block" id="initialize"><a class="viewcode-back" href="../candle_lib/pytorch_utils.html#pytorch_utils.initialize">[docs]</a><span class="k">def</span> <span class="nf">initialize</span><span class="p">(</span><span class="n">weights</span><span class="p">,</span> <span class="nb">type</span><span class="p">,</span> <span class="n">kerasDefaults</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">constant</span><span class="o">=</span><span class="mf">0.</span><span class="p">):</span>
-    
+
     <span class="k">if</span> <span class="nb">type</span> <span class="o">==</span> <span class="s1">&#39;constant&#39;</span><span class="p">:</span>
-        <span class="k">return</span> <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">init</span><span class="o">.</span><span class="n">constant_</span><span class="p">(</span><span class="n">weights</span><span class="p">,</span>
-                                    <span class="n">val</span><span class="o">=</span><span class="n">constant</span><span class="p">)</span>
-    
+        <span class="k">return</span> <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">init</span><span class="o">.</span><span class="n">constant_</span><span class="p">(</span><span class="n">weights</span><span class="p">,</span> <span class="n">val</span><span class="o">=</span><span class="n">constant</span><span class="p">)</span>
+
     <span class="k">elif</span> <span class="nb">type</span> <span class="o">==</span> <span class="s1">&#39;uniform&#39;</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">init</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="n">weights</span><span class="p">,</span>
-                                  <span class="n">a</span><span class="o">=</span><span class="n">kerasDefaults</span><span class="p">[</span><span class="s1">&#39;minval_uniform&#39;</span><span class="p">],</span>
-                                  <span class="n">b</span><span class="o">=</span><span class="n">kerasDefaults</span><span class="p">[</span><span class="s1">&#39;maxval_uniform&#39;</span><span class="p">])</span>
+                                     <span class="n">a</span><span class="o">=</span><span class="n">kerasDefaults</span><span class="p">[</span><span class="s1">&#39;minval_uniform&#39;</span><span class="p">],</span>
+                                     <span class="n">b</span><span class="o">=</span><span class="n">kerasDefaults</span><span class="p">[</span><span class="s1">&#39;maxval_uniform&#39;</span><span class="p">])</span>
 
     <span class="k">elif</span> <span class="nb">type</span> <span class="o">==</span> <span class="s1">&#39;normal&#39;</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">init</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">weights</span><span class="p">,</span>
-                                  <span class="n">mean</span><span class="o">=</span><span class="n">kerasDefaults</span><span class="p">[</span><span class="s1">&#39;mean_normal&#39;</span><span class="p">],</span>
-                                  <span class="n">std</span><span class="o">=</span><span class="n">kerasDefaults</span><span class="p">[</span><span class="s1">&#39;stddev_normal&#39;</span><span class="p">])</span>
+                                    <span class="n">mean</span><span class="o">=</span><span class="n">kerasDefaults</span><span class="p">[</span><span class="s1">&#39;mean_normal&#39;</span><span class="p">],</span>
+                                    <span class="n">std</span><span class="o">=</span><span class="n">kerasDefaults</span><span class="p">[</span><span class="s1">&#39;stddev_normal&#39;</span><span class="p">])</span>
 
-    <span class="k">elif</span> <span class="nb">type</span> <span class="o">==</span> <span class="s1">&#39;glorot_normal&#39;</span><span class="p">:</span> <span class="c1"># not quite Xavier</span>
+    <span class="k">elif</span> <span class="nb">type</span> <span class="o">==</span> <span class="s1">&#39;glorot_normal&#39;</span><span class="p">:</span>  <span class="c1"># not quite Xavier</span>
         <span class="k">return</span> <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">init</span><span class="o">.</span><span class="n">xavier_normal</span><span class="p">(</span><span class="n">weights</span><span class="p">)</span>
 
     <span class="k">elif</span> <span class="nb">type</span> <span class="o">==</span> <span class="s1">&#39;glorot_uniform&#39;</span><span class="p">:</span>

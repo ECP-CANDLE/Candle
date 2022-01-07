@@ -57,6 +57,12 @@
 <li class="toctree-l2"><a class="reference internal" href="uq_keras_utils.html">uq_keras_utils module</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">viz_utils module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="clr_keras_utils.html">clr_keras_utils module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="helper_utils.html">helper_utils module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="modac_utils.html">modac_utils module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="noise_utils.html">noise_utils module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="parsing_utils.html">parsing_utils module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ckpt_keras_utils.html">ckpt_keras_utils module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="benchmark_def.html">benchmark_def module</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../shared_installation.html">CANDLE Shared Installation</a></li>
@@ -115,49 +121,124 @@ figprefix given.</p></li>
 </dd></dl>
 
 <dl class="function">
-<dt id="viz_utils.plot_calibration_and_errors">
-<code class="sig-prename descclassname">viz_utils.</code><code class="sig-name descname">plot_calibration_and_errors</code><span class="sig-paren">(</span><em class="sig-param">mean_sigma</em>, <em class="sig-param">sigma_start_index</em>, <em class="sig-param">sigma_end_index</em>, <em class="sig-param">min_sigma</em>, <em class="sig-param">max_sigma</em>, <em class="sig-param">error_thresholds</em>, <em class="sig-param">error_thresholds_smooth</em>, <em class="sig-param">err_err</em>, <em class="sig-param">s_interpolate</em>, <em class="sig-param">coverage_percentile</em>, <em class="sig-param">method=None</em>, <em class="sig-param">figprefix=None</em>, <em class="sig-param">steps=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/viz_utils.html#plot_calibration_and_errors"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#viz_utils.plot_calibration_and_errors" title="Permalink to this definition">¶</a></dt>
+<dt id="viz_utils.plot_array">
+<code class="sig-prename descclassname">viz_utils.</code><code class="sig-name descname">plot_array</code><span class="sig-paren">(</span><em class="sig-param">nparray</em>, <em class="sig-param">xlabel</em>, <em class="sig-param">ylabel</em>, <em class="sig-param">title</em>, <em class="sig-param">fname</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/viz_utils.html#plot_array"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#viz_utils.plot_array" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="viz_utils.plot_calibrated_std">
+<code class="sig-prename descclassname">viz_utils.</code><code class="sig-name descname">plot_calibrated_std</code><span class="sig-paren">(</span><em class="sig-param">y_test</em>, <em class="sig-param">y_pred</em>, <em class="sig-param">std_calibrated</em>, <em class="sig-param">thresC</em>, <em class="sig-param">pred_name=None</em>, <em class="sig-param">figprefix=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/viz_utils.html#plot_calibrated_std"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#viz_utils.plot_calibrated_std" title="Permalink to this definition">¶</a></dt>
+<dd><p>Functionality to plot values in testing set after calibration. An estimation of the lower-confidence samples is made. The plot generated is stored in a png file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>y_test</strong> (<em>numpy array</em>) – Array with (true) observed values.</p></li>
+<li><p><strong>y_pred</strong> (<em>numpy array</em>) – Array with predicted values.</p></li>
+<li><p><strong>std_calibrated</strong> (<em>numpy array</em>) – Array with standard deviation values after calibration.</p></li>
+<li><p><strong>thresC</strong> (<em>float</em>) – Threshold to label low confidence predictions (low
+confidence predictions are the ones with std &gt; thresC).</p></li>
+<li><p><strong>pred_name</strong> (<em>string</em>) – Name of data colum or quantity predicted (e.g. growth, AUC, etc.).</p></li>
+<li><p><strong>figprefix</strong> (<em>string</em>) – String to prefix the filename to store the figure generated.
+A ‘_calibrated.png’ string will be appended to the
+figprefix given.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="viz_utils.plot_calibration_interpolation">
+<code class="sig-prename descclassname">viz_utils.</code><code class="sig-name descname">plot_calibration_interpolation</code><span class="sig-paren">(</span><em class="sig-param">mean_sigma</em>, <em class="sig-param">error</em>, <em class="sig-param">splineobj1</em>, <em class="sig-param">splineobj2</em>, <em class="sig-param">method=''</em>, <em class="sig-param">figprefix=None</em>, <em class="sig-param">steps=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/viz_utils.html#plot_calibration_interpolation"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#viz_utils.plot_calibration_interpolation" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="simple">
-<dt>Functionality to plot empirical calibration curves</dt><dd><p>estimated by binning the statistics of computed
-standard deviations and errors.</p>
+<dt>Functionality to plot empirical calibration curves</dt><dd><p>estimated by interpolation of the computed
+standard deviations and errors. Since the estimations
+are very noisy, two levels of smoothing are used. Both
+can be plotted independently, if requested.
+The plot(s) generated is(are) stored in png file(s).</p>
 </dd>
 </dl>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>mean_sigma</strong> (<em>numpy array</em>) – Array with the mean standard deviations computed per bin.</p></li>
-<li><p><strong>sigma_start_index</strong> (<em>non-negative integer</em>) – Index of the mean_sigma array that defines the start of
-the valid empirical calibration interval (i.e. index to
-the smallest std for which a meaningful error is obtained).</p></li>
-<li><p><strong>sigma_end_index</strong> (<em>non-negative integer</em>) – Index of the mean_sigma array that defines the end of
-the valid empirical calibration interval (i.e. index to
-the largest std for which a meaningful error is obtained).</p></li>
-<li><p><strong>min_sigma</strong> (<em>numpy array</em>) – Array with the minimum standard deviations computed per bin.</p></li>
-<li><p><strong>max_sigma</strong> (<em>numpy array</em>) – Array with the maximum standard deviations computed per bin.</p></li>
-<li><p><strong>error_thresholds</strong> (<em>numpy array</em>) – Thresholds of the errors computed to attain a certain
-error coverage per bin.</p></li>
-<li><p><strong>error_thresholds_smooth</strong> (<em>numpy array</em>) – Thresholds of the errors computed to attain a certain
-error coverage per bin after a smoothed operation is applied
-to the frequently noisy bin-based estimations.</p></li>
-<li><p><strong>err_err</strong> (<em>numpy array</em>) – Vertical error bars (usually one standard deviation for a binomial
-distribution estimated by bin) for the error calibration
-computed empirically.</p></li>
-<li><p><strong>s_interpolate</strong> (<em>scipy.interpolate python object</em>) – A python object from scipy.interpolate that computes a
-univariate spline (InterpolatedUnivariateSpline) constructed
-to express the mapping from standard deviation to error. This
-spline is generated during the computational empirical
+<li><p><strong>mean_sigma</strong> (<em>numpy array</em>) – Array with the mean standard deviations computed in inference.</p></li>
+<li><p><strong>error</strong> (<em>numpy array</em>) – Array with the errors computed from the means predicted in inference.</p></li>
+<li><p><strong>splineobj1</strong> (<em>scipy.interpolate python object</em>) – A python object from scipy.interpolate that computes a
+cubic Hermite spline (PchipInterpolator) to express
+the interpolation after the first smoothing. This
+spline is a partial result generated during the empirical
 calibration procedure.</p></li>
-<li><p><strong>coverage_percentile</strong> (<em>float</em>) – Value used for the coverage in the percentile estimation
-of the observed error.</p></li>
+<li><p><strong>splineobj2</strong> (<em>scipy.interpolate python object</em>) – A python object from scipy.interpolate that computes a
+cubic Hermite spline (PchipInterpolator) to express
+the mapping from standard deviation to error. This
+spline is generated for interpolating the predictions
+after a process of smoothing-interpolation-smoothing
+computed during the empirical calibration procedure.</p></li>
 <li><p><strong>method</strong> (<em>string</em>) – Method used to comput the standard deviations (i.e. dropout,
 heteroscedastic, etc.).</p></li>
 <li><p><strong>figprefix</strong> (<em>string</em>) – String to prefix the filename to store the figure generated.
-A ‘_empirical_calibration.png’ string will be appended to
+A ‘_empirical_calibration_interpolation.png’ string will be appended to
 the figprefix given.</p></li>
-<li><p><strong>steps</strong> (<em>boolean</em>) – Besides the complete empirical calibration (including raw
-statistics, error bars and smoothing), also generates partial
-plots with only the raw bin statistics (step1) and with only
-the raw bin statistics and the smoothing interpolation (step2).</p></li>
+<li><p><strong>steps</strong> (<em>boolean</em>) – Besides the complete empirical calibration (including the interpolating
+spline), also generates partial plots with only the spline of
+the interpolating spline after the first smoothing level (smooth1).</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="viz_utils.plot_contamination">
+<code class="sig-prename descclassname">viz_utils.</code><code class="sig-name descname">plot_contamination</code><span class="sig-paren">(</span><em class="sig-param">y_true</em>, <em class="sig-param">y_pred</em>, <em class="sig-param">sigma</em>, <em class="sig-param">T=None</em>, <em class="sig-param">thresC=0.1</em>, <em class="sig-param">pred_name=None</em>, <em class="sig-param">figprefix=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/viz_utils.html#plot_contamination"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#viz_utils.plot_contamination" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="simple">
+<dt>Functionality to plot results for the contamination model.</dt><dd><p>This includes the latent variables T if they are given (i.e.
+if the results provided correspond to training results). Global
+parameters for the normal distribution are used for shading 80%
+confidence interval.
+If results for training (i.e. T available), samples determined to
+be outliers (i.e. samples whose probability of membership to the
+heavy tailed distribution (Cauchy) is greater than the threshold
+given) are highlighted.
+The plot(s) generated is(are) stored in a png file.</p>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>y_true</strong> (<em>numpy array</em>) – Array with observed values.</p></li>
+<li><p><strong>y_pred</strong> (<em>numpy array</em>) – Array with predicted values.</p></li>
+<li><p><strong>sigma</strong> (<em>float</em>) – Standard deviation of the normal distribution.</p></li>
+<li><p><strong>T</strong> (<em>numpy array</em>) – Array with latent variables (i.e. membership to normal and heavy-tailed
+distributions). If in testing T is not available (i.e. None)</p></li>
+<li><p><strong>thresC</strong> (<em>float</em>) – Threshold to label outliers (outliers are the ones
+with probability of membership to heavy-tailed distribution,
+i.e. T[:,1] &gt; thresC).</p></li>
+<li><p><strong>pred_name</strong> (<em>string</em>) – Name of data colum or quantity predicted (e.g. growth, AUC, etc.).</p></li>
+<li><p><strong>figprefix</strong> (<em>string</em>) – String to prefix the filename to store the figures generated.
+A ‘_contamination.png’ string will be appended to the
+figprefix given.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="viz_utils.plot_decile_predictions">
+<code class="sig-prename descclassname">viz_utils.</code><code class="sig-name descname">plot_decile_predictions</code><span class="sig-paren">(</span><em class="sig-param">Ypred</em>, <em class="sig-param">Ypred_Lp</em>, <em class="sig-param">Ypred_Hp</em>, <em class="sig-param">decile_list</em>, <em class="sig-param">pred_name=None</em>, <em class="sig-param">figprefix=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/viz_utils.html#plot_decile_predictions"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#viz_utils.plot_decile_predictions" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="simple">
+<dt>Functionality to plot the mean of the deciles predicted.</dt><dd><p>The plot generated is stored in a png file.</p>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>Ypred</strong> (<em>numpy array</em>) – Array with median predicted values.</p></li>
+<li><p><strong>Ypred_Lp</strong> (<em>numpy array</em>) – Array with low decile predicted values.</p></li>
+<li><p><strong>Ypred_Hp</strong> (<em>numpy array</em>) – Array with high decile predicted values.</p></li>
+<li><p><strong>decile_list</strong> (<em>string list</em>) – List of deciles predicted (e.g. ‘1st’, ‘9th’, etc.)</p></li>
+<li><p><strong>pred_name</strong> (<em>string</em>) – Name of data colum or quantity predicted (e.g. growth, AUC, etc.)</p></li>
+<li><p><strong>figprefix</strong> (<em>string</em>) – String to prefix the filename to store the figure generated.
+A ‘_decile_predictions.png’ string will be appended to the
+figprefix given.</p></li>
 </ul>
 </dd>
 </dl>
@@ -218,7 +299,7 @@ the figprefix given.</p></li>
 
 <dl class="function">
 <dt id="viz_utils.plot_history">
-<code class="sig-prename descclassname">viz_utils.</code><code class="sig-name descname">plot_history</code><span class="sig-paren">(</span><em class="sig-param">out</em>, <em class="sig-param">history</em>, <em class="sig-param">metric='loss'</em>, <em class="sig-param">title=None</em>, <em class="sig-param">width=8</em>, <em class="sig-param">height=6</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/viz_utils.html#plot_history"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#viz_utils.plot_history" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">viz_utils.</code><code class="sig-name descname">plot_history</code><span class="sig-paren">(</span><em class="sig-param">out</em>, <em class="sig-param">history</em>, <em class="sig-param">metric='loss'</em>, <em class="sig-param">val=True</em>, <em class="sig-param">title=None</em>, <em class="sig-param">width=8</em>, <em class="sig-param">height=6</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/viz_utils.html#plot_history"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#viz_utils.plot_history" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="function">
@@ -227,29 +308,6 @@ the figprefix given.</p></li>
 <dd><p>Plots keras training curves history.
 :param skip_ep: number of epochs to skip when plotting metrics
 :param add_lr: add curve of learning rate progression over epochs</p>
-</dd></dl>
-
-<dl class="function">
-<dt id="viz_utils.plot_percentile_predictions">
-<code class="sig-prename descclassname">viz_utils.</code><code class="sig-name descname">plot_percentile_predictions</code><span class="sig-paren">(</span><em class="sig-param">Ypred</em>, <em class="sig-param">Ypred_Lp</em>, <em class="sig-param">Ypred_Hp</em>, <em class="sig-param">percentile_list</em>, <em class="sig-param">pred_name=None</em>, <em class="sig-param">figprefix=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/viz_utils.html#plot_percentile_predictions"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#viz_utils.plot_percentile_predictions" title="Permalink to this definition">¶</a></dt>
-<dd><dl class="simple">
-<dt>Functionality to plot the mean of the percentiles predicted.</dt><dd><p>The plot generated is stored in a png file.</p>
-</dd>
-</dl>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>Ypred</strong> (<em>numpy array</em>) – Array with mid percentile predicted values.</p></li>
-<li><p><strong>Ypred_Lp</strong> (<em>numpy array</em>) – Array with low percentile predicted values.</p></li>
-<li><p><strong>Ypred_Hp</strong> (<em>numpy array</em>) – Array with high percentile predicted values.</p></li>
-<li><p><strong>percentile_list</strong> (<em>string list</em>) – List of percentiles predicted (e.g. ‘10p’, ‘90p’, etc.)</p></li>
-<li><p><strong>pred_name</strong> (<em>string</em>) – Name of data colum or quantity predicted (e.g. growth, AUC, etc.)</p></li>
-<li><p><strong>figprefix</strong> (<em>string</em>) – String to prefix the filename to store the figure generated.
-A ‘_density_predictions.png’ string will be appended to the
-figprefix given.</p></li>
-</ul>
-</dd>
-</dl>
 </dd></dl>
 
 <dl class="function">

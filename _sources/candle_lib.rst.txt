@@ -21,3 +21,9 @@ CANDLE Library API
    candle_lib/uq_keras_utils
    candle_lib/viz_utils
    candle_lib/clr_keras_utils
+   candle_lib/helper_utils
+   candle_lib/modac_utils
+   candle_lib/noise_utils
+   candle_lib/parsing_utils
+   candle_lib/ckpt_keras_utils
+   candle_lib/benchmark_def

@@ -67,51 +67,53 @@
            <div itemprop="articleBody">
              
   <h1>Source code for clr_keras_utils</h1><div class="highlight"><pre>
-<span></span><span class="kn">from</span> <span class="nn">keras.callbacks</span> <span class="kn">import</span> <span class="n">Callback</span>
-<span class="kn">from</span> <span class="nn">keras</span> <span class="kn">import</span> <span class="n">backend</span> <span class="k">as</span> <span class="n">K</span>
+<span></span><span class="kn">from</span> <span class="nn">tensorflow.keras.callbacks</span> <span class="kn">import</span> <span class="n">Callback</span>
+<span class="kn">from</span> <span class="nn">tensorflow.keras</span> <span class="kn">import</span> <span class="n">backend</span> <span class="k">as</span> <span class="n">K</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 
+
 <div class="viewcode-block" id="clr_check_args"><a class="viewcode-back" href="../candle_lib/clr_keras_utils.html#clr_keras_utils.clr_check_args">[docs]</a><span class="k">def</span> <span class="nf">clr_check_args</span><span class="p">(</span><span class="n">args</span><span class="p">):</span>
-    <span class="n">req_keys</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;clr_mode&#39;</span><span class="p">,</span><span class="s1">&#39;clr_base_lr&#39;</span><span class="p">,</span><span class="s1">&#39;clr_max_lr&#39;</span><span class="p">,</span><span class="s1">&#39;clr_gamma&#39;</span><span class="p">]</span>
+    <span class="n">req_keys</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;clr_mode&#39;</span><span class="p">,</span> <span class="s1">&#39;clr_base_lr&#39;</span><span class="p">,</span> <span class="s1">&#39;clr_max_lr&#39;</span><span class="p">,</span> <span class="s1">&#39;clr_gamma&#39;</span><span class="p">]</span>
     <span class="n">keys_present</span> <span class="o">=</span> <span class="kc">True</span>
     <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">req_keys</span><span class="p">:</span>
-        <span class="k">if</span>  <span class="n">key</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">args</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+        <span class="k">if</span> <span class="n">key</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">args</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
             <span class="n">keys_present</span> <span class="o">=</span> <span class="kc">False</span>
     <span class="k">return</span> <span class="n">keys_present</span></div>
 
+
 <div class="viewcode-block" id="clr_set_args"><a class="viewcode-back" href="../candle_lib/clr_keras_utils.html#clr_keras_utils.clr_set_args">[docs]</a><span class="k">def</span> <span class="nf">clr_set_args</span><span class="p">(</span><span class="n">args</span><span class="p">):</span>
-    <span class="n">req_keys</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;clr_mode&#39;</span><span class="p">,</span><span class="s1">&#39;clr_base_lr&#39;</span><span class="p">,</span><span class="s1">&#39;clr_max_lr&#39;</span><span class="p">,</span><span class="s1">&#39;clr_gamma&#39;</span><span class="p">]</span>
+    <span class="n">req_keys</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;clr_mode&#39;</span><span class="p">,</span> <span class="s1">&#39;clr_base_lr&#39;</span><span class="p">,</span> <span class="s1">&#39;clr_max_lr&#39;</span><span class="p">,</span> <span class="s1">&#39;clr_gamma&#39;</span><span class="p">]</span>
     <span class="n">exclusive_keys</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;warmup_lr&#39;</span><span class="p">,</span> <span class="s1">&#39;reduce_lr&#39;</span><span class="p">]</span>
     <span class="n">keys_present</span> <span class="o">=</span> <span class="kc">True</span>
     <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">req_keys</span><span class="p">:</span>
-        <span class="k">if</span>  <span class="n">key</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">args</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+        <span class="k">if</span> <span class="n">key</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">args</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
             <span class="n">keys_present</span> <span class="o">=</span> <span class="kc">False</span>
     <span class="k">if</span> <span class="n">keys_present</span> <span class="ow">and</span> <span class="n">args</span><span class="p">[</span><span class="s1">&#39;clr_mode&#39;</span><span class="p">]</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">clr_keras_kwargs</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;mode&#39;</span><span class="p">:</span> <span class="n">args</span><span class="p">[</span><span class="s1">&#39;clr_mode&#39;</span><span class="p">],</span> <span class="s1">&#39;base_lr&#39;</span><span class="p">:</span> <span class="n">args</span><span class="p">[</span><span class="s1">&#39;clr_base_lr&#39;</span><span class="p">],</span>
-                        <span class="s1">&#39;max_lr&#39;</span><span class="p">:</span> <span class="n">args</span><span class="p">[</span><span class="s1">&#39;clr_max_lr&#39;</span><span class="p">],</span> <span class="s1">&#39;gamma&#39;</span><span class="p">:</span> <span class="n">args</span><span class="p">[</span><span class="s1">&#39;clr_gamma&#39;</span><span class="p">]}</span>
+                            <span class="s1">&#39;max_lr&#39;</span><span class="p">:</span> <span class="n">args</span><span class="p">[</span><span class="s1">&#39;clr_max_lr&#39;</span><span class="p">],</span> <span class="s1">&#39;gamma&#39;</span><span class="p">:</span> <span class="n">args</span><span class="p">[</span><span class="s1">&#39;clr_gamma&#39;</span><span class="p">]}</span>
         <span class="k">for</span> <span class="n">ex_key</span> <span class="ow">in</span> <span class="n">exclusive_keys</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">ex_key</span> <span class="ow">in</span> <span class="n">args</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
-                <span class="k">if</span> <span class="n">args</span><span class="p">[</span><span class="n">ex_key</span><span class="p">]</span> <span class="o">==</span> <span class="kc">True</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">args</span><span class="p">[</span><span class="n">ex_key</span><span class="p">]</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
                     <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Key &quot;</span><span class="p">,</span> <span class="n">ex_key</span><span class="p">,</span> <span class="s2">&quot; conflicts, setting to False&quot;</span><span class="p">)</span>
                     <span class="n">args</span><span class="p">[</span><span class="n">ex_key</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Incomplete CLR specification: will run without&quot;</span><span class="p">)</span>
         <span class="n">clr_keras_kwargs</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;mode&#39;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span> <span class="s1">&#39;base_lr&#39;</span><span class="p">:</span> <span class="mf">0.1</span><span class="p">,</span>
-                        <span class="s1">&#39;max_lr&#39;</span><span class="p">:</span> <span class="mf">0.1</span><span class="p">,</span> <span class="s1">&#39;gamma&#39;</span><span class="p">:</span> <span class="mf">0.1</span><span class="p">}</span>
+                            <span class="s1">&#39;max_lr&#39;</span><span class="p">:</span> <span class="mf">0.1</span><span class="p">,</span> <span class="s1">&#39;gamma&#39;</span><span class="p">:</span> <span class="mf">0.1</span><span class="p">}</span>
     <span class="k">return</span> <span class="n">clr_keras_kwargs</span></div>
+
 
 <div class="viewcode-block" id="clr_callback"><a class="viewcode-back" href="../candle_lib/clr_keras_utils.html#clr_keras_utils.clr_callback">[docs]</a><span class="k">def</span> <span class="nf">clr_callback</span><span class="p">(</span><span class="n">mode</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">base_lr</span><span class="o">=</span><span class="mf">1e-4</span><span class="p">,</span> <span class="n">max_lr</span><span class="o">=</span><span class="mf">1e-3</span><span class="p">,</span> <span class="n">gamma</span><span class="o">=</span><span class="mf">0.999994</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot; Creates keras callback for cyclical learning rate. &quot;&quot;&quot;</span>
-        <span class="c1"># keras_contrib = &#39;./keras_contrib/callbacks&#39;</span>
-        <span class="c1"># sys.path.append(keras_contrib)</span>
 
     <span class="k">if</span> <span class="n">mode</span> <span class="o">==</span> <span class="s1">&#39;trng1&#39;</span><span class="p">:</span>
         <span class="n">clr</span> <span class="o">=</span> <span class="n">CyclicLR</span><span class="p">(</span><span class="n">base_lr</span><span class="o">=</span><span class="n">base_lr</span><span class="p">,</span> <span class="n">max_lr</span><span class="o">=</span><span class="n">max_lr</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;triangular&#39;</span><span class="p">)</span>
     <span class="k">elif</span> <span class="n">mode</span> <span class="o">==</span> <span class="s1">&#39;trng2&#39;</span><span class="p">:</span>
         <span class="n">clr</span> <span class="o">=</span> <span class="n">CyclicLR</span><span class="p">(</span><span class="n">base_lr</span><span class="o">=</span><span class="n">base_lr</span><span class="p">,</span> <span class="n">max_lr</span><span class="o">=</span><span class="n">max_lr</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;triangular2&#39;</span><span class="p">)</span>
     <span class="k">elif</span> <span class="n">mode</span> <span class="o">==</span> <span class="s1">&#39;exp&#39;</span><span class="p">:</span>
-        <span class="n">clr</span> <span class="o">=</span> <span class="n">CyclicLR</span><span class="p">(</span><span class="n">base_lr</span><span class="o">=</span><span class="n">base_lr</span><span class="p">,</span> <span class="n">max_lr</span><span class="o">=</span><span class="n">max_lr</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;exp_range&#39;</span><span class="p">,</span> <span class="n">gamma</span><span class="o">=</span><span class="n">gamma</span><span class="p">)</span> <span class="c1"># 0.99994; 0.99999994; 0.999994</span>
+        <span class="n">clr</span> <span class="o">=</span> <span class="n">CyclicLR</span><span class="p">(</span><span class="n">base_lr</span><span class="o">=</span><span class="n">base_lr</span><span class="p">,</span> <span class="n">max_lr</span><span class="o">=</span><span class="n">max_lr</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;exp_range&#39;</span><span class="p">,</span> <span class="n">gamma</span><span class="o">=</span><span class="n">gamma</span><span class="p">)</span>  <span class="c1"># 0.99994; 0.99999994; 0.999994</span>
     <span class="k">return</span> <span class="n">clr</span></div>
+
 
 <div class="viewcode-block" id="CyclicLR"><a class="viewcode-back" href="../candle_lib/clr_keras_utils.html#clr_keras_utils.CyclicLR">[docs]</a><span class="k">class</span> <span class="nc">CyclicLR</span><span class="p">(</span><span class="n">Callback</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;This callback implements a cyclical learning rate policy (CLR).</span>

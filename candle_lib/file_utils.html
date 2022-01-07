@@ -57,6 +57,12 @@
 <li class="toctree-l2"><a class="reference internal" href="uq_keras_utils.html">uq_keras_utils module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="viz_utils.html">viz_utils module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="clr_keras_utils.html">clr_keras_utils module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="helper_utils.html">helper_utils module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="modac_utils.html">modac_utils module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="noise_utils.html">noise_utils module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="parsing_utils.html">parsing_utils module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ckpt_keras_utils.html">ckpt_keras_utils module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="benchmark_def.html">benchmark_def module</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../shared_installation.html">CANDLE Shared Installation</a></li>
@@ -91,8 +97,22 @@
   <div class="section" id="module-file_utils">
 <span id="file-utils-module"></span><h1>file_utils module<a class="headerlink" href="#module-file_utils" title="Permalink to this headline">¶</a></h1>
 <dl class="function">
+<dt id="file_utils.directory_from_parameters">
+<code class="sig-prename descclassname">file_utils.</code><code class="sig-name descname">directory_from_parameters</code><span class="sig-paren">(</span><em class="sig-param">params</em>, <em class="sig-param">commonroot='Output'</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/file_utils.html#directory_from_parameters"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#file_utils.directory_from_parameters" title="Permalink to this definition">¶</a></dt>
+<dd><p>Construct output directory path with unique IDs from parameters</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>params</strong> (<em>python dictionary</em>) – Dictionary of parameters read</p></li>
+<li><p><strong>commonroot</strong> (<em>string</em>) – String to specify the common folder to store results.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
 <dt id="file_utils.get_file">
-<code class="sig-prename descclassname">file_utils.</code><code class="sig-name descname">get_file</code><span class="sig-paren">(</span><em class="sig-param">fname</em>, <em class="sig-param">origin</em>, <em class="sig-param">untar=False</em>, <em class="sig-param">md5_hash=None</em>, <em class="sig-param">cache_subdir='common'</em>, <em class="sig-param">datadir=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/file_utils.html#get_file"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#file_utils.get_file" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">file_utils.</code><code class="sig-name descname">get_file</code><span class="sig-paren">(</span><em class="sig-param">fname</em>, <em class="sig-param">origin</em>, <em class="sig-param">unpack=False</em>, <em class="sig-param">md5_hash=None</em>, <em class="sig-param">cache_subdir='common'</em>, <em class="sig-param">datadir=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/file_utils.html#get_file"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#file_utils.get_file" title="Permalink to this definition">¶</a></dt>
 <dd><p>Downloads a file from a URL if it not already in the cache.
 Passing the MD5 hash will verify the file after download as well
 as if it is already present in the cache.</p>
@@ -101,7 +121,7 @@ as if it is already present in the cache.</p>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>fname</strong> (<em>string</em>) – name of the file</p></li>
 <li><p><strong>origin</strong> (<em>string</em>) – original URL of the file</p></li>
-<li><p><strong>untar</strong> (<em>boolean</em>) – whether the file should be decompressed</p></li>
+<li><p><strong>unpack</strong> (<em>boolean</em>) – whether the file should be decompressed</p></li>
 <li><p><strong>md5_hash</strong> (<em>string</em>) – MD5 hash of the file for verification</p></li>
 <li><p><strong>cache_subdir</strong> (<em>string</em>) – directory being used as the cache</p></li>
 <li><p><strong>datadir</strong> (<em>string</em>) – if set, datadir becomes its setting (which could be e.g. an absolute path) and cache_subdir no longer matters</p></li>

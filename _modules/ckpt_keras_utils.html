@@ -1,0 +1,876 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ckpt_keras_utils &mdash; CANDLE  documentation</title><link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../index.html" class="icon icon-home"> CANDLE
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../readme.html">What is CANDLE?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorials/index.html">Tutorials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../candle_lib.html">CANDLE Library API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../shared_installation.html">CANDLE Shared Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contribute.html">How to Contribute</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">CANDLE</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="index.html">Module code</a> &raquo;</li>
+      <li>ckpt_keras_utils</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for ckpt_keras_utils</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">CKPT KERAS UTILS</span>
+
+<span class="sd">CANDLE checkpoint/restart utilities for Keras</span>
+
+<span class="sd">Hyperparameters that affect CANDLE checkpoint/restart:</span>
+
+<span class="sd">ckpt_restart_mode :  &quot;off&quot; | &quot;auto&quot; | &quot;required&quot;</span>
+<span class="sd">    If &#39;auto&#39; or &#39;required&#39;, automatically try to restart from most recent</span>
+<span class="sd">    (highest epoch) model.h5.</span>
+<span class="sd">    &#39;required&#39; will fail if a model cannot be found.</span>
+<span class="sd">    Default: &quot;auto&quot;</span>
+
+<span class="sd">ckpt_save_best : boolean</span>
+<span class="sd">    If True, save whenever save_best_metric has improved.</span>
+<span class="sd">    Default: True</span>
+
+<span class="sd">ckpt_save_best_metric : string</span>
+<span class="sd">    Required when ckpt_save_best=True, else unused.</span>
+<span class="sd">    The metric in logs.model to track for improvement.</span>
+<span class="sd">    Default: &quot;val_loss&quot;</span>
+
+<span class="sd">ckpt_skip_epochs : integer</span>
+<span class="sd">    Number of initial epochs to skip before writing checkpoints</span>
+<span class="sd">    Default: 0</span>
+
+<span class="sd">ckpt_save_interval: integer</span>
+<span class="sd">    Save whenever epoch % save_interval == 0.</span>
+<span class="sd">    Set save_interval=0 to disable these checkpoints (save nothing).</span>
+<span class="sd">    Default: 1 (save everything)</span>
+
+<span class="sd">ckpt_checksum : boolean</span>
+<span class="sd">    If True, compute a checksum for the model</span>
+<span class="sd">    and store it in the JSON.</span>
+<span class="sd">    Also, confirm checksum at restart time.</span>
+<span class="sd">    Default: False</span>
+
+<span class="sd">ckpt_keep_mode : string</span>
+<span class="sd">    &quot;linear&quot; or &quot;exponential&quot; (NYI)</span>
+<span class="sd">    Default: &quot;linear&quot;</span>
+
+<span class="sd">ckpt_keep_limit: integer GZ</span>
+<span class="sd">    Maximal number of checkpoints to keep.</span>
+<span class="sd">    This can be set lower to reduce disk usage.</span>
+<span class="sd">    Default: 1000000</span>
+
+<span class="sd">ckpt_directory: string</span>
+<span class="sd">    The top directory to use.</span>
+<span class="sd">    Default: &quot;./save&quot;</span>
+<span class="sd">    Typical user values:</span>
+<span class="sd">    &quot;/tmp/user/ckpts&quot;: I.e. I am going to move these myself.</span>
+<span class="sd">    &quot;/other-fs/user/ckpts&quot;: I.e. My working FS is different from the FS</span>
+<span class="sd">                            I want to use for checkpoints.</span>
+
+<span class="sd">ckpt_metadata : string</span>
+<span class="sd">    Arbitrary string to add to the JSON file regarding</span>
+<span class="sd">    job ID, hardware location, etc.</span>
+<span class="sd">    May be None or an empty string.</span>
+<span class="sd">    Default: None</span>
+
+<span class="sd">Usage:</span>
+
+<span class="sd">  Add before training:</span>
+
+<span class="sd">    initial_epoch = 0</span>
+<span class="sd">    J = candle.restart(gParameters, model)</span>
+<span class="sd">    if J is not None:</span>
+<span class="sd">        initial_epoch = J[&#39;epoch&#39;]</span>
+
+<span class="sd">  Set up a callback for checkpoints:</span>
+
+<span class="sd">    ckpt = candle.CandleCheckpointCallback(gParameters)</span>
+<span class="sd">    history = model.fit(epochs=gParameters[&#39;epochs&#39;],</span>
+<span class="sd">                        initial_epoch=initial_epoch,</span>
+<span class="sd">                        ...</span>
+<span class="sd">                        callbacks=[... , ckpt])</span>
+
+<span class="sd">  Optionally, log a final report:</span>
+
+<span class="sd">    ckpt.report_final()</span>
+
+<span class="sd">Controlling restart:</span>
+
+<span class="sd">Most restart control options are in gParameters.</span>
+
+<span class="sd">Normally, restart() looks at the soft link ckpts/last,</span>
+<span class="sd">which should point to a good ckpt directory number in epochs/*</span>
+<span class="sd">and restarts from there.</span>
+
+<span class="sd">To roll back, simply re-link ckpts/last to point to</span>
+<span class="sd">a different directory number in epochs/* .</span>
+<span class="sd">Any later epochs will simply be overwritten</span>
+<span class="sd">(and a debug message will be reported).</span>
+
+<span class="sd">If ckpts/last is missing or a broken link,</span>
+<span class="sd">restart() will start from scratch.</span>
+
+<span class="sd">Keep policy:</span>
+
+<span class="sd">The ckpt_keep settings only apply to the current run.</span>
+<span class="sd">Checkpoints from prior runs will never be deleted by clean().</span>
+<span class="sd">You may simply remove any of them.</span>
+<span class="sd">Normally you will not want to remove the one pointed to by ckpts/last,</span>
+<span class="sd">but if you do, restart() will simply start from scratch.</span>
+
+<span class="sd">Logging:</span>
+
+<span class="sd">A log of ckpt operations is in ckpt_directory/ckpt.log</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">shutil</span>
+<span class="kn">import</span> <span class="nn">time</span>
+
+<span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">PosixPath</span>
+
+<span class="kn">from</span> <span class="nn">helper_utils</span> <span class="kn">import</span> <span class="n">set_up_logger</span><span class="p">,</span> <span class="n">str2bool</span>
+<span class="kn">from</span> <span class="nn">tensorflow.keras.models</span> <span class="kn">import</span> <span class="n">Model</span>
+<span class="kn">from</span> <span class="nn">tensorflow.keras.callbacks</span> <span class="kn">import</span> <span class="n">Callback</span><span class="p">,</span> <span class="n">ModelCheckpoint</span>
+
+
+<div class="viewcode-block" id="MultiGPUCheckpoint"><a class="viewcode-back" href="../candle_lib/ckpt_keras_utils.html#ckpt_keras_utils.MultiGPUCheckpoint">[docs]</a><span class="k">class</span> <span class="nc">MultiGPUCheckpoint</span><span class="p">(</span><span class="n">ModelCheckpoint</span><span class="p">):</span>
+
+<div class="viewcode-block" id="MultiGPUCheckpoint.set_model"><a class="viewcode-back" href="../candle_lib/ckpt_keras_utils.html#ckpt_keras_utils.MultiGPUCheckpoint.set_model">[docs]</a>    <span class="k">def</span> <span class="nf">set_model</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">layers</span><span class="p">[</span><span class="o">-</span><span class="mi">2</span><span class="p">],</span> <span class="n">Model</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">model</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">layers</span><span class="p">[</span><span class="o">-</span><span class="mi">2</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">model</span> <span class="o">=</span> <span class="n">model</span></div></div>
+
+
+<div class="viewcode-block" id="ParamRequired"><a class="viewcode-back" href="../candle_lib/ckpt_keras_utils.html#ckpt_keras_utils.ParamRequired">[docs]</a><span class="k">class</span> <span class="nc">ParamRequired</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot; Indicates that the user params must contain this key &quot;&quot;&quot;</span>
+    <span class="k">pass</span></div>
+
+
+<div class="viewcode-block" id="CandleCheckpointCallback"><a class="viewcode-back" href="../candle_lib/ckpt_keras_utils.html#ckpt_keras_utils.CandleCheckpointCallback">[docs]</a><span class="k">class</span> <span class="nc">CandleCheckpointCallback</span><span class="p">(</span><span class="n">Callback</span><span class="p">):</span>
+
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Keras Callback for CANDLE-compliant Benchmarks to use for checkpointing</span>
+<span class="sd">    Creates a JSON file alongside the weights and optimizer checkpoints</span>
+<span class="sd">    that includes important metadata, particularly for restarting and</span>
+<span class="sd">    tracking complex workflows.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">gParameters</span><span class="p">,</span> <span class="n">logger</span><span class="o">=</span><span class="s2">&quot;DEFAULT&quot;</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">            logger : Logger</span>
+<span class="sd">                The logger to use.</span>
+<span class="sd">                May be None to disable or &quot;DEFAULT&quot; to use the default.</span>
+<span class="sd">            verbose : boolean</span>
+<span class="sd">                If True, more verbose logging</span>
+<span class="sd">                Passed to helper_utils.set_up_logger(verbose) for this logger</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span> <span class="o">=</span> <span class="n">logger</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">logger</span> <span class="o">==</span> <span class="s2">&quot;DEFAULT&quot;</span><span class="p">:</span>
+            <span class="kn">import</span> <span class="nn">logging</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="s2">&quot;CandleCheckpointCallback&quot;</span><span class="p">)</span>
+            <span class="n">set_up_logger</span><span class="p">(</span><span class="s2">&quot;save/ckpt.log&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="n">verbose</span><span class="p">,</span>
+                          <span class="n">fmt_line</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">%(asctime)s</span><span class="s2"> CandleCheckpoint: </span><span class="si">%(message)s</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">scan_params</span><span class="p">(</span><span class="n">gParameters</span><span class="p">)</span>
+        <span class="c1"># List of epoch integers this instance has written.</span>
+        <span class="c1"># Sorted from smallest to largest.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">epochs</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="c1"># The best epoch wrt metric.  Do not delete this!</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">epoch_best</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">report_initial</span><span class="p">()</span>
+
+<div class="viewcode-block" id="CandleCheckpointCallback.report_initial"><a class="viewcode-back" href="../candle_lib/ckpt_keras_utils.html#ckpt_keras_utils.CandleCheckpointCallback.report_initial">[docs]</a>    <span class="k">def</span> <span class="nf">report_initial</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Simply report that we are ready to run &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Callback initialized.&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">save_interval</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Checkpoint save interval == 0 &quot;</span>
+                      <span class="o">+</span> <span class="s2">&quot;-&gt; checkpoints are disabled.&quot;</span><span class="p">)</span>
+            <span class="k">return</span>  <span class="c1"># Skip the rest of this output</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">metadata</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;metadata=&#39;</span><span class="si">%s</span><span class="s2">&#39;&quot;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">metadata</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">save_best</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;save_best_metric=&#39;</span><span class="si">%s</span><span class="s2">&#39;&quot;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">save_best_metric</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;PWD: &quot;</span> <span class="o">+</span> <span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">())</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;ckpt_directory: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span>
+                  <span class="n">PosixPath</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ckpt_directory</span><span class="p">)</span><span class="o">.</span><span class="n">resolve</span><span class="p">())</span></div>
+
+<div class="viewcode-block" id="CandleCheckpointCallback.scan_params"><a class="viewcode-back" href="../candle_lib/ckpt_keras_utils.html#ckpt_keras_utils.CandleCheckpointCallback.scan_params">[docs]</a>    <span class="k">def</span> <span class="nf">scan_params</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">gParameters</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Simply translate gParameters into instance fields &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">epoch_max</span> <span class="o">=</span> <span class="n">param</span><span class="p">(</span><span class="n">gParameters</span><span class="p">,</span> <span class="s2">&quot;epochs&quot;</span><span class="p">,</span>
+                               <span class="n">ParamRequired</span><span class="p">(),</span> <span class="n">ParamType</span><span class="o">.</span><span class="n">INTEGER_NN</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">skip_epochs</span> <span class="o">=</span> <span class="n">param</span><span class="p">(</span><span class="n">gParameters</span><span class="p">,</span> <span class="s2">&quot;ckpt_skip_epochs&quot;</span><span class="p">,</span>
+                                 <span class="mi">0</span><span class="p">,</span> <span class="n">ParamType</span><span class="o">.</span><span class="n">INTEGER_NN</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ckpt_directory</span> <span class="o">=</span> <span class="n">param</span><span class="p">(</span><span class="n">gParameters</span><span class="p">,</span> <span class="s2">&quot;ckpt_directory&quot;</span><span class="p">,</span>
+                                    <span class="s2">&quot;./save&quot;</span><span class="p">,</span> <span class="n">ParamType</span><span class="o">.</span><span class="n">STRING</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">save_best</span> <span class="o">=</span> <span class="n">param</span><span class="p">(</span><span class="n">gParameters</span><span class="p">,</span> <span class="s2">&quot;ckpt_save_best&quot;</span><span class="p">,</span>
+                               <span class="kc">True</span><span class="p">,</span> <span class="n">ParamType</span><span class="o">.</span><span class="n">BOOLEAN</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">save_best_metric</span> <span class="o">=</span> <span class="n">param</span><span class="p">(</span><span class="n">gParameters</span><span class="p">,</span> <span class="s2">&quot;ckpt_save_best_metric&quot;</span><span class="p">,</span>
+                                      <span class="kc">None</span><span class="p">,</span> <span class="n">ParamType</span><span class="o">.</span><span class="n">STRING</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">best_metric_last</span> <span class="o">=</span> <span class="n">param</span><span class="p">(</span><span class="n">gParameters</span><span class="p">,</span> <span class="s2">&quot;ckpt_best_metric_last&quot;</span><span class="p">,</span>
+                                      <span class="kc">None</span><span class="p">,</span> <span class="n">ParamType</span><span class="o">.</span><span class="n">FLOAT</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">best_metric_last</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="kn">import</span> <span class="nn">math</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">best_metric_last</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">inf</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">save_interval</span> <span class="o">=</span> <span class="n">param</span><span class="p">(</span><span class="n">gParameters</span><span class="p">,</span> <span class="s2">&quot;ckpt_save_interval&quot;</span><span class="p">,</span>
+                                   <span class="mi">1</span><span class="p">,</span> <span class="n">ParamType</span><span class="o">.</span><span class="n">INTEGER_NN</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">save_weights_only</span> <span class="o">=</span> <span class="n">param</span><span class="p">(</span><span class="n">gParameters</span><span class="p">,</span> <span class="s2">&quot;ckpt_save_weights_only&quot;</span><span class="p">,</span>
+                                       <span class="kc">True</span><span class="p">,</span> <span class="n">ParamType</span><span class="o">.</span><span class="n">BOOLEAN</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">checksum_enabled</span> <span class="o">=</span> <span class="n">param</span><span class="p">(</span><span class="n">gParameters</span><span class="p">,</span> <span class="s2">&quot;ckpt_checksum&quot;</span><span class="p">,</span>
+                                      <span class="kc">False</span><span class="p">,</span> <span class="n">ParamType</span><span class="o">.</span><span class="n">BOOLEAN</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">keep_mode</span> <span class="o">=</span> <span class="n">param</span><span class="p">(</span><span class="n">gParameters</span><span class="p">,</span> <span class="s2">&quot;ckpt_keep_mode&quot;</span><span class="p">,</span>
+                               <span class="s2">&quot;linear&quot;</span><span class="p">,</span> <span class="n">ParamType</span><span class="o">.</span><span class="n">STRING</span><span class="p">,</span>
+                               <span class="n">allowed</span><span class="o">=</span><span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="s2">&quot;all&quot;</span><span class="p">,</span> <span class="s2">&quot;linear&quot;</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">keep_limit</span> <span class="o">=</span> <span class="n">param</span><span class="p">(</span><span class="n">gParameters</span><span class="p">,</span> <span class="s2">&quot;ckpt_keep_limit&quot;</span><span class="p">,</span>
+                                <span class="mi">1000000</span><span class="p">,</span> <span class="n">ParamType</span><span class="o">.</span><span class="n">INTEGER_GZ</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">metadata</span> <span class="o">=</span> <span class="n">param</span><span class="p">(</span><span class="n">gParameters</span><span class="p">,</span> <span class="s2">&quot;metadata&quot;</span><span class="p">,</span>
+                              <span class="kc">None</span><span class="p">,</span> <span class="n">ParamType</span><span class="o">.</span><span class="n">STRING</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">timestamp_last</span> <span class="o">=</span> <span class="n">param</span><span class="p">(</span><span class="n">gParameters</span><span class="p">,</span> <span class="s2">&quot;ckpt_timestamp_last&quot;</span><span class="p">,</span>
+                                    <span class="kc">None</span><span class="p">,</span> <span class="n">ParamType</span><span class="o">.</span><span class="n">STRING</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cwd</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="CandleCheckpointCallback.on_epoch_end"><a class="viewcode-back" href="../candle_lib/ckpt_keras_utils.html#ckpt_keras_utils.CandleCheckpointCallback.on_epoch_end">[docs]</a>    <span class="k">def</span> <span class="nf">on_epoch_end</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">epoch</span><span class="p">,</span> <span class="n">logs</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Note: We immediately increment epoch</span>
+<span class="sd">        from index-from-0 to index-from-1</span>
+<span class="sd">        to match the TensorFlow output.</span>
+<span class="sd">        Normally, ckpts/best is the best saved state,</span>
+<span class="sd">              and ckpts/last is the last saved state.</span>
+<span class="sd">        Procedure:</span>
+<span class="sd">        1. Write current state to ckpts/work</span>
+<span class="sd">        2. Rename ckpts/work to ckpts/epoch/NNN</span>
+<span class="sd">        3. If best, link ckpts/best to ckpts/epoch/NNN</span>
+<span class="sd">        4. Link ckpts/last to ckpts/epoch/NNN</span>
+<span class="sd">        5. Clean up old ckpts according to keep policy</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">epoch</span> <span class="o">+=</span> <span class="mi">1</span>
+
+        <span class="n">dir_root</span> <span class="o">=</span> <span class="n">PosixPath</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ckpt_directory</span><span class="p">)</span><span class="o">.</span><span class="n">resolve</span><span class="p">()</span>
+        <span class="n">dir_work</span> <span class="o">=</span> <span class="n">dir_root</span> <span class="o">/</span> <span class="s2">&quot;ckpts/work&quot;</span>
+        <span class="n">dir_best</span> <span class="o">=</span> <span class="n">dir_root</span> <span class="o">/</span> <span class="s2">&quot;ckpts/best&quot;</span>  <span class="c1"># a soft link</span>
+        <span class="n">dir_last</span> <span class="o">=</span> <span class="n">dir_root</span> <span class="o">/</span> <span class="s2">&quot;ckpts/last&quot;</span>  <span class="c1"># a soft link</span>
+        <span class="n">dir_epochs</span> <span class="o">=</span> <span class="n">dir_root</span> <span class="o">/</span> <span class="s2">&quot;ckpts/epochs&quot;</span>
+        <span class="n">dir_this</span> <span class="o">=</span> <span class="n">dir_epochs</span> <span class="o">/</span> <span class="p">(</span><span class="s2">&quot;</span><span class="si">%03i</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">epoch</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">save_check</span><span class="p">(</span><span class="n">logs</span><span class="p">,</span> <span class="n">epoch</span><span class="p">):</span>
+            <span class="k">return</span>
+        <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">dir_this</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;remove:  &#39;</span><span class="si">%s</span><span class="s2">&#39;&quot;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">relpath</span><span class="p">(</span><span class="n">dir_this</span><span class="p">))</span>
+            <span class="n">shutil</span><span class="o">.</span><span class="n">rmtree</span><span class="p">(</span><span class="n">dir_this</span><span class="p">)</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">dir_epochs</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">dir_work</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">write_model</span><span class="p">(</span><span class="n">dir_work</span><span class="p">,</span> <span class="n">epoch</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;rename:  &#39;</span><span class="si">%s</span><span class="s2">&#39; -&gt; &#39;</span><span class="si">%s</span><span class="s2">&#39;&quot;</span> <span class="o">%</span>
+                   <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">relpath</span><span class="p">(</span><span class="n">dir_work</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">relpath</span><span class="p">(</span><span class="n">dir_this</span><span class="p">)))</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">dir_work</span><span class="p">,</span> <span class="n">dir_this</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">epochs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">epoch</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">epoch_best</span> <span class="o">==</span> <span class="n">epoch</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">symlink</span><span class="p">(</span><span class="n">dir_this</span><span class="p">,</span> <span class="n">dir_best</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">symlink</span><span class="p">(</span><span class="n">dir_this</span><span class="p">,</span> <span class="n">dir_last</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">clean</span><span class="p">(</span><span class="n">epoch</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="CandleCheckpointCallback.save_check"><a class="viewcode-back" href="../candle_lib/ckpt_keras_utils.html#ckpt_keras_utils.CandleCheckpointCallback.save_check">[docs]</a>    <span class="k">def</span> <span class="nf">save_check</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">logs</span><span class="p">,</span> <span class="n">epoch</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Make sure we want to save this epoch based on the</span>
+<span class="sd">        model metrics in given logs</span>
+<span class="sd">        Also updates epoch_best if appropriate</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">save_interval</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">False</span>  <span class="c1"># Checkpoints are disabled.</span>
+        <span class="c1"># skip early epochs to improve speed</span>
+        <span class="k">if</span> <span class="n">epoch</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">skip_epochs</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;model saving disabled until epoch </span><span class="si">%d</span><span class="s2">&quot;</span> <span class="o">%</span>
+                       <span class="bp">self</span><span class="o">.</span><span class="n">skip_epochs</span><span class="p">)</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="c1"># Do this first- it may set epoch_best:</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">save_check_best</span><span class="p">(</span><span class="n">logs</span><span class="p">,</span> <span class="n">epoch</span><span class="p">):</span>
+            <span class="c1"># The model improved- save!</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">epoch_best</span> <span class="o">=</span> <span class="n">epoch</span>
+            <span class="k">return</span> <span class="kc">True</span>
+        <span class="k">if</span> <span class="n">epoch</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">epoch_max</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;writing final epoch </span><span class="si">%i</span><span class="s2"> ...&quot;</span> <span class="o">%</span> <span class="n">epoch</span><span class="p">)</span>
+            <span class="k">return</span> <span class="kc">True</span>  <span class="c1"># Final epoch - save!</span>
+        <span class="k">if</span> <span class="n">epoch</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">save_interval</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">True</span>  <span class="c1"># We are on the save_interval: save!</span>
+        <span class="c1"># else- not saving:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;not writing this epoch.&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kc">False</span></div>
+
+<div class="viewcode-block" id="CandleCheckpointCallback.save_check_best"><a class="viewcode-back" href="../candle_lib/ckpt_keras_utils.html#ckpt_keras_utils.CandleCheckpointCallback.save_check_best">[docs]</a>    <span class="k">def</span> <span class="nf">save_check_best</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">logs</span><span class="p">,</span> <span class="n">epoch</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">save_best</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">save_best_metric</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">logs</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">((</span><span class="s2">&quot;CandleCheckpointCallback: &quot;</span>
+                             <span class="o">+</span> <span class="s2">&quot;save_best_metric=&#39;</span><span class="si">%s</span><span class="s2">&#39; &quot;</span>
+                             <span class="o">+</span> <span class="s2">&quot;not in list of model metrics: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">)</span> <span class="o">%</span>
+                            <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">save_best_metric</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">logs</span><span class="o">.</span><span class="n">keys</span><span class="p">())))</span>
+
+        <span class="c1"># Known metrics and direction of progress</span>
+        <span class="n">known_metrics</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;loss&quot;</span><span class="p">:</span> <span class="s2">&quot;-&quot;</span><span class="p">,</span>
+                         <span class="s2">&quot;accuracy&quot;</span><span class="p">:</span> <span class="s2">&quot;+&quot;</span><span class="p">,</span>
+                         <span class="s2">&quot;val_loss&quot;</span><span class="p">:</span> <span class="s2">&quot;-&quot;</span><span class="p">,</span>
+                         <span class="s2">&quot;val_accuracy&quot;</span><span class="p">:</span> <span class="s2">&quot;+&quot;</span><span class="p">,</span>
+                         <span class="s2">&quot;lr&quot;</span><span class="p">:</span> <span class="s2">&quot;-&quot;</span><span class="p">}</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">save_best_metric</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">known_metrics</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">((</span><span class="s2">&quot;CandleCheckpointCallback: &quot;</span>
+                             <span class="o">+</span> <span class="s2">&quot;save_best_metric=&#39;</span><span class="si">%s</span><span class="s2">&#39; &quot;</span>
+                             <span class="o">+</span> <span class="s2">&quot;not in list of known_metrics: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">)</span> <span class="o">%</span>
+                            <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">save_best_metric</span><span class="p">,</span>
+                             <span class="nb">str</span><span class="p">(</span><span class="n">known_metrics</span><span class="o">.</span><span class="n">keys</span><span class="p">())))</span>
+
+        <span class="c1"># Logging:</span>
+        <span class="k">if</span> <span class="n">logs</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">save_best_metric</span><span class="p">]</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">best_metric_last</span><span class="p">:</span>
+            <span class="n">symbol</span> <span class="o">=</span> <span class="s2">&quot;&lt;&quot;</span>
+        <span class="k">elif</span> <span class="n">logs</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">save_best_metric</span><span class="p">]</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">best_metric_last</span><span class="p">:</span>
+            <span class="n">symbol</span> <span class="o">=</span> <span class="s2">&quot;&gt;&quot;</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">symbol</span> <span class="o">=</span> <span class="s2">&quot;=&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;metrics: </span><span class="si">%s</span><span class="s2">: current=</span><span class="si">%f</span><span class="s2"> </span><span class="si">%s</span><span class="s2"> last=</span><span class="si">%f</span><span class="s2">&quot;</span> <span class="o">%</span>
+                   <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">save_best_metric</span><span class="p">,</span>
+                    <span class="n">logs</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">save_best_metric</span><span class="p">],</span>
+                    <span class="n">symbol</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">best_metric_last</span><span class="p">))</span>
+
+        <span class="c1"># Check for improvement:</span>
+        <span class="n">improved</span> <span class="o">=</span> <span class="kc">False</span>  <span class="c1"># did the metric improve this epoch?</span>
+        <span class="k">if</span> <span class="n">known_metrics</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">save_best_metric</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;-&quot;</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">logs</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">save_best_metric</span><span class="p">]</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">best_metric_last</span><span class="p">:</span>
+                <span class="n">improved</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="k">elif</span> <span class="n">known_metrics</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">save_best_metric</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;+&quot;</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">logs</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">save_best_metric</span><span class="p">]</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">best_metric_last</span><span class="p">:</span>
+                <span class="n">improved</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">assert</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">improved</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">best_metric_last</span> <span class="o">=</span> <span class="n">logs</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">save_best_metric</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">epoch_best</span> <span class="o">=</span> <span class="n">epoch</span>
+            <span class="k">return</span> <span class="kc">True</span>
+        <span class="k">return</span> <span class="kc">False</span></div>
+
+<div class="viewcode-block" id="CandleCheckpointCallback.write_model"><a class="viewcode-back" href="../candle_lib/ckpt_keras_utils.html#ckpt_keras_utils.CandleCheckpointCallback.write_model">[docs]</a>    <span class="k">def</span> <span class="nf">write_model</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dir_work</span><span class="p">,</span> <span class="n">epoch</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Do the I/O, report stats</span>
+<span class="sd">        dir_work: A PosixPath</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">model_file</span> <span class="o">=</span> <span class="n">dir_work</span> <span class="o">/</span> <span class="s2">&quot;model.h5&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;writing model to: &#39;</span><span class="si">%s</span><span class="s2">&#39;&quot;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">relpath</span><span class="p">(</span><span class="n">model_file</span><span class="p">))</span>
+        <span class="n">start</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+        <span class="c1"># TODO: Implement save_weights_only</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">model_file</span><span class="p">)</span>  <span class="c1"># save_format=&quot;h5&quot;</span>
+        <span class="n">stop</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+        <span class="n">duration</span> <span class="o">=</span> <span class="n">stop</span> <span class="o">-</span> <span class="n">start</span>
+        <span class="n">stats</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">stat</span><span class="p">(</span><span class="n">model_file</span><span class="p">)</span>
+        <span class="n">MB</span> <span class="o">=</span> <span class="n">stats</span><span class="o">.</span><span class="n">st_size</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1024</span> <span class="o">*</span> <span class="mi">1024</span><span class="p">)</span>
+        <span class="n">rate</span> <span class="o">=</span> <span class="n">MB</span> <span class="o">/</span> <span class="n">duration</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;model wrote: </span><span class="si">%0.3f</span><span class="s2"> MB in </span><span class="si">%0.3f</span><span class="s2"> seconds (</span><span class="si">%0.2f</span><span class="s2"> MB/s).&quot;</span> <span class="o">%</span>
+                   <span class="p">(</span><span class="n">MB</span><span class="p">,</span> <span class="n">duration</span><span class="p">,</span> <span class="n">rate</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">checksum</span><span class="p">(</span><span class="n">dir_work</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">write_json</span><span class="p">(</span><span class="n">dir_work</span> <span class="o">/</span> <span class="s2">&quot;ckpt-info.json&quot;</span><span class="p">,</span> <span class="n">epoch</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="CandleCheckpointCallback.checksum"><a class="viewcode-back" href="../candle_lib/ckpt_keras_utils.html#ckpt_keras_utils.CandleCheckpointCallback.checksum">[docs]</a>    <span class="k">def</span> <span class="nf">checksum</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dir_work</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Simple checksum dispatch</span>
+<span class="sd">        dir_work: A PosixPath</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">checksum_enabled</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">cksum_model</span> <span class="o">=</span> <span class="n">checksum_file</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="p">,</span>
+                                             <span class="n">dir_work</span> <span class="o">/</span> <span class="s2">&quot;model.h5&quot;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">cksum_model</span> <span class="o">=</span> <span class="s2">&quot;__DISABLED__&quot;</span></div>
+
+<div class="viewcode-block" id="CandleCheckpointCallback.write_json"><a class="viewcode-back" href="../candle_lib/ckpt_keras_utils.html#ckpt_keras_utils.CandleCheckpointCallback.write_json">[docs]</a>    <span class="k">def</span> <span class="nf">write_json</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">jsonfile</span><span class="p">,</span> <span class="n">epoch</span><span class="p">):</span>
+        <span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span>
+        <span class="n">now</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
+        <span class="n">D</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">D</span><span class="p">[</span><span class="s2">&quot;epoch&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">epoch</span>
+        <span class="n">D</span><span class="p">[</span><span class="s2">&quot;save_best_metric&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">save_best_metric</span>
+        <span class="n">D</span><span class="p">[</span><span class="s2">&quot;best_metric_last&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">best_metric_last</span>
+        <span class="n">D</span><span class="p">[</span><span class="s2">&quot;model_file&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;model.h5&quot;</span>
+        <span class="n">D</span><span class="p">[</span><span class="s2">&quot;checksum&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cksum_model</span>
+        <span class="n">D</span><span class="p">[</span><span class="s2">&quot;timestamp&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">now</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;%Y-%m-</span><span class="si">%d</span><span class="s2"> %H:%M:%S&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">timestamp_last</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">time_elapsed</span> <span class="o">=</span> <span class="s2">&quot;__FIRST__&quot;</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">time_elapsed</span> <span class="o">=</span> <span class="p">(</span><span class="n">now</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">timestamp_last</span><span class="p">)</span><span class="o">.</span><span class="n">total_seconds</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">timestamp_last</span> <span class="o">=</span> <span class="n">now</span>
+        <span class="n">D</span><span class="p">[</span><span class="s2">&quot;time_elapsed&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">time_elapsed</span>
+        <span class="n">D</span><span class="p">[</span><span class="s2">&quot;metadata&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">metadata</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">jsonfile</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fp</span><span class="p">:</span>
+            <span class="n">json</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">D</span><span class="p">,</span> <span class="n">fp</span><span class="p">)</span>
+            <span class="n">fp</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="CandleCheckpointCallback.clean"><a class="viewcode-back" href="../candle_lib/ckpt_keras_utils.html#ckpt_keras_utils.CandleCheckpointCallback.clean">[docs]</a>    <span class="k">def</span> <span class="nf">clean</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">epoch_now</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Clean old epoch directories</span>
+<span class="sd">              in accordance with ckpt_keep policies.</span>
+<span class="sd">        Return number of checkpoints kept and deleted</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">deleted</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">kept</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="c1"># Consider most recent epochs first:</span>
+        <span class="k">for</span> <span class="n">epoch</span> <span class="ow">in</span> <span class="nb">reversed</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">epochs</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;clean(): checking epoch directory: </span><span class="si">%i</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">epoch</span><span class="p">)</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">keep</span><span class="p">(</span><span class="n">epoch</span><span class="p">,</span> <span class="n">epoch_now</span><span class="p">,</span> <span class="n">kept</span><span class="p">):</span>
+                <span class="n">deleted</span> <span class="o">+=</span> <span class="mi">1</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="n">epoch</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;clean(): deleted epoch: </span><span class="si">%i</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">epoch</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">kept</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">return</span> <span class="p">(</span><span class="n">kept</span><span class="p">,</span> <span class="n">deleted</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="CandleCheckpointCallback.keep"><a class="viewcode-back" href="../candle_lib/ckpt_keras_utils.html#ckpt_keras_utils.CandleCheckpointCallback.keep">[docs]</a>    <span class="k">def</span> <span class="nf">keep</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">epoch</span><span class="p">,</span> <span class="n">epoch_now</span><span class="p">,</span> <span class="n">kept</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        kept: Number of epochs already kept</span>
+<span class="sd">        return True if we are keeping this epoch, else False</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">epoch</span> <span class="o">==</span> <span class="n">epoch_now</span><span class="p">:</span>
+            <span class="c1"># We just wrote this!</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;keep(): epoch is latest: </span><span class="si">%i</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">epoch</span><span class="p">)</span>
+            <span class="k">return</span> <span class="kc">True</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">epoch_best</span> <span class="o">==</span> <span class="n">epoch</span><span class="p">:</span>
+            <span class="c1"># This is the best epoch</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;keep(): epoch is best: </span><span class="si">%i</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">epoch</span><span class="p">)</span>
+            <span class="k">return</span> <span class="kc">True</span>
+        <span class="k">if</span> <span class="n">kept</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">keep_limit</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;keep(): epoch count is &lt; limit </span><span class="si">%i</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">keep_limit</span><span class="p">)</span>
+            <span class="k">return</span> <span class="kc">True</span>
+        <span class="c1"># No reason to keep this: delete it:</span>
+        <span class="k">return</span> <span class="kc">False</span></div>
+
+<div class="viewcode-block" id="CandleCheckpointCallback.delete"><a class="viewcode-back" href="../candle_lib/ckpt_keras_utils.html#ckpt_keras_utils.CandleCheckpointCallback.delete">[docs]</a>    <span class="k">def</span> <span class="nf">delete</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">epoch</span><span class="p">):</span>
+        <span class="n">dir_old</span> <span class="o">=</span> <span class="s2">&quot;save/ckpts/epochs/</span><span class="si">%03i</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">epoch</span>
+        <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">dir_old</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;removing: &#39;</span><span class="si">%s</span><span class="s2">&#39;&quot;</span> <span class="o">%</span> <span class="n">dir_old</span><span class="p">)</span>
+            <span class="n">shutil</span><span class="o">.</span><span class="n">rmtree</span><span class="p">(</span><span class="n">dir_old</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;checkpoint for epoch=</span><span class="si">%i</span><span class="s2"> disappeared!&quot;</span> <span class="o">%</span>
+                      <span class="n">epoch</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">epochs</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">epoch</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="CandleCheckpointCallback.symlink"><a class="viewcode-back" href="../candle_lib/ckpt_keras_utils.html#ckpt_keras_utils.CandleCheckpointCallback.symlink">[docs]</a>    <span class="k">def</span> <span class="nf">symlink</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">src</span><span class="p">,</span> <span class="n">dst</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Like os.symlink, but overwrites dst and logs &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;linking: &#39;</span><span class="si">%s</span><span class="s2">&#39; -&gt; &#39;</span><span class="si">%s</span><span class="s2">&#39;&quot;</span> <span class="o">%</span>
+                   <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">relpath</span><span class="p">(</span><span class="n">dst</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">relpath</span><span class="p">(</span><span class="n">src</span><span class="p">)))</span>
+        <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">lexists</span><span class="p">(</span><span class="n">dst</span><span class="p">):</span>
+            <span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">dst</span><span class="p">)</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">symlink</span><span class="p">(</span><span class="n">src</span><span class="p">,</span> <span class="n">dst</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="CandleCheckpointCallback.relpath"><a class="viewcode-back" href="../candle_lib/ckpt_keras_utils.html#ckpt_keras_utils.CandleCheckpointCallback.relpath">[docs]</a>    <span class="k">def</span> <span class="nf">relpath</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">p</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">p</span><span class="o">.</span><span class="n">relative_to</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cwd</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="CandleCheckpointCallback.info"><a class="viewcode-back" href="../candle_lib/ckpt_keras_utils.html#ckpt_keras_utils.CandleCheckpointCallback.info">[docs]</a>    <span class="k">def</span> <span class="nf">info</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">logger</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="n">message</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="CandleCheckpointCallback.debug"><a class="viewcode-back" href="../candle_lib/ckpt_keras_utils.html#ckpt_keras_utils.CandleCheckpointCallback.debug">[docs]</a>    <span class="k">def</span> <span class="nf">debug</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">logger</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="n">message</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="CandleCheckpointCallback.on_train_end"><a class="viewcode-back" href="../candle_lib/ckpt_keras_utils.html#ckpt_keras_utils.CandleCheckpointCallback.on_train_end">[docs]</a>    <span class="k">def</span> <span class="nf">on_train_end</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">logs</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">report_final</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="CandleCheckpointCallback.report_final"><a class="viewcode-back" href="../candle_lib/ckpt_keras_utils.html#ckpt_keras_utils.CandleCheckpointCallback.report_final">[docs]</a>    <span class="k">def</span> <span class="nf">report_final</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;checkpoints kept: </span><span class="si">%i</span><span class="s2">&quot;</span> <span class="o">%</span>
+                  <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">epochs</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;checkpoints list: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span>
+                  <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">epochs</span><span class="p">))</span></div></div>
+
+
+<div class="viewcode-block" id="restart"><a class="viewcode-back" href="../candle_lib/ckpt_keras_utils.html#ckpt_keras_utils.restart">[docs]</a><span class="k">def</span> <span class="nf">restart</span><span class="p">(</span><span class="n">gParameters</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Possibly restarts model from CheckpointCallback according to given</span>
+<span class="sd">    settings and the ckpt-info.json</span>
+
+<span class="sd">    return</span>
+<span class="sd">           The JSON dict if the restart happened or</span>
+<span class="sd">           None if the restart did not happen.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="kn">import</span> <span class="nn">logging</span>
+    <span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="s2">&quot;Candle.restart&quot;</span><span class="p">)</span>
+    <span class="n">directory</span> <span class="o">=</span> <span class="n">param</span><span class="p">(</span><span class="n">gParameters</span><span class="p">,</span> <span class="s2">&quot;ckpt_directory&quot;</span><span class="p">,</span> <span class="s2">&quot;./save&quot;</span><span class="p">)</span>
+    <span class="n">set_up_logger</span><span class="p">(</span><span class="n">directory</span> <span class="o">+</span> <span class="s2">&quot;/ckpt.log&quot;</span><span class="p">,</span> <span class="n">logger</span><span class="p">,</span>
+                  <span class="n">verbose</span><span class="o">=</span><span class="n">verbose</span><span class="p">,</span>
+                  <span class="n">fmt_line</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">%(asctime)s</span><span class="s2"> CANDLE restart(): </span><span class="si">%(message)s</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="n">param_ckpt_mode</span> <span class="o">=</span> <span class="n">param</span><span class="p">(</span><span class="n">gParameters</span><span class="p">,</span> <span class="s2">&quot;ckpt_restart_mode&quot;</span><span class="p">,</span> <span class="s2">&quot;auto&quot;</span><span class="p">,</span>
+                            <span class="n">allowed</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;off&quot;</span><span class="p">,</span> <span class="s2">&quot;auto&quot;</span><span class="p">,</span> <span class="s2">&quot;required&quot;</span><span class="p">])</span>
+    <span class="k">if</span> <span class="n">param_ckpt_mode</span> <span class="o">==</span> <span class="s2">&quot;off&quot;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">None</span>
+
+    <span class="n">dir_last</span> <span class="o">=</span> <span class="s2">&quot;save/ckpts/last&quot;</span>
+    <span class="n">model_file</span> <span class="o">=</span> <span class="n">dir_last</span> <span class="o">+</span> <span class="s2">&quot;/model.h5&quot;</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">model_file</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">param_ckpt_mode</span> <span class="o">==</span> <span class="s2">&quot;required&quot;</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;ckpt_restart_mode==&#39;required&#39; but no checkpoint &quot;</span>
+                            <span class="o">+</span> <span class="s2">&quot;could be found!&quot;</span><span class="p">)</span>
+        <span class="c1"># We must be under AUTO - proceed without restart</span>
+        <span class="k">assert</span> <span class="n">param_ckpt_mode</span> <span class="o">==</span> <span class="s2">&quot;auto&quot;</span>
+        <span class="k">return</span> <span class="kc">None</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;restarting: &#39;</span><span class="si">%s</span><span class="s2">&#39;&quot;</span> <span class="o">%</span> <span class="n">model_file</span><span class="p">)</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="n">restart_json</span><span class="p">(</span><span class="n">gParameters</span><span class="p">,</span> <span class="n">logger</span><span class="p">,</span> <span class="n">dir_last</span><span class="p">)</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;restarting: epoch=</span><span class="si">%i</span><span class="s2"> timestamp=</span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span>
+                <span class="n">result</span><span class="p">[</span><span class="s2">&quot;epoch&quot;</span><span class="p">],</span> <span class="n">result</span><span class="p">[</span><span class="s2">&quot;timestamp&quot;</span><span class="p">])</span>
+    <span class="n">start</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+    <span class="n">stats</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">stat</span><span class="p">(</span><span class="n">model_file</span><span class="p">)</span>
+    <span class="n">MB</span> <span class="o">=</span> <span class="n">stats</span><span class="o">.</span><span class="n">st_size</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1024</span> <span class="o">*</span> <span class="mi">1024</span><span class="p">)</span>
+    <span class="n">model</span><span class="o">.</span><span class="n">load_weights</span><span class="p">(</span><span class="n">model_file</span><span class="p">)</span>
+    <span class="n">stop</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+    <span class="n">duration</span> <span class="o">=</span> <span class="n">stop</span> <span class="o">-</span> <span class="n">start</span>
+    <span class="n">rate</span> <span class="o">=</span> <span class="n">MB</span> <span class="o">/</span> <span class="n">duration</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;restarting: model read:  </span><span class="si">%0.3f</span><span class="s2"> MB in </span><span class="si">%0.3f</span><span class="s2"> seconds (</span><span class="si">%0.2f</span><span class="s2"> MB/s).&quot;</span><span class="p">,</span>
+                <span class="n">MB</span><span class="p">,</span> <span class="n">duration</span><span class="p">,</span> <span class="n">rate</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">result</span></div>
+
+
+<div class="viewcode-block" id="restart_json"><a class="viewcode-back" href="../candle_lib/ckpt_keras_utils.html#ckpt_keras_utils.restart_json">[docs]</a><span class="k">def</span> <span class="nf">restart_json</span><span class="p">(</span><span class="n">gParameters</span><span class="p">,</span> <span class="n">logger</span><span class="p">,</span> <span class="n">directory</span><span class="p">):</span>
+    <span class="n">json_file</span> <span class="o">=</span> <span class="n">directory</span> <span class="o">+</span> <span class="s2">&quot;/ckpt-info.json&quot;</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">json_file</span><span class="p">):</span>
+        <span class="n">msg</span> <span class="o">=</span> <span class="s2">&quot;restart_json(): in: </span><span class="si">%s</span><span class="s2"> model exists but not json!&quot;</span> <span class="o">%</span> \
+              <span class="n">directory</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">disabled</span><span class="p">(</span><span class="n">gParameters</span><span class="p">,</span> <span class="s2">&quot;require_json&quot;</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">json_file</span><span class="p">)</span> <span class="k">as</span> <span class="n">fp</span><span class="p">:</span>
+        <span class="n">J</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">fp</span><span class="p">)</span>
+    <span class="c1"># print(str(J))</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;ckpt-info.json contains:&quot;</span><span class="p">)</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">J</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">2</span><span class="p">))</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;restarting from epoch: </span><span class="si">%i</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">J</span><span class="p">[</span><span class="s2">&quot;epoch&quot;</span><span class="p">])</span>
+    <span class="k">if</span> <span class="n">param</span><span class="p">(</span><span class="n">gParameters</span><span class="p">,</span> <span class="s2">&quot;ckpt_checksum&quot;</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="n">ParamType</span><span class="o">.</span><span class="n">BOOLEAN</span><span class="p">):</span>
+        <span class="n">checksum</span> <span class="o">=</span> <span class="n">checksum_file</span><span class="p">(</span><span class="n">logger</span><span class="p">,</span> <span class="n">directory</span> <span class="o">+</span> <span class="s2">&quot;/model.h5&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">checksum</span> <span class="o">!=</span> <span class="n">J</span><span class="p">[</span><span class="s2">&quot;checksum&quot;</span><span class="p">]:</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;checksum mismatch! directory: &quot;</span> <span class="o">%</span>
+                            <span class="n">directory</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">J</span></div>
+
+
+<span class="kn">from</span> <span class="nn">enum</span> <span class="kn">import</span> <span class="n">Enum</span><span class="p">,</span> <span class="n">unique</span><span class="p">,</span> <span class="n">auto</span>
+
+
+<div class="viewcode-block" id="ParamType"><a class="viewcode-back" href="../candle_lib/ckpt_keras_utils.html#ckpt_keras_utils.ParamType">[docs]</a><span class="nd">@unique</span>
+<span class="k">class</span> <span class="nc">ParamType</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; Possible gParameters types &quot;&quot;&quot;</span>
+    <span class="n">STRING</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">BOOLEAN</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">INTEGER</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="c1"># integer: non-negative</span>
+    <span class="n">INTEGER_NN</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="c1"># integer: greater-than-zero</span>
+    <span class="n">INTEGER_GZ</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">FLOAT</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">FLOAT_NN</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="enabled"><a class="viewcode-back" href="../candle_lib/ckpt_keras_utils.html#ckpt_keras_utils.enabled">[docs]</a><span class="k">def</span> <span class="nf">enabled</span><span class="p">(</span><span class="n">gParameters</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; Is this parameter set to True? &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">gParameters</span> <span class="ow">and</span> <span class="n">gParameters</span><span class="p">[</span><span class="n">key</span><span class="p">]</span></div>
+
+
+<div class="viewcode-block" id="disabled"><a class="viewcode-back" href="../candle_lib/ckpt_keras_utils.html#ckpt_keras_utils.disabled">[docs]</a><span class="k">def</span> <span class="nf">disabled</span><span class="p">(</span><span class="n">gParameters</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; Is this parameter set to False? &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">gParameters</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">gParameters</span><span class="p">[</span><span class="n">key</span><span class="p">]</span></div>
+
+
+<div class="viewcode-block" id="param"><a class="viewcode-back" href="../candle_lib/ckpt_keras_utils.html#ckpt_keras_utils.param">[docs]</a><span class="k">def</span> <span class="nf">param</span><span class="p">(</span><span class="n">gParameters</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">dflt</span><span class="p">,</span>
+          <span class="n">type_</span><span class="o">=</span><span class="n">ParamType</span><span class="o">.</span><span class="n">STRING</span><span class="p">,</span> <span class="n">allowed</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; Pull key from parameters with type checks and conversions &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">gParameters</span><span class="p">:</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">gParameters</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">dflt</span><span class="p">,</span> <span class="n">ParamRequired</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;param key must be provided: &#39;</span><span class="si">%s</span><span class="s2">&#39;&quot;</span> <span class="o">%</span> <span class="n">key</span><span class="p">)</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">dflt</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="n">param_type_check</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">result</span><span class="p">,</span> <span class="n">type_</span><span class="p">)</span>
+    <span class="n">param_allowed</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">result</span><span class="p">,</span> <span class="n">allowed</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">result</span></div>
+
+
+<div class="viewcode-block" id="param_type_check"><a class="viewcode-back" href="../candle_lib/ckpt_keras_utils.html#ckpt_keras_utils.param_type_check">[docs]</a><span class="k">def</span> <span class="nf">param_type_check</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">type_</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Check that value is convertable to given type:</span>
+<span class="sd">          if not, raise TypeError</span>
+<span class="sd">    Return the value as converted to given type</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">value</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">value</span>
+    <span class="k">if</span> <span class="n">type_</span> <span class="ow">is</span> <span class="n">ParamType</span><span class="o">.</span><span class="n">STRING</span><span class="p">:</span>
+        <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">type_</span> <span class="ow">is</span> <span class="n">ParamType</span><span class="o">.</span><span class="n">BOOLEAN</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">param_type_check_bool</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">type_</span> <span class="ow">is</span> <span class="n">ParamType</span><span class="o">.</span><span class="n">INTEGER</span> <span class="ow">or</span> \
+       <span class="n">type_</span> <span class="ow">is</span> <span class="n">ParamType</span><span class="o">.</span><span class="n">INTEGER_NN</span> <span class="ow">or</span> \
+       <span class="n">type_</span> <span class="ow">is</span> <span class="n">ParamType</span><span class="o">.</span><span class="n">INTEGER_GZ</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">param_type_check_int</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">type_</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">type_</span> <span class="ow">is</span> <span class="n">ParamType</span><span class="o">.</span><span class="n">FLOAT</span> <span class="ow">or</span> \
+       <span class="n">type_</span> <span class="ow">is</span> <span class="n">ParamType</span><span class="o">.</span><span class="n">FLOAT_NN</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">param_type_check_float</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">type_</span><span class="p">)</span>
+    <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;param_type_check(): unknown type: &#39;</span><span class="si">%s</span><span class="s2">&#39;&quot;</span> <span class="o">%</span>
+                    <span class="nb">str</span><span class="p">(</span><span class="n">type_</span><span class="p">))</span></div>
+
+
+<div class="viewcode-block" id="param_type_check_bool"><a class="viewcode-back" href="../candle_lib/ckpt_keras_utils.html#ckpt_keras_utils.param_type_check_bool">[docs]</a><span class="k">def</span> <span class="nf">param_type_check_bool</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="nb">bool</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">value</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">v</span> <span class="o">=</span> <span class="n">str2bool</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">TypeError</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;parameter: &#39;</span><span class="si">%s</span><span class="s2">&#39; is &#39;</span><span class="si">%s</span><span class="s2">&#39; but must be a </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span>
+                        <span class="n">key</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">value</span><span class="p">),</span> <span class="nb">str</span><span class="p">(</span><span class="n">ParamType</span><span class="o">.</span><span class="n">BOOLEAN</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">v</span></div>
+
+
+<div class="viewcode-block" id="param_type_check_int"><a class="viewcode-back" href="../candle_lib/ckpt_keras_utils.html#ckpt_keras_utils.param_type_check_int">[docs]</a><span class="k">def</span> <span class="nf">param_type_check_int</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">type_</span><span class="p">):</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="nb">int</span><span class="p">):</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">value</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">result</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">TypeError</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;parameter: &#39;</span><span class="si">%s</span><span class="s2">&#39; is &#39;</span><span class="si">%s</span><span class="s2">&#39; but must be a </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span>
+                            <span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">value</span><span class="p">),</span> <span class="nb">str</span><span class="p">(</span><span class="n">type_</span><span class="p">)))</span>
+    <span class="k">if</span> <span class="n">type_</span> <span class="o">==</span> <span class="n">ParamType</span><span class="o">.</span><span class="n">INTEGER_NN</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">result</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">((</span><span class="s2">&quot;parameter: &#39;</span><span class="si">%s</span><span class="s2">&#39; is &#39;</span><span class="si">%s</span><span class="s2">&#39; &quot;</span>
+                             <span class="o">+</span> <span class="s2">&quot;but must be non-negative&quot;</span><span class="p">)</span> <span class="o">%</span>
+                            <span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">value</span><span class="p">)))</span>
+    <span class="k">if</span> <span class="n">type_</span> <span class="o">==</span> <span class="n">ParamType</span><span class="o">.</span><span class="n">INTEGER_GZ</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">result</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">((</span><span class="s2">&quot;parameter: &#39;</span><span class="si">%s</span><span class="s2">&#39; is &#39;</span><span class="si">%s</span><span class="s2">&#39; &quot;</span>
+                             <span class="o">+</span> <span class="s2">&quot;but must be greater-than-zero&quot;</span><span class="p">)</span> <span class="o">%</span>
+                            <span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">value</span><span class="p">)))</span>
+    <span class="k">return</span> <span class="n">result</span></div>
+
+
+<div class="viewcode-block" id="param_type_check_float"><a class="viewcode-back" href="../candle_lib/ckpt_keras_utils.html#ckpt_keras_utils.param_type_check_float">[docs]</a><span class="k">def</span> <span class="nf">param_type_check_float</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">type_</span><span class="p">):</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="nb">float</span><span class="p">):</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">value</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">result</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">TypeError</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;parameter: &#39;</span><span class="si">%s</span><span class="s2">&#39; is &#39;</span><span class="si">%s</span><span class="s2">&#39; but must be a </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span>
+                            <span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">value</span><span class="p">),</span> <span class="nb">str</span><span class="p">(</span><span class="n">type_</span><span class="p">)))</span>
+    <span class="k">if</span> <span class="n">type_</span> <span class="o">==</span> <span class="n">ParamType</span><span class="o">.</span><span class="n">FLOAT_NN</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">result</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">((</span><span class="s2">&quot;parameter: &#39;</span><span class="si">%s</span><span class="s2">&#39; is &#39;</span><span class="si">%s</span><span class="s2">&#39; &quot;</span>
+                             <span class="o">+</span> <span class="s2">&quot;but must be non-negative&quot;</span><span class="p">)</span> <span class="o">%</span>
+                            <span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">value</span><span class="p">)))</span>
+    <span class="k">return</span> <span class="n">result</span></div>
+
+
+<div class="viewcode-block" id="checksum_file"><a class="viewcode-back" href="../candle_lib/ckpt_keras_utils.html#ckpt_keras_utils.checksum_file">[docs]</a><span class="k">def</span> <span class="nf">checksum_file</span><span class="p">(</span><span class="n">logger</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; Read file, compute checksum, return it as a string. &quot;&quot;&quot;</span>
+    <span class="kn">import</span> <span class="nn">zlib</span>
+    <span class="n">start</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+    <span class="n">chunk_size</span> <span class="o">=</span> <span class="mi">10</span> <span class="o">*</span> <span class="mi">1024</span> <span class="o">*</span> <span class="mi">1024</span>
+    <span class="n">total</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s2">&quot;rb&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fp</span><span class="p">:</span>
+        <span class="n">checksum</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+            <span class="n">chunk</span> <span class="o">=</span> <span class="n">fp</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">chunk_size</span><span class="p">)</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">chunk</span><span class="p">:</span>
+                <span class="k">break</span>
+            <span class="n">total</span> <span class="o">+=</span> <span class="nb">len</span><span class="p">(</span><span class="n">chunk</span><span class="p">)</span>
+            <span class="n">checksum</span> <span class="o">=</span> <span class="n">zlib</span><span class="o">.</span><span class="n">crc32</span><span class="p">(</span><span class="n">chunk</span><span class="p">,</span> <span class="n">checksum</span><span class="p">)</span>
+    <span class="n">stop</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+    <span class="n">MB</span> <span class="o">=</span> <span class="n">total</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1024</span> <span class="o">*</span> <span class="mi">1024</span><span class="p">)</span>
+    <span class="n">duration</span> <span class="o">=</span> <span class="n">stop</span> <span class="o">-</span> <span class="n">start</span>
+    <span class="n">rate</span> <span class="o">=</span> <span class="n">MB</span> <span class="o">/</span> <span class="n">duration</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;checksummed: </span><span class="si">%0.3f</span><span class="s2"> MB in </span><span class="si">%.3f</span><span class="s2"> seconds (</span><span class="si">%.2f</span><span class="s2"> MB/s).&quot;</span> <span class="o">%</span>
+                <span class="p">(</span><span class="n">MB</span><span class="p">,</span> <span class="n">duration</span><span class="p">,</span> <span class="n">rate</span><span class="p">))</span>
+    <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="n">checksum</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="param_allowed"><a class="viewcode-back" href="../candle_lib/ckpt_keras_utils.html#ckpt_keras_utils.param_allowed">[docs]</a><span class="k">def</span> <span class="nf">param_allowed</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">allowed</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Check that the value is in the list of allowed values</span>
+<span class="sd">    If allowed is None, there is no check, simply success</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">allowed</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">return</span>
+    <span class="k">if</span> <span class="n">value</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">allowed</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">((</span><span class="s2">&quot;hyperparameter &#39;</span><span class="si">%s</span><span class="s2">&#39;=&#39;</span><span class="si">%s</span><span class="s2">&#39; is not in the &quot;</span>
+                          <span class="o">+</span> <span class="s2">&quot;list of allowed values: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">)</span> <span class="o">%</span>
+                         <span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">allowed</span><span class="p">)))</span></div>
+
+
+<div class="viewcode-block" id="ckpt_parser"><a class="viewcode-back" href="../candle_lib/ckpt_keras_utils.html#ckpt_keras_utils.ckpt_parser">[docs]</a><span class="k">def</span> <span class="nf">ckpt_parser</span><span class="p">(</span><span class="n">parser</span><span class="p">):</span>
+    <span class="c1"># global</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--ckpt_restart_mode&quot;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span>
+                        <span class="n">default</span><span class="o">=</span><span class="s1">&#39;auto&#39;</span><span class="p">,</span>
+                        <span class="n">choices</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;off&#39;</span><span class="p">,</span> <span class="s1">&#39;auto&#39;</span><span class="p">,</span> <span class="s1">&#39;required&#39;</span><span class="p">],</span>
+                        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Mode to restart from a saved checkpoint file, &quot;</span>
+                             <span class="o">+</span> <span class="s2">&quot;choices are &#39;off&#39;, &#39;auto&#39;, &#39;required&#39;&quot;</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--ckpt_checksum&quot;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="n">str2bool</span><span class="p">,</span>
+                        <span class="n">default</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Checksum the restart file after read+write&quot;</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--ckpt_skip_epochs&quot;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span>
+                        <span class="n">default</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+                        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Number of epochs to skip before saving epochs&quot;</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--ckpt_directory&quot;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span>
+                        <span class="n">default</span><span class="o">=</span><span class="s1">&#39;./save&#39;</span><span class="p">,</span>
+                        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Base directory in which to save checkpoints&quot;</span><span class="p">)</span>
+    <span class="c1"># saving</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--ckpt_save_best&quot;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="n">str2bool</span><span class="p">,</span>
+                        <span class="n">default</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Toggle saving best model&quot;</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--ckpt_save_best_metric&quot;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span>
+                        <span class="n">default</span><span class="o">=</span><span class="s2">&quot;val_loss&quot;</span><span class="p">,</span>
+                        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Metric for determining when to save best model&quot;</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--ckpt_save_weights_only&quot;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="n">str2bool</span><span class="p">,</span>
+                        <span class="n">default</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Toggle saving only weights (not optimizer) (NYI)&quot;</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--ckpt_save_interval&quot;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span>
+                        <span class="n">default</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+                        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Epoch interval to save checkpoints.  &quot;</span>
+                        <span class="o">+</span> <span class="s2">&quot;Set to 0 to disable writing checkpoints&quot;</span><span class="p">)</span>
+    <span class="c1"># keeping</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--ckpt_keep_mode&quot;</span><span class="p">,</span>
+                        <span class="n">choices</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;linear&#39;</span><span class="p">,</span> <span class="s1">&#39;exponential&#39;</span><span class="p">],</span>
+                        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Checkpoint saving mode. &quot;</span>
+                             <span class="o">+</span> <span class="s2">&quot;Choices are &#39;linear&#39; or &#39;exponential&#39; &quot;</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--ckpt_keep_limit&quot;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span>
+                        <span class="n">default</span><span class="o">=</span><span class="mi">1000000</span><span class="p">,</span>
+                        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Limit checkpoints to keep&quot;</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">parser</span></div>
+
+
+<div class="viewcode-block" id="ckpt_defs"><a class="viewcode-back" href="../candle_lib/ckpt_keras_utils.html#ckpt_keras_utils.ckpt_defs">[docs]</a><span class="k">def</span> <span class="nf">ckpt_defs</span><span class="p">(</span><span class="n">defs</span><span class="p">):</span>
+    <span class="c1"># defs is an existing list</span>
+    <span class="c1"># global</span>
+    <span class="n">new_defs</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="p">{</span><span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;ckpt_restart_mode&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+            <span class="s1">&#39;default&#39;</span><span class="p">:</span> <span class="s1">&#39;auto&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;choices&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;off&#39;</span><span class="p">,</span> <span class="s1">&#39;auto&#39;</span><span class="p">,</span> <span class="s1">&#39;required&#39;</span><span class="p">],</span>
+            <span class="s1">&#39;help&#39;</span><span class="p">:</span> <span class="s1">&#39;Mode to restart from a saved checkpoint file&#39;</span><span class="p">},</span>
+        <span class="p">{</span><span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;ckpt_checksum&#39;</span><span class="p">,</span> <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="n">str2bool</span><span class="p">,</span>
+            <span class="s1">&#39;default&#39;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+            <span class="s1">&#39;help&#39;</span><span class="p">:</span> <span class="s1">&#39;Checksum the restart file after read+write&#39;</span><span class="p">},</span>
+        <span class="p">{</span><span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;ckpt_skip_epochs&#39;</span><span class="p">,</span> <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+            <span class="s1">&#39;default&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+            <span class="s1">&#39;help&#39;</span><span class="p">:</span> <span class="s1">&#39;Number of epochs to skip before saving epochs&#39;</span><span class="p">},</span>
+        <span class="p">{</span><span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;ckpt_directory&#39;</span><span class="p">,</span> <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+            <span class="s1">&#39;default&#39;</span><span class="p">:</span> <span class="s1">&#39;./save&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;help&#39;</span><span class="p">:</span> <span class="s1">&#39;Base directory in which to save checkpoints&#39;</span><span class="p">},</span>
+        <span class="c1"># saving</span>
+        <span class="p">{</span><span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;ckpt_save_best&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="n">str2bool</span><span class="p">,</span>
+            <span class="s1">&#39;default&#39;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+            <span class="s1">&#39;help&#39;</span><span class="p">:</span> <span class="s1">&#39;Toggle saving best model&#39;</span><span class="p">},</span>
+        <span class="p">{</span><span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;ckpt_save_best_metric&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+            <span class="s1">&#39;default&#39;</span><span class="p">:</span> <span class="s1">&#39;val_loss&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;help&#39;</span><span class="p">:</span> <span class="s1">&#39;Metric for determining when to save best model&#39;</span><span class="p">},</span>
+        <span class="p">{</span><span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;ckpt_save_weights_only&#39;</span><span class="p">,</span> <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="n">str2bool</span><span class="p">,</span>
+            <span class="s1">&#39;default&#39;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+            <span class="s1">&#39;help&#39;</span><span class="p">:</span> <span class="s1">&#39;Toggle saving only weights (not optimizer) (NYI)&#39;</span><span class="p">},</span>
+        <span class="p">{</span><span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;ckpt_save_interval&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+            <span class="s1">&#39;default&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+            <span class="s1">&#39;help&#39;</span><span class="p">:</span> <span class="s1">&#39;Interval to save checkpoints&#39;</span><span class="p">},</span>
+        <span class="c1"># keeping</span>
+        <span class="p">{</span><span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;ckpt_keep_mode&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;choices&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;linear&#39;</span><span class="p">,</span> <span class="s1">&#39;exponential&#39;</span><span class="p">],</span>
+            <span class="s1">&#39;help&#39;</span><span class="p">:</span> <span class="s1">&#39;Checkpoint saving mode. &#39;</span>
+            <span class="o">+</span> <span class="s2">&quot;choices are &#39;linear&#39; or &#39;exponential&#39; &quot;</span><span class="p">},</span>
+        <span class="p">{</span><span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;ckpt_keep_limit&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+            <span class="s1">&#39;default&#39;</span><span class="p">:</span> <span class="mi">1000000</span><span class="p">,</span>
+            <span class="s1">&#39;help&#39;</span><span class="p">:</span> <span class="s1">&#39;Limit checkpoints to keep&#39;</span><span class="p">}</span>
+    <span class="p">]</span>
+
+    <span class="n">defs</span> <span class="o">=</span> <span class="n">defs</span> <span class="o">+</span> <span class="n">new_defs</span>
+
+    <span class="k">return</span> <span class="n">defs</span></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2021, ANL.gov.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

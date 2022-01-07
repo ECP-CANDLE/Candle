@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>benchmark_def module &mdash; CANDLE  documentation</title><link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="CANDLE Shared Installation" href="../shared_installation.html" />
+    <link rel="prev" title="ckpt_keras_utils module" href="ckpt_keras_utils.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../index.html" class="icon icon-home"> CANDLE
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../readme.html">What is CANDLE?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorials/index.html">Tutorials</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../candle_lib.html">CANDLE Library API</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="candle_keras.html">candle_keras package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="data_preprocessing_utils.html">data_preprocessing_utils module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="data_utils.html">data_utils module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="default_utils.html">default_utils module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="exp_logger.html">exp_logger module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="feature_selection_utils.html">feature_selection_utils module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_utils.html">file_utils module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="generic_utils.html">generic_utils module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="keras_utils.html">keras_utils module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="P1_utils.html">P1_utils module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="profiling_utils.html">profiling_utils module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pytorch_utils.html">pytorch_utils module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="solr_keras.html">solr_keras module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="uq_utils.html">uq_utils module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="uq_keras_utils.html">uq_keras_utils module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="viz_utils.html">viz_utils module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="clr_keras_utils.html">clr_keras_utils module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="helper_utils.html">helper_utils module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="modac_utils.html">modac_utils module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="noise_utils.html">noise_utils module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="parsing_utils.html">parsing_utils module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ckpt_keras_utils.html">ckpt_keras_utils module</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">benchmark_def module</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../shared_installation.html">CANDLE Shared Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contribute.html">How to Contribute</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">CANDLE</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="../candle_lib.html">CANDLE Library API</a> &raquo;</li>
+      <li>benchmark_def module</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/candle_lib/benchmark_def.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <div class="section" id="module-benchmark_def">
+<span id="benchmark-def-module"></span><h1>benchmark_def module<a class="headerlink" href="#module-benchmark_def" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="benchmark_def.Benchmark">
+<em class="property">class </em><code class="sig-prename descclassname">benchmark_def.</code><code class="sig-name descname">Benchmark</code><span class="sig-paren">(</span><em class="sig-param">filepath</em>, <em class="sig-param">defmodel</em>, <em class="sig-param">framework</em>, <em class="sig-param">prog=None</em>, <em class="sig-param">desc=None</em>, <em class="sig-param">parser=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/benchmark_def.html#Benchmark"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#benchmark_def.Benchmark" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Class that implements an interface to handle configuration options for the
+different CANDLE benchmarks.
+It provides access to all the common configuration
+options and configuration options particular to each individual benchmark.
+It describes what minimum requirements should be specified to instantiate
+the corresponding benchmark.
+It interacts with the argparser to extract command-line options and arguments
+from the benchmark’s configuration files.</p>
+<dl class="method">
+<dt id="benchmark_def.Benchmark.check_required_exists">
+<code class="sig-name descname">check_required_exists</code><span class="sig-paren">(</span><em class="sig-param">gparam</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/benchmark_def.html#Benchmark.check_required_exists"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#benchmark_def.Benchmark.check_required_exists" title="Permalink to this definition">¶</a></dt>
+<dd><p>Functionality to verify that the required
+model parameters have been specified.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="benchmark_def.Benchmark.format_benchmark_config_arguments">
+<code class="sig-name descname">format_benchmark_config_arguments</code><span class="sig-paren">(</span><em class="sig-param">dictfileparam</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/benchmark_def.html#Benchmark.format_benchmark_config_arguments"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#benchmark_def.Benchmark.format_benchmark_config_arguments" title="Permalink to this definition">¶</a></dt>
+<dd><p>Functionality to format the particular parameters of
+the benchmark.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>dictfileparam</strong> (<em>python dictionary</em>) – parameters read from configuration file</p></li>
+<li><p><strong>args</strong> (<em>python dictionary</em>) – parameters read from command-line
+Most of the time command-line overwrites configuration file
+except when the command-line is using default values and
+config file defines those values</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="benchmark_def.Benchmark.parse_parameters">
+<code class="sig-name descname">parse_parameters</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/benchmark_def.html#Benchmark.parse_parameters"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#benchmark_def.Benchmark.parse_parameters" title="Permalink to this definition">¶</a></dt>
+<dd><p>Functionality to parse options common
+for all benchmarks.
+This functionality is based on methods ‘get_default_neon_parser’ and
+‘get_common_parser’ which are defined previously(above). If the order changes
+or they are moved, the calling has to be updated.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="benchmark_def.Benchmark.read_config_file">
+<code class="sig-name descname">read_config_file</code><span class="sig-paren">(</span><em class="sig-param">file</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/benchmark_def.html#Benchmark.read_config_file"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#benchmark_def.Benchmark.read_config_file" title="Permalink to this definition">¶</a></dt>
+<dd><p>Functionality to read the configue file
+specific for each benchmark.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="benchmark_def.Benchmark.set_locals">
+<code class="sig-name descname">set_locals</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/benchmark_def.html#Benchmark.set_locals"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#benchmark_def.Benchmark.set_locals" title="Permalink to this definition">¶</a></dt>
+<dd><p>Functionality to set variables specific for the benchmark
+- required: set of required parameters for the benchmark.
+- additional_definitions: list of dictionaries describing                 the additional parameters for the benchmark.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="benchmark_def.set_seed">
+<code class="sig-prename descclassname">benchmark_def.</code><code class="sig-name descname">set_seed</code><span class="sig-paren">(</span><em class="sig-param">seed</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/benchmark_def.html#set_seed"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#benchmark_def.set_seed" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the seed of the pseudo-random generator to the specified value.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>seed</strong> (<em>int</em>) – Value to intialize or re-seed the generator.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="ckpt_keras_utils.html" class="btn btn-neutral float-left" title="ckpt_keras_utils module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../shared_installation.html" class="btn btn-neutral float-right" title="CANDLE Shared Installation" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2021, ANL.gov.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

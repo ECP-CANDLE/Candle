@@ -57,6 +57,12 @@
 <li class="toctree-l2"><a class="reference internal" href="uq_keras_utils.html">uq_keras_utils module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="viz_utils.html">viz_utils module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="clr_keras_utils.html">clr_keras_utils module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="helper_utils.html">helper_utils module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="modac_utils.html">modac_utils module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="noise_utils.html">noise_utils module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="parsing_utils.html">parsing_utils module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ckpt_keras_utils.html">ckpt_keras_utils module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="benchmark_def.html">benchmark_def module</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../shared_installation.html">CANDLE Shared Installation</a></li>
@@ -88,8 +94,211 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <div class="section" id="keras-utils-module">
-<h1>keras_utils module<a class="headerlink" href="#keras-utils-module" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="module-keras_utils">
+<span id="keras-utils-module"></span><h1>keras_utils module<a class="headerlink" href="#module-keras_utils" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="keras_utils.LoggingCallback">
+<em class="property">class </em><code class="sig-prename descclassname">keras_utils.</code><code class="sig-name descname">LoggingCallback</code><span class="sig-paren">(</span><em class="sig-param">print_fcn=&lt;built-in function print&gt;</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/keras_utils.html#LoggingCallback"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#keras_utils.LoggingCallback" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">keras.callbacks.Callback</span></code></p>
+<dl class="method">
+<dt id="keras_utils.LoggingCallback.on_epoch_end">
+<code class="sig-name descname">on_epoch_end</code><span class="sig-paren">(</span><em class="sig-param">epoch</em>, <em class="sig-param">logs={}</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/keras_utils.html#LoggingCallback.on_epoch_end"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#keras_utils.LoggingCallback.on_epoch_end" title="Permalink to this definition">¶</a></dt>
+<dd><p>Called at the end of an epoch.</p>
+<p>Subclasses should override for any actions to run. This function should only
+be called during TRAIN mode.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>epoch</strong> – Integer, index of epoch.</p></li>
+<li><p><strong>logs</strong> – <dl>
+<dt>Dict, metric results for this training epoch, and for the</dt><dd><p>validation epoch if validation is performed. Validation result keys
+are prefixed with <cite>val_</cite>. For training epoch, the values of the</p>
+</dd>
+<dt><cite>Model</cite>’s metrics are returned. Example<span class="classifier"><a href="#id1"><span class="problematic" id="id2">`</span></a>{‘loss’: 0.2, ‘accuracy’:</span></dt><dd><p>0.7}`.</p>
+</dd>
+</dl>
+</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="keras_utils.PermanentDropout">
+<em class="property">class </em><code class="sig-prename descclassname">keras_utils.</code><code class="sig-name descname">PermanentDropout</code><span class="sig-paren">(</span><em class="sig-param">rate</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/keras_utils.html#PermanentDropout"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#keras_utils.PermanentDropout" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">keras.layers.core.dropout.Dropout</span></code></p>
+<dl class="method">
+<dt id="keras_utils.PermanentDropout.call">
+<code class="sig-name descname">call</code><span class="sig-paren">(</span><em class="sig-param">x</em>, <em class="sig-param">mask=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/keras_utils.html#PermanentDropout.call"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#keras_utils.PermanentDropout.call" title="Permalink to this definition">¶</a></dt>
+<dd><p>This is where the layer’s logic lives.</p>
+<p>Note here that <cite>call()</cite> method in <cite>tf.keras</cite> is little bit different
+from <cite>keras</cite> API. In <cite>keras</cite> API, you can pass support masking for
+layers as additional arguments. Whereas <cite>tf.keras</cite> has <cite>compute_mask()</cite>
+method to support masking.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>inputs</strong> – <p>Input tensor, or dict/list/tuple of input tensors.
+The first positional <cite>inputs</cite> argument is subject to special rules:
+- <cite>inputs</cite> must be explicitly passed. A layer cannot have zero</p>
+<blockquote>
+<div><p>arguments, and <cite>inputs</cite> cannot be provided via the default value
+of a keyword argument.</p>
+</div></blockquote>
+<ul>
+<li><p>NumPy array or Python scalar values in <cite>inputs</cite> get cast as tensors.</p></li>
+<li><p>Keras mask metadata is only collected from <cite>inputs</cite>.</p></li>
+<li><p>Layers are built (<cite>build(input_shape)</cite> method)
+using shape info from <cite>inputs</cite> only.</p></li>
+<li><p><cite>input_spec</cite> compatibility is only checked against <cite>inputs</cite>.</p></li>
+<li><p>Mixed precision input casting is only applied to <cite>inputs</cite>.
+If a layer has tensor arguments in <cite>*args</cite> or <cite>**kwargs</cite>, their
+casting behavior in mixed precision should be handled manually.</p></li>
+<li><p>The SavedModel input specification is generated using <cite>inputs</cite> only.</p></li>
+<li><p>Integration with various ecosystem packages like TFMOT, TFLite,
+TF.js, etc is only supported for <cite>inputs</cite> and not for tensors in
+positional and keyword arguments.</p></li>
+</ul>
+</p></li>
+<li><p><strong>*args</strong> – Additional positional arguments. May contain tensors, although
+this is not recommended, for the reasons above.</p></li>
+<li><p><strong>**kwargs</strong> – <p>Additional keyword arguments. May contain tensors, although
+this is not recommended, for the reasons above.
+The following optional keyword arguments are reserved:
+- <cite>training</cite>: Boolean scalar tensor of Python boolean indicating</p>
+<blockquote>
+<div><p>whether the <cite>call</cite> is meant for training or inference.</p>
+</div></blockquote>
+<ul>
+<li><p><cite>mask</cite>: Boolean input mask. If the layer’s <cite>call()</cite> method takes a
+<cite>mask</cite> argument, its default value will be set to the mask generated
+for <cite>inputs</cite> by the previous layer (if <cite>input</cite> did come from a layer
+that generated a corresponding mask, i.e. if it came from a Keras
+layer with masking support).</p></li>
+</ul>
+</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>A tensor or list/tuple of tensors.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="keras_utils.build_initializer">
+<code class="sig-prename descclassname">keras_utils.</code><code class="sig-name descname">build_initializer</code><span class="sig-paren">(</span><em class="sig-param">type</em>, <em class="sig-param">kerasDefaults</em>, <em class="sig-param">seed=None</em>, <em class="sig-param">constant=0.0</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/keras_utils.html#build_initializer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#keras_utils.build_initializer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the initializer to the appropriate Keras initializer function
+based on the input string and learning rate. Other required values
+are set to the Keras default values</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>type</strong> (<em>string</em>) – <p>String to choose the initializer</p>
+<p>Options recognized: ‘constant’, ‘uniform’, ‘normal’,
+‘glorot_uniform’, ‘lecun_uniform’, ‘he_normal’</p>
+<p>See the Keras documentation for a full description of the options</p>
+</p></li>
+<li><p><strong>kerasDefaults</strong> (<em>list</em>) – List of default parameter values to ensure consistency between frameworks</p></li>
+<li><p><strong>seed</strong> (<em>integer</em>) – Random number seed</p></li>
+<li><p><strong>constant</strong> (<em>float</em>) – Constant value (for the constant initializer only)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><em>The appropriate Keras initializer function</em></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="keras_utils.build_optimizer">
+<code class="sig-prename descclassname">keras_utils.</code><code class="sig-name descname">build_optimizer</code><span class="sig-paren">(</span><em class="sig-param">type</em>, <em class="sig-param">lr</em>, <em class="sig-param">kerasDefaults</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/keras_utils.html#build_optimizer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#keras_utils.build_optimizer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the optimizer to the appropriate Keras optimizer function
+based on the input string and learning rate. Other required values
+are set to the Keras default values</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>type</strong> (<em>string</em>) – <p>String to choose the optimizer</p>
+<p>Options recognized: ‘sgd’, ‘rmsprop’, ‘adagrad’, adadelta’, ‘adam’
+See the Keras documentation for a full description of the options</p>
+</p></li>
+<li><p><strong>lr</strong> (<em>float</em>) – Learning rate</p></li>
+<li><p><strong>kerasDefaults</strong> (<em>list</em>) – List of default parameter values to ensure consistency between frameworks</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><em>The appropriate Keras optimizer function</em></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="keras_utils.corr">
+<code class="sig-prename descclassname">keras_utils.</code><code class="sig-name descname">corr</code><span class="sig-paren">(</span><em class="sig-param">y_true</em>, <em class="sig-param">y_pred</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/keras_utils.html#corr"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#keras_utils.corr" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="keras_utils.covariance">
+<code class="sig-prename descclassname">keras_utils.</code><code class="sig-name descname">covariance</code><span class="sig-paren">(</span><em class="sig-param">x</em>, <em class="sig-param">y</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/keras_utils.html#covariance"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#keras_utils.covariance" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="keras_utils.evaluate_autoencoder">
+<code class="sig-prename descclassname">keras_utils.</code><code class="sig-name descname">evaluate_autoencoder</code><span class="sig-paren">(</span><em class="sig-param">y_pred</em>, <em class="sig-param">y_test</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/keras_utils.html#evaluate_autoencoder"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#keras_utils.evaluate_autoencoder" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="keras_utils.get_function">
+<code class="sig-prename descclassname">keras_utils.</code><code class="sig-name descname">get_function</code><span class="sig-paren">(</span><em class="sig-param">name</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/keras_utils.html#get_function"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#keras_utils.get_function" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="keras_utils.mae">
+<code class="sig-prename descclassname">keras_utils.</code><code class="sig-name descname">mae</code><span class="sig-paren">(</span><em class="sig-param">y_true</em>, <em class="sig-param">y_pred</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/keras_utils.html#mae"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#keras_utils.mae" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="keras_utils.mse">
+<code class="sig-prename descclassname">keras_utils.</code><code class="sig-name descname">mse</code><span class="sig-paren">(</span><em class="sig-param">y_true</em>, <em class="sig-param">y_pred</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/keras_utils.html#mse"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#keras_utils.mse" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="keras_utils.r2">
+<code class="sig-prename descclassname">keras_utils.</code><code class="sig-name descname">r2</code><span class="sig-paren">(</span><em class="sig-param">y_true</em>, <em class="sig-param">y_pred</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/keras_utils.html#r2"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#keras_utils.r2" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="keras_utils.register_permanent_dropout">
+<code class="sig-prename descclassname">keras_utils.</code><code class="sig-name descname">register_permanent_dropout</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/keras_utils.html#register_permanent_dropout"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#keras_utils.register_permanent_dropout" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="keras_utils.set_parallelism_threads">
+<code class="sig-prename descclassname">keras_utils.</code><code class="sig-name descname">set_parallelism_threads</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/keras_utils.html#set_parallelism_threads"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#keras_utils.set_parallelism_threads" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the number of parallel threads according to the number available on the hardware</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="keras_utils.set_seed">
+<code class="sig-prename descclassname">keras_utils.</code><code class="sig-name descname">set_seed</code><span class="sig-paren">(</span><em class="sig-param">seed</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/keras_utils.html#set_seed"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#keras_utils.set_seed" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the random number seed to the desired value</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>seed</strong> (<em>integer</em>) – Random number seed.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="keras_utils.xent">
+<code class="sig-prename descclassname">keras_utils.</code><code class="sig-name descname">xent</code><span class="sig-paren">(</span><em class="sig-param">y_true</em>, <em class="sig-param">y_pred</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/keras_utils.html#xent"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#keras_utils.xent" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
 </div>
 
 

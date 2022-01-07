@@ -70,9 +70,9 @@
 <span></span><span class="kn">import</span> <span class="nn">sys</span>
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">import</span> <span class="nn">numpy.linalg</span> <span class="k">as</span> <span class="nn">la</span>
 <span class="kn">from</span> <span class="nn">scipy</span> <span class="kn">import</span> <span class="n">stats</span>
 <span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">Counter</span>
+
 
 <div class="viewcode-block" id="quantile_normalization"><a class="viewcode-back" href="../candle_lib/data_preprocessing_utils.html#data_preprocessing_utils.quantile_normalization">[docs]</a><span class="k">def</span> <span class="nf">quantile_normalization</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39;</span>
@@ -122,6 +122,7 @@
         <span class="n">norm_data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">norm_data</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="n">colnames</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="n">rownames</span><span class="p">)</span>
 
     <span class="k">return</span> <span class="n">norm_data</span></div>
+
 
 <div class="viewcode-block" id="generate_cross_validation_partition"><a class="viewcode-back" href="../candle_lib/data_preprocessing_utils.html#data_preprocessing_utils.generate_cross_validation_partition">[docs]</a><span class="k">def</span> <span class="nf">generate_cross_validation_partition</span><span class="p">(</span><span class="n">group_label</span><span class="p">,</span> <span class="n">n_folds</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">n_repeats</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">portions</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">random_seed</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39;</span>
@@ -198,8 +199,6 @@
             <span class="n">partition</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">temp</span><span class="p">)</span>
 
     <span class="k">return</span> <span class="n">partition</span></div>
-
-
 </pre></div>
 
            </div>

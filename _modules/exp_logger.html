@@ -89,6 +89,7 @@
     <span class="p">}]</span>
     <span class="n">save</span><span class="p">(</span><span class="s2">&quot;experiment_start.json&quot;</span><span class="p">,</span> <span class="n">msg</span><span class="p">)</span></div>
 
+
 <div class="viewcode-block" id="end"><a class="viewcode-back" href="../candle_lib/exp_logger.html#exp_logger.end">[docs]</a><span class="k">def</span> <span class="nf">end</span><span class="p">(</span><span class="n">experiment_id</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Capture exp end &quot;&quot;&quot;</span>
     <span class="n">exp_end</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
@@ -98,6 +99,7 @@
         <span class="s1">&#39;end_time&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;set&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">exp_end</span><span class="p">)}</span>
     <span class="p">}]</span>
     <span class="n">save</span><span class="p">(</span><span class="s2">&quot;experiment_end.json&quot;</span><span class="p">,</span> <span class="n">msg</span><span class="p">)</span></div>
+
 
 <div class="viewcode-block" id="save"><a class="viewcode-back" href="../candle_lib/exp_logger.html#exp_logger.save">[docs]</a><span class="k">def</span> <span class="nf">save</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">msg</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Save log message&quot;&quot;&quot;</span>

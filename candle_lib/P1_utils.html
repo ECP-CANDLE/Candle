@@ -57,6 +57,12 @@
 <li class="toctree-l2"><a class="reference internal" href="uq_keras_utils.html">uq_keras_utils module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="viz_utils.html">viz_utils module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="clr_keras_utils.html">clr_keras_utils module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="helper_utils.html">helper_utils module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="modac_utils.html">modac_utils module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="noise_utils.html">noise_utils module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="parsing_utils.html">parsing_utils module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ckpt_keras_utils.html">ckpt_keras_utils module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="benchmark_def.html">benchmark_def module</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../shared_installation.html">CANDLE Shared Installation</a></li>
@@ -88,8 +94,202 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <div class="section" id="p1-utils-module">
-<h1>P1_utils module<a class="headerlink" href="#p1-utils-module" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="module-P1_utils">
+<span id="p1-utils-module"></span><h1>P1_utils module<a class="headerlink" href="#module-P1_utils" title="Permalink to this headline">¶</a></h1>
+<dl class="function">
+<dt id="P1_utils.aprior">
+<code class="sig-prename descclassname">P1_utils.</code><code class="sig-name descname">aprior</code><span class="sig-paren">(</span><em class="sig-param">gamma_hat</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/P1_utils.html#aprior"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#P1_utils.aprior" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="P1_utils.bprior">
+<code class="sig-prename descclassname">P1_utils.</code><code class="sig-name descname">bprior</code><span class="sig-paren">(</span><em class="sig-param">gamma_hat</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/P1_utils.html#bprior"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#P1_utils.bprior" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="P1_utils.calculate_concordance_correlation_coefficient">
+<code class="sig-prename descclassname">P1_utils.</code><code class="sig-name descname">calculate_concordance_correlation_coefficient</code><span class="sig-paren">(</span><em class="sig-param">u</em>, <em class="sig-param">v</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/P1_utils.html#calculate_concordance_correlation_coefficient"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#P1_utils.calculate_concordance_correlation_coefficient" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function calculates the concordance correlation coefficient between two input 1-D numpy arrays.</p>
+<p>u: 1-D numpy array of a variable
+v: 1-D numpy array of a variable</p>
+<p>ccc: a numeric value of concordance correlation coefficient between the two input variables.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="P1_utils.combat_batch_effect_removal">
+<code class="sig-prename descclassname">P1_utils.</code><code class="sig-name descname">combat_batch_effect_removal</code><span class="sig-paren">(</span><em class="sig-param">data</em>, <em class="sig-param">batch_labels</em>, <em class="sig-param">model=None</em>, <em class="sig-param">numerical_covariates=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/P1_utils.html#combat_batch_effect_removal"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#P1_utils.combat_batch_effect_removal" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function corrects for batch effect in data.</p>
+<p>data: pandas data frame of numeric values, with a size of (n_features, n_samples)
+batch_labels: pandas series, with a length of n_samples. It should provide the batch labels of samples.</p>
+<blockquote>
+<div><p>Its indices are the same as the column names (sample names) in “data”.</p>
+</div></blockquote>
+<dl class="simple">
+<dt>model: an object of patsy.design_info.DesignMatrix. It is a design matrix describing the covariate</dt><dd><p>information on the samples that could cause batch effects. If not provided, this function
+will attempt to coarsely correct just based on the information provided in “batch”.</p>
+</dd>
+<dt>numerical_covariates: a list of the names of covariates in “model” that are numerical rather than</dt><dd><p>categorical.</p>
+</dd>
+</dl>
+<dl class="simple">
+<dt>corrected<span class="classifier">pandas data frame of numeric values, with a size of (n_features, n_samples). It is</span></dt><dd><p>the data with batch effects corrected.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="P1_utils.coxen_multi_drug_gene_selection">
+<code class="sig-prename descclassname">P1_utils.</code><code class="sig-name descname">coxen_multi_drug_gene_selection</code><span class="sig-paren">(</span><em class="sig-param">source_data</em>, <em class="sig-param">target_data</em>, <em class="sig-param">drug_response_data</em>, <em class="sig-param">drug_response_col</em>, <em class="sig-param">tumor_col</em>, <em class="sig-param">drug_col</em>, <em class="sig-param">prediction_power_measure='lm'</em>, <em class="sig-param">num_predictive_gene=100</em>, <em class="sig-param">generalization_power_measure='ccc'</em>, <em class="sig-param">num_generalizable_gene=50</em>, <em class="sig-param">union_of_single_drug_selection=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/P1_utils.html#coxen_multi_drug_gene_selection"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#P1_utils.coxen_multi_drug_gene_selection" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function uses the COXEN approach to select genes for predicting the response of multiple drugs.
+It assumes no missing data exist. It works in three modes.
+(1) If union_of_single_drug_selection is True, prediction_power_measure must be either ‘pearson’ or ‘mutual_info’.
+This functions runs coxen_single_drug_gene_selection for every drug with the parameter setting and takes the
+union of the selected genes of every drug as the output. The size of the selected gene set may be larger than
+num_generalizable_gene.
+(2) If union_of_single_drug_selection is False and prediction_power_measure is ‘lm’, this function uses a
+linear model to fit the response of multiple drugs using the expression of a gene, while the drugs are
+one-hot encoded. The p-value associated with the coefficient of gene expression is used as the prediction
+power measure, according to which num_predictive_gene genes will be selected. Then, among the predictive
+genes, num_generalizable_gene generalizable genes will be  selected.
+(3) If union_of_single_drug_selection is False and prediction_power_measure is ‘pearson’ or ‘mutual_info’,
+for each drug this functions ranks the genes according to their power of predicting the
+response of the drug. The union of an equal number of predictive genes for every drug will be generated,
+and its size must be at least num_predictive_gene. Then, num_generalizable_gene generalizable genes
+will be selected.</p>
+<dl class="simple">
+<dt>source_data: pandas data frame of gene expressions of tumors, for which drug response is known. Its size is</dt><dd><p>[n_source_samples, n_features].</p>
+</dd>
+<dt>target_data: pandas data frame of gene expressions of tumors, for which drug response needs to be predicted.</dt><dd><p>Its size is [n_target_samples, n_features]. source_data and target_data have the same set
+of features and the orders of features must match.</p>
+</dd>
+<dt>drug_response_data: pandas data frame of drug response that must include a column of drug response values,</dt><dd><p>a column of tumor IDs, and a column of drug IDs.</p>
+</dd>
+<dt>drug_response_col: non-negative integer or string. If integer, it is the column index of drug response in</dt><dd><p>drug_response_data. If string, it is the column name of drug response.</p>
+</dd>
+<dt>tumor_col: non-negative integer or string. If integer, it is the column index of tumor IDs in drug_response_data.</dt><dd><p>If string, it is the column name of tumor IDs.</p>
+</dd>
+<dt>drug_col: non-negative integer or string. If integer, it is the column index of drugs in drug_response_data.</dt><dd><p>If string, it is the column name of drugs.</p>
+</dd>
+<dt>prediction_power_measure: string. ‘pearson’ uses the absolute value of Pearson correlation coefficient to</dt><dd><p>measure prediction power of a gene; ‘mutual_info’ uses the mutual information to measure prediction power
+of a gene; ‘lm’ uses the linear regression model to select predictive genes for multiple drugs. Default is ‘lm’.</p>
+</dd>
+</dl>
+<p>num_predictive_gene: positive integer indicating the number of predictive genes to be selected.
+generalization_power_measure: string. ‘pearson’ indicates the Pearson correlation coefficient;</p>
+<blockquote>
+<div><p>‘ccc’ indicates the concordance correlation coefficient. Default is ‘ccc’.</p>
+</div></blockquote>
+<p>num_generalizable_gene: positive integer indicating the number of generalizable genes to be selected.
+union_of_single_drug_selection: boolean, indicating whether the final gene set should be the union of genes</p>
+<blockquote>
+<div><p>selected for every drug.</p>
+</div></blockquote>
+<p>indices: 1-D numpy array containing the indices of selected genes.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="P1_utils.coxen_single_drug_gene_selection">
+<code class="sig-prename descclassname">P1_utils.</code><code class="sig-name descname">coxen_single_drug_gene_selection</code><span class="sig-paren">(</span><em class="sig-param">source_data</em>, <em class="sig-param">target_data</em>, <em class="sig-param">drug_response_data</em>, <em class="sig-param">drug_response_col</em>, <em class="sig-param">tumor_col</em>, <em class="sig-param">prediction_power_measure='pearson'</em>, <em class="sig-param">num_predictive_gene=100</em>, <em class="sig-param">generalization_power_measure='ccc'</em>, <em class="sig-param">num_generalizable_gene=50</em>, <em class="sig-param">multi_drug_mode=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/P1_utils.html#coxen_single_drug_gene_selection"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#P1_utils.coxen_single_drug_gene_selection" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function selects genes for drug response prediction using the COXEN approach. The COXEN approach is
+designed for selecting genes to predict the response of tumor cells to a specific drug. This function
+assumes no missing data exist.</p>
+<dl class="simple">
+<dt>source_data: pandas data frame of gene expressions of tumors, for which drug response is known. Its size is</dt><dd><p>[n_source_samples, n_features].</p>
+</dd>
+<dt>target_data: pandas data frame of gene expressions of tumors, for which drug response needs to be predicted.</dt><dd><p>Its size is [n_target_samples, n_features]. source_data and target_data have the same set
+of features and the orders of features must match.</p>
+</dd>
+<dt>drug_response_data: pandas data frame of drug response values for a drug. It must include a column of drug</dt><dd><p>response values and a column of tumor IDs.</p>
+</dd>
+<dt>drug_response_col: non-negative integer or string. If integer, it is the column index of drug response in</dt><dd><p>drug_response_data. If string, it is the column name of drug response.</p>
+</dd>
+<dt>tumor_col: non-negative integer or string. If integer, it is the column index of tumor IDs in drug_response_data.</dt><dd><p>If string, it is the column name of tumor IDs.</p>
+</dd>
+<dt>prediction_power_measure: string. ‘pearson’ uses the absolute value of Pearson correlation coefficient to</dt><dd><p>measure prediction power of gene; ‘mutual_info’ uses the mutual information to measure prediction power
+of gene. Default is ‘pearson’.</p>
+</dd>
+</dl>
+<p>num_predictive_gene: positive integer indicating the number of predictive genes to be selected.
+generalization_power_measure: string. ‘pearson’ indicates the Pearson correlation coefficient;</p>
+<blockquote>
+<div><p>‘ccc’ indicates the concordance correlation coefficient. Default is ‘ccc’.</p>
+</div></blockquote>
+<p>num_generalizable_gene: positive integer indicating the number of generalizable genes to be selected.
+multi_drug_mode: boolean, indicating whether the function runs as an auxiliary function of COXEN</p>
+<blockquote>
+<div><p>gene selection for multiple drugs. Default is False.</p>
+</div></blockquote>
+<p>indices: 1-D numpy array containing the indices of selected genes, if multi_drug_mode is False;
+1-D numpy array of indices of sorting all genes according to their prediction power, if multi_drug_mode is True.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="P1_utils.design_mat">
+<code class="sig-prename descclassname">P1_utils.</code><code class="sig-name descname">design_mat</code><span class="sig-paren">(</span><em class="sig-param">mod</em>, <em class="sig-param">numerical_covariates</em>, <em class="sig-param">batch_levels</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/P1_utils.html#design_mat"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#P1_utils.design_mat" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="P1_utils.generalization_feature_selection">
+<code class="sig-prename descclassname">P1_utils.</code><code class="sig-name descname">generalization_feature_selection</code><span class="sig-paren">(</span><em class="sig-param">data1</em>, <em class="sig-param">data2</em>, <em class="sig-param">measure</em>, <em class="sig-param">cutoff</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/P1_utils.html#generalization_feature_selection"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#P1_utils.generalization_feature_selection" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function uses the Pearson correlation coefficient to select the features that are generalizable
+between data1 and data2.</p>
+<p>data1: 2D numpy array of the first dataset with a size of (n_samples_1, n_features)
+data2: 2D numpy array of the second dataset with a size of (n_samples_2, n_features)
+measure: string. ‘pearson’ indicates the Pearson correlation coefficient;</p>
+<blockquote>
+<div><p>‘ccc’ indicates the concordance correlation coefficient. Default is ‘pearson’.</p>
+</div></blockquote>
+<dl class="simple">
+<dt>cutoff: a positive number for selecting generalizable features. If cutoff &lt; 1, this function selects</dt><dd><p>the features with a correlation coefficient &gt;= cutoff. If cutoff &gt;= 1, it must be an
+integer indicating the number of features to be selected based on correlation coefficient.</p>
+</dd>
+</dl>
+<p>fid: 1-D numpy array containing the indices of selected features.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="P1_utils.generate_gene_set_data">
+<code class="sig-prename descclassname">P1_utils.</code><code class="sig-name descname">generate_gene_set_data</code><span class="sig-paren">(</span><em class="sig-param">data</em>, <em class="sig-param">genes</em>, <em class="sig-param">gene_name_type='entrez'</em>, <em class="sig-param">gene_set_category='c6.all'</em>, <em class="sig-param">metric='mean'</em>, <em class="sig-param">standardize=False</em>, <em class="sig-param">data_dir='../../Data/examples/Gene_Sets/MSigDB.v7.0/'</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/P1_utils.html#generate_gene_set_data"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#P1_utils.generate_gene_set_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function generates genomic data summarized at the gene set level.</p>
+<p>data: numpy array or pandas data frame of numeric values, with a shape of [n_samples, n_features].
+genes: 1-D array or list of gene names with a length of n_features. It indicates which gene a genomic</p>
+<blockquote>
+<div><p>feature belongs to.</p>
+</div></blockquote>
+<dl class="simple">
+<dt>gene_name_type: string, indicating the type of gene name used in genes. ‘entrez’ indicates Entrez gene ID and</dt><dd><p>‘symbols’ indicates HGNC gene symbol. Default is ‘symbols’.</p>
+</dd>
+<dt>gene_set_category: string, indicating the gene sets for which data will be calculated. ‘c2.cgp’ indicates gene sets</dt><dd><p>affected by chemical and genetic perturbations; ‘c2.cp.biocarta’ indicates BioCarta gene sets; ‘c2.cp.kegg’
+indicates KEGG gene sets; ‘c2.cp.pid’ indicates PID gene sets; ‘c2.cp.reactome’ indicates Reactome gene sets;
+‘c5.bp’ indicates GO biological processes; ‘c5.cc’ indicates GO cellular components; ‘c5.mf’ indicates
+GO molecular functions; ‘c6.all’ indicates oncogenic signatures. Default is ‘c6.all’.</p>
+</dd>
+<dt>metric: string, indicating the way to calculate gene-set-level data. ‘mean’ calculates the mean of gene</dt><dd><p>features belonging to the same gene set. ‘sum’ calculates the summation of gene features belonging
+to the same gene set. ‘max’ calculates the maximum of gene features. ‘min’ calculates the minimum
+of gene features. ‘abs_mean’ calculates the mean of absolute values. ‘abs_maximum’ calculates
+the maximum of absolute values. Default is ‘mean’.</p>
+</dd>
+<dt>standardize: boolean, indicating whether to standardize features before calculation. Standardization transforms</dt><dd><p>each feature to have a zero mean and a unit standard deviation.</p>
+</dd>
+</dl>
+<p>gene_set_data: a data frame of calculated gene-set-level data. Column names are the gene set names.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="P1_utils.it_sol">
+<code class="sig-prename descclassname">P1_utils.</code><code class="sig-name descname">it_sol</code><span class="sig-paren">(</span><em class="sig-param">sdat</em>, <em class="sig-param">g_hat</em>, <em class="sig-param">d_hat</em>, <em class="sig-param">g_bar</em>, <em class="sig-param">t2</em>, <em class="sig-param">a</em>, <em class="sig-param">b</em>, <em class="sig-param">conv=0.0001</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/P1_utils.html#it_sol"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#P1_utils.it_sol" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="P1_utils.postmean">
+<code class="sig-prename descclassname">P1_utils.</code><code class="sig-name descname">postmean</code><span class="sig-paren">(</span><em class="sig-param">g_hat</em>, <em class="sig-param">g_bar</em>, <em class="sig-param">n</em>, <em class="sig-param">d_star</em>, <em class="sig-param">t2</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/P1_utils.html#postmean"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#P1_utils.postmean" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="P1_utils.postvar">
+<code class="sig-prename descclassname">P1_utils.</code><code class="sig-name descname">postvar</code><span class="sig-paren">(</span><em class="sig-param">sum2</em>, <em class="sig-param">n</em>, <em class="sig-param">a</em>, <em class="sig-param">b</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/P1_utils.html#postvar"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#P1_utils.postvar" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
 </div>
 
 

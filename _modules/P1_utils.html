@@ -1,68 +1,30 @@
-
-
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
   <meta charset="utf-8" />
-  
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  
-  <title>P1_utils &mdash; CANDLE  documentation</title>
-  
-
-  
-  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-
-  
-  
-
-  
-  
-
-  
-
-  
+  <title>P1_utils &mdash; CANDLE  documentation</title><link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
   <!--[if lt IE 9]>
     <script src="../_static/js/html5shiv.min.js"></script>
   <![endif]-->
-  
-    
-      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+  <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
         <script src="../_static/doctools.js"></script>
-    
-    <script type="text/javascript" src="../_static/js/theme.js"></script>
-
-    
+        <script src="../_static/language_data.js"></script>
+    <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" /> 
 </head>
 
-<body class="wy-body-for-nav">
-
-   
+<body class="wy-body-for-nav"> 
   <div class="wy-grid-for-nav">
-    
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-          
-
-          
             <a href="../index.html" class="icon icon-home"> CANDLE
-          
-
-          
           </a>
-
-          
-            
-            
-          
-
-          
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" />
@@ -70,18 +32,7 @@
     <input type="hidden" name="area" value="default" />
   </form>
 </div>
-
-          
-        </div>
-
-        
-        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
-          
-            
-            
-              
-            
-            
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <p class="caption"><span class="caption-text">Contents:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../readme.html">What is CANDLE?</a></li>
@@ -91,69 +42,30 @@
 <li class="toctree-l1"><a class="reference internal" href="../contribute.html">How to Contribute</a></li>
 </ul>
 
-            
-          
         </div>
-        
       </div>
     </nav>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
-
-      
-      <nav class="wy-nav-top" aria-label="top navigation">
-        
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="../index.html">CANDLE</a>
-        
       </nav>
 
-
       <div class="wy-nav-content">
-        
         <div class="rst-content">
-        
-          
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div role="navigation" aria-label="breadcrumbs navigation">
-
+          <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-    
       <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
-        
           <li><a href="index.html">Module code</a> &raquo;</li>
-        
       <li>P1_utils</li>
-    
-    
       <li class="wy-breadcrumbs-aside">
-        
       </li>
-    
   </ul>
-
-  
   <hr/>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
-            
+             
   <h1>Source code for P1_utils</h1><div class="highlight"><pre>
 <span></span><span class="kn">import</span> <span class="nn">sys</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
@@ -164,12 +76,10 @@
 <span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">StandardScaler</span>
 <span class="kn">import</span> <span class="nn">statsmodels.api</span> <span class="k">as</span> <span class="nn">sm</span>
 
-<span class="kn">from</span>  <span class="nn">feature_selection_utils</span> <span class="kn">import</span> <span class="n">select_features_by_variation</span>
-
-<span class="c1">################### Auxiliary functions of COXEN start here ####################</span>
+<span class="kn">from</span> <span class="nn">feature_selection_utils</span> <span class="kn">import</span> <span class="n">select_features_by_variation</span>
 
 
-
+<span class="c1"># Auxiliary functions of COXEN start here ####################</span>
 <div class="viewcode-block" id="calculate_concordance_correlation_coefficient"><a class="viewcode-back" href="../candle_lib/P1_utils.html#P1_utils.calculate_concordance_correlation_coefficient">[docs]</a><span class="k">def</span> <span class="nf">calculate_concordance_correlation_coefficient</span><span class="p">(</span><span class="n">u</span><span class="p">,</span> <span class="n">v</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">    This function calculates the concordance correlation coefficient between two input 1-D numpy arrays.</span>
@@ -185,9 +95,8 @@
 <span class="sd">    &#39;&#39;&#39;</span>
     <span class="n">a</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">((</span><span class="n">u</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">u</span><span class="p">))</span> <span class="o">*</span> <span class="p">(</span><span class="n">v</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">v</span><span class="p">)))</span>
     <span class="n">b</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">square</span><span class="p">(</span><span class="n">u</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">u</span><span class="p">)))</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">square</span><span class="p">(</span><span class="n">v</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">v</span><span class="p">)))</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">square</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">u</span><span class="p">)</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">v</span><span class="p">))</span>
-    <span class="n">ccc</span> <span class="o">=</span> <span class="n">a</span><span class="o">/</span><span class="n">b</span>
+    <span class="n">ccc</span> <span class="o">=</span> <span class="n">a</span> <span class="o">/</span> <span class="n">b</span>
     <span class="k">return</span> <span class="n">ccc</span></div>
-
 
 
 <div class="viewcode-block" id="generalization_feature_selection"><a class="viewcode-back" href="../candle_lib/P1_utils.html#P1_utils.generalization_feature_selection">[docs]</a><span class="k">def</span> <span class="nf">generalization_feature_selection</span><span class="p">(</span><span class="n">data1</span><span class="p">,</span> <span class="n">data2</span><span class="p">,</span> <span class="n">measure</span><span class="p">,</span> <span class="n">cutoff</span><span class="p">):</span>
@@ -220,18 +129,17 @@
     <span class="k">elif</span> <span class="n">measure</span> <span class="o">==</span> <span class="s1">&#39;ccc&#39;</span><span class="p">:</span>
         <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num</span><span class="p">):</span>
             <span class="n">cor</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">calculate_concordance_correlation_coefficient</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">cor1</span><span class="p">[:</span><span class="n">i</span><span class="p">,</span> <span class="n">i</span><span class="p">])</span> <span class="o">+</span> <span class="nb">list</span><span class="p">(</span><span class="n">cor1</span><span class="p">[(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):,</span> <span class="n">i</span><span class="p">])),</span>
-                <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">cor2</span><span class="p">[:</span><span class="n">i</span><span class="p">,</span> <span class="n">i</span><span class="p">])</span> <span class="o">+</span> <span class="nb">list</span><span class="p">(</span><span class="n">cor2</span><span class="p">[(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):,</span> <span class="n">i</span><span class="p">]))))</span>
+                       <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">cor2</span><span class="p">[:</span><span class="n">i</span><span class="p">,</span> <span class="n">i</span><span class="p">])</span> <span class="o">+</span> <span class="nb">list</span><span class="p">(</span><span class="n">cor2</span><span class="p">[(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):,</span> <span class="n">i</span><span class="p">]))))</span>
     <span class="n">cor</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">cor</span><span class="p">)</span>
     <span class="n">fid</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argsort</span><span class="p">(</span><span class="o">-</span><span class="n">cor</span><span class="p">)[:</span><span class="nb">int</span><span class="p">(</span><span class="n">cutoff</span><span class="p">)]</span>
     <span class="k">return</span> <span class="n">fid</span></div>
 
 
-
-<span class="c1">################### Auxiliary functions of COXEN end here ####################</span>
-
-<div class="viewcode-block" id="coxen_single_drug_gene_selection"><a class="viewcode-back" href="../candle_lib/P1_utils.html#P1_utils.coxen_single_drug_gene_selection">[docs]</a><span class="k">def</span> <span class="nf">coxen_single_drug_gene_selection</span><span class="p">(</span><span class="n">source_data</span><span class="p">,</span> <span class="n">target_data</span><span class="p">,</span> <span class="n">drug_response_data</span><span class="p">,</span> <span class="n">drug_response_col</span><span class="p">,</span> <span class="n">tumor_col</span><span class="p">,</span>
+<span class="c1"># Auxiliary functions of COXEN end here ####################</span>
+<div class="viewcode-block" id="coxen_single_drug_gene_selection"><a class="viewcode-back" href="../candle_lib/P1_utils.html#P1_utils.coxen_single_drug_gene_selection">[docs]</a><span class="k">def</span> <span class="nf">coxen_single_drug_gene_selection</span><span class="p">(</span>
+    <span class="n">source_data</span><span class="p">,</span> <span class="n">target_data</span><span class="p">,</span> <span class="n">drug_response_data</span><span class="p">,</span> <span class="n">drug_response_col</span><span class="p">,</span> <span class="n">tumor_col</span><span class="p">,</span>
     <span class="n">prediction_power_measure</span><span class="o">=</span><span class="s1">&#39;pearson&#39;</span><span class="p">,</span> <span class="n">num_predictive_gene</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">generalization_power_measure</span><span class="o">=</span><span class="s1">&#39;ccc&#39;</span><span class="p">,</span>
-    <span class="n">num_generalizable_gene</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">multi_drug_mode</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="n">num_generalizable_gene</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">multi_drug_mode</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">    This function selects genes for drug response prediction using the COXEN approach. The COXEN approach is</span>
 <span class="sd">    designed for selecting genes to predict the response of tumor cells to a specific drug. This function</span>
@@ -289,21 +197,22 @@
     <span class="c1"># Perform the first step of COXEN approach to select predictive genes. To avoid exceeding the memory limit,</span>
     <span class="c1"># the prediction power of genes is calculated in batches.</span>
     <span class="n">batchSize</span> <span class="o">=</span> <span class="mi">1000</span>
-    <span class="n">numBatch</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">ceil</span><span class="p">(</span><span class="n">source_data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">/</span><span class="n">batchSize</span><span class="p">))</span>
+    <span class="n">numBatch</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">ceil</span><span class="p">(</span><span class="n">source_data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">/</span> <span class="n">batchSize</span><span class="p">))</span>
     <span class="n">prediction_power</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">((</span><span class="n">source_data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="mi">1</span><span class="p">))</span>
     <span class="n">prediction_power</span><span class="o">.</span><span class="n">fill</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">)</span>
     <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">numBatch</span><span class="p">):</span>
-        <span class="n">startIndex</span> <span class="o">=</span> <span class="n">i</span><span class="o">*</span><span class="n">batchSize</span>
-        <span class="n">endIndex</span> <span class="o">=</span> <span class="nb">min</span><span class="p">((</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="o">*</span><span class="n">batchSize</span><span class="p">,</span> <span class="n">source_data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+        <span class="n">startIndex</span> <span class="o">=</span> <span class="n">i</span> <span class="o">*</span> <span class="n">batchSize</span>
+        <span class="n">endIndex</span> <span class="o">=</span> <span class="nb">min</span><span class="p">((</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">batchSize</span><span class="p">,</span> <span class="n">source_data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
 
         <span class="k">if</span> <span class="n">prediction_power_measure</span> <span class="o">==</span> <span class="s1">&#39;pearson&#39;</span><span class="p">:</span>
-            <span class="n">cor_i</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">corrcoef</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">vstack</span><span class="p">((</span><span class="n">np</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="n">source_data</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span> <span class="n">startIndex</span><span class="p">:</span><span class="n">endIndex</span><span class="p">]</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">drug_response_data</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span> <span class="n">tumor_col</span><span class="p">],</span>
-                <span class="p">:]</span><span class="o">.</span><span class="n">values</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">drug_response_data</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span> <span class="n">drug_response_col</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">drug_response_data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])))))</span>
+            <span class="n">cor_i</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">corrcoef</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">vstack</span><span class="p">(</span>
+                <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="n">source_data</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span> <span class="n">startIndex</span><span class="p">:</span><span class="n">endIndex</span><span class="p">]</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">drug_response_data</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span> <span class="n">tumor_col</span><span class="p">],</span> <span class="p">:]</span><span class="o">.</span><span class="n">values</span><span class="p">),</span>
+                 <span class="n">np</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">drug_response_data</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span> <span class="n">drug_response_col</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">drug_response_data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])))))</span>
             <span class="n">prediction_power</span><span class="p">[</span><span class="n">startIndex</span><span class="p">:</span><span class="n">endIndex</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="nb">abs</span><span class="p">(</span><span class="n">cor_i</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">])</span>
 
         <span class="k">if</span> <span class="n">prediction_power_measure</span> <span class="o">==</span> <span class="s1">&#39;mutual_info&#39;</span><span class="p">:</span>
             <span class="n">mi</span> <span class="o">=</span> <span class="n">mutual_info_regression</span><span class="p">(</span><span class="n">X</span><span class="o">=</span><span class="n">source_data</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span> <span class="n">startIndex</span><span class="p">:</span><span class="n">endIndex</span><span class="p">]</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">drug_response_data</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span> <span class="n">tumor_col</span><span class="p">],</span> <span class="p">:]</span><span class="o">.</span><span class="n">values</span><span class="p">,</span>
-                                <span class="n">y</span><span class="o">=</span><span class="n">drug_response_data</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span> <span class="n">drug_response_col</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>
+                                        <span class="n">y</span><span class="o">=</span><span class="n">drug_response_data</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span> <span class="n">drug_response_col</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>
             <span class="n">prediction_power</span><span class="p">[</span><span class="n">startIndex</span><span class="p">:</span><span class="n">endIndex</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">mi</span>
 
     <span class="k">if</span> <span class="n">multi_drug_mode</span><span class="p">:</span>
@@ -325,9 +234,11 @@
 
     <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">indices</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="coxen_multi_drug_gene_selection"><a class="viewcode-back" href="../candle_lib/P1_utils.html#P1_utils.coxen_multi_drug_gene_selection">[docs]</a><span class="k">def</span> <span class="nf">coxen_multi_drug_gene_selection</span><span class="p">(</span><span class="n">source_data</span><span class="p">,</span> <span class="n">target_data</span><span class="p">,</span> <span class="n">drug_response_data</span><span class="p">,</span> <span class="n">drug_response_col</span><span class="p">,</span> <span class="n">tumor_col</span><span class="p">,</span> <span class="n">drug_col</span><span class="p">,</span>
-                         <span class="n">prediction_power_measure</span><span class="o">=</span><span class="s1">&#39;lm&#39;</span><span class="p">,</span> <span class="n">num_predictive_gene</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">generalization_power_measure</span><span class="o">=</span><span class="s1">&#39;ccc&#39;</span><span class="p">,</span>
-                         <span class="n">num_generalizable_gene</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">union_of_single_drug_selection</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+
+<div class="viewcode-block" id="coxen_multi_drug_gene_selection"><a class="viewcode-back" href="../candle_lib/P1_utils.html#P1_utils.coxen_multi_drug_gene_selection">[docs]</a><span class="k">def</span> <span class="nf">coxen_multi_drug_gene_selection</span><span class="p">(</span>
+    <span class="n">source_data</span><span class="p">,</span> <span class="n">target_data</span><span class="p">,</span> <span class="n">drug_response_data</span><span class="p">,</span> <span class="n">drug_response_col</span><span class="p">,</span> <span class="n">tumor_col</span><span class="p">,</span> <span class="n">drug_col</span><span class="p">,</span>
+    <span class="n">prediction_power_measure</span><span class="o">=</span><span class="s1">&#39;lm&#39;</span><span class="p">,</span> <span class="n">num_predictive_gene</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">generalization_power_measure</span><span class="o">=</span><span class="s1">&#39;ccc&#39;</span><span class="p">,</span>
+        <span class="n">num_generalizable_gene</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">union_of_single_drug_selection</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">    This function uses the COXEN approach to select genes for predicting the response of multiple drugs.</span>
 <span class="sd">    It assumes no missing data exist. It works in three modes.</span>
@@ -411,7 +322,7 @@
             <span class="n">idd</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">drug_response_data</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span> <span class="n">drug_col</span><span class="p">]</span> <span class="o">==</span> <span class="n">d</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
             <span class="n">response_d</span> <span class="o">=</span> <span class="n">drug_response_data</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">idd</span><span class="p">,</span> <span class="p">:]</span>
             <span class="n">gid2</span> <span class="o">=</span> <span class="n">coxen_single_drug_gene_selection</span><span class="p">(</span><span class="n">source_data</span><span class="p">,</span> <span class="n">target_data</span><span class="p">,</span> <span class="n">response_d</span><span class="p">,</span> <span class="n">drug_response_col</span><span class="p">,</span> <span class="n">tumor_col</span><span class="p">,</span>
-                <span class="n">prediction_power_measure</span><span class="p">,</span> <span class="n">num_predictive_gene</span><span class="p">,</span> <span class="n">generalization_power_measure</span><span class="p">,</span> <span class="n">num_generalizable_gene</span><span class="p">)</span>
+                                                    <span class="n">prediction_power_measure</span><span class="p">,</span> <span class="n">num_predictive_gene</span><span class="p">,</span> <span class="n">generalization_power_measure</span><span class="p">,</span> <span class="n">num_generalizable_gene</span><span class="p">)</span>
             <span class="n">gid1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">union1d</span><span class="p">(</span><span class="n">gid1</span><span class="p">,</span> <span class="n">gid2</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">std_id</span><span class="p">[</span><span class="n">gid1</span><span class="p">])</span>
 
@@ -429,7 +340,7 @@
             <span class="k">try</span><span class="p">:</span>
                 <span class="n">res</span> <span class="o">=</span> <span class="n">mod</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
                 <span class="n">pvalue</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">res</span><span class="o">.</span><span class="n">pvalues</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
-            <span class="k">except</span><span class="p">:</span>
+            <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
                 <span class="n">pvalue</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
 
         <span class="n">gid1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argsort</span><span class="p">(</span><span class="n">pvalue</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">])[:</span><span class="n">num_predictive_gene</span><span class="p">]</span>
@@ -441,12 +352,13 @@
         <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">drugs</span><span class="p">)):</span>
             <span class="n">idd</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">drug_response_data</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span> <span class="n">drug_col</span><span class="p">]</span> <span class="o">==</span> <span class="n">drugs</span><span class="p">[</span><span class="n">d</span><span class="p">])[</span><span class="mi">0</span><span class="p">]</span>
             <span class="n">response_d</span> <span class="o">=</span> <span class="n">drug_response_data</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">idd</span><span class="p">,</span> <span class="p">:]</span>
-            <span class="n">temp_rank</span> <span class="o">=</span> <span class="n">coxen_single_drug_gene_selection</span><span class="p">(</span><span class="n">source_data</span><span class="p">,</span> <span class="n">target_data</span><span class="p">,</span> <span class="n">response_d</span><span class="p">,</span>
+            <span class="n">temp_rank</span> <span class="o">=</span> <span class="n">coxen_single_drug_gene_selection</span><span class="p">(</span>
+                <span class="n">source_data</span><span class="p">,</span> <span class="n">target_data</span><span class="p">,</span> <span class="n">response_d</span><span class="p">,</span>
                 <span class="n">drug_response_col</span><span class="p">,</span> <span class="n">tumor_col</span><span class="p">,</span> <span class="n">prediction_power_measure</span><span class="p">,</span> <span class="n">num_predictive_gene</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
                 <span class="n">generalization_power_measure</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">num_generalizable_gene</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">multi_drug_mode</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
             <span class="n">gene_rank</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">d</span><span class="p">,</span> <span class="p">:</span><span class="nb">len</span><span class="p">(</span><span class="n">temp_rank</span><span class="p">)]</span> <span class="o">=</span> <span class="n">temp_rank</span>
-        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">ceil</span><span class="p">(</span><span class="n">num_predictive_gene</span><span class="o">/</span><span class="nb">len</span><span class="p">(</span><span class="n">drugs</span><span class="p">))),</span> <span class="n">source_data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">+</span><span class="mi">1</span><span class="p">):</span>
-            <span class="n">gid1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">gene_rank</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span> <span class="p">:</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">gene_rank</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="n">i</span><span class="p">))[</span><span class="mi">0</span><span class="p">,</span> <span class="p">:])</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">ceil</span><span class="p">(</span><span class="n">num_predictive_gene</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">drugs</span><span class="p">))),</span> <span class="n">source_data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+            <span class="n">gid1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">gene_rank</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span> <span class="p">:</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">gene_rank</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="n">i</span><span class="p">))[</span><span class="mi">0</span><span class="p">,</span> <span class="p">:])</span>
             <span class="n">gid1</span> <span class="o">=</span> <span class="n">gid1</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">invert</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="n">gid1</span><span class="p">)))[</span><span class="mi">0</span><span class="p">]]</span>
             <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">gid1</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="n">num_predictive_gene</span><span class="p">:</span>
                 <span class="k">break</span>
@@ -464,6 +376,7 @@
     <span class="n">indices</span> <span class="o">=</span> <span class="n">std_id</span><span class="p">[</span><span class="n">gid1</span><span class="p">[</span><span class="n">gid2</span><span class="p">]]</span>
 
     <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">indices</span><span class="p">)</span></div>
+
 
 <div class="viewcode-block" id="generate_gene_set_data"><a class="viewcode-back" href="../candle_lib/P1_utils.html#P1_utils.generate_gene_set_data">[docs]</a><span class="k">def</span> <span class="nf">generate_gene_set_data</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">genes</span><span class="p">,</span> <span class="n">gene_name_type</span><span class="o">=</span><span class="s1">&#39;entrez&#39;</span><span class="p">,</span> <span class="n">gene_set_category</span><span class="o">=</span><span class="s1">&#39;c6.all&#39;</span><span class="p">,</span> <span class="n">metric</span><span class="o">=</span><span class="s1">&#39;mean&#39;</span><span class="p">,</span>
                            <span class="n">standardize</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">data_dir</span><span class="o">=</span><span class="s1">&#39;../../Data/examples/Gene_Sets/MSigDB.v7.0/&#39;</span><span class="p">):</span>
@@ -513,7 +426,7 @@
         <span class="n">gene_set_category</span> <span class="o">=</span> <span class="n">gene_set_category</span> <span class="o">+</span> <span class="s1">&#39;.v7.0.entrez.gmt&#39;</span>
     <span class="k">if</span> <span class="n">gene_name_type</span> <span class="o">==</span> <span class="s1">&#39;symbols&#39;</span><span class="p">:</span>
         <span class="n">gene_set_category</span> <span class="o">=</span> <span class="n">gene_set_category</span> <span class="o">+</span> <span class="s1">&#39;.v7.0.symbols.gmt&#39;</span>
-    <span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">data_dir</span>  <span class="o">+</span> <span class="n">gene_set_category</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span>
+    <span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">data_dir</span> <span class="o">+</span> <span class="n">gene_set_category</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span>
     <span class="n">x</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">readlines</span><span class="p">()</span>
     <span class="n">gene_sets</span> <span class="o">=</span> <span class="p">{}</span>
     <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">)):</span>
@@ -536,7 +449,7 @@
                 <span class="n">gene_set_data</span><span class="p">[:,</span> <span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nanmean</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">absolute</span><span class="p">(</span><span class="n">data</span><span class="p">[:,</span> <span class="n">idi</span><span class="p">]),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
             <span class="k">elif</span> <span class="n">metric</span> <span class="o">==</span> <span class="s1">&#39;abs_maximum&#39;</span><span class="p">:</span>
                 <span class="n">gene_set_data</span><span class="p">[:,</span> <span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nanmax</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">absolute</span><span class="p">(</span><span class="n">data</span><span class="p">[:,</span> <span class="n">idi</span><span class="p">]),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-            <span class="k">else</span><span class="p">:</span>  <span class="c1">#&#39;mean&#39;</span>
+            <span class="k">else</span><span class="p">:</span>  <span class="c1"># &#39;mean&#39;</span>
                 <span class="n">gene_set_data</span><span class="p">[:,</span> <span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nanmean</span><span class="p">(</span><span class="n">data</span><span class="p">[:,</span> <span class="n">idi</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 
     <span class="k">if</span> <span class="n">sample_name</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
@@ -548,32 +461,29 @@
 
     <span class="k">return</span> <span class="n">gene_set_data</span></div>
 
-<span class="c1">################### Auxiliary functions of ComBat start here ####################</span>
 
-
-
+<span class="c1"># Auxiliary functions of ComBat start here ####################</span>
 <div class="viewcode-block" id="design_mat"><a class="viewcode-back" href="../candle_lib/P1_utils.html#P1_utils.design_mat">[docs]</a><span class="k">def</span> <span class="nf">design_mat</span><span class="p">(</span><span class="n">mod</span><span class="p">,</span> <span class="n">numerical_covariates</span><span class="p">,</span> <span class="n">batch_levels</span><span class="p">):</span>
     <span class="c1"># require levels to make sure they are in the same order as we use in the</span>
     <span class="c1"># rest of the script.</span>
     <span class="n">design</span> <span class="o">=</span> <span class="n">patsy</span><span class="o">.</span><span class="n">dmatrix</span><span class="p">(</span><span class="s2">&quot;~ 0 + C(batch, levels=</span><span class="si">%s</span><span class="s2">)&quot;</span> <span class="o">%</span> <span class="nb">str</span><span class="p">(</span><span class="n">batch_levels</span><span class="p">),</span>
-                                                  <span class="n">mod</span><span class="p">,</span> <span class="n">return_type</span><span class="o">=</span><span class="s2">&quot;dataframe&quot;</span><span class="p">)</span>
+                           <span class="n">mod</span><span class="p">,</span> <span class="n">return_type</span><span class="o">=</span><span class="s2">&quot;dataframe&quot;</span><span class="p">)</span>
 
     <span class="n">mod</span> <span class="o">=</span> <span class="n">mod</span><span class="o">.</span><span class="n">drop</span><span class="p">([</span><span class="s2">&quot;batch&quot;</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
     <span class="n">numerical_covariates</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">numerical_covariates</span><span class="p">)</span>
-    <span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;found </span><span class="si">%i</span><span class="s2"> batches</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">design</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+    <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;found </span><span class="si">%i</span><span class="s2"> batches</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">design</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
     <span class="n">other_cols</span> <span class="o">=</span> <span class="p">[</span><span class="n">c</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">c</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">mod</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span>
-                  <span class="k">if</span> <span class="ow">not</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">numerical_covariates</span><span class="p">]</span>
+                  <span class="k">if</span> <span class="n">i</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">numerical_covariates</span><span class="p">]</span>
     <span class="n">factor_matrix</span> <span class="o">=</span> <span class="n">mod</span><span class="p">[</span><span class="n">other_cols</span><span class="p">]</span>
     <span class="n">design</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">((</span><span class="n">design</span><span class="p">,</span> <span class="n">factor_matrix</span><span class="p">),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">numerical_covariates</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;found </span><span class="si">%i</span><span class="s2"> numerical covariates...</span><span class="se">\n</span><span class="s2">&quot;</span>
-                            <span class="o">%</span> <span class="nb">len</span><span class="p">(</span><span class="n">numerical_covariates</span><span class="p">))</span>
+        <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;found </span><span class="si">%i</span><span class="s2"> numerical covariates...</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="nb">len</span><span class="p">(</span><span class="n">numerical_covariates</span><span class="p">))</span>
         <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">nC</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">numerical_covariates</span><span class="p">):</span>
             <span class="n">cname</span> <span class="o">=</span> <span class="n">mod</span><span class="o">.</span><span class="n">columns</span><span class="p">[</span><span class="n">nC</span><span class="p">]</span>
-            <span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\t</span><span class="si">{0}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">cname</span><span class="p">))</span>
+            <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\t</span><span class="si">{0}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">cname</span><span class="p">))</span>
             <span class="n">design</span><span class="p">[</span><span class="n">cname</span><span class="p">]</span> <span class="o">=</span> <span class="n">mod</span><span class="p">[</span><span class="n">mod</span><span class="o">.</span><span class="n">columns</span><span class="p">[</span><span class="n">nC</span><span class="p">]]</span>
-    <span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;found </span><span class="si">%i</span><span class="s2"> categorical variables:&quot;</span> <span class="o">%</span> <span class="nb">len</span><span class="p">(</span><span class="n">other_cols</span><span class="p">))</span>
-    <span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\t</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="s2">&quot;, &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">other_cols</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+    <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;found </span><span class="si">%i</span><span class="s2"> categorical variables:&quot;</span> <span class="o">%</span> <span class="nb">len</span><span class="p">(</span><span class="n">other_cols</span><span class="p">))</span>
+    <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\t</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="s2">&quot;, &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">other_cols</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">design</span></div>
 
 
@@ -619,9 +529,7 @@
     <span class="k">return</span> <span class="p">(</span><span class="mf">0.5</span> <span class="o">*</span> <span class="n">sum2</span> <span class="o">+</span> <span class="n">b</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">n</span> <span class="o">/</span> <span class="mf">2.0</span> <span class="o">+</span> <span class="n">a</span> <span class="o">-</span> <span class="mf">1.0</span><span class="p">)</span></div>
 
 
-
-<span class="c1">################### Auxiliary functions of ComBat end here ####################</span>
-
+<span class="c1"># Auxiliary functions of ComBat end here ####################</span>
 <div class="viewcode-block" id="combat_batch_effect_removal"><a class="viewcode-back" href="../candle_lib/P1_utils.html#P1_utils.combat_batch_effect_removal">[docs]</a><span class="k">def</span> <span class="nf">combat_batch_effect_removal</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">batch_labels</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">numerical_covariates</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">    This function corrects for batch effect in data.</span>
@@ -663,13 +571,13 @@
     <span class="c1"># drop intercept</span>
     <span class="n">drop_cols</span> <span class="o">=</span> <span class="p">[</span><span class="n">cname</span> <span class="k">for</span> <span class="n">cname</span><span class="p">,</span> <span class="n">inter</span> <span class="ow">in</span> <span class="p">((</span><span class="n">model</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">all</span><span class="p">())</span><span class="o">.</span><span class="n">iteritems</span><span class="p">()</span> <span class="k">if</span> <span class="n">inter</span> <span class="o">==</span> <span class="kc">True</span><span class="p">]</span>
     <span class="n">drop_idxs</span> <span class="o">=</span> <span class="p">[</span><span class="nb">list</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">cdrop</span><span class="p">)</span> <span class="k">for</span> <span class="n">cdrop</span> <span class="ow">in</span> <span class="n">drop_cols</span><span class="p">]</span>
-    <span class="n">model</span> <span class="o">=</span> <span class="n">model</span><span class="p">[[</span><span class="n">c</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">model</span><span class="o">.</span><span class="n">columns</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">drop_cols</span><span class="p">]]</span>
+    <span class="n">model</span> <span class="o">=</span> <span class="n">model</span><span class="p">[[</span><span class="n">c</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">model</span><span class="o">.</span><span class="n">columns</span> <span class="k">if</span> <span class="n">c</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">drop_cols</span><span class="p">]]</span>
     <span class="n">numerical_covariates</span> <span class="o">=</span> <span class="p">[</span><span class="nb">list</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">c</span><span class="p">)</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span> <span class="k">else</span> <span class="n">c</span>
-                            <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">numerical_covariates</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">drop_cols</span><span class="p">]</span>
+                            <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">numerical_covariates</span> <span class="k">if</span> <span class="n">c</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">drop_cols</span><span class="p">]</span>
 
     <span class="n">design</span> <span class="o">=</span> <span class="n">design_mat</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">numerical_covariates</span><span class="p">,</span> <span class="n">batch_levels</span><span class="p">)</span>
 
-    <span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;Standardizing Data across genes.</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;Standardizing Data across genes.</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
     <span class="n">B_hat</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">la</span><span class="o">.</span><span class="n">inv</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">design</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">design</span><span class="p">)),</span> <span class="n">design</span><span class="o">.</span><span class="n">T</span><span class="p">),</span> <span class="n">data</span><span class="o">.</span><span class="n">T</span><span class="p">)</span>
     <span class="n">grand_mean</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">((</span><span class="n">n_batches</span> <span class="o">/</span> <span class="n">n_array</span><span class="p">)</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">B_hat</span><span class="p">[:</span><span class="n">n_batch</span><span class="p">,</span> <span class="p">:])</span>
     <span class="n">var_pooled</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(((</span><span class="n">data</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">design</span><span class="p">,</span> <span class="n">B_hat</span><span class="p">)</span><span class="o">.</span><span class="n">T</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="nb">int</span><span class="p">(</span><span class="n">n_array</span><span class="p">),</span> <span class="mi">1</span><span class="p">))</span> <span class="o">/</span> <span class="nb">int</span><span class="p">(</span><span class="n">n_array</span><span class="p">))</span>
@@ -681,7 +589,7 @@
 
     <span class="n">s_data</span> <span class="o">=</span> <span class="p">((</span><span class="n">data</span> <span class="o">-</span> <span class="n">stand_mean</span><span class="p">)</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">var_pooled</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="n">n_array</span><span class="p">)))))</span>
 
-    <span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;Fitting L/S model and finding priors</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;Fitting L/S model and finding priors</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
     <span class="n">batch_design</span> <span class="o">=</span> <span class="n">design</span><span class="p">[</span><span class="n">design</span><span class="o">.</span><span class="n">columns</span><span class="p">[:</span><span class="n">n_batch</span><span class="p">]]</span>
     <span class="n">gamma_hat</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">la</span><span class="o">.</span><span class="n">inv</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">batch_design</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">batch_design</span><span class="p">)),</span> <span class="n">batch_design</span><span class="o">.</span><span class="n">T</span><span class="p">),</span> <span class="n">s_data</span><span class="o">.</span><span class="n">T</span><span class="p">)</span>
 
@@ -696,7 +604,7 @@
     <span class="n">a_prior</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="n">aprior</span><span class="p">,</span> <span class="n">delta_hat</span><span class="p">))</span>
     <span class="n">b_prior</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="n">bprior</span><span class="p">,</span> <span class="n">delta_hat</span><span class="p">))</span>
 
-    <span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;Finding parametric adjustments</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;Finding parametric adjustments</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
     <span class="n">gamma_star</span><span class="p">,</span> <span class="n">delta_star</span> <span class="o">=</span> <span class="p">[],</span> <span class="p">[]</span>
     <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">batch_idxs</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">batch_info</span><span class="p">):</span>
         <span class="n">temp</span> <span class="o">=</span> <span class="n">it_sol</span><span class="p">(</span><span class="n">s_data</span><span class="p">[</span><span class="n">batch_idxs</span><span class="p">],</span> <span class="n">gamma_hat</span><span class="p">[</span><span class="n">i</span><span class="p">],</span>
@@ -725,46 +633,30 @@
 </pre></div>
 
            </div>
-           
           </div>
           <footer>
 
   <hr/>
 
   <div role="contentinfo">
-    <p>
-        &#169; Copyright 2021, ANL.gov.
-
-    </p>
+    <p>&#169; Copyright 2021, ANL.gov.</p>
   </div>
-    
-    
-    
-    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
-    
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
     <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
-    
-    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
 
 </footer>
         </div>
       </div>
-
     </section>
-
   </div>
-  
-
-  <script type="text/javascript">
+  <script>
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script>
-
-  
-  
-    
-   
+  </script> 
 
 </body>
 </html>

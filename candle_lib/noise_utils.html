@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>candle_keras package &mdash; CANDLE  documentation</title><link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <title>noise_utils module &mdash; CANDLE  documentation</title><link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
   <!--[if lt IE 9]>
     <script src="../_static/js/html5shiv.min.js"></script>
@@ -16,8 +16,8 @@
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="data_preprocessing_utils module" href="data_preprocessing_utils.html" />
-    <link rel="prev" title="CANDLE Library API" href="../candle_lib.html" /> 
+    <link rel="next" title="parsing_utils module" href="parsing_utils.html" />
+    <link rel="prev" title="modac_utils module" href="modac_utils.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -40,7 +40,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../readme.html">What is CANDLE?</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../tutorials/index.html">Tutorials</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="../candle_lib.html">CANDLE Library API</a><ul class="current">
-<li class="toctree-l2 current"><a class="current reference internal" href="#">candle_keras package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="candle_keras.html">candle_keras package</a></li>
 <li class="toctree-l2"><a class="reference internal" href="data_preprocessing_utils.html">data_preprocessing_utils module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="data_utils.html">data_utils module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="default_utils.html">default_utils module</a></li>
@@ -59,7 +59,7 @@
 <li class="toctree-l2"><a class="reference internal" href="clr_keras_utils.html">clr_keras_utils module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="helper_utils.html">helper_utils module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="modac_utils.html">modac_utils module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="noise_utils.html">noise_utils module</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">noise_utils module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="parsing_utils.html">parsing_utils module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="ckpt_keras_utils.html">ckpt_keras_utils module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="benchmark_def.html">benchmark_def module</a></li>
@@ -84,9 +84,9 @@
   <ul class="wy-breadcrumbs">
       <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
           <li><a href="../candle_lib.html">CANDLE Library API</a> &raquo;</li>
-      <li>candle_keras package</li>
+      <li>noise_utils module</li>
       <li class="wy-breadcrumbs-aside">
-            <a href="../_sources/candle_lib/candle_keras.rst.txt" rel="nofollow"> View page source</a>
+            <a href="../_sources/candle_lib/noise_utils.rst.txt" rel="nofollow"> View page source</a>
       </li>
   </ul>
   <hr/>
@@ -94,16 +94,51 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <div class="section" id="candle-keras-package">
-<h1>candle_keras package<a class="headerlink" href="#candle-keras-package" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="module-noise_utils">
+<span id="noise-utils-module"></span><h1>noise_utils module<a class="headerlink" href="#module-noise_utils" title="Permalink to this headline">¶</a></h1>
+<dl class="function">
+<dt id="noise_utils.add_cluster_noise">
+<code class="sig-prename descclassname">noise_utils.</code><code class="sig-name descname">add_cluster_noise</code><span class="sig-paren">(</span><em class="sig-param">x_data, loc=0.0, scale=0.5, col_ids=[0], noise_type='gaussian', row_ids=[0], y_noise_level=0.0</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/noise_utils.html#add_cluster_noise"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#noise_utils.add_cluster_noise" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="noise_utils.add_column_noise">
+<code class="sig-prename descclassname">noise_utils.</code><code class="sig-name descname">add_column_noise</code><span class="sig-paren">(</span><em class="sig-param">x_data, loc=0.0, scale=0.5, col_ids=[0], noise_type='gaussian'</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/noise_utils.html#add_column_noise"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#noise_utils.add_column_noise" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="noise_utils.add_gaussian_noise">
+<code class="sig-prename descclassname">noise_utils.</code><code class="sig-name descname">add_gaussian_noise</code><span class="sig-paren">(</span><em class="sig-param">x_data</em>, <em class="sig-param">loc=0.0</em>, <em class="sig-param">scale=0.5</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/noise_utils.html#add_gaussian_noise"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#noise_utils.add_gaussian_noise" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="noise_utils.add_noise">
+<code class="sig-prename descclassname">noise_utils.</code><code class="sig-name descname">add_noise</code><span class="sig-paren">(</span><em class="sig-param">data</em>, <em class="sig-param">labels</em>, <em class="sig-param">params</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/noise_utils.html#add_noise"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#noise_utils.add_noise" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="noise_utils.add_noise_new">
+<code class="sig-prename descclassname">noise_utils.</code><code class="sig-name descname">add_noise_new</code><span class="sig-paren">(</span><em class="sig-param">data</em>, <em class="sig-param">labels</em>, <em class="sig-param">params</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/noise_utils.html#add_noise_new"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#noise_utils.add_noise_new" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="noise_utils.label_flip">
+<code class="sig-prename descclassname">noise_utils.</code><code class="sig-name descname">label_flip</code><span class="sig-paren">(</span><em class="sig-param">y_data_categorical</em>, <em class="sig-param">y_noise_level</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/noise_utils.html#label_flip"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#noise_utils.label_flip" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="noise_utils.label_flip_correlated">
+<code class="sig-prename descclassname">noise_utils.</code><code class="sig-name descname">label_flip_correlated</code><span class="sig-paren">(</span><em class="sig-param">y_data_categorical</em>, <em class="sig-param">y_noise_level</em>, <em class="sig-param">x_data</em>, <em class="sig-param">col_ids</em>, <em class="sig-param">threshold</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/noise_utils.html#label_flip_correlated"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#noise_utils.label_flip_correlated" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
 </div>
 
 
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="../candle_lib.html" class="btn btn-neutral float-left" title="CANDLE Library API" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="data_preprocessing_utils.html" class="btn btn-neutral float-right" title="data_preprocessing_utils module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="modac_utils.html" class="btn btn-neutral float-left" title="modac_utils module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="parsing_utils.html" class="btn btn-neutral float-right" title="parsing_utils module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

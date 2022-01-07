@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>modac_utils module &mdash; CANDLE  documentation</title><link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="noise_utils module" href="noise_utils.html" />
+    <link rel="prev" title="helper_utils module" href="helper_utils.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../index.html" class="icon icon-home"> CANDLE
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../readme.html">What is CANDLE?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorials/index.html">Tutorials</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../candle_lib.html">CANDLE Library API</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="candle_keras.html">candle_keras package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="data_preprocessing_utils.html">data_preprocessing_utils module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="data_utils.html">data_utils module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="default_utils.html">default_utils module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="exp_logger.html">exp_logger module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="feature_selection_utils.html">feature_selection_utils module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_utils.html">file_utils module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="generic_utils.html">generic_utils module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="keras_utils.html">keras_utils module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="P1_utils.html">P1_utils module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="profiling_utils.html">profiling_utils module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pytorch_utils.html">pytorch_utils module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="solr_keras.html">solr_keras module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="uq_utils.html">uq_utils module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="uq_keras_utils.html">uq_keras_utils module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="viz_utils.html">viz_utils module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="clr_keras_utils.html">clr_keras_utils module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="helper_utils.html">helper_utils module</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">modac_utils module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="noise_utils.html">noise_utils module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="parsing_utils.html">parsing_utils module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ckpt_keras_utils.html">ckpt_keras_utils module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="benchmark_def.html">benchmark_def module</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../shared_installation.html">CANDLE Shared Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contribute.html">How to Contribute</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">CANDLE</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="../candle_lib.html">CANDLE Library API</a> &raquo;</li>
+      <li>modac_utils module</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/candle_lib/modac_utils.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <div class="section" id="module-modac_utils">
+<span id="modac-utils-module"></span><h1>modac_utils module<a class="headerlink" href="#module-modac_utils" title="Permalink to this headline">¶</a></h1>
+<dl class="function">
+<dt id="modac_utils.authenticate_modac">
+<code class="sig-prename descclassname">modac_utils.</code><code class="sig-name descname">authenticate_modac</code><span class="sig-paren">(</span><em class="sig-param">generate_token=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/modac_utils.html#authenticate_modac"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#modac_utils.authenticate_modac" title="Permalink to this definition">¶</a></dt>
+<dd><p>Authenticates a user on modac.cancer.gov</p>
+<blockquote>
+<div><dl class="simple">
+<dt>generate_token<span class="classifier">Bool</span></dt><dd><p>Either generate a new token, or read saved token if it exists</p>
+</dd>
+</dl>
+<dl class="simple">
+<dt>tuple(string,string)</dt><dd><p>tuple with the modac credentials</p>
+</dd>
+</dl>
+</div></blockquote>
+</dd></dl>
+
+<dl class="function">
+<dt id="modac_utils.get_dataObject_modac_filesize">
+<code class="sig-prename descclassname">modac_utils.</code><code class="sig-name descname">get_dataObject_modac_filesize</code><span class="sig-paren">(</span><em class="sig-param">data_object_path</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/modac_utils.html#get_dataObject_modac_filesize"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#modac_utils.get_dataObject_modac_filesize" title="Permalink to this definition">¶</a></dt>
+<dd><dl>
+<dt>Return the file size in bytes for a modac file</dt><dd><dl class="simple">
+<dt>data_object_path<span class="classifier">string</span></dt><dd><p>The path of the file on MoDAC</p>
+</dd>
+</dl>
+<dl class="simple">
+<dt>integer</dt><dd><p>file size in bytes</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="modac_utils.get_dataObject_modac_md5sum">
+<code class="sig-prename descclassname">modac_utils.</code><code class="sig-name descname">get_dataObject_modac_md5sum</code><span class="sig-paren">(</span><em class="sig-param">data_object_path</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/modac_utils.html#get_dataObject_modac_md5sum"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#modac_utils.get_dataObject_modac_md5sum" title="Permalink to this definition">¶</a></dt>
+<dd><dl>
+<dt>Return the md5sum for a modac file</dt><dd><dl class="simple">
+<dt>data_object_path<span class="classifier">string</span></dt><dd><p>The path of the file on MoDAC</p>
+</dd>
+</dl>
+<dl class="simple">
+<dt>string</dt><dd><p>The md5sum of the file</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="modac_utils.get_dataObject_modac_meta">
+<code class="sig-prename descclassname">modac_utils.</code><code class="sig-name descname">get_dataObject_modac_meta</code><span class="sig-paren">(</span><em class="sig-param">data_object_path</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/modac_utils.html#get_dataObject_modac_meta"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#modac_utils.get_dataObject_modac_meta" title="Permalink to this definition">¶</a></dt>
+<dd><dl>
+<dt>Return the self metadata values for a file (data_object)</dt><dd><dl class="simple">
+<dt>data_object_path<span class="classifier">string</span></dt><dd><p>The path of the file on MoDAC</p>
+</dd>
+</dl>
+<dl class="simple">
+<dt>dictionary</dt><dd><p>Dictonary of all metadata for the file in MoDAC</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="modac_utils.get_file_from_modac">
+<code class="sig-prename descclassname">modac_utils.</code><code class="sig-name descname">get_file_from_modac</code><span class="sig-paren">(</span><em class="sig-param">fname</em>, <em class="sig-param">origin</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/modac_utils.html#get_file_from_modac"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#modac_utils.get_file_from_modac" title="Permalink to this definition">¶</a></dt>
+<dd><p>Downloads a file from the “Model and Data Clearning House” (MoDAC)
+repository. Users should already have a MoDAC account to download the data.
+Accounts can be created on modac.cancer.gov</p>
+<blockquote>
+<div><dl class="simple">
+<dt>fname<span class="classifier">string</span></dt><dd><p>path on disk to save the file</p>
+</dd>
+<dt>origin<span class="classifier">string</span></dt><dd><p>original MoDAC URL of the file</p>
+</dd>
+</dl>
+<dl class="simple">
+<dt>string</dt><dd><p>Path to the downloaded file</p>
+</dd>
+</dl>
+</div></blockquote>
+</dd></dl>
+
+<dl class="function">
+<dt id="modac_utils.query_yes_no">
+<code class="sig-prename descclassname">modac_utils.</code><code class="sig-name descname">query_yes_no</code><span class="sig-paren">(</span><em class="sig-param">question</em>, <em class="sig-param">default='yes'</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/modac_utils.html#query_yes_no"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#modac_utils.query_yes_no" title="Permalink to this definition">¶</a></dt>
+<dd><p>Ask a yes/no question via raw_input() and return their answer.</p>
+<blockquote>
+<div><dl class="simple">
+<dt>question: string</dt><dd><p>string that is presented to the user.</p>
+</dd>
+<dt>default: boolean</dt><dd><p>The presumed boolean answer if the user just hits &lt;Enter&gt;.</p>
+</dd>
+</dl>
+<dl class="simple">
+<dt>boolean</dt><dd><p>True for “yes” or False for “no”.</p>
+</dd>
+</dl>
+</div></blockquote>
+</dd></dl>
+
+<dl class="function">
+<dt id="modac_utils.register_file_to_modac">
+<code class="sig-prename descclassname">modac_utils.</code><code class="sig-name descname">register_file_to_modac</code><span class="sig-paren">(</span><em class="sig-param">file_path</em>, <em class="sig-param">metadata</em>, <em class="sig-param">destination_path</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/modac_utils.html#register_file_to_modac"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#modac_utils.register_file_to_modac" title="Permalink to this definition">¶</a></dt>
+<dd><p>Register a file in the “Model and Data Clearning House” (MoDAC).
+The file size is limited to 2GBs</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>file_path</strong> (<em>string</em>) – path on disk for the file to be uploaded</p></li>
+<li><p><strong>metadata</strong> (<em>dictionary</em>) – dictionary of attribute/value pairs of metadata to associate with
+the file in MoDaC</p></li>
+<li><p><strong>destination</strong> (<em>string</em>) – The path on MoDaC in form of collection/filename</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><em>integer</em> – The returned code from the PUT request</p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="helper_utils.html" class="btn btn-neutral float-left" title="helper_utils module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="noise_utils.html" class="btn btn-neutral float-right" title="noise_utils module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2021, ANL.gov.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

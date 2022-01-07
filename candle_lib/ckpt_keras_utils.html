@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ckpt_keras_utils module &mdash; CANDLE  documentation</title><link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="benchmark_def module" href="benchmark_def.html" />
+    <link rel="prev" title="parsing_utils module" href="parsing_utils.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../index.html" class="icon icon-home"> CANDLE
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../readme.html">What is CANDLE?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorials/index.html">Tutorials</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../candle_lib.html">CANDLE Library API</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="candle_keras.html">candle_keras package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="data_preprocessing_utils.html">data_preprocessing_utils module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="data_utils.html">data_utils module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="default_utils.html">default_utils module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="exp_logger.html">exp_logger module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="feature_selection_utils.html">feature_selection_utils module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_utils.html">file_utils module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="generic_utils.html">generic_utils module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="keras_utils.html">keras_utils module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="P1_utils.html">P1_utils module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="profiling_utils.html">profiling_utils module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pytorch_utils.html">pytorch_utils module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="solr_keras.html">solr_keras module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="uq_utils.html">uq_utils module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="uq_keras_utils.html">uq_keras_utils module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="viz_utils.html">viz_utils module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="clr_keras_utils.html">clr_keras_utils module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="helper_utils.html">helper_utils module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="modac_utils.html">modac_utils module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="noise_utils.html">noise_utils module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="parsing_utils.html">parsing_utils module</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">ckpt_keras_utils module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="benchmark_def.html">benchmark_def module</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../shared_installation.html">CANDLE Shared Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contribute.html">How to Contribute</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">CANDLE</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="../candle_lib.html">CANDLE Library API</a> &raquo;</li>
+      <li>ckpt_keras_utils module</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/candle_lib/ckpt_keras_utils.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <div class="section" id="module-ckpt_keras_utils">
+<span id="ckpt-keras-utils-module"></span><h1>ckpt_keras_utils module<a class="headerlink" href="#module-ckpt_keras_utils" title="Permalink to this headline">¶</a></h1>
+<p>CKPT KERAS UTILS</p>
+<p>CANDLE checkpoint/restart utilities for Keras</p>
+<p>Hyperparameters that affect CANDLE checkpoint/restart:</p>
+<dl>
+<dt>ckpt_restart_mode<span class="classifier">“off” | “auto” | “required”</span></dt><dd><p>If ‘auto’ or ‘required’, automatically try to restart from most recent
+(highest epoch) model.h5.
+‘required’ will fail if a model cannot be found.
+Default: “auto”</p>
+</dd>
+<dt>ckpt_save_best<span class="classifier">boolean</span></dt><dd><p>If True, save whenever save_best_metric has improved.
+Default: True</p>
+</dd>
+<dt>ckpt_save_best_metric<span class="classifier">string</span></dt><dd><p>Required when ckpt_save_best=True, else unused.
+The metric in logs.model to track for improvement.
+Default: “val_loss”</p>
+</dd>
+<dt>ckpt_skip_epochs<span class="classifier">integer</span></dt><dd><p>Number of initial epochs to skip before writing checkpoints
+Default: 0</p>
+</dd>
+<dt>ckpt_save_interval: integer</dt><dd><p>Save whenever epoch % save_interval == 0.
+Set save_interval=0 to disable these checkpoints (save nothing).
+Default: 1 (save everything)</p>
+</dd>
+<dt>ckpt_checksum<span class="classifier">boolean</span></dt><dd><p>If True, compute a checksum for the model
+and store it in the JSON.
+Also, confirm checksum at restart time.
+Default: False</p>
+</dd>
+<dt>ckpt_keep_mode<span class="classifier">string</span></dt><dd><p>“linear” or “exponential” (NYI)
+Default: “linear”</p>
+</dd>
+<dt>ckpt_keep_limit: integer GZ</dt><dd><p>Maximal number of checkpoints to keep.
+This can be set lower to reduce disk usage.
+Default: 1000000</p>
+</dd>
+<dt>ckpt_directory: string</dt><dd><p>The top directory to use.
+Default: “./save”
+Typical user values:
+“/tmp/user/ckpts”: I.e. I am going to move these myself.
+“/other-fs/user/ckpts”: I.e. My working FS is different from the FS</p>
+<blockquote>
+<div><p>I want to use for checkpoints.</p>
+</div></blockquote>
+</dd>
+<dt>ckpt_metadata<span class="classifier">string</span></dt><dd><p>Arbitrary string to add to the JSON file regarding
+job ID, hardware location, etc.
+May be None or an empty string.
+Default: None</p>
+</dd>
+</dl>
+<p>Usage:</p>
+<blockquote>
+<div><p>Add before training:</p>
+<blockquote>
+<div><p>initial_epoch = 0
+J = candle.restart(gParameters, model)
+if J is not None:</p>
+<blockquote>
+<div><p>initial_epoch = J[‘epoch’]</p>
+</div></blockquote>
+</div></blockquote>
+<p>Set up a callback for checkpoints:</p>
+<blockquote>
+<div><p>ckpt = candle.CandleCheckpointCallback(gParameters)
+history = model.fit(epochs=gParameters[‘epochs’],</p>
+<blockquote>
+<div><p>initial_epoch=initial_epoch,
+…
+callbacks=[… , ckpt])</p>
+</div></blockquote>
+</div></blockquote>
+<p>Optionally, log a final report:</p>
+<blockquote>
+<div><p>ckpt.report_final()</p>
+</div></blockquote>
+</div></blockquote>
+<p>Controlling restart:</p>
+<p>Most restart control options are in gParameters.</p>
+<p>Normally, restart() looks at the soft link ckpts/last,
+which should point to a good ckpt directory number in epochs/*
+and restarts from there.</p>
+<p>To roll back, simply re-link ckpts/last to point to
+a different directory number in epochs/* .
+Any later epochs will simply be overwritten
+(and a debug message will be reported).</p>
+<p>If ckpts/last is missing or a broken link,
+restart() will start from scratch.</p>
+<p>Keep policy:</p>
+<p>The ckpt_keep settings only apply to the current run.
+Checkpoints from prior runs will never be deleted by clean().
+You may simply remove any of them.
+Normally you will not want to remove the one pointed to by ckpts/last,
+but if you do, restart() will simply start from scratch.</p>
+<p>Logging:</p>
+<p>A log of ckpt operations is in ckpt_directory/ckpt.log</p>
+<dl class="class">
+<dt id="ckpt_keras_utils.CandleCheckpointCallback">
+<em class="property">class </em><code class="sig-prename descclassname">ckpt_keras_utils.</code><code class="sig-name descname">CandleCheckpointCallback</code><span class="sig-paren">(</span><em class="sig-param">gParameters</em>, <em class="sig-param">logger='DEFAULT'</em>, <em class="sig-param">verbose=True</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ckpt_keras_utils.html#CandleCheckpointCallback"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ckpt_keras_utils.CandleCheckpointCallback" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">keras.callbacks.Callback</span></code></p>
+<p>Keras Callback for CANDLE-compliant Benchmarks to use for checkpointing
+Creates a JSON file alongside the weights and optimizer checkpoints
+that includes important metadata, particularly for restarting and
+tracking complex workflows.</p>
+<dl class="method">
+<dt id="ckpt_keras_utils.CandleCheckpointCallback.checksum">
+<code class="sig-name descname">checksum</code><span class="sig-paren">(</span><em class="sig-param">dir_work</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ckpt_keras_utils.html#CandleCheckpointCallback.checksum"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ckpt_keras_utils.CandleCheckpointCallback.checksum" title="Permalink to this definition">¶</a></dt>
+<dd><p>Simple checksum dispatch
+dir_work: A PosixPath</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="ckpt_keras_utils.CandleCheckpointCallback.clean">
+<code class="sig-name descname">clean</code><span class="sig-paren">(</span><em class="sig-param">epoch_now</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ckpt_keras_utils.html#CandleCheckpointCallback.clean"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ckpt_keras_utils.CandleCheckpointCallback.clean" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="simple">
+<dt>Clean old epoch directories</dt><dd><p>in accordance with ckpt_keep policies.</p>
+</dd>
+</dl>
+<p>Return number of checkpoints kept and deleted</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="ckpt_keras_utils.CandleCheckpointCallback.debug">
+<code class="sig-name descname">debug</code><span class="sig-paren">(</span><em class="sig-param">message</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ckpt_keras_utils.html#CandleCheckpointCallback.debug"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ckpt_keras_utils.CandleCheckpointCallback.debug" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="ckpt_keras_utils.CandleCheckpointCallback.delete">
+<code class="sig-name descname">delete</code><span class="sig-paren">(</span><em class="sig-param">epoch</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ckpt_keras_utils.html#CandleCheckpointCallback.delete"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ckpt_keras_utils.CandleCheckpointCallback.delete" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="ckpt_keras_utils.CandleCheckpointCallback.info">
+<code class="sig-name descname">info</code><span class="sig-paren">(</span><em class="sig-param">message</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ckpt_keras_utils.html#CandleCheckpointCallback.info"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ckpt_keras_utils.CandleCheckpointCallback.info" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="ckpt_keras_utils.CandleCheckpointCallback.keep">
+<code class="sig-name descname">keep</code><span class="sig-paren">(</span><em class="sig-param">epoch</em>, <em class="sig-param">epoch_now</em>, <em class="sig-param">kept</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ckpt_keras_utils.html#CandleCheckpointCallback.keep"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ckpt_keras_utils.CandleCheckpointCallback.keep" title="Permalink to this definition">¶</a></dt>
+<dd><p>kept: Number of epochs already kept
+return True if we are keeping this epoch, else False</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="ckpt_keras_utils.CandleCheckpointCallback.on_epoch_end">
+<code class="sig-name descname">on_epoch_end</code><span class="sig-paren">(</span><em class="sig-param">epoch</em>, <em class="sig-param">logs=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ckpt_keras_utils.html#CandleCheckpointCallback.on_epoch_end"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ckpt_keras_utils.CandleCheckpointCallback.on_epoch_end" title="Permalink to this definition">¶</a></dt>
+<dd><p>Note: We immediately increment epoch
+from index-from-0 to index-from-1
+to match the TensorFlow output.
+Normally, ckpts/best is the best saved state,</p>
+<blockquote>
+<div><p>and ckpts/last is the last saved state.</p>
+</div></blockquote>
+<p>Procedure:
+1. Write current state to ckpts/work
+2. Rename ckpts/work to ckpts/epoch/NNN
+3. If best, link ckpts/best to ckpts/epoch/NNN
+4. Link ckpts/last to ckpts/epoch/NNN
+5. Clean up old ckpts according to keep policy</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="ckpt_keras_utils.CandleCheckpointCallback.on_train_end">
+<code class="sig-name descname">on_train_end</code><span class="sig-paren">(</span><em class="sig-param">logs=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ckpt_keras_utils.html#CandleCheckpointCallback.on_train_end"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ckpt_keras_utils.CandleCheckpointCallback.on_train_end" title="Permalink to this definition">¶</a></dt>
+<dd><p>Called at the end of training.</p>
+<p>Subclasses should override for any actions to run.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>logs</strong> – Dict. Currently the output of the last call to <cite>on_epoch_end()</cite>
+is passed to this argument for this method but that may change in
+the future.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="ckpt_keras_utils.CandleCheckpointCallback.relpath">
+<code class="sig-name descname">relpath</code><span class="sig-paren">(</span><em class="sig-param">p</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ckpt_keras_utils.html#CandleCheckpointCallback.relpath"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ckpt_keras_utils.CandleCheckpointCallback.relpath" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="ckpt_keras_utils.CandleCheckpointCallback.report_final">
+<code class="sig-name descname">report_final</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ckpt_keras_utils.html#CandleCheckpointCallback.report_final"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ckpt_keras_utils.CandleCheckpointCallback.report_final" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="ckpt_keras_utils.CandleCheckpointCallback.report_initial">
+<code class="sig-name descname">report_initial</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ckpt_keras_utils.html#CandleCheckpointCallback.report_initial"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ckpt_keras_utils.CandleCheckpointCallback.report_initial" title="Permalink to this definition">¶</a></dt>
+<dd><p>Simply report that we are ready to run</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="ckpt_keras_utils.CandleCheckpointCallback.save_check">
+<code class="sig-name descname">save_check</code><span class="sig-paren">(</span><em class="sig-param">logs</em>, <em class="sig-param">epoch</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ckpt_keras_utils.html#CandleCheckpointCallback.save_check"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ckpt_keras_utils.CandleCheckpointCallback.save_check" title="Permalink to this definition">¶</a></dt>
+<dd><p>Make sure we want to save this epoch based on the
+model metrics in given logs
+Also updates epoch_best if appropriate</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="ckpt_keras_utils.CandleCheckpointCallback.save_check_best">
+<code class="sig-name descname">save_check_best</code><span class="sig-paren">(</span><em class="sig-param">logs</em>, <em class="sig-param">epoch</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ckpt_keras_utils.html#CandleCheckpointCallback.save_check_best"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ckpt_keras_utils.CandleCheckpointCallback.save_check_best" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="ckpt_keras_utils.CandleCheckpointCallback.scan_params">
+<code class="sig-name descname">scan_params</code><span class="sig-paren">(</span><em class="sig-param">gParameters</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ckpt_keras_utils.html#CandleCheckpointCallback.scan_params"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ckpt_keras_utils.CandleCheckpointCallback.scan_params" title="Permalink to this definition">¶</a></dt>
+<dd><p>Simply translate gParameters into instance fields</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="ckpt_keras_utils.CandleCheckpointCallback.symlink">
+<code class="sig-name descname">symlink</code><span class="sig-paren">(</span><em class="sig-param">src</em>, <em class="sig-param">dst</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ckpt_keras_utils.html#CandleCheckpointCallback.symlink"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ckpt_keras_utils.CandleCheckpointCallback.symlink" title="Permalink to this definition">¶</a></dt>
+<dd><p>Like os.symlink, but overwrites dst and logs</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="ckpt_keras_utils.CandleCheckpointCallback.write_json">
+<code class="sig-name descname">write_json</code><span class="sig-paren">(</span><em class="sig-param">jsonfile</em>, <em class="sig-param">epoch</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ckpt_keras_utils.html#CandleCheckpointCallback.write_json"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ckpt_keras_utils.CandleCheckpointCallback.write_json" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="ckpt_keras_utils.CandleCheckpointCallback.write_model">
+<code class="sig-name descname">write_model</code><span class="sig-paren">(</span><em class="sig-param">dir_work</em>, <em class="sig-param">epoch</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ckpt_keras_utils.html#CandleCheckpointCallback.write_model"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ckpt_keras_utils.CandleCheckpointCallback.write_model" title="Permalink to this definition">¶</a></dt>
+<dd><p>Do the I/O, report stats
+dir_work: A PosixPath</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="ckpt_keras_utils.MultiGPUCheckpoint">
+<em class="property">class </em><code class="sig-prename descclassname">ckpt_keras_utils.</code><code class="sig-name descname">MultiGPUCheckpoint</code><span class="sig-paren">(</span><em class="sig-param">filepath</em>, <em class="sig-param">monitor='val_loss'</em>, <em class="sig-param">verbose=0</em>, <em class="sig-param">save_best_only=False</em>, <em class="sig-param">save_weights_only=False</em>, <em class="sig-param">mode='auto'</em>, <em class="sig-param">save_freq='epoch'</em>, <em class="sig-param">options=None</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ckpt_keras_utils.html#MultiGPUCheckpoint"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ckpt_keras_utils.MultiGPUCheckpoint" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">keras.callbacks.ModelCheckpoint</span></code></p>
+<dl class="method">
+<dt id="ckpt_keras_utils.MultiGPUCheckpoint.set_model">
+<code class="sig-name descname">set_model</code><span class="sig-paren">(</span><em class="sig-param">model</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ckpt_keras_utils.html#MultiGPUCheckpoint.set_model"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ckpt_keras_utils.MultiGPUCheckpoint.set_model" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="ckpt_keras_utils.ParamRequired">
+<em class="property">class </em><code class="sig-prename descclassname">ckpt_keras_utils.</code><code class="sig-name descname">ParamRequired</code><a class="reference internal" href="../_modules/ckpt_keras_utils.html#ParamRequired"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ckpt_keras_utils.ParamRequired" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Indicates that the user params must contain this key</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="ckpt_keras_utils.ParamType">
+<em class="property">class </em><code class="sig-prename descclassname">ckpt_keras_utils.</code><code class="sig-name descname">ParamType</code><a class="reference internal" href="../_modules/ckpt_keras_utils.html#ParamType"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ckpt_keras_utils.ParamType" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">enum.Enum</span></code></p>
+<p>Possible gParameters types</p>
+<dl class="attribute">
+<dt id="ckpt_keras_utils.ParamType.BOOLEAN">
+<code class="sig-name descname">BOOLEAN</code><em class="property"> = 2</em><a class="headerlink" href="#ckpt_keras_utils.ParamType.BOOLEAN" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="ckpt_keras_utils.ParamType.FLOAT">
+<code class="sig-name descname">FLOAT</code><em class="property"> = 6</em><a class="headerlink" href="#ckpt_keras_utils.ParamType.FLOAT" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="ckpt_keras_utils.ParamType.FLOAT_NN">
+<code class="sig-name descname">FLOAT_NN</code><em class="property"> = 7</em><a class="headerlink" href="#ckpt_keras_utils.ParamType.FLOAT_NN" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="ckpt_keras_utils.ParamType.INTEGER">
+<code class="sig-name descname">INTEGER</code><em class="property"> = 3</em><a class="headerlink" href="#ckpt_keras_utils.ParamType.INTEGER" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="ckpt_keras_utils.ParamType.INTEGER_GZ">
+<code class="sig-name descname">INTEGER_GZ</code><em class="property"> = 5</em><a class="headerlink" href="#ckpt_keras_utils.ParamType.INTEGER_GZ" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="ckpt_keras_utils.ParamType.INTEGER_NN">
+<code class="sig-name descname">INTEGER_NN</code><em class="property"> = 4</em><a class="headerlink" href="#ckpt_keras_utils.ParamType.INTEGER_NN" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="ckpt_keras_utils.ParamType.STRING">
+<code class="sig-name descname">STRING</code><em class="property"> = 1</em><a class="headerlink" href="#ckpt_keras_utils.ParamType.STRING" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="ckpt_keras_utils.checksum_file">
+<code class="sig-prename descclassname">ckpt_keras_utils.</code><code class="sig-name descname">checksum_file</code><span class="sig-paren">(</span><em class="sig-param">logger</em>, <em class="sig-param">filename</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ckpt_keras_utils.html#checksum_file"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ckpt_keras_utils.checksum_file" title="Permalink to this definition">¶</a></dt>
+<dd><p>Read file, compute checksum, return it as a string.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="ckpt_keras_utils.ckpt_defs">
+<code class="sig-prename descclassname">ckpt_keras_utils.</code><code class="sig-name descname">ckpt_defs</code><span class="sig-paren">(</span><em class="sig-param">defs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ckpt_keras_utils.html#ckpt_defs"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ckpt_keras_utils.ckpt_defs" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="ckpt_keras_utils.ckpt_parser">
+<code class="sig-prename descclassname">ckpt_keras_utils.</code><code class="sig-name descname">ckpt_parser</code><span class="sig-paren">(</span><em class="sig-param">parser</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ckpt_keras_utils.html#ckpt_parser"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ckpt_keras_utils.ckpt_parser" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="ckpt_keras_utils.disabled">
+<code class="sig-prename descclassname">ckpt_keras_utils.</code><code class="sig-name descname">disabled</code><span class="sig-paren">(</span><em class="sig-param">gParameters</em>, <em class="sig-param">key</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ckpt_keras_utils.html#disabled"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ckpt_keras_utils.disabled" title="Permalink to this definition">¶</a></dt>
+<dd><p>Is this parameter set to False?</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="ckpt_keras_utils.enabled">
+<code class="sig-prename descclassname">ckpt_keras_utils.</code><code class="sig-name descname">enabled</code><span class="sig-paren">(</span><em class="sig-param">gParameters</em>, <em class="sig-param">key</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ckpt_keras_utils.html#enabled"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ckpt_keras_utils.enabled" title="Permalink to this definition">¶</a></dt>
+<dd><p>Is this parameter set to True?</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="ckpt_keras_utils.param">
+<code class="sig-prename descclassname">ckpt_keras_utils.</code><code class="sig-name descname">param</code><span class="sig-paren">(</span><em class="sig-param">gParameters</em>, <em class="sig-param">key</em>, <em class="sig-param">dflt</em>, <em class="sig-param">type_=&lt;ParamType.STRING: 1&gt;</em>, <em class="sig-param">allowed=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ckpt_keras_utils.html#param"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ckpt_keras_utils.param" title="Permalink to this definition">¶</a></dt>
+<dd><p>Pull key from parameters with type checks and conversions</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="ckpt_keras_utils.param_allowed">
+<code class="sig-prename descclassname">ckpt_keras_utils.</code><code class="sig-name descname">param_allowed</code><span class="sig-paren">(</span><em class="sig-param">key</em>, <em class="sig-param">value</em>, <em class="sig-param">allowed</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ckpt_keras_utils.html#param_allowed"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ckpt_keras_utils.param_allowed" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check that the value is in the list of allowed values
+If allowed is None, there is no check, simply success</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="ckpt_keras_utils.param_type_check">
+<code class="sig-prename descclassname">ckpt_keras_utils.</code><code class="sig-name descname">param_type_check</code><span class="sig-paren">(</span><em class="sig-param">key</em>, <em class="sig-param">value</em>, <em class="sig-param">type_</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ckpt_keras_utils.html#param_type_check"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ckpt_keras_utils.param_type_check" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="simple">
+<dt>Check that value is convertable to given type:</dt><dd><p>if not, raise TypeError</p>
+</dd>
+</dl>
+<p>Return the value as converted to given type</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="ckpt_keras_utils.param_type_check_bool">
+<code class="sig-prename descclassname">ckpt_keras_utils.</code><code class="sig-name descname">param_type_check_bool</code><span class="sig-paren">(</span><em class="sig-param">key</em>, <em class="sig-param">value</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ckpt_keras_utils.html#param_type_check_bool"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ckpt_keras_utils.param_type_check_bool" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="ckpt_keras_utils.param_type_check_float">
+<code class="sig-prename descclassname">ckpt_keras_utils.</code><code class="sig-name descname">param_type_check_float</code><span class="sig-paren">(</span><em class="sig-param">key</em>, <em class="sig-param">value</em>, <em class="sig-param">type_</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ckpt_keras_utils.html#param_type_check_float"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ckpt_keras_utils.param_type_check_float" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="ckpt_keras_utils.param_type_check_int">
+<code class="sig-prename descclassname">ckpt_keras_utils.</code><code class="sig-name descname">param_type_check_int</code><span class="sig-paren">(</span><em class="sig-param">key</em>, <em class="sig-param">value</em>, <em class="sig-param">type_</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ckpt_keras_utils.html#param_type_check_int"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ckpt_keras_utils.param_type_check_int" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="ckpt_keras_utils.restart">
+<code class="sig-prename descclassname">ckpt_keras_utils.</code><code class="sig-name descname">restart</code><span class="sig-paren">(</span><em class="sig-param">gParameters</em>, <em class="sig-param">model</em>, <em class="sig-param">verbose=True</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ckpt_keras_utils.html#restart"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ckpt_keras_utils.restart" title="Permalink to this definition">¶</a></dt>
+<dd><p>Possibly restarts model from CheckpointCallback according to given
+settings and the ckpt-info.json</p>
+<dl class="simple">
+<dt>return</dt><dd><p>The JSON dict if the restart happened or
+None if the restart did not happen.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="ckpt_keras_utils.restart_json">
+<code class="sig-prename descclassname">ckpt_keras_utils.</code><code class="sig-name descname">restart_json</code><span class="sig-paren">(</span><em class="sig-param">gParameters</em>, <em class="sig-param">logger</em>, <em class="sig-param">directory</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ckpt_keras_utils.html#restart_json"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ckpt_keras_utils.restart_json" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="parsing_utils.html" class="btn btn-neutral float-left" title="parsing_utils module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="benchmark_def.html" class="btn btn-neutral float-right" title="benchmark_def module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2021, ANL.gov.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
