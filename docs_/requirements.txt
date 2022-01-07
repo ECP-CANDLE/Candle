@@ -12,3 +12,5 @@ numba
 matplotlib
 tqdm
 patsy
+statsmodels
+dill
