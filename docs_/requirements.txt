@@ -1,7 +1,14 @@
 sphinx_rtd_theme
 tensorflow
-pytorch
+torch
 scikit-learn
 numpy
 pandas
 scipy
+matplotlib
+wget
+astropy
+numba
+matplotlib
+tqdm
+patsy
