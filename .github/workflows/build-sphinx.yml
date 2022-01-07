@@ -3,7 +3,7 @@ name: build-sphinx-to-gh-pages
 on:
   push:
     branches:
-      - main
+      - master
 
 jobs:
   build_sphinx:
