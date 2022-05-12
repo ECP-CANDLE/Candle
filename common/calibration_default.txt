@@ -1,4 +1,0 @@
-[Global_Params]
-uqmode = 'qtl' 
-results_filename = '../Pilot1/Uno/uno.predicted_INFER_QTL.tsv'
-cv = 10
