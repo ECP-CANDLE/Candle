@@ -4,4 +4,5 @@
 *.pyc
 __pycache__/
 docs_/source/_build/
+docs_/source/candle
 docs/

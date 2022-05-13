@@ -14,7 +14,6 @@
 #
 import os
 import sys
-sys.path.insert(0, os.path.abspath('../../common'))
 sys.path.insert(0, os.path.abspath('../../examples/mnist'))
 
 
@@ -47,14 +46,16 @@ extensions = [
     'sphinx.ext.ifconfig',
     'sphinx.ext.viewcode',
     'sphinx.ext.githubpages',
-    'sphinx.ext.napoleon',
+    'sphinx.ext.inheritance_diagram',
+    'autoapi.sphinx',
 ]
 
-# napoleon settings
-napoleon_google_docstring = True
-napoleon_numpy_docstring = True
-napoleon_use_ivar = True
-napoleon_use_rtype = False
+# autoapi settings
+autoapi_modules = {
+    'candle': {
+        'prune': True
+    }
+}
 
 
 # Add any paths that contain templates here, relative to this directory.
