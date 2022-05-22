@@ -12,6 +12,10 @@ jobs:
     steps:
     - uses: actions/checkout@v1
 
+    - name: Install candle lib
+      run: |
+        pip install git+https://github.com/ECP-CANDLE/candle_lib.git
+
     - uses: ammaraskar/sphinx-action@master
       with:
         docs-folder: "docs_/"
