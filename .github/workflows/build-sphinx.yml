@@ -12,9 +12,10 @@ jobs:
     steps:
     - uses: actions/checkout@v1
 
-    - name: Install candle lib
+    - name: Install dependencies
       run: |
         pip install git+https://github.com/ECP-CANDLE/candle_lib.git
+        pip install autoapi==2.0.1
 
     - uses: ammaraskar/sphinx-action@master
       with:
