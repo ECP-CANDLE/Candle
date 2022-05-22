@@ -15,7 +15,7 @@ jobs:
     - uses: ammaraskar/sphinx-action@master
       with:
         docs-folder: "docs_/"
-        pre-build-command: "apt install -y git"
+        pre-build-command: "apt update --yes && apt install -y git"
 
     - name: Commit documentation changes
       run: |
