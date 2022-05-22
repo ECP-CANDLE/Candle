@@ -15,4 +15,4 @@ patsy
 statsmodels
 dill
 autoapi==2.0.1
--e git+https://github.com/ECP-CANDLE/candle_lib.git@master
+-e git+https://github.com/ECP-CANDLE/candle_lib.git@master#egg=candle
