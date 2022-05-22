@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>candle.keras_utils &mdash; CANDLE  documentation</title><link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/graphviz.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/language_data.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../index.html" class="icon icon-home"> CANDLE
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../readme.html">What is CANDLE?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../tutorials/index.html">Tutorials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../candle/candle.html"><code class="docutils literal notranslate"><span class="pre">candle</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../shared_installation.html">CANDLE Shared Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../contribute.html">How to Contribute</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">CANDLE</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="../index.html">Module code</a> &raquo;</li>
+      <li>candle.keras_utils</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for candle.keras_utils</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">import</span> <span class="nn">warnings</span>
+<span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Dict</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">scipy.stats.stats</span> <span class="kn">import</span> <span class="n">pearsonr</span>
+<span class="kn">from</span> <span class="nn">tensorflow.keras</span> <span class="kn">import</span> <span class="n">backend</span> <span class="k">as</span> <span class="n">K</span>
+<span class="kn">from</span> <span class="nn">tensorflow.keras</span> <span class="kn">import</span> <span class="n">initializers</span><span class="p">,</span> <span class="n">optimizers</span>
+<span class="kn">from</span> <span class="nn">tensorflow.keras.callbacks</span> <span class="kn">import</span> <span class="n">Callback</span>
+<span class="kn">from</span> <span class="nn">tensorflow.keras.layers</span> <span class="kn">import</span> <span class="n">Dropout</span>
+<span class="kn">from</span> <span class="nn">tensorflow.keras.metrics</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">binary_crossentropy</span><span class="p">,</span>
+    <span class="n">mean_absolute_error</span><span class="p">,</span>
+    <span class="n">mean_squared_error</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="kn">from</span> <span class="nn">tensorflow.keras.utils</span> <span class="kn">import</span> <span class="n">get_custom_objects</span>
+
+<span class="kn">from</span> <span class="nn">.helper_utils</span> <span class="kn">import</span> <span class="n">set_seed</span> <span class="k">as</span> <span class="n">set_seed_defaultUtils</span>
+
+<span class="k">with</span> <span class="n">warnings</span><span class="o">.</span><span class="n">catch_warnings</span><span class="p">():</span>
+    <span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="s2">&quot;ignore&quot;</span><span class="p">,</span> <span class="n">category</span><span class="o">=</span><span class="ne">DeprecationWarning</span><span class="p">)</span>
+    <span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">r2_score</span>
+
+<span class="kn">import</span> <span class="nn">os</span>
+
+
+<div class="viewcode-block" id="set_parallelism_threads"><a class="viewcode-back" href="../../candle/candle.html#candle.set_parallelism_threads">[docs]</a><span class="k">def</span> <span class="nf">set_parallelism_threads</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Set the number of parallel threads according to the number available on</span>
+<span class="sd">    the hardware.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">if</span> <span class="p">(</span>
+        <span class="n">K</span><span class="o">.</span><span class="n">backend</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;tensorflow&quot;</span>
+        <span class="ow">and</span> <span class="s2">&quot;NUM_INTRA_THREADS&quot;</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span>
+        <span class="ow">and</span> <span class="s2">&quot;NUM_INTER_THREADS&quot;</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span>
+    <span class="p">):</span>
+        <span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="nn">tf</span>
+
+        <span class="c1"># print(&#39;Using Thread Parallelism: {} NUM_INTRA_THREADS, {} NUM_INTER_THREADS&#39;.format(os.environ[&#39;NUM_INTRA_THREADS&#39;], os.environ[&#39;NUM_INTER_THREADS&#39;]))</span>
+        <span class="n">session_conf</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">ConfigProto</span><span class="p">(</span>
+            <span class="n">inter_op_parallelism_threads</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;NUM_INTER_THREADS&quot;</span><span class="p">]),</span>
+            <span class="n">intra_op_parallelism_threads</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;NUM_INTRA_THREADS&quot;</span><span class="p">]),</span>
+        <span class="p">)</span>
+        <span class="n">sess</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">Session</span><span class="p">(</span><span class="n">graph</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">get_default_graph</span><span class="p">(),</span> <span class="n">config</span><span class="o">=</span><span class="n">session_conf</span><span class="p">)</span>
+        <span class="n">K</span><span class="o">.</span><span class="n">set_session</span><span class="p">(</span><span class="n">sess</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="set_seed"><a class="viewcode-back" href="../../candle/candle.html#candle.set_seed">[docs]</a><span class="k">def</span> <span class="nf">set_seed</span><span class="p">(</span><span class="n">seed</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Set the random number seed to the desired value.</span>
+
+<span class="sd">    :param int seed: Random number seed.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">set_seed_defaultUtils</span><span class="p">(</span><span class="n">seed</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">K</span><span class="o">.</span><span class="n">backend</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;tensorflow&quot;</span><span class="p">:</span>
+        <span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="nn">tf</span>
+
+        <span class="k">if</span> <span class="n">tf</span><span class="o">.</span><span class="n">__version__</span> <span class="o">&lt;</span> <span class="s2">&quot;2.0.0&quot;</span><span class="p">:</span>
+            <span class="n">tf</span><span class="o">.</span><span class="n">compat</span><span class="o">.</span><span class="n">v1</span><span class="o">.</span><span class="n">set_random_seed</span><span class="p">(</span><span class="n">seed</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">tf</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">set_seed</span><span class="p">(</span><span class="n">seed</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="get_function"><a class="viewcode-back" href="../../candle/candle.html#candle.get_function">[docs]</a><span class="k">def</span> <span class="nf">get_function</span><span class="p">(</span><span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+    <span class="n">mapping</span> <span class="o">=</span> <span class="p">{}</span>
+
+    <span class="n">mapped</span> <span class="o">=</span> <span class="n">mapping</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">mapped</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s1">&#39;No keras function found for &quot;</span><span class="si">{}</span><span class="s1">&quot;&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">name</span><span class="p">))</span>
+
+    <span class="k">return</span> <span class="n">mapped</span></div>
+
+
+<div class="viewcode-block" id="build_optimizer"><a class="viewcode-back" href="../../candle/candle.html#candle.build_optimizer">[docs]</a><span class="k">def</span> <span class="nf">build_optimizer</span><span class="p">(</span><span class="n">optimizer</span><span class="p">,</span> <span class="n">lr</span><span class="p">,</span> <span class="n">kerasDefaults</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Set the optimizer to the appropriate Keras optimizer function based on</span>
+<span class="sd">    the input string and learning rate. Other required values are set to the</span>
+<span class="sd">    Keras default values.</span>
+
+<span class="sd">    :param string optimizer: String to choose the optimizer \</span>
+<span class="sd">        Options recognized: &#39;sgd&#39;, &#39;rmsprop&#39;, &#39;adagrad&#39;, adadelta&#39;, &#39;adam&#39; \</span>
+<span class="sd">        See the Keras documentation for a full description of the options</span>
+<span class="sd">    :param float lr: Learning rate</span>
+<span class="sd">    :param List kerasDefaults: List of default parameter values to ensure consistency between frameworks</span>
+
+<span class="sd">    :return: The appropriate Keras optimizer function</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">if</span> <span class="n">optimizer</span> <span class="o">==</span> <span class="s2">&quot;sgd&quot;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">optimizers</span><span class="o">.</span><span class="n">SGD</span><span class="p">(</span>
+            <span class="n">lr</span><span class="o">=</span><span class="n">lr</span><span class="p">,</span>
+            <span class="n">decay</span><span class="o">=</span><span class="n">kerasDefaults</span><span class="p">[</span><span class="s2">&quot;decay_lr&quot;</span><span class="p">],</span>
+            <span class="n">momentum</span><span class="o">=</span><span class="n">kerasDefaults</span><span class="p">[</span><span class="s2">&quot;momentum_sgd&quot;</span><span class="p">],</span>
+            <span class="n">nesterov</span><span class="o">=</span><span class="n">kerasDefaults</span><span class="p">[</span><span class="s2">&quot;nesterov_sgd&quot;</span><span class="p">],</span>
+        <span class="p">)</span>
+
+    <span class="k">elif</span> <span class="n">optimizer</span> <span class="o">==</span> <span class="s2">&quot;rmsprop&quot;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">optimizers</span><span class="o">.</span><span class="n">RMSprop</span><span class="p">(</span>
+            <span class="n">lr</span><span class="o">=</span><span class="n">lr</span><span class="p">,</span>
+            <span class="n">rho</span><span class="o">=</span><span class="n">kerasDefaults</span><span class="p">[</span><span class="s2">&quot;rho&quot;</span><span class="p">],</span>
+            <span class="n">epsilon</span><span class="o">=</span><span class="n">kerasDefaults</span><span class="p">[</span><span class="s2">&quot;epsilon&quot;</span><span class="p">],</span>
+            <span class="n">decay</span><span class="o">=</span><span class="n">kerasDefaults</span><span class="p">[</span><span class="s2">&quot;decay_lr&quot;</span><span class="p">],</span>
+        <span class="p">)</span>
+
+    <span class="k">elif</span> <span class="n">optimizer</span> <span class="o">==</span> <span class="s2">&quot;adagrad&quot;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">optimizers</span><span class="o">.</span><span class="n">Adagrad</span><span class="p">(</span>
+            <span class="n">lr</span><span class="o">=</span><span class="n">lr</span><span class="p">,</span> <span class="n">epsilon</span><span class="o">=</span><span class="n">kerasDefaults</span><span class="p">[</span><span class="s2">&quot;epsilon&quot;</span><span class="p">],</span> <span class="n">decay</span><span class="o">=</span><span class="n">kerasDefaults</span><span class="p">[</span><span class="s2">&quot;decay_lr&quot;</span><span class="p">]</span>
+        <span class="p">)</span>
+
+    <span class="k">elif</span> <span class="n">optimizer</span> <span class="o">==</span> <span class="s2">&quot;adadelta&quot;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">optimizers</span><span class="o">.</span><span class="n">Adadelta</span><span class="p">(</span>
+            <span class="n">lr</span><span class="o">=</span><span class="n">lr</span><span class="p">,</span>
+            <span class="n">rho</span><span class="o">=</span><span class="n">kerasDefaults</span><span class="p">[</span><span class="s2">&quot;rho&quot;</span><span class="p">],</span>
+            <span class="n">epsilon</span><span class="o">=</span><span class="n">kerasDefaults</span><span class="p">[</span><span class="s2">&quot;epsilon&quot;</span><span class="p">],</span>
+            <span class="n">decay</span><span class="o">=</span><span class="n">kerasDefaults</span><span class="p">[</span><span class="s2">&quot;decay_lr&quot;</span><span class="p">],</span>
+        <span class="p">)</span>
+
+    <span class="k">elif</span> <span class="n">optimizer</span> <span class="o">==</span> <span class="s2">&quot;adam&quot;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">optimizers</span><span class="o">.</span><span class="n">Adam</span><span class="p">(</span>
+            <span class="n">lr</span><span class="o">=</span><span class="n">lr</span><span class="p">,</span>
+            <span class="n">beta_1</span><span class="o">=</span><span class="n">kerasDefaults</span><span class="p">[</span><span class="s2">&quot;beta_1&quot;</span><span class="p">],</span>
+            <span class="n">beta_2</span><span class="o">=</span><span class="n">kerasDefaults</span><span class="p">[</span><span class="s2">&quot;beta_2&quot;</span><span class="p">],</span>
+            <span class="n">epsilon</span><span class="o">=</span><span class="n">kerasDefaults</span><span class="p">[</span><span class="s2">&quot;epsilon&quot;</span><span class="p">],</span>
+            <span class="n">decay</span><span class="o">=</span><span class="n">kerasDefaults</span><span class="p">[</span><span class="s2">&quot;decay_lr&quot;</span><span class="p">],</span>
+        <span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="build_initializer"><a class="viewcode-back" href="../../candle/candle.html#candle.build_initializer">[docs]</a><span class="k">def</span> <span class="nf">build_initializer</span><span class="p">(</span>
+    <span class="n">initializer</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">kerasDefaults</span><span class="p">:</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">seed</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">constant</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.0</span>
+<span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Set the initializer to the appropriate Keras initializer function based</span>
+<span class="sd">    on the input string and learning rate. Other required values are set to the</span>
+<span class="sd">    Keras default values.</span>
+
+<span class="sd">    :param string initializer: String to choose the initializer \</span>
+<span class="sd">        Options recognized: &#39;constant&#39;, &#39;uniform&#39;, &#39;normal&#39;, \</span>
+<span class="sd">        &#39;glorot_uniform&#39;, &#39;lecun_uniform&#39;, &#39;he_normal&#39; \</span>
+<span class="sd">        See the Keras documentation for a full description of the options</span>
+<span class="sd">    :param List kerasDefaults: List of default parameter values to ensure consistency between frameworks</span>
+<span class="sd">    :param int seed: Random number seed</span>
+<span class="sd">    :param float constant: Constant value (for the constant initializer only)</span>
+
+<span class="sd">    :return: The appropriate Keras initializer function</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">if</span> <span class="n">initializer</span> <span class="o">==</span> <span class="s2">&quot;constant&quot;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">initializers</span><span class="o">.</span><span class="n">Constant</span><span class="p">(</span><span class="n">value</span><span class="o">=</span><span class="n">constant</span><span class="p">)</span>
+
+    <span class="k">elif</span> <span class="n">initializer</span> <span class="o">==</span> <span class="s2">&quot;uniform&quot;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">initializers</span><span class="o">.</span><span class="n">RandomUniform</span><span class="p">(</span>
+            <span class="n">minval</span><span class="o">=</span><span class="n">kerasDefaults</span><span class="p">[</span><span class="s2">&quot;minval_uniform&quot;</span><span class="p">],</span>
+            <span class="n">maxval</span><span class="o">=</span><span class="n">kerasDefaults</span><span class="p">[</span><span class="s2">&quot;maxval_uniform&quot;</span><span class="p">],</span>
+            <span class="n">seed</span><span class="o">=</span><span class="n">seed</span><span class="p">,</span>
+        <span class="p">)</span>
+
+    <span class="k">elif</span> <span class="n">initializer</span> <span class="o">==</span> <span class="s2">&quot;normal&quot;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">initializers</span><span class="o">.</span><span class="n">RandomNormal</span><span class="p">(</span>
+            <span class="n">mean</span><span class="o">=</span><span class="n">kerasDefaults</span><span class="p">[</span><span class="s2">&quot;mean_normal&quot;</span><span class="p">],</span>
+            <span class="n">stddev</span><span class="o">=</span><span class="n">kerasDefaults</span><span class="p">[</span><span class="s2">&quot;stddev_normal&quot;</span><span class="p">],</span>
+            <span class="n">seed</span><span class="o">=</span><span class="n">seed</span><span class="p">,</span>
+        <span class="p">)</span>
+
+    <span class="k">elif</span> <span class="n">initializer</span> <span class="o">==</span> <span class="s2">&quot;glorot_normal&quot;</span><span class="p">:</span>
+        <span class="c1"># aka Xavier normal initializer. keras default</span>
+        <span class="k">return</span> <span class="n">initializers</span><span class="o">.</span><span class="n">glorot_normal</span><span class="p">(</span><span class="n">seed</span><span class="o">=</span><span class="n">seed</span><span class="p">)</span>
+
+    <span class="k">elif</span> <span class="n">initializer</span> <span class="o">==</span> <span class="s2">&quot;glorot_uniform&quot;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">initializers</span><span class="o">.</span><span class="n">glorot_uniform</span><span class="p">(</span><span class="n">seed</span><span class="o">=</span><span class="n">seed</span><span class="p">)</span>
+
+    <span class="k">elif</span> <span class="n">initializer</span> <span class="o">==</span> <span class="s2">&quot;lecun_uniform&quot;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">initializers</span><span class="o">.</span><span class="n">lecun_uniform</span><span class="p">(</span><span class="n">seed</span><span class="o">=</span><span class="n">seed</span><span class="p">)</span>
+
+    <span class="k">elif</span> <span class="n">initializer</span> <span class="o">==</span> <span class="s2">&quot;he_normal&quot;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">initializers</span><span class="o">.</span><span class="n">he_normal</span><span class="p">(</span><span class="n">seed</span><span class="o">=</span><span class="n">seed</span><span class="p">)</span></div>
+
+
+<span class="k">def</span> <span class="nf">xent</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">binary_crossentropy</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="r2"><a class="viewcode-back" href="../../candle/candle.html#candle.r2">[docs]</a><span class="k">def</span> <span class="nf">r2</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">):</span>
+    <span class="n">SS_res</span> <span class="o">=</span> <span class="n">K</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">K</span><span class="o">.</span><span class="n">square</span><span class="p">(</span><span class="n">y_true</span> <span class="o">-</span> <span class="n">y_pred</span><span class="p">))</span>
+    <span class="n">SS_tot</span> <span class="o">=</span> <span class="n">K</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">K</span><span class="o">.</span><span class="n">square</span><span class="p">(</span><span class="n">y_true</span> <span class="o">-</span> <span class="n">K</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">y_true</span><span class="p">)))</span>
+    <span class="k">return</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">SS_res</span> <span class="o">/</span> <span class="p">(</span><span class="n">SS_tot</span> <span class="o">+</span> <span class="n">K</span><span class="o">.</span><span class="n">epsilon</span><span class="p">())</span></div>
+
+
+<div class="viewcode-block" id="mae"><a class="viewcode-back" href="../../candle/candle.html#candle.mae">[docs]</a><span class="k">def</span> <span class="nf">mae</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">mean_absolute_error</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="mse"><a class="viewcode-back" href="../../candle/candle.html#candle.mse">[docs]</a><span class="k">def</span> <span class="nf">mse</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">mean_squared_error</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">)</span></div>
+
+
+<span class="k">def</span> <span class="nf">covariance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">K</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">x</span> <span class="o">*</span> <span class="n">y</span><span class="p">)</span> <span class="o">-</span> <span class="n">K</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">*</span> <span class="n">K</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">corr</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">):</span>
+    <span class="n">cov</span> <span class="o">=</span> <span class="n">covariance</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">)</span>
+    <span class="n">var1</span> <span class="o">=</span> <span class="n">covariance</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_true</span><span class="p">)</span>
+    <span class="n">var2</span> <span class="o">=</span> <span class="n">covariance</span><span class="p">(</span><span class="n">y_pred</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">cov</span> <span class="o">/</span> <span class="p">(</span><span class="n">K</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">var1</span> <span class="o">*</span> <span class="n">var2</span><span class="p">)</span> <span class="o">+</span> <span class="n">K</span><span class="o">.</span><span class="n">epsilon</span><span class="p">())</span>
+
+
+<span class="k">def</span> <span class="nf">evaluate_autoencoder</span><span class="p">(</span><span class="n">y_pred</span><span class="p">,</span> <span class="n">y_test</span><span class="p">):</span>
+    <span class="n">mse</span> <span class="o">=</span> <span class="n">mean_squared_error</span><span class="p">(</span><span class="n">y_pred</span><span class="p">,</span> <span class="n">y_test</span><span class="p">)</span>
+    <span class="n">r2</span> <span class="o">=</span> <span class="n">r2_score</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">)</span>
+    <span class="n">corr</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">pearsonr</span><span class="p">(</span><span class="n">y_pred</span><span class="o">.</span><span class="n">flatten</span><span class="p">(),</span> <span class="n">y_test</span><span class="o">.</span><span class="n">flatten</span><span class="p">())</span>
+    <span class="c1"># print(&#39;Mean squared error: {}%&#39;.format(mse))</span>
+    <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;mse&quot;</span><span class="p">:</span> <span class="n">mse</span><span class="p">,</span> <span class="s2">&quot;r2_score&quot;</span><span class="p">:</span> <span class="n">r2</span><span class="p">,</span> <span class="s2">&quot;correlation&quot;</span><span class="p">:</span> <span class="n">corr</span><span class="p">}</span>
+
+
+<div class="viewcode-block" id="PermanentDropout"><a class="viewcode-back" href="../../candle/candle.html#candle.PermanentDropout">[docs]</a><span class="k">class</span> <span class="nc">PermanentDropout</span><span class="p">(</span><span class="n">Dropout</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">rate</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">PermanentDropout</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">rate</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">uses_learning_phase</span> <span class="o">=</span> <span class="kc">False</span>
+
+<div class="viewcode-block" id="PermanentDropout.call"><a class="viewcode-back" href="../../candle/candle.html#candle.PermanentDropout.call">[docs]</a>    <span class="k">def</span> <span class="nf">call</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">mask</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="k">if</span> <span class="mf">0.0</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">rate</span> <span class="o">&lt;</span> <span class="mf">1.0</span><span class="p">:</span>
+            <span class="n">noise_shape</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_noise_shape</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+            <span class="n">x</span> <span class="o">=</span> <span class="n">K</span><span class="o">.</span><span class="n">dropout</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">rate</span><span class="p">,</span> <span class="n">noise_shape</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">x</span></div></div>
+
+
+<div class="viewcode-block" id="register_permanent_dropout"><a class="viewcode-back" href="../../candle/candle.html#candle.register_permanent_dropout">[docs]</a><span class="k">def</span> <span class="nf">register_permanent_dropout</span><span class="p">():</span>
+    <span class="n">get_custom_objects</span><span class="p">()[</span><span class="s2">&quot;PermanentDropout&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">PermanentDropout</span></div>
+
+
+<div class="viewcode-block" id="LoggingCallback"><a class="viewcode-back" href="../../candle/candle.html#candle.LoggingCallback">[docs]</a><span class="k">class</span> <span class="nc">LoggingCallback</span><span class="p">(</span><span class="n">Callback</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">print_fcn</span><span class="o">=</span><span class="nb">print</span><span class="p">):</span>
+        <span class="n">Callback</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">print_fcn</span> <span class="o">=</span> <span class="n">print_fcn</span>
+
+<div class="viewcode-block" id="LoggingCallback.on_epoch_end"><a class="viewcode-back" href="../../candle/candle.html#candle.LoggingCallback.on_epoch_end">[docs]</a>    <span class="k">def</span> <span class="nf">on_epoch_end</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">epoch</span><span class="p">,</span> <span class="n">logs</span><span class="o">=</span><span class="p">{}):</span>
+        <span class="n">msg</span> <span class="o">=</span> <span class="s2">&quot;[Epoch: </span><span class="si">%i</span><span class="s2">] </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span>
+            <span class="n">epoch</span><span class="p">,</span>
+            <span class="s2">&quot;, &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%s</span><span class="s2">: </span><span class="si">%f</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">logs</span><span class="o">.</span><span class="n">items</span><span class="p">())),</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">print_fcn</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span></div></div>
+
+
+<div class="viewcode-block" id="compute_trainable_params"><a class="viewcode-back" href="../../candle/candle.html#candle.compute_trainable_params">[docs]</a><span class="k">def</span> <span class="nf">compute_trainable_params</span><span class="p">(</span><span class="n">model</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Extract number of parameters from the given Keras model</span>
+
+<span class="sd">    :param model: Keras model</span>
+
+<span class="sd">    :return: python dictionary that contains trainable_params, non_trainable_params and total_params</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="nb">str</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">model</span><span class="p">))</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;&lt;class &#39;keras.&quot;</span><span class="p">):</span>
+        <span class="kn">from</span> <span class="nn">keras</span> <span class="kn">import</span> <span class="n">backend</span> <span class="k">as</span> <span class="n">K</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="kn">import</span> <span class="nn">tensorflow.keras.backend</span> <span class="k">as</span> <span class="nn">K</span>
+
+    <span class="n">trainable_count</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">([</span><span class="n">K</span><span class="o">.</span><span class="n">count_params</span><span class="p">(</span><span class="n">w</span><span class="p">)</span> <span class="k">for</span> <span class="n">w</span> <span class="ow">in</span> <span class="n">model</span><span class="o">.</span><span class="n">trainable_weights</span><span class="p">]))</span>
+    <span class="n">non_trainable_count</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span>
+        <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">([</span><span class="n">K</span><span class="o">.</span><span class="n">count_params</span><span class="p">(</span><span class="n">w</span><span class="p">)</span> <span class="k">for</span> <span class="n">w</span> <span class="ow">in</span> <span class="n">model</span><span class="o">.</span><span class="n">non_trainable_weights</span><span class="p">])</span>
+    <span class="p">)</span>
+
+    <span class="k">return</span> <span class="p">{</span>
+        <span class="s2">&quot;trainable_params&quot;</span><span class="p">:</span> <span class="n">trainable_count</span><span class="p">,</span>
+        <span class="s2">&quot;non_trainable_params&quot;</span><span class="p">:</span> <span class="n">non_trainable_count</span><span class="p">,</span>
+        <span class="s2">&quot;total_params&quot;</span><span class="p">:</span> <span class="p">(</span><span class="n">trainable_count</span> <span class="o">+</span> <span class="n">non_trainable_count</span><span class="p">),</span>
+    <span class="p">}</span></div>
+
+
+<div class="viewcode-block" id="TerminateOnTimeOut"><a class="viewcode-back" href="../../candle/candle.html#candle.TerminateOnTimeOut">[docs]</a><span class="k">class</span> <span class="nc">TerminateOnTimeOut</span><span class="p">(</span><span class="n">Callback</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This class implements timeout on model training.</span>
+
+<span class="sd">    When the script reaches timeout,</span>
+<span class="sd">    this class sets model.stop_training = True</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">timeout_in_sec</span><span class="o">=</span><span class="mi">10</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Initialize TerminateOnTimeOut class.</span>
+
+<span class="sd">        :param int timeout_in_sec: seconds to timeout</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="nb">super</span><span class="p">(</span><span class="n">TerminateOnTimeOut</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">run_timestamp</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">timeout_in_sec</span> <span class="o">=</span> <span class="n">timeout_in_sec</span>
+
+<div class="viewcode-block" id="TerminateOnTimeOut.on_train_begin"><a class="viewcode-back" href="../../candle/candle.html#candle.TerminateOnTimeOut.on_train_begin">[docs]</a>    <span class="k">def</span> <span class="nf">on_train_begin</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">logs</span><span class="o">=</span><span class="p">{}):</span>
+        <span class="sd">&quot;&quot;&quot;Start clock to calculate timeout.&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">run_timestamp</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="TerminateOnTimeOut.on_epoch_end"><a class="viewcode-back" href="../../candle/candle.html#candle.TerminateOnTimeOut.on_epoch_end">[docs]</a>    <span class="k">def</span> <span class="nf">on_epoch_end</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">epoch</span><span class="p">,</span> <span class="n">logs</span><span class="o">=</span><span class="p">{}):</span>
+        <span class="sd">&quot;&quot;&quot;On every epoch end, check whether it exceeded timeout and terminate</span>
+<span class="sd">        training if necessary.&quot;&quot;&quot;</span>
+        <span class="n">run_end</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
+        <span class="n">run_duration</span> <span class="o">=</span> <span class="n">run_end</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">run_timestamp</span>
+        <span class="n">run_in_sec</span> <span class="o">=</span> <span class="n">run_duration</span><span class="o">.</span><span class="n">total_seconds</span><span class="p">()</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Current time ....</span><span class="si">%2.3f</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">run_in_sec</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">timeout_in_sec</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">run_in_sec</span> <span class="o">&gt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">timeout_in_sec</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span>
+                    <span class="s2">&quot;Timeout==&gt;Runtime: </span><span class="si">%2.3f</span><span class="s2">s, Maxtime: </span><span class="si">%2.3f</span><span class="s2">s&quot;</span>
+                    <span class="o">%</span> <span class="p">(</span><span class="n">run_in_sec</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">timeout_in_sec</span><span class="p">)</span>
+                <span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">stop_training</span> <span class="o">=</span> <span class="kc">True</span></div></div>
+
+
+<div class="viewcode-block" id="CandleRemoteMonitor"><a class="viewcode-back" href="../../candle/candle.html#candle.CandleRemoteMonitor">[docs]</a><span class="k">class</span> <span class="nc">CandleRemoteMonitor</span><span class="p">(</span><span class="n">Callback</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Capture Run level output and store/send for monitoring.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">CandleRemoteMonitor</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">global_params</span> <span class="o">=</span> <span class="n">params</span>
+
+        <span class="c1"># init</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">experiment_id</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">run_id</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">run_timestamp</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">epoch_timestamp</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">log_messages</span> <span class="o">=</span> <span class="p">[]</span>
+
+<div class="viewcode-block" id="CandleRemoteMonitor.on_train_begin"><a class="viewcode-back" href="../../candle/candle.html#candle.CandleRemoteMonitor.on_train_begin">[docs]</a>    <span class="k">def</span> <span class="nf">on_train_begin</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">logs</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="n">logs</span> <span class="o">=</span> <span class="n">logs</span> <span class="ow">or</span> <span class="p">{}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">run_timestamp</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">experiment_id</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">global_params</span><span class="p">[</span><span class="s2">&quot;experiment_id&quot;</span><span class="p">]</span>
+            <span class="k">if</span> <span class="s2">&quot;experiment_id&quot;</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">global_params</span>
+            <span class="k">else</span> <span class="s2">&quot;EXP_default&quot;</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">run_id</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">global_params</span><span class="p">[</span><span class="s2">&quot;run_id&quot;</span><span class="p">]</span>
+            <span class="k">if</span> <span class="s2">&quot;run_id&quot;</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">global_params</span>
+            <span class="k">else</span> <span class="s2">&quot;RUN_default&quot;</span>
+        <span class="p">)</span>
+
+        <span class="n">run_params</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">val</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">global_params</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="n">run_params</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{}</span><span class="s2">: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">val</span><span class="p">))</span>
+
+        <span class="n">send</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;experiment_id&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">experiment_id</span><span class="p">,</span>
+            <span class="s2">&quot;run_id&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">run_id</span><span class="p">,</span>
+            <span class="s2">&quot;parameters&quot;</span><span class="p">:</span> <span class="n">run_params</span><span class="p">,</span>
+            <span class="s2">&quot;start_time&quot;</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">run_timestamp</span><span class="p">),</span>
+            <span class="s2">&quot;status&quot;</span><span class="p">:</span> <span class="s2">&quot;Started&quot;</span><span class="p">,</span>
+        <span class="p">}</span>
+        <span class="c1"># print(&quot;on_train_begin&quot;, send)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">log_messages</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">send</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="CandleRemoteMonitor.on_epoch_begin"><a class="viewcode-back" href="../../candle/candle.html#candle.CandleRemoteMonitor.on_epoch_begin">[docs]</a>    <span class="k">def</span> <span class="nf">on_epoch_begin</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">epoch</span><span class="p">,</span> <span class="n">logs</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">epoch_timestamp</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="CandleRemoteMonitor.on_epoch_end"><a class="viewcode-back" href="../../candle/candle.html#candle.CandleRemoteMonitor.on_epoch_end">[docs]</a>    <span class="k">def</span> <span class="nf">on_epoch_end</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">epoch</span><span class="p">,</span> <span class="n">logs</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="n">logs</span> <span class="o">=</span> <span class="n">logs</span> <span class="ow">or</span> <span class="p">{}</span>
+        <span class="n">loss</span> <span class="o">=</span> <span class="n">logs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;loss&quot;</span><span class="p">)</span>
+        <span class="n">val_loss</span> <span class="o">=</span> <span class="n">logs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;val_loss&quot;</span><span class="p">)</span>
+        <span class="n">epoch_total</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">global_params</span><span class="p">[</span><span class="s2">&quot;epochs&quot;</span><span class="p">]</span>
+        <span class="n">epoch_duration</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">epoch_timestamp</span>
+        <span class="n">epoch_in_sec</span> <span class="o">=</span> <span class="n">epoch_duration</span><span class="o">.</span><span class="n">total_seconds</span><span class="p">()</span>
+        <span class="n">epoch_line</span> <span class="o">=</span> <span class="s2">&quot;epoch: </span><span class="si">{}</span><span class="s2">/</span><span class="si">{}</span><span class="s2">, duration: </span><span class="si">{}</span><span class="s2">s, loss: </span><span class="si">{}</span><span class="s2">, val_loss: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+            <span class="p">(</span><span class="n">epoch</span> <span class="o">+</span> <span class="mi">1</span><span class="p">),</span> <span class="n">epoch_total</span><span class="p">,</span> <span class="n">epoch_in_sec</span><span class="p">,</span> <span class="n">loss</span><span class="p">,</span> <span class="n">val_loss</span>
+        <span class="p">)</span>
+
+        <span class="n">send</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;run_id&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">run_id</span><span class="p">,</span>
+            <span class="s2">&quot;status&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;set&quot;</span><span class="p">:</span> <span class="s2">&quot;Running&quot;</span><span class="p">},</span>
+            <span class="s2">&quot;training_loss&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;set&quot;</span><span class="p">:</span> <span class="n">loss</span><span class="p">},</span>
+            <span class="s2">&quot;validation_loss&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;set&quot;</span><span class="p">:</span> <span class="n">val_loss</span><span class="p">},</span>
+            <span class="s2">&quot;run_progress&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;add&quot;</span><span class="p">:</span> <span class="p">[</span><span class="n">epoch_line</span><span class="p">]},</span>
+        <span class="p">}</span>
+        <span class="c1"># print(&quot;on_epoch_end&quot;, send)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">log_messages</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">send</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="CandleRemoteMonitor.on_train_end"><a class="viewcode-back" href="../../candle/candle.html#candle.CandleRemoteMonitor.on_train_end">[docs]</a>    <span class="k">def</span> <span class="nf">on_train_end</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">logs</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="n">logs</span> <span class="o">=</span> <span class="n">logs</span> <span class="ow">or</span> <span class="p">{}</span>
+        <span class="n">run_end</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
+        <span class="n">run_duration</span> <span class="o">=</span> <span class="n">run_end</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">run_timestamp</span>
+        <span class="n">run_in_hour</span> <span class="o">=</span> <span class="n">run_duration</span><span class="o">.</span><span class="n">total_seconds</span><span class="p">()</span> <span class="o">/</span> <span class="p">(</span><span class="mi">60</span> <span class="o">*</span> <span class="mi">60</span><span class="p">)</span>
+
+        <span class="n">send</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;run_id&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">run_id</span><span class="p">,</span>
+            <span class="s2">&quot;runtime_hours&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;set&quot;</span><span class="p">:</span> <span class="n">run_in_hour</span><span class="p">},</span>
+            <span class="s2">&quot;end_time&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;set&quot;</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">run_end</span><span class="p">)},</span>
+            <span class="s2">&quot;status&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;set&quot;</span><span class="p">:</span> <span class="s2">&quot;Finished&quot;</span><span class="p">},</span>
+            <span class="s2">&quot;date_modified&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;set&quot;</span><span class="p">:</span> <span class="s2">&quot;NOW&quot;</span><span class="p">},</span>
+        <span class="p">}</span>
+        <span class="c1"># print(&quot;on_train_end&quot;, send)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">log_messages</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">send</span><span class="p">)</span>
+
+        <span class="c1"># save to file when finished</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">save</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="CandleRemoteMonitor.save"><a class="viewcode-back" href="../../candle/candle.html#candle.CandleRemoteMonitor.save">[docs]</a>    <span class="k">def</span> <span class="nf">save</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Save log_messages to file.&quot;&quot;&quot;</span>
+        <span class="c1"># path = os.getenv(&#39;TURBINE_OUTPUT&#39;) if &#39;TURBINE_OUTPUT&#39; in os.environ else &#39;.&#39;</span>
+        <span class="n">path</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">global_params</span><span class="p">[</span><span class="s2">&quot;output_dir&quot;</span><span class="p">]</span>
+            <span class="k">if</span> <span class="s2">&quot;output_dir&quot;</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">global_params</span>
+            <span class="k">else</span> <span class="s2">&quot;.&quot;</span>
+        <span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
+            <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+
+        <span class="n">filename</span> <span class="o">=</span> <span class="s2">&quot;/run.</span><span class="si">{}</span><span class="s2">.json&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">run_id</span><span class="p">)</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">path</span> <span class="o">+</span> <span class="n">filename</span><span class="p">,</span> <span class="s2">&quot;a&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file_run_json</span><span class="p">:</span>
+            <span class="n">file_run_json</span><span class="o">.</span><span class="n">write</span><span class="p">(</span>
+                <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">log_messages</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">separators</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;,&quot;</span><span class="p">,</span> <span class="s2">&quot;: &quot;</span><span class="p">))</span>
+            <span class="p">)</span></div></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2021, ANL.gov.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,1201 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>candle.uq_keras_utils &mdash; CANDLE  documentation</title><link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/graphviz.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/language_data.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../index.html" class="icon icon-home"> CANDLE
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../readme.html">What is CANDLE?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../tutorials/index.html">Tutorials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../candle/candle.html"><code class="docutils literal notranslate"><span class="pre">candle</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../shared_installation.html">CANDLE Shared Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../contribute.html">How to Contribute</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">CANDLE</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="../index.html">Module code</a> &raquo;</li>
+      <li>candle.uq_keras_utils</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for candle.uq_keras_utils</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">absolute_import</span>
+
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">,</span> <span class="n">Type</span><span class="p">,</span> <span class="n">Union</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">scipy.stats</span> <span class="kn">import</span> <span class="n">cauchy</span><span class="p">,</span> <span class="n">norm</span>
+<span class="kn">from</span> <span class="nn">tensorflow.keras</span> <span class="kn">import</span> <span class="n">backend</span> <span class="k">as</span> <span class="n">K</span>
+<span class="kn">from</span> <span class="nn">tensorflow.keras</span> <span class="kn">import</span> <span class="n">layers</span>
+<span class="kn">from</span> <span class="nn">tensorflow.keras.callbacks</span> <span class="kn">import</span> <span class="n">Callback</span>
+<span class="kn">from</span> <span class="nn">tensorflow.keras.layers</span> <span class="kn">import</span> <span class="n">Dense</span>
+<span class="kn">from</span> <span class="nn">tensorflow.keras.metrics</span> <span class="kn">import</span> <span class="n">mean_absolute_error</span><span class="p">,</span> <span class="n">mean_squared_error</span>
+<span class="kn">from</span> <span class="nn">tensorflow.keras.models</span> <span class="kn">import</span> <span class="n">Model</span>
+<span class="kn">from</span> <span class="nn">tensorflow.keras.utils</span> <span class="kn">import</span> <span class="n">to_categorical</span>
+
+<span class="n">Array</span> <span class="o">=</span> <span class="n">Type</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">]</span>
+
+<span class="n">piSQ</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">**</span><span class="mi">2</span>
+
+<span class="c1">###################################################################</span>
+
+<span class="c1"># For Abstention Model</span>
+
+
+<div class="viewcode-block" id="abstention_loss"><a class="viewcode-back" href="../../candle/candle.html#candle.abstention_loss">[docs]</a><span class="k">def</span> <span class="nf">abstention_loss</span><span class="p">(</span><span class="n">alpha</span><span class="p">,</span> <span class="n">mask</span><span class="p">:</span> <span class="n">Array</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Function to compute abstention loss. It is composed by two terms: (i)</span>
+<span class="sd">    original loss of the multiclass classification problem, (ii) cost</span>
+<span class="sd">    associated to the abstaining samples.</span>
+
+<span class="sd">    :param alpha: Keras variable. Weight of abstention term in cost function</span>
+<span class="sd">    :param ndarray mask: Numpy array to use as mask for abstention: \</span>
+<span class="sd">        it is 1 on the output associated to the abstention class and 0 otherwise</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">loss</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :param y_true: keras tensor. True values to predict</span>
+<span class="sd">        :param y_pred: keras tensor. Prediction made by the model. \</span>
+<span class="sd">            It is assumed that this keras tensor includes extra columns to store the abstaining classes.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">base_pred</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">mask</span><span class="p">)</span> <span class="o">*</span> <span class="n">y_pred</span> <span class="o">+</span> <span class="n">K</span><span class="o">.</span><span class="n">epsilon</span><span class="p">()</span>
+        <span class="n">base_true</span> <span class="o">=</span> <span class="n">y_true</span>
+        <span class="n">base_cost</span> <span class="o">=</span> <span class="n">K</span><span class="o">.</span><span class="n">categorical_crossentropy</span><span class="p">(</span><span class="n">base_true</span><span class="p">,</span> <span class="n">base_pred</span><span class="p">)</span>
+        <span class="c1"># abs_pred = K.mean(mask * y_pred, axis=-1)</span>
+        <span class="n">abs_pred</span> <span class="o">=</span> <span class="n">K</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">mask</span> <span class="o">*</span> <span class="n">y_pred</span><span class="p">,</span> <span class="n">axis</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
+        <span class="c1"># add some small value to prevent NaN when prediction is abstained</span>
+        <span class="n">abs_pred</span> <span class="o">=</span> <span class="n">K</span><span class="o">.</span><span class="n">clip</span><span class="p">(</span><span class="n">abs_pred</span><span class="p">,</span> <span class="n">K</span><span class="o">.</span><span class="n">epsilon</span><span class="p">(),</span> <span class="mf">1.0</span> <span class="o">-</span> <span class="n">K</span><span class="o">.</span><span class="n">epsilon</span><span class="p">())</span>
+
+        <span class="k">return</span> <span class="p">(</span><span class="mf">1.0</span> <span class="o">-</span> <span class="n">abs_pred</span><span class="p">)</span> <span class="o">*</span> <span class="n">base_cost</span> <span class="o">-</span> <span class="n">alpha</span> <span class="o">*</span> <span class="n">K</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="mf">1.0</span> <span class="o">-</span> <span class="n">abs_pred</span><span class="p">)</span>
+        <span class="c1"># return K.mean((1. - abs_pred) * base_cost - alpha * K.log(1. - abs_pred), axis = -1)</span>
+
+    <span class="n">loss</span><span class="o">.</span><span class="vm">__name__</span> <span class="o">=</span> <span class="s2">&quot;abs_crossentropy&quot;</span>
+    <span class="k">return</span> <span class="n">loss</span></div>
+
+
+<div class="viewcode-block" id="sparse_abstention_loss"><a class="viewcode-back" href="../../candle/candle.html#candle.sparse_abstention_loss">[docs]</a><span class="k">def</span> <span class="nf">sparse_abstention_loss</span><span class="p">(</span><span class="n">alpha</span><span class="p">,</span> <span class="n">mask</span><span class="p">:</span> <span class="n">Array</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Function to compute abstention loss. It is composed by two terms: (i)</span>
+<span class="sd">    original loss of the multiclass classification problem, (ii) cost</span>
+<span class="sd">    associated to the abstaining samples. Assumes y_true is not one-hot</span>
+<span class="sd">    encoded.</span>
+
+<span class="sd">    :param alpha: Keras variable.  Weight of abstention term in cost function</span>
+<span class="sd">    :param ndarray mask: Numpy array to use as mask for abstention: it is 1 on the output associated \</span>
+<span class="sd">        to the abstention class and 0 otherwise</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">loss</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :param y_true: keras tensor. True values to predict</span>
+<span class="sd">        :param y_pred: keras tensor. Prediction made by the model. \</span>
+<span class="sd">            It is assumed that this keras tensor includes extra columns to store the abstaining classes.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">base_pred</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">mask</span><span class="p">)</span> <span class="o">*</span> <span class="n">y_pred</span> <span class="o">+</span> <span class="n">K</span><span class="o">.</span><span class="n">epsilon</span><span class="p">()</span>
+        <span class="n">base_true</span> <span class="o">=</span> <span class="n">y_true</span>
+        <span class="n">base_cost</span> <span class="o">=</span> <span class="n">K</span><span class="o">.</span><span class="n">sparse_categorical_crossentropy</span><span class="p">(</span><span class="n">base_true</span><span class="p">,</span> <span class="n">base_pred</span><span class="p">)</span>
+        <span class="c1"># abs_pred = K.mean(mask * y_pred, axis=-1)</span>
+        <span class="n">abs_pred</span> <span class="o">=</span> <span class="n">K</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">mask</span> <span class="o">*</span> <span class="n">y_pred</span><span class="p">,</span> <span class="n">axis</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
+        <span class="c1"># add some small value to prevent NaN when prediction is abstained</span>
+        <span class="n">abs_pred</span> <span class="o">=</span> <span class="n">K</span><span class="o">.</span><span class="n">clip</span><span class="p">(</span><span class="n">abs_pred</span><span class="p">,</span> <span class="n">K</span><span class="o">.</span><span class="n">epsilon</span><span class="p">(),</span> <span class="mf">1.0</span> <span class="o">-</span> <span class="n">K</span><span class="o">.</span><span class="n">epsilon</span><span class="p">())</span>
+
+        <span class="k">return</span> <span class="p">(</span><span class="mf">1.0</span> <span class="o">-</span> <span class="n">abs_pred</span><span class="p">)</span> <span class="o">*</span> <span class="n">base_cost</span> <span class="o">-</span> <span class="n">alpha</span> <span class="o">*</span> <span class="n">K</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="mf">1.0</span> <span class="o">-</span> <span class="n">abs_pred</span><span class="p">)</span>
+        <span class="c1"># return K.mean((1. - abs_pred) * base_cost - alpha * K.log(1. - abs_pred), axis = -1)</span>
+
+    <span class="n">loss</span><span class="o">.</span><span class="vm">__name__</span> <span class="o">=</span> <span class="s2">&quot;sparse_abs_crossentropy&quot;</span>
+    <span class="k">return</span> <span class="n">loss</span></div>
+
+
+<div class="viewcode-block" id="abstention_acc_metric"><a class="viewcode-back" href="../../candle/candle.html#candle.abstention_acc_metric">[docs]</a><span class="k">def</span> <span class="nf">abstention_acc_metric</span><span class="p">(</span><span class="n">nb_classes</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="n">Array</span><span class="p">]):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Abstained accuracy: Function to estimate accuracy over the predicted</span>
+<span class="sd">    samples after removing the samples where the model is abstaining.</span>
+
+<span class="sd">    :param int or ndarray nb_classes: Integer or numpy array defining indices of the abstention class</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">metric</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :param y_true: keras tensor. True values to predict</span>
+<span class="sd">        :param y_pred: keras tensor. Prediction made by the model.\</span>
+<span class="sd">            It is assumed that this keras tensor includes extra columns to store the abstaining classes.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># matching in original classes</span>
+        <span class="n">true_pred</span> <span class="o">=</span> <span class="n">K</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span>
+            <span class="n">K</span><span class="o">.</span><span class="n">cast</span><span class="p">(</span>
+                <span class="n">K</span><span class="o">.</span><span class="n">equal</span><span class="p">(</span><span class="n">K</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">axis</span><span class="o">=-</span><span class="mi">1</span><span class="p">),</span> <span class="n">K</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">y_pred</span><span class="p">,</span> <span class="n">axis</span><span class="o">=-</span><span class="mi">1</span><span class="p">)),</span> <span class="s2">&quot;int64&quot;</span>
+            <span class="p">)</span>
+        <span class="p">)</span>
+
+        <span class="c1"># total abstention</span>
+        <span class="n">total_abs</span> <span class="o">=</span> <span class="n">K</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span>
+            <span class="n">K</span><span class="o">.</span><span class="n">cast</span><span class="p">(</span><span class="n">K</span><span class="o">.</span><span class="n">equal</span><span class="p">(</span><span class="n">K</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">y_pred</span><span class="p">,</span> <span class="n">axis</span><span class="o">=-</span><span class="mi">1</span><span class="p">),</span> <span class="n">nb_classes</span><span class="p">),</span> <span class="s2">&quot;int64&quot;</span><span class="p">)</span>
+        <span class="p">)</span>
+
+        <span class="c1"># total predicted in original classes</span>
+        <span class="n">total_pred</span> <span class="o">=</span> <span class="n">K</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span>
+            <span class="n">K</span><span class="o">.</span><span class="n">cast</span><span class="p">(</span>
+                <span class="n">K</span><span class="o">.</span><span class="n">equal</span><span class="p">(</span><span class="n">K</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">y_pred</span><span class="p">,</span> <span class="n">axis</span><span class="o">=-</span><span class="mi">1</span><span class="p">),</span> <span class="n">K</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">y_pred</span><span class="p">,</span> <span class="n">axis</span><span class="o">=-</span><span class="mi">1</span><span class="p">)),</span> <span class="s2">&quot;int64&quot;</span>
+            <span class="p">)</span>
+        <span class="p">)</span>
+
+        <span class="c1"># guard against divide by zero</span>
+        <span class="n">condition</span> <span class="o">=</span> <span class="n">K</span><span class="o">.</span><span class="n">greater</span><span class="p">(</span><span class="n">total_pred</span><span class="p">,</span> <span class="n">total_abs</span><span class="p">)</span>
+        <span class="n">abs_acc</span> <span class="o">=</span> <span class="n">K</span><span class="o">.</span><span class="n">switch</span><span class="p">(</span>
+            <span class="n">condition</span><span class="p">,</span> <span class="n">true_pred</span> <span class="o">/</span> <span class="p">(</span><span class="n">total_pred</span> <span class="o">-</span> <span class="n">total_abs</span><span class="p">),</span> <span class="n">total_pred</span> <span class="o">/</span> <span class="n">total_pred</span>
+        <span class="p">)</span>
+        <span class="k">return</span> <span class="n">abs_acc</span>
+
+    <span class="n">metric</span><span class="o">.</span><span class="vm">__name__</span> <span class="o">=</span> <span class="s2">&quot;abstention_acc&quot;</span>
+    <span class="k">return</span> <span class="n">metric</span></div>
+
+
+<div class="viewcode-block" id="sparse_abstention_acc_metric"><a class="viewcode-back" href="../../candle/candle.html#candle.sparse_abstention_acc_metric">[docs]</a><span class="k">def</span> <span class="nf">sparse_abstention_acc_metric</span><span class="p">(</span><span class="n">nb_classes</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="n">Array</span><span class="p">]):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Abstained accuracy: Function to estimate accuracy over the predicted</span>
+<span class="sd">    samples after removing the samples where the model is abstaining. Assumes</span>
+<span class="sd">    y_true is not one-hot encoded.</span>
+
+<span class="sd">    :param int or ndarray nb_classes: Integer or numpy array defining indices of the abstention class</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">metric</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :param y_true: keras tensor. True values to predict</span>
+<span class="sd">        :param y_pred: keras tensor. Prediction made by the model. \</span>
+<span class="sd">            It is assumed that this keras tensor includes extra columns to store the abstaining classes.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># matching in original classes</span>
+        <span class="n">y_pred_index</span> <span class="o">=</span> <span class="n">K</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">y_pred</span><span class="p">,</span> <span class="n">axis</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">y_true_index</span> <span class="o">=</span> <span class="n">K</span><span class="o">.</span><span class="n">cast</span><span class="p">(</span><span class="n">K</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">axis</span><span class="o">=-</span><span class="mi">1</span><span class="p">),</span> <span class="s2">&quot;int64&quot;</span><span class="p">)</span>
+        <span class="n">true_pred</span> <span class="o">=</span> <span class="n">K</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">K</span><span class="o">.</span><span class="n">cast</span><span class="p">(</span><span class="n">K</span><span class="o">.</span><span class="n">equal</span><span class="p">(</span><span class="n">y_true_index</span><span class="p">,</span> <span class="n">y_pred_index</span><span class="p">),</span> <span class="s2">&quot;int64&quot;</span><span class="p">))</span>
+
+        <span class="c1"># total abstention</span>
+        <span class="n">total_abs</span> <span class="o">=</span> <span class="n">K</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span>
+            <span class="n">K</span><span class="o">.</span><span class="n">cast</span><span class="p">(</span><span class="n">K</span><span class="o">.</span><span class="n">equal</span><span class="p">(</span><span class="n">K</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">y_pred</span><span class="p">,</span> <span class="n">axis</span><span class="o">=-</span><span class="mi">1</span><span class="p">),</span> <span class="n">nb_classes</span><span class="p">),</span> <span class="s2">&quot;int64&quot;</span><span class="p">)</span>
+        <span class="p">)</span>
+
+        <span class="c1"># total predicted in original classes</span>
+        <span class="n">total_pred</span> <span class="o">=</span> <span class="n">K</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span>
+            <span class="n">K</span><span class="o">.</span><span class="n">cast</span><span class="p">(</span>
+                <span class="n">K</span><span class="o">.</span><span class="n">equal</span><span class="p">(</span><span class="n">K</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">y_pred</span><span class="p">,</span> <span class="n">axis</span><span class="o">=-</span><span class="mi">1</span><span class="p">),</span> <span class="n">K</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">y_pred</span><span class="p">,</span> <span class="n">axis</span><span class="o">=-</span><span class="mi">1</span><span class="p">)),</span> <span class="s2">&quot;int64&quot;</span>
+            <span class="p">)</span>
+        <span class="p">)</span>
+
+        <span class="c1"># guard against divide by zero</span>
+        <span class="n">condition</span> <span class="o">=</span> <span class="n">K</span><span class="o">.</span><span class="n">greater</span><span class="p">(</span><span class="n">total_pred</span><span class="p">,</span> <span class="n">total_abs</span><span class="p">)</span>
+        <span class="n">abs_acc</span> <span class="o">=</span> <span class="n">K</span><span class="o">.</span><span class="n">switch</span><span class="p">(</span>
+            <span class="n">condition</span><span class="p">,</span> <span class="n">true_pred</span> <span class="o">/</span> <span class="p">(</span><span class="n">total_pred</span> <span class="o">-</span> <span class="n">total_abs</span><span class="p">),</span> <span class="n">total_pred</span> <span class="o">/</span> <span class="n">total_pred</span>
+        <span class="p">)</span>
+        <span class="k">return</span> <span class="n">abs_acc</span>
+
+    <span class="n">metric</span><span class="o">.</span><span class="vm">__name__</span> <span class="o">=</span> <span class="s2">&quot;sparse_abstention_acc&quot;</span>
+    <span class="k">return</span> <span class="n">metric</span></div>
+
+
+<div class="viewcode-block" id="abstention_metric"><a class="viewcode-back" href="../../candle/candle.html#candle.abstention_metric">[docs]</a><span class="k">def</span> <span class="nf">abstention_metric</span><span class="p">(</span><span class="n">nb_classes</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="n">Array</span><span class="p">]):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Function to estimate fraction of the samples where the model is</span>
+<span class="sd">    abstaining.</span>
+
+<span class="sd">    :param int or ndarray nb_classes: Integer or numpy array defining indices of the abstention class</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">metric</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :param y_true: keras tensor. True values to predict</span>
+<span class="sd">        :param y_pred: keras tensor.  Prediction made by the model. \</span>
+<span class="sd">            It is assumed that this keras tensor includes extra columns to store the abstaining classes.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># total abstention</span>
+        <span class="n">total_abs</span> <span class="o">=</span> <span class="n">K</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span>
+            <span class="n">K</span><span class="o">.</span><span class="n">cast</span><span class="p">(</span><span class="n">K</span><span class="o">.</span><span class="n">equal</span><span class="p">(</span><span class="n">K</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">y_pred</span><span class="p">,</span> <span class="n">axis</span><span class="o">=-</span><span class="mi">1</span><span class="p">),</span> <span class="n">nb_classes</span><span class="p">),</span> <span class="s2">&quot;int64&quot;</span><span class="p">)</span>
+        <span class="p">)</span>
+
+        <span class="c1"># total predicted in original classes</span>
+        <span class="n">total_pred</span> <span class="o">=</span> <span class="n">K</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span>
+            <span class="n">K</span><span class="o">.</span><span class="n">cast</span><span class="p">(</span>
+                <span class="n">K</span><span class="o">.</span><span class="n">equal</span><span class="p">(</span><span class="n">K</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">y_pred</span><span class="p">,</span> <span class="n">axis</span><span class="o">=-</span><span class="mi">1</span><span class="p">),</span> <span class="n">K</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">y_pred</span><span class="p">,</span> <span class="n">axis</span><span class="o">=-</span><span class="mi">1</span><span class="p">)),</span> <span class="s2">&quot;int64&quot;</span>
+            <span class="p">)</span>
+        <span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">total_abs</span> <span class="o">/</span> <span class="n">total_pred</span>
+
+    <span class="n">metric</span><span class="o">.</span><span class="vm">__name__</span> <span class="o">=</span> <span class="s2">&quot;abstention&quot;</span>
+    <span class="k">return</span> <span class="n">metric</span></div>
+
+
+<div class="viewcode-block" id="acc_class_i_metric"><a class="viewcode-back" href="../../candle/candle.html#candle.acc_class_i_metric">[docs]</a><span class="k">def</span> <span class="nf">acc_class_i_metric</span><span class="p">(</span><span class="n">class_i</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Function to estimate accuracy over the ith class prediction. This</span>
+<span class="sd">    estimation is global (i.e. abstaining samples are not removed)</span>
+
+<span class="sd">    :param int class_i: Index of the class to estimate accuracy</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">metric</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :param y_true: keras tensor. True values to predict</span>
+<span class="sd">        :param y_pred: keras tensor. Prediction made by the model. \</span>
+<span class="sd">            It is assumed that this keras tensor includes extra columns to store the abstaining classes.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Find locations in ground truth belonging to class i</span>
+        <span class="n">ytrueint</span> <span class="o">=</span> <span class="n">K</span><span class="o">.</span><span class="n">cast</span><span class="p">(</span><span class="n">K</span><span class="o">.</span><span class="n">equal</span><span class="p">(</span><span class="n">K</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">axis</span><span class="o">=-</span><span class="mi">1</span><span class="p">),</span> <span class="n">class_i</span><span class="p">),</span> <span class="s2">&quot;int64&quot;</span><span class="p">)</span>
+
+        <span class="c1"># Compute total number of ground truth samples in class i</span>
+        <span class="n">total_true_i</span> <span class="o">=</span> <span class="n">K</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">ytrueint</span><span class="p">)</span>
+
+        <span class="c1"># Find samples in prediction belonging to class i (not accounting for abstention)</span>
+        <span class="n">ypredint</span> <span class="o">=</span> <span class="n">K</span><span class="o">.</span><span class="n">cast</span><span class="p">(</span><span class="n">K</span><span class="o">.</span><span class="n">equal</span><span class="p">(</span><span class="n">K</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">y_pred</span><span class="p">[:,</span> <span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">axis</span><span class="o">=-</span><span class="mi">1</span><span class="p">),</span> <span class="n">class_i</span><span class="p">),</span> <span class="s2">&quot;int64&quot;</span><span class="p">)</span>
+
+        <span class="c1"># Find correctly predicted class i samples</span>
+        <span class="n">true_i_pred</span> <span class="o">=</span> <span class="n">K</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">ytrueint</span> <span class="o">*</span> <span class="n">ypredint</span><span class="p">)</span>
+
+        <span class="c1"># Compute accuracy in class i</span>
+        <span class="n">acc</span> <span class="o">=</span> <span class="n">true_i_pred</span> <span class="o">/</span> <span class="n">total_true_i</span>
+
+        <span class="c1"># Since there could be few samples in class i</span>
+        <span class="c1"># it is possible that ground truth does not</span>
+        <span class="c1"># have any sample in class i, leading to a divide</span>
+        <span class="c1"># by zero and not valid accuracy</span>
+        <span class="c1"># Therefore, for the accuracy to be valid</span>
+        <span class="c1"># total_true_i should be greater than zero</span>
+        <span class="c1"># otherwise, return 0.</span>
+
+        <span class="n">condition</span> <span class="o">=</span> <span class="n">K</span><span class="o">.</span><span class="n">greater</span><span class="p">(</span><span class="n">total_true_i</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">K</span><span class="o">.</span><span class="n">switch</span><span class="p">(</span><span class="n">condition</span><span class="p">,</span> <span class="n">acc</span><span class="p">,</span> <span class="n">K</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">acc</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">acc</span><span class="o">.</span><span class="n">dtype</span><span class="p">))</span>
+
+    <span class="n">metric</span><span class="o">.</span><span class="vm">__name__</span> <span class="o">=</span> <span class="s2">&quot;acc_class_</span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">class_i</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">metric</span></div>
+
+
+<div class="viewcode-block" id="abstention_acc_class_i_metric"><a class="viewcode-back" href="../../candle/candle.html#candle.abstention_acc_class_i_metric">[docs]</a><span class="k">def</span> <span class="nf">abstention_acc_class_i_metric</span><span class="p">(</span><span class="n">nb_classes</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="n">Array</span><span class="p">],</span> <span class="n">class_i</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Function to estimate accuracy over the class i prediction after removing</span>
+<span class="sd">    the samples where the model is abstaining.</span>
+
+<span class="sd">    :param int or ndarray nb_classes: Integer or numpy array defining indices of the abstention class</span>
+<span class="sd">    :param int class_i: Index of the class to estimate accuracy after removing abstention samples</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">metric</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :param y_true: keras tensor. True values to predict</span>
+<span class="sd">        :param y_pred: keras tensor. Prediction made by the model. \</span>
+<span class="sd">            It is assumed that this keras tensor includes extra columns to store the abstaining classes.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Find locations in ground truth belonging to class i</span>
+        <span class="n">ytrueint</span> <span class="o">=</span> <span class="n">K</span><span class="o">.</span><span class="n">cast</span><span class="p">(</span><span class="n">K</span><span class="o">.</span><span class="n">equal</span><span class="p">(</span><span class="n">K</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">axis</span><span class="o">=-</span><span class="mi">1</span><span class="p">),</span> <span class="n">class_i</span><span class="p">),</span> <span class="s2">&quot;int64&quot;</span><span class="p">)</span>
+
+        <span class="c1"># Find locations that are predicted (not abstained)</span>
+        <span class="n">mask_pred</span> <span class="o">=</span> <span class="n">K</span><span class="o">.</span><span class="n">cast</span><span class="p">(</span><span class="n">K</span><span class="o">.</span><span class="n">not_equal</span><span class="p">(</span><span class="n">K</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">y_pred</span><span class="p">,</span> <span class="n">axis</span><span class="o">=-</span><span class="mi">1</span><span class="p">),</span> <span class="n">nb_classes</span><span class="p">),</span> <span class="s2">&quot;int64&quot;</span><span class="p">)</span>
+
+        <span class="c1"># Compute total number of ground truth samples in class i filtering abstaining predictions</span>
+        <span class="n">total_true_i</span> <span class="o">=</span> <span class="n">K</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">ytrueint</span> <span class="o">*</span> <span class="n">mask_pred</span><span class="p">)</span>
+
+        <span class="c1"># matching in original class i after removing abstention</span>
+        <span class="n">true_i_pred</span> <span class="o">=</span> <span class="n">K</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span>
+            <span class="n">mask_pred</span>
+            <span class="o">*</span> <span class="n">ytrueint</span>
+            <span class="o">*</span> <span class="n">K</span><span class="o">.</span><span class="n">cast</span><span class="p">(</span>
+                <span class="n">K</span><span class="o">.</span><span class="n">equal</span><span class="p">(</span><span class="n">K</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">axis</span><span class="o">=-</span><span class="mi">1</span><span class="p">),</span> <span class="n">K</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">y_pred</span><span class="p">,</span> <span class="n">axis</span><span class="o">=-</span><span class="mi">1</span><span class="p">)),</span> <span class="s2">&quot;int64&quot;</span>
+            <span class="p">)</span>
+        <span class="p">)</span>
+
+        <span class="c1"># Compute accuracy in class i</span>
+        <span class="n">acc</span> <span class="o">=</span> <span class="n">true_i_pred</span> <span class="o">/</span> <span class="n">total_true_i</span>
+
+        <span class="c1"># Since there could few samples in class i</span>
+        <span class="c1"># it is possible that ground truth does not</span>
+        <span class="c1"># have any sample in class i, leading to a divide</span>
+        <span class="c1"># by zero and not valid accuracy</span>
+        <span class="c1"># Therefore, for the accuracy to be valid</span>
+        <span class="c1"># total_true_i should be greater than zero</span>
+        <span class="c1"># otherwise, return 0.</span>
+
+        <span class="n">condition</span> <span class="o">=</span> <span class="n">K</span><span class="o">.</span><span class="n">greater</span><span class="p">(</span><span class="n">total_true_i</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">K</span><span class="o">.</span><span class="n">switch</span><span class="p">(</span><span class="n">condition</span><span class="p">,</span> <span class="n">acc</span><span class="p">,</span> <span class="n">K</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">acc</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">acc</span><span class="o">.</span><span class="n">dtype</span><span class="p">))</span>
+
+    <span class="n">metric</span><span class="o">.</span><span class="vm">__name__</span> <span class="o">=</span> <span class="s2">&quot;abstention_acc_class_</span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">class_i</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">metric</span></div>
+
+
+<div class="viewcode-block" id="abstention_class_i_metric"><a class="viewcode-back" href="../../candle/candle.html#candle.abstention_class_i_metric">[docs]</a><span class="k">def</span> <span class="nf">abstention_class_i_metric</span><span class="p">(</span><span class="n">nb_classes</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="n">Array</span><span class="p">],</span> <span class="n">class_i</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Function to estimate fraction of the samples where the model is</span>
+<span class="sd">    abstaining in class i.</span>
+
+<span class="sd">    :param int or ndarray nb_classes: Integer or numpy array defining indices of the abstention class</span>
+<span class="sd">    :param int class_i: Index of the class to estimate accuracy</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">metric</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :param y_true: keras tensor. True values to predict</span>
+<span class="sd">        :param y_pred: keras tensor. Prediction made by the model. \</span>
+<span class="sd">            It is assumed that this keras tensor includes extra columns to store the abstaining classes.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Find locations in ground truth belonging to class i</span>
+        <span class="n">ytrue_i_int</span> <span class="o">=</span> <span class="n">K</span><span class="o">.</span><span class="n">cast</span><span class="p">(</span><span class="n">K</span><span class="o">.</span><span class="n">equal</span><span class="p">(</span><span class="n">K</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">axis</span><span class="o">=-</span><span class="mi">1</span><span class="p">),</span> <span class="n">class_i</span><span class="p">),</span> <span class="s2">&quot;int64&quot;</span><span class="p">)</span>
+        <span class="c1"># total in class i</span>
+        <span class="n">total_class_i</span> <span class="o">=</span> <span class="n">K</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">ytrue_i_int</span><span class="p">)</span>
+
+        <span class="c1"># Abstention samples</span>
+        <span class="n">y_abs</span> <span class="o">=</span> <span class="n">K</span><span class="o">.</span><span class="n">cast</span><span class="p">(</span><span class="n">K</span><span class="o">.</span><span class="n">equal</span><span class="p">(</span><span class="n">K</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">y_pred</span><span class="p">,</span> <span class="n">axis</span><span class="o">=-</span><span class="mi">1</span><span class="p">),</span> <span class="n">nb_classes</span><span class="p">),</span> <span class="s2">&quot;int64&quot;</span><span class="p">)</span>
+        <span class="c1"># Abstention in class_i</span>
+        <span class="n">total_abs_i</span> <span class="o">=</span> <span class="n">K</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">ytrue_i_int</span> <span class="o">*</span> <span class="n">y_abs</span><span class="p">)</span>
+
+        <span class="n">abs_i</span> <span class="o">=</span> <span class="n">total_abs_i</span> <span class="o">/</span> <span class="n">total_class_i</span>
+
+        <span class="n">condition</span> <span class="o">=</span> <span class="n">K</span><span class="o">.</span><span class="n">greater</span><span class="p">(</span><span class="n">total_class_i</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">K</span><span class="o">.</span><span class="n">switch</span><span class="p">(</span><span class="n">condition</span><span class="p">,</span> <span class="n">abs_i</span><span class="p">,</span> <span class="n">K</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">abs_i</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">abs_i</span><span class="o">.</span><span class="n">dtype</span><span class="p">))</span>
+
+    <span class="n">metric</span><span class="o">.</span><span class="vm">__name__</span> <span class="o">=</span> <span class="s2">&quot;abstention_class_</span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">class_i</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">metric</span></div>
+
+
+<div class="viewcode-block" id="AbstentionAdapt_Callback"><a class="viewcode-back" href="../../candle/candle.html#candle.AbstentionAdapt_Callback">[docs]</a><span class="k">class</span> <span class="nc">AbstentionAdapt_Callback</span><span class="p">(</span><span class="n">Callback</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This callback is used to adapt the parameter alpha in the abstention</span>
+<span class="sd">    loss.</span>
+
+<span class="sd">    The parameter alpha (weight of the abstention term in the abstention</span>
+<span class="sd">    loss) is increased or decreased adaptively during the training run.</span>
+<span class="sd">    It is decreased if the current abstention accuracy is less than the</span>
+<span class="sd">    minimum accuracy set or increased if the current abstention fraction</span>
+<span class="sd">    is greater than the maximum fraction set. The abstention accuracy</span>
+<span class="sd">    metric to use must be specified as the &#39;acc_monitor&#39; argument in the</span>
+<span class="sd">    initialization of the callback. It could be: the global abstention</span>
+<span class="sd">    accuracy (abstention_acc), the abstention accuracy over the ith</span>
+<span class="sd">    class (acc_class_i), etc. The abstention metric to use must be</span>
+<span class="sd">    specified as the &#39;abs_monitor&#39; argument in the initialization of the</span>
+<span class="sd">    callback. It should be the metric that computes the fraction of</span>
+<span class="sd">    samples for which the model is abstaining (abstention). The factor</span>
+<span class="sd">    alpha is modified if the current abstention accuracy is less than</span>
+<span class="sd">    the minimum accuracy set or if the current abstention fraction is</span>
+<span class="sd">    greater than the maximum fraction set. Thresholds for minimum and</span>
+<span class="sd">    maximum correction factors are computed and the correction over</span>
+<span class="sd">    alpha is not allowed to be less or greater than them, respectively,</span>
+<span class="sd">    to avoid huge swings in the abstention loss evolution.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">acc_monitor</span><span class="p">,</span>
+        <span class="n">abs_monitor</span><span class="p">,</span>
+        <span class="n">alpha0</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+        <span class="n">init_abs_epoch</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">4</span><span class="p">,</span>
+        <span class="n">alpha_scale_factor</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.8</span><span class="p">,</span>
+        <span class="n">min_abs_acc</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.9</span><span class="p">,</span>
+        <span class="n">max_abs_frac</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.4</span><span class="p">,</span>
+        <span class="n">acc_gain</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">5.0</span><span class="p">,</span>
+        <span class="n">abs_gain</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">,</span>
+    <span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Initializer of the AbstentionAdapt_Callback.</span>
+
+<span class="sd">        :param keras.metric acc_monitor: Accuracy metric to monitor during the run and use \</span>
+<span class="sd">            as base to adapt the weight of the abstention term (i.e. alpha) in the abstention \</span>
+<span class="sd">            cost function. (Must be an accuracy metric that takes abstention into account).</span>
+<span class="sd">        :param keras.metric abs_monitor: Abstention metric monitored during the run and \</span>
+<span class="sd">            used as the other factor to adapt the weight of the abstention term (i.e. alpha) in the asbstention loss function</span>
+<span class="sd">        :param float alpha0: Initial weight of abstention term in cost function</span>
+<span class="sd">        :param int init_abs_epoch: Value of the epochs to start adjusting the weight of the abstention \</span>
+<span class="sd">            term (i.e. alpha). Default: 4.</span>
+<span class="sd">        :param float alpha_scale_factor: Factor to scale (increase by dividing or decrease by multiplying) \</span>
+<span class="sd">            the weight of the abstention term (i.e. alpha). Default: 0.8.</span>
+<span class="sd">        :param float min_abs_acc: Minimum accuracy to target in the current training. Default: 0.9.</span>
+<span class="sd">        :param float max_abs_frac: Maximum abstention fraction to tolerate in the current training. Default: 0.4.</span>
+<span class="sd">        :param float acc_gain: Factor to adjust alpha scale. Default: 5.0.</span>
+<span class="sd">        :param float abs_gain: Factor to adjust alpha scale. Default: 1.0.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">AbstentionAdapt_Callback</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">acc_monitor</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="n">acc_monitor</span>  <span class="c1"># Keras metric to monitor (must be an accuracy with abstention)</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">abs_monitor</span> <span class="o">=</span> <span class="n">abs_monitor</span>  <span class="c1"># Keras metric momitoring abstention fraction</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">alpha</span> <span class="o">=</span> <span class="n">K</span><span class="o">.</span><span class="n">variable</span><span class="p">(</span><span class="n">value</span><span class="o">=</span><span class="n">alpha0</span><span class="p">)</span>  <span class="c1"># Weight of abstention term</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">init_abs_epoch</span> <span class="o">=</span> <span class="n">init_abs_epoch</span>  <span class="c1"># epoch to init abstention</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">alpha_scale_factor</span> <span class="o">=</span> <span class="n">alpha_scale_factor</span>  <span class="c1"># factor to scale alpha (weight for abstention term in cost function)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">min_abs_acc</span> <span class="o">=</span> <span class="n">min_abs_acc</span>  <span class="c1"># minimum target accuracy (value specified as parameter of the run)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">max_abs_frac</span> <span class="o">=</span> <span class="n">max_abs_frac</span>  <span class="c1"># maximum abstention fraction (value specified as parameter of the run)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">acc_gain</span> <span class="o">=</span> <span class="n">acc_gain</span>  <span class="c1"># factor for adjusting alpha scale</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">abs_gain</span> <span class="o">=</span> <span class="n">abs_gain</span>  <span class="c1"># factor for adjusting alpha scale</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">alphavalues</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>  <span class="c1"># array to store alpha evolution</span>
+
+<div class="viewcode-block" id="AbstentionAdapt_Callback.on_epoch_end"><a class="viewcode-back" href="../../candle/candle.html#candle.AbstentionAdapt_Callback.on_epoch_end">[docs]</a>    <span class="k">def</span> <span class="nf">on_epoch_end</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">epoch</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">logs</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Updates the weight of abstention term on epoch end.</span>
+
+<span class="sd">        :param int epoch: Current epoch in training.</span>
+<span class="sd">        :param logs: Metrics stored during current keras training.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">new_alpha_val</span> <span class="o">=</span> <span class="n">K</span><span class="o">.</span><span class="n">get_value</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">alpha</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">epoch</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">init_abs_epoch</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">acc_monitor</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">abs_monitor</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span>
+                    <span class="s2">&quot;ERROR! Abstention Adapt conditioned on metrics &quot;</span>
+                    <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">acc_monitor</span><span class="p">)</span>
+                    <span class="o">+</span> <span class="s2">&quot; and &quot;</span>
+                    <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">abs_monitor</span><span class="p">)</span>
+                    <span class="o">+</span> <span class="s2">&quot; which are not available. Available metrics are: &quot;</span>
+                    <span class="o">+</span> <span class="s2">&quot;,&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">logs</span><span class="o">.</span><span class="n">keys</span><span class="p">()))</span>
+                    <span class="o">+</span> <span class="s2">&quot;... Exiting&quot;</span>
+                <span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="c1"># Current accuracy (with abstention)</span>
+                <span class="n">abs_acc</span> <span class="o">=</span> <span class="n">logs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">acc_monitor</span><span class="p">)</span>
+                <span class="c1"># Current abstention fraction</span>
+                <span class="n">abs_frac</span> <span class="o">=</span> <span class="n">logs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">abs_monitor</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">abs_acc</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">abs_frac</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span>
+                        <span class="s2">&quot;ERROR! Abstention Adapt conditioned on metrics &quot;</span>
+                        <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">acc_monitor</span><span class="p">)</span>
+                        <span class="o">+</span> <span class="s2">&quot; and &quot;</span>
+                        <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">abs_monitor</span><span class="p">)</span>
+                        <span class="o">+</span> <span class="s2">&quot; which are not available. Available metrics are: &quot;</span>
+                        <span class="o">+</span> <span class="s2">&quot;,&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">logs</span><span class="o">.</span><span class="n">keys</span><span class="p">()))</span>
+                        <span class="o">+</span> <span class="s2">&quot;... Exiting&quot;</span>
+                    <span class="p">)</span>
+
+                <span class="c1"># modify alpha as needed</span>
+                <span class="n">acc_error</span> <span class="o">=</span> <span class="n">abs_acc</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">min_abs_acc</span>
+                <span class="n">acc_error</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">acc_error</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">)</span>
+                <span class="n">abs_error</span> <span class="o">=</span> <span class="n">abs_frac</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">max_abs_frac</span>
+                <span class="n">abs_error</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">abs_error</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">)</span>
+                <span class="n">new_scale</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">acc_gain</span> <span class="o">*</span> <span class="n">acc_error</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">abs_gain</span> <span class="o">*</span> <span class="n">abs_error</span>
+                <span class="c1"># threshold to avoid huge swings</span>
+                <span class="n">min_scale</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">alpha_scale_factor</span>
+                <span class="n">max_scale</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">alpha_scale_factor</span>
+                <span class="n">new_scale</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">new_scale</span><span class="p">,</span> <span class="n">max_scale</span><span class="p">)</span>
+                <span class="n">new_scale</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">new_scale</span><span class="p">,</span> <span class="n">min_scale</span><span class="p">)</span>
+
+                <span class="c1"># print(&#39;Scaling factor: &#39;, new_scale)</span>
+                <span class="n">new_alpha_val</span> <span class="o">*=</span> <span class="n">new_scale</span>
+                <span class="n">K</span><span class="o">.</span><span class="n">set_value</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">alpha</span><span class="p">,</span> <span class="n">new_alpha_val</span><span class="p">)</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Scaling factor: &quot;</span><span class="p">,</span> <span class="n">new_scale</span><span class="p">,</span> <span class="s2">&quot; new alpha, &quot;</span><span class="p">,</span> <span class="n">new_alpha_val</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">alphavalues</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">new_alpha_val</span><span class="p">)</span></div></div>
+
+
+<div class="viewcode-block" id="modify_labels"><a class="viewcode-back" href="../../candle/candle.html#candle.modify_labels">[docs]</a><span class="k">def</span> <span class="nf">modify_labels</span><span class="p">(</span>
+    <span class="n">numclasses_out</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">ytrain</span><span class="p">:</span> <span class="n">Array</span><span class="p">,</span> <span class="n">ytest</span><span class="p">:</span> <span class="n">Array</span><span class="p">,</span> <span class="n">yval</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Array</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">Array</span><span class="p">,</span> <span class="o">...</span><span class="p">]:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This function generates a categorical representation with a class added</span>
+<span class="sd">    for indicating abstention.</span>
+
+<span class="sd">    :param int numclasses_out: Original number of classes + 1 abstention class</span>
+<span class="sd">    :param ndarray ytrain: Numpy array of the classes (labels) in the training set</span>
+<span class="sd">    :param ndarray ytest: Numpy array of the classes (labels) in the testing set</span>
+<span class="sd">    :param ndarray yval: Numpy array of the classes (labels) in the validation set</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">classestrain</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">ytrain</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span>
+    <span class="n">classestest</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">ytest</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span>
+    <span class="k">if</span> <span class="n">yval</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">classesval</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">yval</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span>
+
+    <span class="k">assert</span> <span class="n">classestrain</span> <span class="o">==</span> <span class="n">classestest</span>
+    <span class="k">if</span> <span class="n">yval</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">assert</span> <span class="n">classesval</span> <span class="o">==</span> <span class="n">classestest</span>
+    <span class="k">assert</span> <span class="p">(</span>
+        <span class="n">classestrain</span> <span class="o">+</span> <span class="mi">1</span>
+    <span class="p">)</span> <span class="o">==</span> <span class="n">numclasses_out</span>  <span class="c1"># In this case only one other slot for abstention is created</span>
+
+    <span class="n">labels_train</span> <span class="o">=</span> <span class="n">to_categorical</span><span class="p">(</span><span class="n">ytrain</span><span class="p">,</span> <span class="n">numclasses_out</span><span class="p">)</span>
+    <span class="n">labels_test</span> <span class="o">=</span> <span class="n">to_categorical</span><span class="p">(</span><span class="n">ytest</span><span class="p">,</span> <span class="n">numclasses_out</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">yval</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">labels_val</span> <span class="o">=</span> <span class="n">to_categorical</span><span class="p">(</span><span class="n">yval</span><span class="p">,</span> <span class="n">numclasses_out</span><span class="p">)</span>
+
+    <span class="c1"># For sanity check</span>
+    <span class="n">mask_vec</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">labels_train</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+    <span class="n">mask_vec</span><span class="p">[:,</span> <span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="n">i</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">labels_train</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
+    <span class="n">sanity_check</span> <span class="o">=</span> <span class="n">mask_vec</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="p">:]</span> <span class="o">*</span> <span class="n">labels_train</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="p">:]</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">sanity_check</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">ytrain</span><span class="o">.</span><span class="n">ndim</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="n">ll</span> <span class="o">=</span> <span class="n">ytrain</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">ll</span> <span class="o">=</span> <span class="mi">0</span>
+
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">ll</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">numclasses_out</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">sanity_check</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Problem at &quot;</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">yval</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">labels_train</span><span class="p">,</span> <span class="n">labels_test</span><span class="p">,</span> <span class="n">labels_val</span>
+
+    <span class="k">return</span> <span class="n">labels_train</span><span class="p">,</span> <span class="n">labels_test</span></div>
+
+
+<span class="c1">###################################################################</span>
+
+
+<div class="viewcode-block" id="add_model_output"><a class="viewcode-back" href="../../candle/candle.html#candle.add_model_output">[docs]</a><span class="k">def</span> <span class="nf">add_model_output</span><span class="p">(</span>
+    <span class="n">modelIn</span><span class="p">,</span>
+    <span class="n">mode</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">num_add</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">activation</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This function modifies the last dense layer in the passed keras model.</span>
+<span class="sd">    The modification includes adding units and optionally changing the</span>
+<span class="sd">    activation function.</span>
+
+<span class="sd">    :param modelIn: keras model. Keras model to be modified.</span>
+<span class="sd">    :param string mode: Mode to modify the layer. It could be:</span>
+
+<span class="sd">        - &#39;abstain&#39; for adding an arbitrary number of units for the abstention optimization strategy.</span>
+<span class="sd">        - &#39;qtl&#39; for quantile regression which needs the outputs to be tripled.</span>
+<span class="sd">        - &#39;het&#39; for heteroscedastic regression which needs the outputs to be doubled.</span>
+<span class="sd">    :param int num_add: Number of units to add. This only applies to the &#39;abstain&#39; mode.</span>
+<span class="sd">    :param string activation: String with keras specification of activation function (e.g. &#39;relu&#39;, &#39;sigomid&#39;, &#39;softmax&#39;, etc.)</span>
+
+<span class="sd">    :return: Keras model after last dense layer has been modified as specified. \</span>
+<span class="sd">        If there is no mode specified it returns the same model. \</span>
+<span class="sd">        If the mode is not one of &#39;abstain&#39;, &#39;qtl&#39; or &#39;het&#39; an exception is raised.</span>
+<span class="sd">    :rtype: Keras model</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">if</span> <span class="n">mode</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">modelIn</span>
+
+    <span class="n">numlayers</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">modelIn</span><span class="o">.</span><span class="n">layers</span><span class="p">)</span>
+    <span class="c1"># Find last dense layer</span>
+    <span class="n">i</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+    <span class="k">while</span> <span class="s2">&quot;dense&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">(</span><span class="n">modelIn</span><span class="o">.</span><span class="n">layers</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">name</span><span class="p">)</span> <span class="ow">and</span> <span class="p">((</span><span class="n">i</span> <span class="o">+</span> <span class="n">numlayers</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">):</span>
+        <span class="n">i</span> <span class="o">-=</span> <span class="mi">1</span>
+    <span class="c1"># Minimal verification about the validity of the layer found</span>
+    <span class="k">assert</span> <span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="n">numlayers</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="mi">0</span>
+    <span class="k">assert</span> <span class="s2">&quot;dense&quot;</span> <span class="ow">in</span> <span class="n">modelIn</span><span class="o">.</span><span class="n">layers</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">name</span>
+
+    <span class="c1"># Compute new output size</span>
+    <span class="k">if</span> <span class="n">mode</span> <span class="o">==</span> <span class="s2">&quot;abstain&quot;</span><span class="p">:</span>
+        <span class="k">assert</span> <span class="n">num_add</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+        <span class="n">new_output_size</span> <span class="o">=</span> <span class="n">modelIn</span><span class="o">.</span><span class="n">layers</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">output_shape</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">num_add</span>
+    <span class="k">elif</span> <span class="n">mode</span> <span class="o">==</span> <span class="s2">&quot;qtl&quot;</span><span class="p">:</span>  <span class="c1"># for quantile UQ</span>
+        <span class="n">new_output_size</span> <span class="o">=</span> <span class="mi">3</span> <span class="o">*</span> <span class="n">modelIn</span><span class="o">.</span><span class="n">layers</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">output_shape</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+    <span class="k">elif</span> <span class="n">mode</span> <span class="o">==</span> <span class="s2">&quot;het&quot;</span><span class="p">:</span>  <span class="c1"># for heteroscedastic UQ</span>
+        <span class="n">new_output_size</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">modelIn</span><span class="o">.</span><span class="n">layers</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">output_shape</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span>
+            <span class="s2">&quot;ERROR ! Type of mode specified for adding outputs to the model: &quot;</span>
+            <span class="o">+</span> <span class="n">mode</span>
+            <span class="o">+</span> <span class="s2">&quot; not implemented... Exiting&quot;</span>
+        <span class="p">)</span>
+
+    <span class="c1"># Recover current layer options</span>
+    <span class="n">config</span> <span class="o">=</span> <span class="n">modelIn</span><span class="o">.</span><span class="n">layers</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">get_config</span><span class="p">()</span>
+    <span class="c1"># Update number of units</span>
+    <span class="n">config</span><span class="p">[</span><span class="s2">&quot;units&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">new_output_size</span>
+    <span class="c1"># Update activation function if requested</span>
+    <span class="k">if</span> <span class="n">activation</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">config</span><span class="p">[</span><span class="s2">&quot;activation&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">activation</span>
+    <span class="c1"># Bias initialization seems to help het and qtl</span>
+    <span class="k">if</span> <span class="n">mode</span> <span class="o">==</span> <span class="s2">&quot;het&quot;</span> <span class="ow">or</span> <span class="n">mode</span> <span class="o">==</span> <span class="s2">&quot;qtl&quot;</span><span class="p">:</span>
+        <span class="n">config</span><span class="p">[</span><span class="s2">&quot;bias_initializer&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;ones&quot;</span>
+    <span class="c1"># Create new Dense layer</span>
+    <span class="n">reconstructed_layer</span> <span class="o">=</span> <span class="n">Dense</span><span class="o">.</span><span class="n">from_config</span><span class="p">(</span><span class="n">config</span><span class="p">)</span>
+    <span class="c1"># Connect new Dense last layer to previous one-before-last layer</span>
+    <span class="n">additional</span> <span class="o">=</span> <span class="n">reconstructed_layer</span><span class="p">(</span><span class="n">modelIn</span><span class="o">.</span><span class="n">layers</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">output</span><span class="p">)</span>
+    <span class="c1"># If the layer to replace is not the last layer, add the remainder layers</span>
+    <span class="k">if</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">):</span>
+            <span class="n">config_j</span> <span class="o">=</span> <span class="n">modelIn</span><span class="o">.</span><span class="n">layers</span><span class="p">[</span><span class="n">j</span><span class="p">]</span><span class="o">.</span><span class="n">get_config</span><span class="p">()</span>
+            <span class="n">aux_j</span> <span class="o">=</span> <span class="n">layers</span><span class="o">.</span><span class="n">deserialize</span><span class="p">(</span>
+                <span class="p">{</span><span class="s2">&quot;class_name&quot;</span><span class="p">:</span> <span class="n">modelIn</span><span class="o">.</span><span class="n">layers</span><span class="p">[</span><span class="n">j</span><span class="p">]</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span> <span class="s2">&quot;config&quot;</span><span class="p">:</span> <span class="n">config_j</span><span class="p">}</span>
+            <span class="p">)</span>
+            <span class="n">reconstructed_layer</span> <span class="o">=</span> <span class="n">aux_j</span><span class="o">.</span><span class="n">from_config</span><span class="p">(</span><span class="n">config_j</span><span class="p">)</span>
+            <span class="n">additional</span> <span class="o">=</span> <span class="n">reconstructed_layer</span><span class="p">(</span><span class="n">additional</span><span class="p">)</span>
+
+    <span class="n">modelOut</span> <span class="o">=</span> <span class="n">Model</span><span class="p">(</span><span class="n">modelIn</span><span class="o">.</span><span class="n">input</span><span class="p">,</span> <span class="n">additional</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">modelOut</span></div>
+
+
+<span class="c1">###################################################################</span>
+
+<span class="c1"># UQ regression - utilities</span>
+
+
+<div class="viewcode-block" id="r2_heteroscedastic_metric"><a class="viewcode-back" href="../../candle/candle.html#candle.r2_heteroscedastic_metric">[docs]</a><span class="k">def</span> <span class="nf">r2_heteroscedastic_metric</span><span class="p">(</span><span class="n">nout</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This function computes the r2 for the heteroscedastic model. The r2 is</span>
+<span class="sd">    computed over the prediction of the mean and the standard deviation</span>
+<span class="sd">    prediction is not taken into account.</span>
+
+<span class="sd">    :param int nout: Number of outputs without uq augmentation</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">metric</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :param y_true: Keras tensor. Keras tensor including the ground truth</span>
+<span class="sd">        :param y_pred: Keras tensor. Keras tensor including the predictions of a heteroscedastic model. \</span>
+<span class="sd">            The predictions follow the order: (mean_0, S_0, mean_1, S_1, ...) with S_i the log of the variance for the ith output.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">if</span> <span class="n">nout</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">y_out</span> <span class="o">=</span> <span class="n">K</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">y_pred</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">::</span><span class="n">nout</span><span class="p">],</span> <span class="n">K</span><span class="o">.</span><span class="n">shape</span><span class="p">(</span><span class="n">y_true</span><span class="p">))</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">y_out</span> <span class="o">=</span> <span class="n">K</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">y_pred</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">K</span><span class="o">.</span><span class="n">shape</span><span class="p">(</span><span class="n">y_true</span><span class="p">))</span>
+
+        <span class="n">SS_res</span> <span class="o">=</span> <span class="n">K</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">K</span><span class="o">.</span><span class="n">square</span><span class="p">(</span><span class="n">y_true</span> <span class="o">-</span> <span class="n">y_out</span><span class="p">))</span>
+        <span class="n">SS_tot</span> <span class="o">=</span> <span class="n">K</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">K</span><span class="o">.</span><span class="n">square</span><span class="p">(</span><span class="n">y_true</span> <span class="o">-</span> <span class="n">K</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">y_true</span><span class="p">)))</span>
+        <span class="k">return</span> <span class="mf">1.0</span> <span class="o">-</span> <span class="n">SS_res</span> <span class="o">/</span> <span class="p">(</span><span class="n">SS_tot</span> <span class="o">+</span> <span class="n">K</span><span class="o">.</span><span class="n">epsilon</span><span class="p">())</span>
+
+    <span class="n">metric</span><span class="o">.</span><span class="vm">__name__</span> <span class="o">=</span> <span class="s2">&quot;r2_heteroscedastic&quot;</span>
+    <span class="k">return</span> <span class="n">metric</span></div>
+
+
+<div class="viewcode-block" id="mae_heteroscedastic_metric"><a class="viewcode-back" href="../../candle/candle.html#candle.mae_heteroscedastic_metric">[docs]</a><span class="k">def</span> <span class="nf">mae_heteroscedastic_metric</span><span class="p">(</span><span class="n">nout</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This function computes the mean absolute error (mae) for the</span>
+<span class="sd">    heteroscedastic model. The mae is computed over the prediction of the mean</span>
+<span class="sd">    and the standard deviation prediction is not taken into account.</span>
+
+<span class="sd">    :param int nout: Number of outputs without uq augmentation</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">metric</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :param y_true: Keras tensor. Keras tensor including the ground truth</span>
+<span class="sd">        :param y_pred: Keras tensor. Keras tensor including the predictions of a heteroscedastic model. \</span>
+<span class="sd">            The predictions follow the order: (mean_0, S_0, mean_1, S_1, ...) with S_i the log of the variance for the ith output.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">nout</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">y_out</span> <span class="o">=</span> <span class="n">K</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">y_pred</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">::</span><span class="n">nout</span><span class="p">],</span> <span class="n">K</span><span class="o">.</span><span class="n">shape</span><span class="p">(</span><span class="n">y_true</span><span class="p">))</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">y_out</span> <span class="o">=</span> <span class="n">K</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">y_pred</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">K</span><span class="o">.</span><span class="n">shape</span><span class="p">(</span><span class="n">y_true</span><span class="p">))</span>
+
+        <span class="k">return</span> <span class="n">mean_absolute_error</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_out</span><span class="p">)</span>
+
+    <span class="n">metric</span><span class="o">.</span><span class="vm">__name__</span> <span class="o">=</span> <span class="s2">&quot;mae_heteroscedastic&quot;</span>
+    <span class="k">return</span> <span class="n">metric</span></div>
+
+
+<div class="viewcode-block" id="mse_heteroscedastic_metric"><a class="viewcode-back" href="../../candle/candle.html#candle.mse_heteroscedastic_metric">[docs]</a><span class="k">def</span> <span class="nf">mse_heteroscedastic_metric</span><span class="p">(</span><span class="n">nout</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This function computes the mean squared error (mse) for the</span>
+<span class="sd">    heteroscedastic model. The mse is computed over the prediction of the mean</span>
+<span class="sd">    and the standard deviation prediction is not taken into account.</span>
+
+<span class="sd">    :param int nout: Number of outputs without uq augmentation</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">metric</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :param y_true: Keras tensor. Keras tensor including the ground truth</span>
+<span class="sd">        :param y_pred: Keras tensor. Keras tensor including the predictions of a heteroscedastic model. \</span>
+<span class="sd">            The predictions follow the order: (mean_0, S_0, mean_1, S_1, ...) with S_i the log of the variance for the ith output.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">nout</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">y_out</span> <span class="o">=</span> <span class="n">K</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">y_pred</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">::</span><span class="n">nout</span><span class="p">],</span> <span class="n">K</span><span class="o">.</span><span class="n">shape</span><span class="p">(</span><span class="n">y_true</span><span class="p">))</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">y_out</span> <span class="o">=</span> <span class="n">K</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">y_pred</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">K</span><span class="o">.</span><span class="n">shape</span><span class="p">(</span><span class="n">y_true</span><span class="p">))</span>
+
+        <span class="k">return</span> <span class="n">mean_squared_error</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_out</span><span class="p">)</span>
+
+    <span class="n">metric</span><span class="o">.</span><span class="vm">__name__</span> <span class="o">=</span> <span class="s2">&quot;mse_heteroscedastic&quot;</span>
+    <span class="k">return</span> <span class="n">metric</span></div>
+
+
+<div class="viewcode-block" id="meanS_heteroscedastic_metric"><a class="viewcode-back" href="../../candle/candle.html#candle.meanS_heteroscedastic_metric">[docs]</a><span class="k">def</span> <span class="nf">meanS_heteroscedastic_metric</span><span class="p">(</span><span class="n">nout</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This function computes the mean log of the variance (log S) for the</span>
+<span class="sd">    heteroscedastic model. The mean log is computed over the standard deviation</span>
+<span class="sd">    prediction and the mean prediction is not taken into account.</span>
+
+<span class="sd">    :param int nout: Number of outputs without uq augmentation</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">metric</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :param y_true: Keras tensor. Keras tensor including the ground truth</span>
+<span class="sd">        :param y_pred: Keras tensor. Keras tensor including the predictions of a heteroscedastic model. \</span>
+<span class="sd">            The predictions follow the order: (mean_0, S_0, mean_1, S_1, ...) with S_i the log of the variance for the ith output.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">nout</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">log_sig2</span> <span class="o">=</span> <span class="n">y_pred</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">::</span><span class="n">nout</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">log_sig2</span> <span class="o">=</span> <span class="n">y_pred</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span>
+
+        <span class="k">return</span> <span class="n">K</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">log_sig2</span><span class="p">)</span>
+
+    <span class="n">metric</span><span class="o">.</span><span class="vm">__name__</span> <span class="o">=</span> <span class="s2">&quot;meanS_heteroscedastic&quot;</span>
+    <span class="k">return</span> <span class="n">metric</span></div>
+
+
+<div class="viewcode-block" id="heteroscedastic_loss"><a class="viewcode-back" href="../../candle/candle.html#candle.heteroscedastic_loss">[docs]</a><span class="k">def</span> <span class="nf">heteroscedastic_loss</span><span class="p">(</span><span class="n">nout</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This function computes the heteroscedastic loss for the heteroscedastic</span>
+<span class="sd">    model. Both mean and standard deviation predictions are taken into account.</span>
+
+<span class="sd">    :param int nout: Number of outputs without uq augmentation</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">loss</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This function computes the heteroscedastic loss.</span>
+
+<span class="sd">        :param y_true: Keras tensor. Keras tensor including the ground truth</span>
+<span class="sd">        :param y_pred: Keras tensor. Keras tensor including the predictions of a heteroscedastic model. \</span>
+<span class="sd">            The predictions follow the order: (mean_0, S_0, mean_1, S_1, ...) with S_i the log of the variance for the ith output.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">y_shape</span> <span class="o">=</span> <span class="n">K</span><span class="o">.</span><span class="n">shape</span><span class="p">(</span><span class="n">y_true</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">nout</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">y_out</span> <span class="o">=</span> <span class="n">K</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">y_pred</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">::</span><span class="n">nout</span><span class="p">],</span> <span class="n">y_shape</span><span class="p">)</span>
+            <span class="n">log_sig2</span> <span class="o">=</span> <span class="n">K</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">y_pred</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">::</span><span class="n">nout</span><span class="p">],</span> <span class="n">y_shape</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">y_out</span> <span class="o">=</span> <span class="n">K</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">y_pred</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">y_shape</span><span class="p">)</span>
+            <span class="n">log_sig2</span> <span class="o">=</span> <span class="n">K</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">y_pred</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">y_shape</span><span class="p">)</span>
+
+        <span class="n">diff_sq</span> <span class="o">=</span> <span class="n">K</span><span class="o">.</span><span class="n">square</span><span class="p">(</span><span class="n">y_out</span> <span class="o">-</span> <span class="n">y_true</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">K</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">K</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">log_sig2</span><span class="p">)</span> <span class="o">*</span> <span class="n">diff_sq</span> <span class="o">+</span> <span class="n">log_sig2</span><span class="p">)</span>
+
+    <span class="c1"># Return a function</span>
+    <span class="k">return</span> <span class="n">loss</span></div>
+
+
+<div class="viewcode-block" id="quantile_loss"><a class="viewcode-back" href="../../candle/candle.html#candle.quantile_loss">[docs]</a><span class="k">def</span> <span class="nf">quantile_loss</span><span class="p">(</span><span class="n">quantile</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This function computes the quantile loss for a given quantile fraction.</span>
+
+<span class="sd">    :param quantile: float in (0, 1). Quantile fraction to compute the loss.</span>
+<span class="sd">    :param y_true: Keras tensor. Keras tensor including the ground truth</span>
+<span class="sd">    :param y_pred: Keras tensor. Keras tensor including the predictions of a quantile model.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">error</span> <span class="o">=</span> <span class="n">y_true</span> <span class="o">-</span> <span class="n">y_pred</span>
+    <span class="k">return</span> <span class="n">K</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">K</span><span class="o">.</span><span class="n">maximum</span><span class="p">(</span><span class="n">quantile</span> <span class="o">*</span> <span class="n">error</span><span class="p">,</span> <span class="p">(</span><span class="n">quantile</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">error</span><span class="p">))</span></div>
+
+
+<div class="viewcode-block" id="triple_quantile_loss"><a class="viewcode-back" href="../../candle/candle.html#candle.triple_quantile_loss">[docs]</a><span class="k">def</span> <span class="nf">triple_quantile_loss</span><span class="p">(</span><span class="n">nout</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">lowquantile</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">highquantile</span><span class="p">:</span> <span class="nb">float</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This function computes the quantile loss for the median and low and high</span>
+<span class="sd">    quantiles. The median is given twice the weight of the other components.</span>
+
+<span class="sd">    :param int nout: Number of outputs without uq augmentation</span>
+<span class="sd">    :param lowquantile: float in (0, 1). Fraction corresponding to the low quantile</span>
+<span class="sd">    :param highquantile: float in (0, 1). Fraction corresponding to the high quantile</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">loss</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This function computes the quantile loss, considering the median and</span>
+<span class="sd">        low and high quantiles.</span>
+
+<span class="sd">        :param y_true: Keras tensor. Keras tensor including the ground truth</span>
+<span class="sd">        :param y_pred: Keras tensor. Keras tensor including the predictions of a heteroscedastic model. \</span>
+<span class="sd">            The predictions follow the order: (q50_0, qlow_0, qhigh_0, q50_1, qlow_1, qhigh_1, ...) \</span>
+<span class="sd">            with q50_i the median of the ith output and qlow_i and qhigh_i the low and high specified \</span>
+<span class="sd">            quantiles of the ith output.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">y_shape</span> <span class="o">=</span> <span class="n">K</span><span class="o">.</span><span class="n">shape</span><span class="p">(</span><span class="n">y_true</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">nout</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">y_qtl0</span> <span class="o">=</span> <span class="n">K</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">y_pred</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">::</span><span class="mi">3</span><span class="p">],</span> <span class="n">y_shape</span><span class="p">)</span>
+            <span class="n">y_qtl1</span> <span class="o">=</span> <span class="n">K</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">y_pred</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">::</span><span class="mi">3</span><span class="p">],</span> <span class="n">y_shape</span><span class="p">)</span>
+            <span class="n">y_qtl2</span> <span class="o">=</span> <span class="n">K</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">y_pred</span><span class="p">[:,</span> <span class="mi">2</span><span class="p">::</span><span class="mi">3</span><span class="p">],</span> <span class="n">y_shape</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">y_qtl0</span> <span class="o">=</span> <span class="n">K</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">y_pred</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">y_shape</span><span class="p">)</span>
+            <span class="n">y_qtl1</span> <span class="o">=</span> <span class="n">K</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">y_pred</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">y_shape</span><span class="p">)</span>
+            <span class="n">y_qtl2</span> <span class="o">=</span> <span class="n">K</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">y_pred</span><span class="p">[:,</span> <span class="mi">2</span><span class="p">],</span> <span class="n">y_shape</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="p">(</span>
+            <span class="n">quantile_loss</span><span class="p">(</span><span class="n">lowquantile</span><span class="p">,</span> <span class="n">y_true</span><span class="p">,</span> <span class="n">y_qtl1</span><span class="p">)</span>
+            <span class="o">+</span> <span class="n">quantile_loss</span><span class="p">(</span><span class="n">highquantile</span><span class="p">,</span> <span class="n">y_true</span><span class="p">,</span> <span class="n">y_qtl2</span><span class="p">)</span>
+            <span class="o">+</span> <span class="mf">2.0</span> <span class="o">*</span> <span class="n">quantile_loss</span><span class="p">(</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">y_true</span><span class="p">,</span> <span class="n">y_qtl0</span><span class="p">)</span>
+        <span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">loss</span></div>
+
+
+<div class="viewcode-block" id="quantile_metric"><a class="viewcode-back" href="../../candle/candle.html#candle.quantile_metric">[docs]</a><span class="k">def</span> <span class="nf">quantile_metric</span><span class="p">(</span><span class="n">nout</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">index</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">quantile</span><span class="p">:</span> <span class="nb">float</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This function computes the quantile metric for a given quantile and</span>
+<span class="sd">    corresponding output index. This is provided as a metric to track evolution</span>
+<span class="sd">    while training.</span>
+
+<span class="sd">    :param int nout: Number of outputs without uq augmentation</span>
+<span class="sd">    :param int index: Index of output corresponding to the given quantile.</span>
+<span class="sd">    :param quantile: float in (0, 1). Fraction corresponding to the quantile</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">metric</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :param y_true: Keras tensor. Keras tensor including the ground truth</span>
+<span class="sd">        :param y_pred: Keras tensor. Keras tensor including the predictions of a quantile model. \</span>
+<span class="sd">            The predictions follow the order: (q50_0, qlow_0, qhigh_0, q50_1, qlow_1, qhigh_1, ...) \</span>
+<span class="sd">            with q50_i the median of the ith output and qlow_i and qhigh_i the low and high specified \</span>
+<span class="sd">            quantiles of the ith output.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">y_shape</span> <span class="o">=</span> <span class="n">K</span><span class="o">.</span><span class="n">shape</span><span class="p">(</span><span class="n">y_true</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">nout</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">y_qtl</span> <span class="o">=</span> <span class="n">K</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">y_pred</span><span class="p">[:,</span> <span class="n">index</span><span class="p">::</span><span class="mi">3</span><span class="p">],</span> <span class="n">y_shape</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">y_qtl</span> <span class="o">=</span> <span class="n">K</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">y_pred</span><span class="p">[:,</span> <span class="n">index</span><span class="p">],</span> <span class="n">y_shape</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">quantile_loss</span><span class="p">(</span><span class="n">quantile</span><span class="p">,</span> <span class="n">y_true</span><span class="p">,</span> <span class="n">y_qtl</span><span class="p">)</span>
+
+    <span class="n">metric</span><span class="o">.</span><span class="vm">__name__</span> <span class="o">=</span> <span class="s2">&quot;quantile_</span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">quantile</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">metric</span></div>
+
+
+<span class="c1">###################################################################</span>
+
+<span class="c1"># For the Contamination Model</span>
+
+
+<div class="viewcode-block" id="add_index_to_output"><a class="viewcode-back" href="../../candle/candle.html#candle.add_index_to_output">[docs]</a><span class="k">def</span> <span class="nf">add_index_to_output</span><span class="p">(</span><span class="n">y_train</span><span class="p">:</span> <span class="n">Array</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Array</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This function adds a column to the training output to store the indices</span>
+<span class="sd">    of the corresponding samples in the training set.</span>
+
+<span class="sd">    :param ndarray y_train: Numpy array of the output in the training set</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Add indices to y</span>
+    <span class="n">y_train_index</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="n">y_train</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+    <span class="k">if</span> <span class="n">y_train</span><span class="o">.</span><span class="n">ndim</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="n">shp</span> <span class="o">=</span> <span class="p">(</span><span class="n">y_train</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="n">y_train_augmented</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">hstack</span><span class="p">([</span><span class="n">y_train</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">y_train_index</span><span class="p">,</span> <span class="n">shp</span><span class="p">)])</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">y_train_augmented</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">vstack</span><span class="p">([</span><span class="n">y_train</span><span class="p">,</span> <span class="n">y_train_index</span><span class="p">])</span><span class="o">.</span><span class="n">T</span>
+
+    <span class="k">return</span> <span class="n">y_train_augmented</span></div>
+
+
+<div class="viewcode-block" id="contamination_loss"><a class="viewcode-back" href="../../candle/candle.html#candle.contamination_loss">[docs]</a><span class="k">def</span> <span class="nf">contamination_loss</span><span class="p">(</span><span class="n">nout</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">T_k</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">sigmaSQ</span><span class="p">,</span> <span class="n">gammaSQ</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Function to compute contamination loss. It is composed by two terms: (i)</span>
+<span class="sd">    the loss with respect to the normal distribution that models the</span>
+<span class="sd">    distribution of the training data samples, (ii) the loss with respect to</span>
+<span class="sd">    the Cauchy distribution that models the distribution of the outlier</span>
+<span class="sd">    samples. Note that the evaluation of this contamination loss function does</span>
+<span class="sd">    not make sense for any data different to the training set. This is because</span>
+<span class="sd">    latent variables are only defined for samples in the training set.</span>
+
+<span class="sd">    :param int nout: Number of outputs without uq augmentation (in the contamination model \</span>
+<span class="sd">        the augmentation corresponds to the data index in training).</span>
+<span class="sd">    :param T_k: Keras tensor. Tensor containing latent variables (probability of membership \</span>
+<span class="sd">        to normal and Cauchy distributions) for each of the samples in the training set. \</span>
+<span class="sd">        (Validation data is usually augmented too to be able to run training with validation set, \</span>
+<span class="sd">        however loss in validation should not be used as a criterion for early stopping training \</span>
+<span class="sd">        since the latent variables are defined for the training only, and thus, are not valid \</span>
+<span class="sd">        when used in combination with data different from training).</span>
+<span class="sd">    :param a: Keras variable. Probability of belonging to the normal distribution</span>
+<span class="sd">    :param sigmaSQ: Keras variable. Variance estimated for the normal distribution</span>
+<span class="sd">    :param gammaSQ: Keras variable. Scale estimated for the Cauchy distribution</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">loss</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :param y_true: keras tensor. True values to predict. It is assumed that this keras tensor \</span>
+<span class="sd">            includes extra columns to store the index of the data sample in the training set.</span>
+<span class="sd">        :param y_pred: keras tensor. Prediction made by the model.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">y_shape</span> <span class="o">=</span> <span class="n">K</span><span class="o">.</span><span class="n">shape</span><span class="p">(</span><span class="n">y_pred</span><span class="p">)</span>
+        <span class="n">y_true_</span> <span class="o">=</span> <span class="n">K</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">y_true</span><span class="p">[:,</span> <span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">y_shape</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">nout</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">diff_sq</span> <span class="o">=</span> <span class="n">K</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">K</span><span class="o">.</span><span class="n">square</span><span class="p">(</span><span class="n">y_true_</span> <span class="o">-</span> <span class="n">y_pred</span><span class="p">),</span> <span class="n">axis</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">diff_sq</span> <span class="o">=</span> <span class="n">K</span><span class="o">.</span><span class="n">square</span><span class="p">(</span><span class="n">y_true_</span> <span class="o">-</span> <span class="n">y_pred</span><span class="p">)</span>
+
+        <span class="n">term_normal</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="n">diff_sq</span> <span class="o">/</span> <span class="p">(</span><span class="mf">2.0</span> <span class="o">*</span> <span class="n">sigmaSQ</span><span class="p">)</span>
+            <span class="o">+</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">K</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">sigmaSQ</span><span class="p">)</span>
+            <span class="o">+</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">K</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="mf">2.0</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">)</span>
+            <span class="o">-</span> <span class="n">K</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+        <span class="p">)</span>
+        <span class="n">term_cauchy</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="n">K</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="mf">1.0</span> <span class="o">+</span> <span class="n">diff_sq</span> <span class="o">/</span> <span class="n">gammaSQ</span><span class="p">)</span>
+            <span class="o">+</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">K</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">piSQ</span> <span class="o">*</span> <span class="n">gammaSQ</span><span class="p">)</span>
+            <span class="o">-</span> <span class="n">K</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="mf">1.0</span> <span class="o">-</span> <span class="n">a</span><span class="p">)</span>
+        <span class="p">)</span>
+
+        <span class="n">batch_index</span> <span class="o">=</span> <span class="n">K</span><span class="o">.</span><span class="n">cast</span><span class="p">(</span><span class="n">y_true</span><span class="p">[:,</span> <span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="s2">&quot;int64&quot;</span><span class="p">)</span>
+
+        <span class="n">T_0_red</span> <span class="o">=</span> <span class="n">K</span><span class="o">.</span><span class="n">gather</span><span class="p">(</span><span class="n">T_k</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">batch_index</span><span class="p">)</span>
+        <span class="n">T_1_red</span> <span class="o">=</span> <span class="n">K</span><span class="o">.</span><span class="n">gather</span><span class="p">(</span><span class="n">T_k</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">batch_index</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">K</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">T_0_red</span> <span class="o">*</span> <span class="n">term_normal</span> <span class="o">+</span> <span class="n">T_1_red</span> <span class="o">*</span> <span class="n">term_cauchy</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">loss</span></div>
+
+
+<div class="viewcode-block" id="Contamination_Callback"><a class="viewcode-back" href="../../candle/candle.html#candle.Contamination_Callback">[docs]</a><span class="k">class</span> <span class="nc">Contamination_Callback</span><span class="p">(</span><span class="n">Callback</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This callback is used to update the parameters of the contamination</span>
+<span class="sd">    model.</span>
+
+<span class="sd">    This functionality follows the EM algorithm: in the E-step latent</span>
+<span class="sd">    variables are updated and in the M-step global variables are</span>
+<span class="sd">    updated. The global variables correspond to &#39;a&#39; (probability of</span>
+<span class="sd">    membership to normal class), &#39;sigmaSQ&#39; (variance of normal class)</span>
+<span class="sd">    and &#39;gammaSQ&#39; (scale of Cauchy class, modeling outliers). The latent</span>
+<span class="sd">    variables correspond to &#39;T_k&#39; (the first column corresponds to the</span>
+<span class="sd">    probability of membership to the normal distribution, while the</span>
+<span class="sd">    second column corresponds to the probability of membership to the</span>
+<span class="sd">    Cauchy distribution i.e. outlier).</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">a_max</span><span class="o">=</span><span class="mf">0.99</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Initializer of the Contamination_Callback.</span>
+
+<span class="sd">        :param ndarray x: Array of samples (= input features) in training set.</span>
+<span class="sd">        :param ndarray y: Array of sample outputs in training set.</span>
+<span class="sd">        :param flaot a_max: Maximum value of a variable to allow</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">Contamination_Callback</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">y</span><span class="o">.</span><span class="n">ndim</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">y</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span>
+                    <span class="s2">&quot;ERROR ! Contamination model can be applied to one-output regression, but provided training data has: &quot;</span>
+                    <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">y</span><span class="o">.</span><span class="n">ndim</span><span class="p">)</span>
+                    <span class="o">+</span> <span class="s2">&quot;outpus... Exiting&quot;</span>
+                <span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="n">x</span>  <span class="c1"># Features of training set</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="n">y</span>  <span class="c1"># Output of training set</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">a_max</span> <span class="o">=</span> <span class="n">a_max</span>  <span class="c1"># Set maximum a value to allow</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sigmaSQ</span> <span class="o">=</span> <span class="n">K</span><span class="o">.</span><span class="n">variable</span><span class="p">(</span>
+            <span class="n">value</span><span class="o">=</span><span class="mf">0.01</span>
+        <span class="p">)</span>  <span class="c1"># Standard devation of normal distribution for error</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">gammaSQ</span> <span class="o">=</span> <span class="n">K</span><span class="o">.</span><span class="n">variable</span><span class="p">(</span><span class="n">value</span><span class="o">=</span><span class="mf">0.01</span><span class="p">)</span>  <span class="c1"># Scale of Cauchy distribution for error</span>
+        <span class="c1"># Parameter Initialization - Conditional distribution of the latent variables</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">T</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="mi">2</span><span class="p">))</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">T</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="mi">2</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">T</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">T</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">T</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">T</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">T_k</span> <span class="o">=</span> <span class="n">K</span><span class="o">.</span><span class="n">variable</span><span class="p">(</span><span class="n">value</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">T</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">a</span> <span class="o">=</span> <span class="n">K</span><span class="o">.</span><span class="n">variable</span><span class="p">(</span>
+            <span class="n">value</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">T</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">])</span>
+        <span class="p">)</span>  <span class="c1"># Probability of membership to normal distribution</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">avalues</span> <span class="o">=</span> <span class="p">[]</span>  <span class="c1"># array to store a evolution</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sigmaSQvalues</span> <span class="o">=</span> <span class="p">[]</span>  <span class="c1"># array to store sigmaSQ evolution</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">gammaSQvalues</span> <span class="o">=</span> <span class="p">[]</span>  <span class="c1"># array to store gammaSQ evolution</span>
+
+<div class="viewcode-block" id="Contamination_Callback.on_epoch_end"><a class="viewcode-back" href="../../candle/candle.html#candle.Contamination_Callback.on_epoch_end">[docs]</a>    <span class="k">def</span> <span class="nf">on_epoch_end</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">epoch</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">logs</span><span class="o">=</span><span class="p">{}):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Updates the parameters of the distributions in the contamination</span>
+<span class="sd">        model on epoch end. The parameters updated are: &#39;a&#39; for the global</span>
+<span class="sd">        weight of the membership to the normal distribution, &#39;sigmaSQ&#39; for the</span>
+<span class="sd">        variance of the normal distribution and &#39;gammaSQ&#39; for the scale of the</span>
+<span class="sd">        Cauchy distribution of outliers. The latent variables are updated as</span>
+<span class="sd">        well: &#39;T_k&#39; describing in the first column the probability of</span>
+<span class="sd">        membership to normal distribution and in the second column probability</span>
+<span class="sd">        of membership to the Cauchy distribution i.e. outlier. Stores evolution</span>
+<span class="sd">        of global parameters (a, sigmaSQ and gammaSQ).</span>
+
+<span class="sd">        :param int epoch: Current epoch in training.</span>
+<span class="sd">        :param logs: keras logs. Metrics stored during current keras training.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">y_pred</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="p">)</span>
+        <span class="n">error</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">y</span><span class="o">.</span><span class="n">squeeze</span><span class="p">()</span> <span class="o">-</span> <span class="n">y_pred</span><span class="o">.</span><span class="n">squeeze</span><span class="p">()</span>
+
+        <span class="c1"># Update parameters (M-Step)</span>
+        <span class="n">errorSQ</span> <span class="o">=</span> <span class="n">error</span><span class="o">**</span><span class="mi">2</span>
+        <span class="n">aux</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">T</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">])</span>
+        <span class="k">if</span> <span class="n">aux</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">a_max</span><span class="p">:</span>
+            <span class="n">aux</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">a_max</span>
+        <span class="n">K</span><span class="o">.</span><span class="n">set_value</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">a</span><span class="p">,</span> <span class="n">aux</span><span class="p">)</span>
+        <span class="n">K</span><span class="o">.</span><span class="n">set_value</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sigmaSQ</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">T</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="n">errorSQ</span><span class="p">)</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">T</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]))</span>
+        <span class="c1"># Gradient descent</span>
+        <span class="n">gmSQ_eval</span> <span class="o">=</span> <span class="n">K</span><span class="o">.</span><span class="n">get_value</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">gammaSQ</span><span class="p">)</span>
+        <span class="n">grad_gmSQ</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="mf">0.5</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">T</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">])</span>
+            <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">T</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="n">errorSQ</span> <span class="o">/</span> <span class="p">(</span><span class="n">gmSQ_eval</span> <span class="o">+</span> <span class="n">errorSQ</span><span class="p">))</span>
+        <span class="p">)</span> <span class="o">/</span> <span class="n">gmSQ_eval</span>
+        <span class="c1"># Guarantee positivity in update</span>
+        <span class="n">eta</span> <span class="o">=</span> <span class="n">K</span><span class="o">.</span><span class="n">get_value</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">optimizer</span><span class="o">.</span><span class="n">lr</span><span class="p">)</span>
+        <span class="n">new_gmSQ</span> <span class="o">=</span> <span class="n">gmSQ_eval</span> <span class="o">-</span> <span class="n">eta</span> <span class="o">*</span> <span class="n">grad_gmSQ</span>
+        <span class="k">while</span> <span class="n">new_gmSQ</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="ow">or</span> <span class="p">(</span><span class="n">new_gmSQ</span> <span class="o">/</span> <span class="n">gmSQ_eval</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1000</span><span class="p">:</span>
+            <span class="n">eta</span> <span class="o">/=</span> <span class="mi">2</span>
+            <span class="n">new_gmSQ</span> <span class="o">=</span> <span class="n">gmSQ_eval</span> <span class="o">-</span> <span class="n">eta</span> <span class="o">*</span> <span class="n">grad_gmSQ</span>
+        <span class="n">K</span><span class="o">.</span><span class="n">set_value</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">gammaSQ</span><span class="p">,</span> <span class="n">new_gmSQ</span><span class="p">)</span>
+
+        <span class="c1"># Update conditional distribution of latent variables (beginning of E-Step)</span>
+        <span class="n">a_eval</span> <span class="o">=</span> <span class="n">K</span><span class="o">.</span><span class="n">get_value</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">a</span><span class="p">)</span>
+        <span class="n">sigmaSQ_eval</span> <span class="o">=</span> <span class="n">K</span><span class="o">.</span><span class="n">get_value</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sigmaSQ</span><span class="p">)</span>
+        <span class="n">gammaSQ_eval</span> <span class="o">=</span> <span class="n">K</span><span class="o">.</span><span class="n">get_value</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">gammaSQ</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;a: </span><span class="si">%f</span><span class="s2">, sigmaSQ: </span><span class="si">%f</span><span class="s2">, gammaSQ: </span><span class="si">%f</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">a_eval</span><span class="p">,</span> <span class="n">sigmaSQ_eval</span><span class="p">,</span> <span class="n">gammaSQ_eval</span><span class="p">))</span>
+        <span class="n">norm_eval</span> <span class="o">=</span> <span class="n">norm</span><span class="o">.</span><span class="n">pdf</span><span class="p">(</span><span class="n">error</span><span class="p">,</span> <span class="n">loc</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">sigmaSQ_eval</span><span class="p">))</span>
+        <span class="n">cauchy_eval</span> <span class="o">=</span> <span class="n">cauchy</span><span class="o">.</span><span class="n">pdf</span><span class="p">(</span><span class="n">error</span><span class="p">,</span> <span class="n">loc</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">gammaSQ_eval</span><span class="p">))</span>
+        <span class="n">denominator</span> <span class="o">=</span> <span class="n">a_eval</span> <span class="o">*</span> <span class="n">norm_eval</span> <span class="o">+</span> <span class="p">(</span><span class="mf">1.0</span> <span class="o">-</span> <span class="n">a_eval</span><span class="p">)</span> <span class="o">*</span> <span class="n">cauchy_eval</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">T</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">a_eval</span> <span class="o">*</span> <span class="n">norm_eval</span> <span class="o">/</span> <span class="n">denominator</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">T</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="mf">1.0</span> <span class="o">-</span> <span class="n">a_eval</span><span class="p">)</span> <span class="o">*</span> <span class="n">cauchy_eval</span> <span class="o">/</span> <span class="n">denominator</span>
+        <span class="n">K</span><span class="o">.</span><span class="n">set_value</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">T_k</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">T</span><span class="p">)</span>
+
+        <span class="c1"># store evolution of global variables</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">avalues</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">a_eval</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sigmaSQvalues</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">sigmaSQ_eval</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">gammaSQvalues</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">gammaSQ_eval</span><span class="p">)</span></div></div>
+
+
+<div class="viewcode-block" id="mse_contamination_metric"><a class="viewcode-back" href="../../candle/candle.html#candle.mse_contamination_metric">[docs]</a><span class="k">def</span> <span class="nf">mse_contamination_metric</span><span class="p">(</span><span class="n">nout</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;This function computes the mean squared error (mse) for the</span>
+<span class="sd">    contamination model. The mse is computed over the prediction. Therefore,</span>
+<span class="sd">    the augmentation for the index variable is ignored.</span>
+
+<span class="sd">    :param int nout: \</span>
+<span class="sd">        Number of outputs without uq augmentation (in the contamination model the augmentation corresponds to the data index in training).</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">metric</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :param y_true: Keras tensor. \</span>
+<span class="sd">            Keras tensor including the ground truth. Since the keras tensor includes an extra column to store the index of the data sample in the training set this column is ignored.</span>
+<span class="sd">        :param y_pred: Keras tensor. \</span>
+<span class="sd">            Keras tensor with the predictions of the contamination model (no data index).</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">return</span> <span class="n">mean_squared_error</span><span class="p">(</span><span class="n">y_true</span><span class="p">[:,</span> <span class="p">:</span><span class="n">nout</span><span class="p">],</span> <span class="n">y_pred</span><span class="p">[:,</span> <span class="p">:</span><span class="n">nout</span><span class="p">])</span>
+
+    <span class="n">metric</span><span class="o">.</span><span class="vm">__name__</span> <span class="o">=</span> <span class="s2">&quot;mse_contamination&quot;</span>
+    <span class="k">return</span> <span class="n">metric</span></div>
+
+
+<div class="viewcode-block" id="mae_contamination_metric"><a class="viewcode-back" href="../../candle/candle.html#candle.mae_contamination_metric">[docs]</a><span class="k">def</span> <span class="nf">mae_contamination_metric</span><span class="p">(</span><span class="n">nout</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This function computes the mean absolute error (mae) for the</span>
+<span class="sd">    contamination model. The mae is computed over the prediction. Therefore,</span>
+<span class="sd">    the augmentation for the index variable is ignored.</span>
+
+<span class="sd">    :param int nout: \</span>
+<span class="sd">        Number of outputs without uq augmentation (in the contamination model the augmentation corresponds to the data index in training).</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">metric</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :param y_true: Keras tensor. \</span>
+<span class="sd">            Keras tensor including the ground truth. Since the keras tensor includes an extra column to store the index of the data sample in the training set this column is ignored.</span>
+<span class="sd">        :param y_pred: Keras tensor. \</span>
+<span class="sd">            Keras tensor with the predictions of the contamination model (no data index).</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">return</span> <span class="n">mean_absolute_error</span><span class="p">(</span><span class="n">y_true</span><span class="p">[:,</span> <span class="p">:</span><span class="n">nout</span><span class="p">],</span> <span class="n">y_pred</span><span class="p">[:,</span> <span class="p">:</span><span class="n">nout</span><span class="p">])</span>
+
+    <span class="n">metric</span><span class="o">.</span><span class="vm">__name__</span> <span class="o">=</span> <span class="s2">&quot;mae_contamination&quot;</span>
+    <span class="k">return</span> <span class="n">metric</span></div>
+
+
+<div class="viewcode-block" id="r2_contamination_metric"><a class="viewcode-back" href="../../candle/candle.html#candle.r2_contamination_metric">[docs]</a><span class="k">def</span> <span class="nf">r2_contamination_metric</span><span class="p">(</span><span class="n">nout</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This function computes the r2 for the contamination model. The r2 is</span>
+<span class="sd">    computed over the prediction. Therefore, the augmentation for the index</span>
+<span class="sd">    variable is ignored.</span>
+
+<span class="sd">    :param int nout: \</span>
+<span class="sd">        Number of outputs without uq augmentation (in the contamination model the augmentation corresponds to the data index in training).</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">metric</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :param y_true: Keras tensor. \</span>
+<span class="sd">            Keras tensor including the ground truth. Since the keras tensor includes an extra column to store the index of the data sample in the training set this column is ignored.</span>
+<span class="sd">        :param y_pred: Keras tensor. \</span>
+<span class="sd">            Keras tensor with the predictions of the contamination model (no data index).</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># if nout &gt; 1:</span>
+        <span class="c1">#    y_true_ = K.reshape(y_true[:, :-1], K.shape(y_pred))</span>
+        <span class="c1"># else:</span>
+        <span class="c1">#    y_true_ = K.reshape(y_true[:, 0], K.shape(y_pred))</span>
+        <span class="n">y_true_</span> <span class="o">=</span> <span class="n">K</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">y_true</span><span class="p">[:,</span> <span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">K</span><span class="o">.</span><span class="n">shape</span><span class="p">(</span><span class="n">y_pred</span><span class="p">))</span>
+
+        <span class="n">SS_res</span> <span class="o">=</span> <span class="n">K</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">K</span><span class="o">.</span><span class="n">square</span><span class="p">(</span><span class="n">y_true_</span> <span class="o">-</span> <span class="n">y_pred</span><span class="p">))</span>
+        <span class="n">SS_tot</span> <span class="o">=</span> <span class="n">K</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">K</span><span class="o">.</span><span class="n">square</span><span class="p">(</span><span class="n">y_true_</span> <span class="o">-</span> <span class="n">K</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">y_true_</span><span class="p">)))</span>
+        <span class="k">return</span> <span class="mf">1.0</span> <span class="o">-</span> <span class="n">SS_res</span> <span class="o">/</span> <span class="p">(</span><span class="n">SS_tot</span> <span class="o">+</span> <span class="n">K</span><span class="o">.</span><span class="n">epsilon</span><span class="p">())</span>
+
+    <span class="n">metric</span><span class="o">.</span><span class="vm">__name__</span> <span class="o">=</span> <span class="s2">&quot;r2_contamination&quot;</span>
+    <span class="k">return</span> <span class="n">metric</span></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2021, ANL.gov.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

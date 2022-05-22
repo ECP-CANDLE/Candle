@@ -12,6 +12,6 @@ CANDLE Documentation Home
 
    readme
    tutorials/index
-   candle_lib
+   candle/candle
    shared_installation
    contribute

@@ -1,0 +1,4 @@
+<map id="inheritance4215683b1a" name="inheritance4215683b1a">
+<area shape="rect" id="node1" title="Abstract base class used to build new callbacks." alt="" coords="5,5,84,31"/>
+<area shape="rect" id="node2" title="Callback to save the Keras model or model weights at some frequency." alt="" coords="132,5,267,31"/>
+</map>

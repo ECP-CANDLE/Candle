@@ -1,0 +1,555 @@
+==========
+``candle``
+==========
+
+.. automodule:: candle
+
+   .. contents::
+      :local:
+
+.. currentmodule:: candle
+
+
+Functions
+=========
+
+- :py:func:`generate_cross_validation_partition`:
+  This function generates partition indices of samples for cross-
+
+- :py:func:`quantile_normalization`:
+  This function does quantile normalization to input data. After
+
+- :py:func:`load_csv_data`:
+  Load data from the files specified. Columns corresponding to data
+
+- :py:func:`load_Xy_data_noheader`:
+  Load training and testing data from the files specified, with the first
+
+- :py:func:`load_Xy_one_hot_data2`:
+  Load training and testing data from the files specified, with a column
+
+- :py:func:`select_decorrelated_features`:
+  This function selects features whose mutual absolute correlation
+
+- :py:func:`select_features_by_missing_values`:
+  This function returns the indices of the features whose missing rates
+
+- :py:func:`select_features_by_variation`:
+  This function evaluates the variations of individual features and
+
+- :py:func:`get_file`:
+  Downloads a file from a URL if it not already in the cache. Passing the
+
+- :py:func:`validate_file`:
+  Validates a file against a MD5 hash.
+
+- :py:func:`fetch_file`:
+  Convert URL to file path and download the file if it is not already
+
+- :py:func:`keras_default_config`:
+  Defines parameters that intervine in different functions using the keras
+
+- :py:func:`set_up_logger`:
+  Set up the event logging system. Two handlers are created. One to send
+
+- :py:func:`str2bool`:
+  This is taken from:
+
+- :py:func:`verify_path`:
+  Verify if a directory path exists locally. If the path does not exist,
+
+- :py:func:`add_cluster_noise`:
+  Undocumented.
+
+- :py:func:`add_column_noise`:
+  Undocumented.
+
+- :py:func:`add_gaussian_noise`:
+  Undocumented.
+
+- :py:func:`add_noise`:
+  Undocumented.
+
+- :py:func:`label_flip`:
+  Undocumented.
+
+- :py:func:`label_flip_correlated`:
+  Undocumented.
+
+- :py:func:`combat_batch_effect_removal`:
+  This function corrects for batch effect in data.
+
+- :py:func:`coxen_multi_drug_gene_selection`:
+  This function uses the COXEN approach to select genes for predicting the
+
+- :py:func:`coxen_single_drug_gene_selection`:
+  This function selects genes for drug response prediction using the COXEN
+
+- :py:func:`generate_gene_set_data`:
+  This function generates genomic data summarized at the gene set level.
+
+- :py:func:`check_flag_conflicts`:
+  Check if parameters that must be exclusive are used in conjunction. The
+
+- :py:func:`finalize_parameters`:
+  Utility to parse parameters in common as well as parameters particular
+
+- :py:func:`parse_from_dictlist`:
+  Functionality to parse options.
+
+- :py:func:`compute_empirical_calibration_interpolation`:
+  Use the arrays provided to estimate an empirical mapping between
+
+- :py:func:`compute_statistics_heteroscedastic`:
+  Extracts ground truth, mean prediction, error, standard deviation of
+
+- :py:func:`compute_statistics_homoscedastic`:
+  Extracts ground truth, mean prediction, error and standard deviation of
+
+- :py:func:`compute_statistics_homoscedastic_summary`:
+  Extracts ground truth, mean prediction, error and standard deviation of
+
+- :py:func:`compute_statistics_quantile`:
+  Extracts ground truth, 50th percentile mean prediction, low percentile
+
+- :py:func:`generate_index_distribution`:
+  Generates a vector of indices to partition the data for training. NO
+
+- :py:func:`split_data_for_empirical_calibration`:
+  Extracts a portion of the arrays provided for the computation of the
+
+- :py:func:`plot_2d_density_sigma_vs_error`:
+  Functionality to plot a 2D histogram of the distribution of the standard
+
+- :py:func:`plot_array`:
+  Undocumented.
+
+- :py:func:`plot_calibrated_std`:
+  Functionality to plot values in testing set after calibration. An
+
+- :py:func:`plot_calibration_interpolation`:
+  Functionality to plot empirical calibration curves estimated by
+
+- :py:func:`plot_contamination`:
+  Functionality to plot results for the contamination model. This includes
+
+- :py:func:`plot_decile_predictions`:
+  Functionality to plot the mean of the deciles predicted. The plot
+
+- :py:func:`plot_density_observed_vs_predicted`:
+  Functionality to plot a 2D histogram of the distribution of observed
+
+- :py:func:`plot_histogram_error_per_sigma`:
+  Functionality to plot a 1D histogram of the distribution of computed errors 
+
+- :py:func:`plot_history`:
+  Undocumented.
+
+- :py:func:`plot_scatter`:
+  Undocumented.
+
+- :py:func:`restart`:
+  Possibly restarts model from CheckpointCallback according to given
+
+- :py:func:`clr_callback`:
+  Creates keras callback for cyclical learning rate.
+
+- :py:func:`clr_check_args`:
+  Checks if the arguments for cyclical learning rate are valid.
+
+- :py:func:`clr_set_args`:
+  Undocumented.
+
+- :py:func:`build_initializer`:
+  Set the initializer to the appropriate Keras initializer function based
+
+- :py:func:`build_optimizer`:
+  Set the optimizer to the appropriate Keras optimizer function based on
+
+- :py:func:`compute_trainable_params`:
+  Extract number of parameters from the given Keras model
+
+- :py:func:`get_function`:
+  Undocumented.
+
+- :py:func:`mae`:
+  Undocumented.
+
+- :py:func:`mse`:
+  Undocumented.
+
+- :py:func:`r2`:
+  Undocumented.
+
+- :py:func:`register_permanent_dropout`:
+  Undocumented.
+
+- :py:func:`set_parallelism_threads`:
+  Set the number of parallel threads according to the number available on
+
+- :py:func:`set_seed`:
+  Set the random number seed to the desired value.
+
+- :py:func:`abstention_acc_class_i_metric`:
+  Function to estimate accuracy over the class i prediction after removing
+
+- :py:func:`abstention_acc_metric`:
+  Abstained accuracy: Function to estimate accuracy over the predicted
+
+- :py:func:`abstention_class_i_metric`:
+  Function to estimate fraction of the samples where the model is
+
+- :py:func:`abstention_loss`:
+  Function to compute abstention loss. It is composed by two terms: (i)
+
+- :py:func:`abstention_metric`:
+  Function to estimate fraction of the samples where the model is
+
+- :py:func:`acc_class_i_metric`:
+  Function to estimate accuracy over the ith class prediction. This
+
+- :py:func:`add_index_to_output`:
+  This function adds a column to the training output to store the indices
+
+- :py:func:`add_model_output`:
+  This function modifies the last dense layer in the passed keras model.
+
+- :py:func:`contamination_loss`:
+  Function to compute contamination loss. It is composed by two terms: (i)
+
+- :py:func:`heteroscedastic_loss`:
+  This function computes the heteroscedastic loss for the heteroscedastic
+
+- :py:func:`mae_contamination_metric`:
+  This function computes the mean absolute error (mae) for the
+
+- :py:func:`mae_heteroscedastic_metric`:
+  This function computes the mean absolute error (mae) for the
+
+- :py:func:`meanS_heteroscedastic_metric`:
+  This function computes the mean log of the variance (log S) for the
+
+- :py:func:`modify_labels`:
+  This function generates a categorical representation with a class added
+
+- :py:func:`mse_contamination_metric`:
+  This function computes the mean squared error (mse) for the
+
+- :py:func:`mse_heteroscedastic_metric`:
+  This function computes the mean squared error (mse) for the
+
+- :py:func:`quantile_loss`:
+  This function computes the quantile loss for a given quantile fraction.
+
+- :py:func:`quantile_metric`:
+  This function computes the quantile metric for a given quantile and
+
+- :py:func:`r2_contamination_metric`:
+  This function computes the r2 for the contamination model. The r2 is
+
+- :py:func:`r2_heteroscedastic_metric`:
+  This function computes the r2 for the heteroscedastic model. The r2 is
+
+- :py:func:`sparse_abstention_acc_metric`:
+  Abstained accuracy: Function to estimate accuracy over the predicted
+
+- :py:func:`sparse_abstention_loss`:
+  Function to compute abstention loss. It is composed by two terms: (i)
+
+- :py:func:`triple_quantile_loss`:
+  This function computes the quantile loss for the median and low and high
+
+- :py:func:`plot_metrics`:
+  Plots keras training curves history.
+
+
+.. autofunction:: generate_cross_validation_partition
+
+.. autofunction:: quantile_normalization
+
+.. autofunction:: load_csv_data
+
+.. autofunction:: load_Xy_data_noheader
+
+.. autofunction:: load_Xy_one_hot_data2
+
+.. autofunction:: select_decorrelated_features
+
+.. autofunction:: select_features_by_missing_values
+
+.. autofunction:: select_features_by_variation
+
+.. autofunction:: get_file
+
+.. autofunction:: validate_file
+
+.. autofunction:: fetch_file
+
+.. autofunction:: keras_default_config
+
+.. autofunction:: set_up_logger
+
+.. autofunction:: str2bool
+
+.. autofunction:: verify_path
+
+.. autofunction:: add_cluster_noise
+
+.. autofunction:: add_column_noise
+
+.. autofunction:: add_gaussian_noise
+
+.. autofunction:: add_noise
+
+.. autofunction:: label_flip
+
+.. autofunction:: label_flip_correlated
+
+.. autofunction:: combat_batch_effect_removal
+
+.. autofunction:: coxen_multi_drug_gene_selection
+
+.. autofunction:: coxen_single_drug_gene_selection
+
+.. autofunction:: generate_gene_set_data
+
+.. autofunction:: check_flag_conflicts
+
+.. autofunction:: finalize_parameters
+
+.. autofunction:: parse_from_dictlist
+
+.. autofunction:: compute_empirical_calibration_interpolation
+
+.. autofunction:: compute_statistics_heteroscedastic
+
+.. autofunction:: compute_statistics_homoscedastic
+
+.. autofunction:: compute_statistics_homoscedastic_summary
+
+.. autofunction:: compute_statistics_quantile
+
+.. autofunction:: generate_index_distribution
+
+.. autofunction:: split_data_for_empirical_calibration
+
+.. autofunction:: plot_2d_density_sigma_vs_error
+
+.. autofunction:: plot_array
+
+.. autofunction:: plot_calibrated_std
+
+.. autofunction:: plot_calibration_interpolation
+
+.. autofunction:: plot_contamination
+
+.. autofunction:: plot_decile_predictions
+
+.. autofunction:: plot_density_observed_vs_predicted
+
+.. autofunction:: plot_histogram_error_per_sigma
+
+.. autofunction:: plot_history
+
+.. autofunction:: plot_scatter
+
+.. autofunction:: restart
+
+.. autofunction:: clr_callback
+
+.. autofunction:: clr_check_args
+
+.. autofunction:: clr_set_args
+
+.. autofunction:: build_initializer
+
+.. autofunction:: build_optimizer
+
+.. autofunction:: compute_trainable_params
+
+.. autofunction:: get_function
+
+.. autofunction:: mae
+
+.. autofunction:: mse
+
+.. autofunction:: r2
+
+.. autofunction:: register_permanent_dropout
+
+.. autofunction:: set_parallelism_threads
+
+.. autofunction:: set_seed
+
+.. autofunction:: abstention_acc_class_i_metric
+
+.. autofunction:: abstention_acc_metric
+
+.. autofunction:: abstention_class_i_metric
+
+.. autofunction:: abstention_loss
+
+.. autofunction:: abstention_metric
+
+.. autofunction:: acc_class_i_metric
+
+.. autofunction:: add_index_to_output
+
+.. autofunction:: add_model_output
+
+.. autofunction:: contamination_loss
+
+.. autofunction:: heteroscedastic_loss
+
+.. autofunction:: mae_contamination_metric
+
+.. autofunction:: mae_heteroscedastic_metric
+
+.. autofunction:: meanS_heteroscedastic_metric
+
+.. autofunction:: modify_labels
+
+.. autofunction:: mse_contamination_metric
+
+.. autofunction:: mse_heteroscedastic_metric
+
+.. autofunction:: quantile_loss
+
+.. autofunction:: quantile_metric
+
+.. autofunction:: r2_contamination_metric
+
+.. autofunction:: r2_heteroscedastic_metric
+
+.. autofunction:: sparse_abstention_acc_metric
+
+.. autofunction:: sparse_abstention_loss
+
+.. autofunction:: triple_quantile_loss
+
+.. autofunction:: plot_metrics
+
+
+Classes
+=======
+
+- :py:class:`Benchmark`:
+  Class that implements an interface to handle configuration options for
+
+- :py:class:`Progbar`:
+  Progress bar
+
+- :py:class:`ArgumentStruct`:
+  Class that converts a python dictionary into an object with named
+
+- :py:class:`CandleCheckpointCallback`:
+  Keras Callback for CANDLE-compliant Benchmarks to use for checkpointing
+
+- :py:class:`MultiGPUCheckpoint`:
+  Callback to save the Keras model or model weights at some frequency.
+
+- :py:class:`CyclicLR`:
+  This callback implements a cyclical learning rate policy (CLR). The
+
+- :py:class:`CandleRemoteMonitor`:
+  Capture Run level output and store/send for monitoring.
+
+- :py:class:`LoggingCallback`:
+  Abstract base class used to build new callbacks.
+
+- :py:class:`PermanentDropout`:
+  Applies Dropout to the input.
+
+- :py:class:`TerminateOnTimeOut`:
+  This class implements timeout on model training.
+
+- :py:class:`AbstentionAdapt_Callback`:
+  This callback is used to adapt the parameter alpha in the abstention
+
+- :py:class:`Contamination_Callback`:
+  This callback is used to update the parameters of the contamination
+
+
+.. autoclass:: Benchmark
+   :members:
+
+   .. rubric:: Inheritance
+   .. inheritance-diagram:: Benchmark
+      :parts: 1
+
+.. autoclass:: Progbar
+   :members:
+
+   .. rubric:: Inheritance
+   .. inheritance-diagram:: Progbar
+      :parts: 1
+
+.. autoclass:: ArgumentStruct
+   :members:
+
+   .. rubric:: Inheritance
+   .. inheritance-diagram:: ArgumentStruct
+      :parts: 1
+
+.. autoclass:: CandleCheckpointCallback
+   :members:
+
+   .. rubric:: Inheritance
+   .. inheritance-diagram:: CandleCheckpointCallback
+      :parts: 1
+
+.. autoclass:: MultiGPUCheckpoint
+   :members:
+
+   .. rubric:: Inheritance
+   .. inheritance-diagram:: MultiGPUCheckpoint
+      :parts: 1
+
+.. autoclass:: CyclicLR
+   :members:
+
+   .. rubric:: Inheritance
+   .. inheritance-diagram:: CyclicLR
+      :parts: 1
+
+.. autoclass:: CandleRemoteMonitor
+   :members:
+
+   .. rubric:: Inheritance
+   .. inheritance-diagram:: CandleRemoteMonitor
+      :parts: 1
+
+.. autoclass:: LoggingCallback
+   :members:
+
+   .. rubric:: Inheritance
+   .. inheritance-diagram:: LoggingCallback
+      :parts: 1
+
+.. autoclass:: PermanentDropout
+   :members:
+
+   .. rubric:: Inheritance
+   .. inheritance-diagram:: PermanentDropout
+      :parts: 1
+
+.. autoclass:: TerminateOnTimeOut
+   :members:
+
+   .. rubric:: Inheritance
+   .. inheritance-diagram:: TerminateOnTimeOut
+      :parts: 1
+
+.. autoclass:: AbstentionAdapt_Callback
+   :members:
+
+   .. rubric:: Inheritance
+   .. inheritance-diagram:: AbstentionAdapt_Callback
+      :parts: 1
+
+.. autoclass:: Contamination_Callback
+   :members:
+
+   .. rubric:: Inheritance
+   .. inheritance-diagram:: Contamination_Callback
+      :parts: 1
