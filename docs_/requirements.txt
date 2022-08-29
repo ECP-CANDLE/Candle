@@ -4,4 +4,4 @@ torch==1.11.0
 wget==3.2
 dill==0.3.5.1
 autoapi==2.0.1
-git+https://github.com/ECP-CANDLE/candle_lib.git@master#egg=candle
+git+https://github.com/ECP-CANDLE/candle_lib.git@develop#egg=candle
