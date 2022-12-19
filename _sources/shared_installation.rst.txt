@@ -4,16 +4,29 @@ CANDLE Shared Installation
 Terminology and scope
 ---------------------
 
-In addition to the CANDLE shared installation being a ready-to-use, central installation of CANDLE, it is further a set of scripts that adds to the functionality of CANDLE and makes it easier to use for new users. For brevity, below these scripts will be called the "wrapper scripts" or "wrappers," as they are essentially wrappers around the Supervisor/Benchmarks codebase with the aim of improving functionality while leaving the codebase as untouched as possible. These scripts should not interfere in any way with how CANDLE is currently being run; these are only enhancements. They are currently set up and tested on Biowulf and Summit.
+In addition to the CANDLE shared installation being a ready-to-use,
+central installation of CANDLE, it is further a set of scripts that
+adds to the functionality of CANDLE and makes it easier to use for new users.
+For brevity, below these scripts will be called the "wrapper scripts"
+or "wrappers," as they are essentially wrappers around the
+Supervisor/Benchmarks codebase with the aim of improving functionality
+while leaving the codebase as untouched as possible. These scripts should not
+interfere in any way with how CANDLE is currently being run;
+these are only enhancements.
+They are currently set up and tested on Biowulf and Summit.
 
-The source code of the wrapper scripts is currently located `here <https://github.com/fnlcr-bids-sdsi/candle_wrappers>`__. This contains code that (1) helps to set up and test these
+The source code of the wrapper scripts is currently located
+`here <https://github.com/fnlcr-bids-sdsi/candle_wrappers>`__.
+This contains code that (1) helps to set up and test these
 scripts alongside new clones of the
 `Supervisor <https://github.com/ECP-CANDLE/Supervisor/tree/develop>`__
 and
 `Benchmarks <https://github.com/ECP-CANDLE/Benchmarks/tree/develop>`__
-repositories, and (2) adds various features to CANDLE. The documentation
-for setup (#1) can be found `here <https://github.com/fnlcr-bids-sdsi/candle_wrappers/blob/master/README.md>`__; the documentation
-for usage (#2) is below.
+repositories, and (2) adds various features to CANDLE.
+The documentation
+for setup (#1) can be found
+`here <https://github.com/fnlcr-bids-sdsi/candle_wrappers/blob/master/README.md>`__;
+the documentation for usage (#2) is below.
 
 Overview of wrapper scripts functionality
 -----------------------------------------
@@ -62,7 +75,7 @@ For users
       (e.g.,
       ``bsub -W 1:00 -nnodes 1 -P med106 -q debug -Is /bin/bash``) for
       testing modifications to a model script
-      
+
    -  **Note:** See `here <#known-issues>`__ if you encounter an issue with the CUDA driver when testing a model in this interactive mode
 
    2. *Production:* Using ``candle submit-job <INPUT-FILE>`` this time

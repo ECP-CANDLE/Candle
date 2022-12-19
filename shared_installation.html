@@ -102,8 +102,8 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
-      <li>CANDLE Shared Installation</li>
+      <li><a href="index.html" class="icon icon-home"></a></li>
+      <li class="breadcrumb-item active">CANDLE Shared Installation</li>
       <li class="wy-breadcrumbs-aside">
             <a href="_sources/shared_installation.rst.txt" rel="nofollow"> View page source</a>
       </li>
@@ -117,15 +117,28 @@
 <h1>CANDLE Shared Installation<a class="headerlink" href="#candle-shared-installation" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="terminology-and-scope">
 <h2>Terminology and scope<a class="headerlink" href="#terminology-and-scope" title="Permalink to this headline">¶</a></h2>
-<p>In addition to the CANDLE shared installation being a ready-to-use, central installation of CANDLE, it is further a set of scripts that adds to the functionality of CANDLE and makes it easier to use for new users. For brevity, below these scripts will be called the “wrapper scripts” or “wrappers,” as they are essentially wrappers around the Supervisor/Benchmarks codebase with the aim of improving functionality while leaving the codebase as untouched as possible. These scripts should not interfere in any way with how CANDLE is currently being run; these are only enhancements. They are currently set up and tested on Biowulf and Summit.</p>
-<p>The source code of the wrapper scripts is currently located <a class="reference external" href="https://github.com/fnlcr-bids-sdsi/candle_wrappers">here</a>. This contains code that (1) helps to set up and test these
+<p>In addition to the CANDLE shared installation being a ready-to-use,
+central installation of CANDLE, it is further a set of scripts that
+adds to the functionality of CANDLE and makes it easier to use for new users.
+For brevity, below these scripts will be called the “wrapper scripts”
+or “wrappers,” as they are essentially wrappers around the
+Supervisor/Benchmarks codebase with the aim of improving functionality
+while leaving the codebase as untouched as possible. These scripts should not
+interfere in any way with how CANDLE is currently being run;
+these are only enhancements.
+They are currently set up and tested on Biowulf and Summit.</p>
+<p>The source code of the wrapper scripts is currently located
+<a class="reference external" href="https://github.com/fnlcr-bids-sdsi/candle_wrappers">here</a>.
+This contains code that (1) helps to set up and test these
 scripts alongside new clones of the
 <a class="reference external" href="https://github.com/ECP-CANDLE/Supervisor/tree/develop">Supervisor</a>
 and
 <a class="reference external" href="https://github.com/ECP-CANDLE/Benchmarks/tree/develop">Benchmarks</a>
-repositories, and (2) adds various features to CANDLE. The documentation
-for setup (#1) can be found <a class="reference external" href="https://github.com/fnlcr-bids-sdsi/candle_wrappers/blob/master/README.md">here</a>; the documentation
-for usage (#2) is below.</p>
+repositories, and (2) adds various features to CANDLE.
+The documentation
+for setup (#1) can be found
+<a class="reference external" href="https://github.com/fnlcr-bids-sdsi/candle_wrappers/blob/master/README.md">here</a>;
+the documentation for usage (#2) is below.</p>
 </div>
 <div class="section" id="overview-of-wrapper-scripts-functionality">
 <h2>Overview of wrapper scripts functionality<a class="headerlink" href="#overview-of-wrapper-scripts-functionality" title="Permalink to this headline">¶</a></h2>
