@@ -1,5 +1,5 @@
 import mnist
-import candle_keras as candle
+import candle
 
 def initialize_parameters():
 
@@ -12,7 +12,7 @@ def initialize_parameters():
     )
 
     # Initialize parameters
-    gParameters = candle.initialize_parameters(mnist_common)
+    gParameters = candle.finalize_parameters(mnist_common)
 
     return gParameters
 
@@ -60,7 +60,7 @@ def run(gParameters):
     model.add(Dense(num_classes, activation='softmax'))
 
     model.summary()
-    candle.model_plot(model, 'newname.png')
+    # candle.model_plot(model, 'newname.png')
 
     model.compile(loss='categorical_crossentropy',
                 optimizer=optimizer,
