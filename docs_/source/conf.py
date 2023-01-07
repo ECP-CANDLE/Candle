@@ -20,8 +20,8 @@ sys.path.insert(0, os.path.abspath('../../examples/mnist'))
 # -- Project information -----------------------------------------------------
 
 project = 'CANDLE'
-copyright = '2021, ANL.gov'
-author = 'CANDLE Team'
+copyright = '2023 | https://www.anl.gov'
+author = 'ECP-CANDLE Team'
 
 # The short X.Y version
 version = ''
@@ -99,6 +99,8 @@ html_theme_options = {
     'display_version': True
 }
 html_theme_path = [sphinx_rtd_theme.get_html_theme_path()]
+html_favicon = "_static/favicon.ico"
+html_title = "ECP-CANDLE"
 
 # Theme options are theme-specific and customize the look and feel of a theme
 # further.  For a list of options available for each theme, see the
