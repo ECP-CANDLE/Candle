@@ -1,0 +1,6 @@
+
+NOTE TO DEVELOPERS
+
+To modify these docs, simply modify the RST files in place and push back to git.
+
+GitHub will build the docs, there is no need to install Sphinx.
