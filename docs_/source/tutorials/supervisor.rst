@@ -25,4 +25,4 @@ External forked execution in Supervisor starts with a call to the Model Shell (m
 
 In-memory execution skips straight to the Model Runner without fork or the ability to perform shell configuration.
 
-The Model Runner (model_runner.py) sets up and runs the model.  It imports the required Python modules, processes the hyperparameters (formatted as JSON), and performs other optional configuration, and then runs the model via CANDLE-compliant interfaces.  The return value is specified by the obj_return value.  
+The Model Runner (model_runner.py) sets up and runs the model.  It imports the required Python modules, processes the hyperparameters (formatted as JSON), and performs other optional configuration, and then runs the model via CANDLE-compliant interfaces.  The return value is specified by the obj_return value.
