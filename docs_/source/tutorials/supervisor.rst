@@ -27,4 +27,4 @@ In-memory execution skips straight to the Model Runner without fork or the abili
 
 The Model Runner (model_runner.py) sets up and runs the model.  It imports the required Python modules, processes the hyperparameters (formatted as JSON), and performs other optional configuration, and then runs the model via CANDLE-compliant interfaces.  The return value is specified by the obj_return value.
 
-To run an external model, that is, not one of the CANDLE Benchmarks, the user should set  environment variable MODEL_NAME and PYTHONPATH and/or APP_PYTHONPATH.  The Model Runner will attempt to import MODEL_NAME_baseline_FRAMEWORK where MODEL_NAME and FRAMEWORK are set in the environment.
+To run an external model, that is, not one of the CANDLE Benchmarks, the user should set  environment variable MODEL_NAME and PYTHONPATH and/or APP_PYTHONPATH.  The Model Runner will attempt to load the model package via the Python command ``import MODEL_NAME_baseline_FRAMEWORK`` where MODEL_NAME and FRAMEWORK are set in the environment.  It will then invoke the CANDLE-compliant API on that package.
