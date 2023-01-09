@@ -9,7 +9,7 @@ Running
 -------
 
 1. cd into the ``~/Supervisor/workflows/mlrMBO/test`` directory
-2. Specify the ``MODEL_NAME`` in the ``test-1.sh`` file, hyperparameters in
+2. Specify the ``MODEL_NAME`` in the ``test-<model>.sh`` file, hyperparameters in
    ``cfg-prm-1.txt``
 3. Specify the number or processes, queue etc., in ``cfg-sys-1.sh`` file
 4. Launch the test by invoking ``./test-1.sh benchmark machine`` where the machine can be ``cori``, ``theta``, ``titan`` etc.
