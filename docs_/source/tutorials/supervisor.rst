@@ -19,7 +19,7 @@ The Swift/T launcher is part of Swift/T.  This includes the Swift/T scheduler te
 
 Finally, qsub or equivalent is run by the Swift/T launcher scripts.
 
-Swift/T runs as single multi-node MPI job, shown as workflow.swift .  Swift/T logic encoded in workflow.swift proceeds until a Swift/T app function or python() launches execution.  In Supervisor, this conventionally happens inside the function called obj(), which launches a CANDLE-compliant model run.  obj() has multiple implementations for external forked execution (obj_app.swift), in-memory Python execution (obj_py.swift), and a debugging non-execution mode that reports the hyperparameters (obj_echo.swift).  
+Swift/T runs as single multi-node MPI job, shown as workflow.swift .  Swift/T logic encoded in workflow.swift proceeds until a Swift/T app function or python() launches execution.  In Supervisor, this conventionally happens inside the function called obj(), which launches a CANDLE-compliant model run.  obj() is the CANDLE objective function, in the sense of optimization or whatever else the workflow is doing. obj() has multiple implementations for external forked execution (obj_app.swift), in-memory Python execution (obj_py.swift), and a debugging non-execution mode that reports the hyperparameters (obj_echo.swift).  This is controlled by environment variable SWIFT_IMPL and is actuated by the 'swift-t -i' argument, which imports the selected Swift/T module into the workflow.
 
 External forked execution in Supervisor starts with a call to the Model Shell (model.sh) which redirects output to model.log, loads the langs-app-SITE settings described above, and runs the Model Runner in Python.
 
