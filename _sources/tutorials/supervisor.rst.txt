@@ -23,6 +23,8 @@ Swift/T runs as single multi-node MPI job, shown as workflow.swift .  Swift/T lo
 
 External forked execution in Supervisor starts with a call to the Model Shell (model.sh) which redirects output to model.log, loads the langs-app-SITE settings described above, and runs the Model Runner in Python.  The Model Shell sets up PYTHONPATH and prepends APP_PYTHONPATH - this is because the Python used by Swift/T may be different from the Python the user desires to use on the compute nodes.  PYTHONPATH will affect Swift/T but APP_PYTHONPATH will not.  APP_PYTHONPATH can contain any entries needed to run the user model, including entries that will break Swift/T, such as libraries from an entirely different Python environment.
 
-In-memory execution skips straight to the Model Runner without fork or the ability to perform shell configuration.
+In-memory execution skips straight to the Model Runner without fork or the ability to perform shell configuration.  APP_PYTHONPATH is not used here, so the PYTHONPATH must be correct for both Swift/T and the user model, since they are sharing the same Python instance.
 
 The Model Runner (model_runner.py) sets up and runs the model.  It imports the required Python modules, processes the hyperparameters (formatted as JSON), and performs other optional configuration, and then runs the model via CANDLE-compliant interfaces.  The return value is specified by the obj_return value.
+
+To run an external model, that is, not one of the CANDLE Benchmarks, the user should set  environment variable MODEL_NAME and PYTHONPATH and/or APP_PYTHONPATH.  The Model Runner will attempt to import MODEL_NAME_baseline_FRAMEWORK where MODEL_NAME and FRAMEWORK are set in the environment.
