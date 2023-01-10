@@ -18,7 +18,7 @@ jobs:
         pip install sphinx_rtd_theme
         pip install autoapi
         pip install sphinx
-        pip install keras torch
+        pip install keras torch tensorflow
         pwd
         ls
         cd docs_
