@@ -3,17 +3,21 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>candle.ckpt_keras_utils &mdash; CANDLE  documentation</title><link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
-    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <title>candle.ckpt_keras_utils &mdash; ECP-CANDLE</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/graphviz.css" type="text/css" />
+    <link rel="shortcut icon" href="../../_static/favicon.ico"/>
   <!--[if lt IE 9]>
     <script src="../../_static/js/html5shiv.min.js"></script>
   <![endif]-->
-  <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
         <script src="../../_static/jquery.js"></script>
         <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../../_static/doctools.js"></script>
-        <script src="../../_static/language_data.js"></script>
+        <script src="../../_static/sphinx_highlight.js"></script>
     <script src="../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" /> 
@@ -34,7 +38,7 @@
   </form>
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
-              <p class="caption"><span class="caption-text">Contents:</span></p>
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../readme.html">What is CANDLE?</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../tutorials/index.html">Tutorials</a></li>
@@ -56,9 +60,9 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
-          <li><a href="../index.html">Module code</a> &raquo;</li>
-      <li>candle.ckpt_keras_utils</li>
+      <li><a href="../../index.html" class="icon icon-home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">candle.ckpt_keras_utils</li>
       <li class="wy-breadcrumbs-aside">
       </li>
   </ul>
@@ -202,13 +206,13 @@
 
 
 <span class="k">class</span> <span class="nc">ParamRequired</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;Indicates that the user params must contain this key.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Indicates that the user params must contain this key.&quot;&quot;&quot;</span>
 
     <span class="k">pass</span>
 
 
 <div class="viewcode-block" id="CandleCheckpointCallback"><a class="viewcode-back" href="../../candle/candle.html#candle.CandleCheckpointCallback">[docs]</a><span class="k">class</span> <span class="nc">CandleCheckpointCallback</span><span class="p">(</span><span class="n">Callback</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Keras Callback for CANDLE-compliant Benchmarks to use for checkpointing</span>
 <span class="sd">    Creates a JSON file alongside the weights and optimizer checkpoints that</span>
 <span class="sd">    includes important metadata, particularly for restarting and tracking</span>
@@ -216,7 +220,7 @@
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">gParameters</span><span class="p">:</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">logger</span><span class="o">=</span><span class="s2">&quot;DEFAULT&quot;</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :param Logger logger: The logger to use.</span>
 <span class="sd">            May be None to disable or &quot;DEFAULT&quot; to use the default.</span>
 <span class="sd">        :param boolean verbose: If True, more verbose logging</span>
@@ -242,7 +246,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">report_initial</span><span class="p">()</span>
 
 <div class="viewcode-block" id="CandleCheckpointCallback.report_initial"><a class="viewcode-back" href="../../candle/candle.html#candle.CandleCheckpointCallback.report_initial">[docs]</a>    <span class="k">def</span> <span class="nf">report_initial</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Simply report that we are ready to run.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Callback initialized.&quot;</span><span class="p">)</span>
@@ -257,7 +261,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;ckpt_directory: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">Path</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ckpt_directory</span><span class="p">)</span><span class="o">.</span><span class="n">resolve</span><span class="p">())</span></div>
 
 <div class="viewcode-block" id="CandleCheckpointCallback.scan_params"><a class="viewcode-back" href="../../candle/candle.html#candle.CandleCheckpointCallback.scan_params">[docs]</a>    <span class="k">def</span> <span class="nf">scan_params</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">gParameters</span><span class="p">:</span> <span class="n">Dict</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Simply translate gParameters into instance fields.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">epoch_max</span> <span class="o">=</span> <span class="n">param</span><span class="p">(</span>
@@ -306,7 +310,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">cwd</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">()</span></div>
 
 <div class="viewcode-block" id="CandleCheckpointCallback.on_epoch_end"><a class="viewcode-back" href="../../candle/candle.html#candle.CandleCheckpointCallback.on_epoch_end">[docs]</a>    <span class="k">def</span> <span class="nf">on_epoch_end</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">epoch</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">logs</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Note: We immediately increment epoch</span>
 <span class="sd">        from index-from-0 to index-from-1</span>
 <span class="sd">        to match the TensorFlow output.</span>
@@ -348,7 +352,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">clean</span><span class="p">(</span><span class="n">epoch</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="CandleCheckpointCallback.save_check"><a class="viewcode-back" href="../../candle/candle.html#candle.CandleCheckpointCallback.save_check">[docs]</a>    <span class="k">def</span> <span class="nf">save_check</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">logs</span><span class="p">,</span> <span class="n">epoch</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Make sure we want to save this epoch based on the model metrics in</span>
 <span class="sd">        given logs Also updates epoch_best if appropriate.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -438,7 +442,7 @@
         <span class="k">return</span> <span class="kc">False</span>
 
 <div class="viewcode-block" id="CandleCheckpointCallback.write_model"><a class="viewcode-back" href="../../candle/candle.html#candle.CandleCheckpointCallback.write_model">[docs]</a>    <span class="k">def</span> <span class="nf">write_model</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dir_work</span><span class="p">,</span> <span class="n">epoch</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Do the I/O, report stats</span>
 <span class="sd">        dir_work: A Path</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -460,7 +464,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">write_json</span><span class="p">(</span><span class="n">dir_work</span> <span class="o">/</span> <span class="s2">&quot;ckpt-info.json&quot;</span><span class="p">,</span> <span class="n">epoch</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="CandleCheckpointCallback.checksum"><a class="viewcode-back" href="../../candle/candle.html#candle.CandleCheckpointCallback.checksum">[docs]</a>    <span class="k">def</span> <span class="nf">checksum</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dir_work</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Simple checksum dispatch</span>
 <span class="sd">        dir_work: A Path</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -492,7 +496,7 @@
             <span class="n">fp</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
 
 <div class="viewcode-block" id="CandleCheckpointCallback.clean"><a class="viewcode-back" href="../../candle/candle.html#candle.CandleCheckpointCallback.clean">[docs]</a>    <span class="k">def</span> <span class="nf">clean</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">epoch_now</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Clean old epoch directories in accordance with ckpt_keep policies.</span>
 
 <span class="sd">        Return number of checkpoints kept and deleted</span>
@@ -511,7 +515,7 @@
         <span class="k">return</span> <span class="p">(</span><span class="n">kept</span><span class="p">,</span> <span class="n">deleted</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="CandleCheckpointCallback.keep"><a class="viewcode-back" href="../../candle/candle.html#candle.CandleCheckpointCallback.keep">[docs]</a>    <span class="k">def</span> <span class="nf">keep</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">epoch</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">epoch_now</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">kept</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        kept: Number of epochs already kept</span>
 <span class="sd">        return True if we are keeping this epoch, else False</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -539,7 +543,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">epochs</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">epoch</span><span class="p">)</span>
 
 <div class="viewcode-block" id="CandleCheckpointCallback.symlink"><a class="viewcode-back" href="../../candle/candle.html#candle.CandleCheckpointCallback.symlink">[docs]</a>    <span class="k">def</span> <span class="nf">symlink</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">src</span><span class="p">,</span> <span class="n">dst</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Like os.symlink, but overwrites dst and logs.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Like os.symlink, but overwrites dst and logs.&quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;linking: &#39;</span><span class="si">%s</span><span class="s2">&#39; -&gt; &#39;</span><span class="si">%s</span><span class="s2">&#39;&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">relpath</span><span class="p">(</span><span class="n">dst</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">relpath</span><span class="p">(</span><span class="n">src</span><span class="p">)))</span>
         <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">lexists</span><span class="p">(</span><span class="n">dst</span><span class="p">):</span>
             <span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">dst</span><span class="p">)</span>
@@ -565,7 +569,7 @@
 
 
 <div class="viewcode-block" id="restart"><a class="viewcode-back" href="../../candle/candle.html#candle.restart">[docs]</a><span class="k">def</span> <span class="nf">restart</span><span class="p">(</span><span class="n">gParameters</span><span class="p">:</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Possibly restarts model from CheckpointCallback according to given</span>
 <span class="sd">    settings and the ckpt-info.json.</span>
 
@@ -645,7 +649,7 @@
 
 <span class="nd">@unique</span>
 <span class="k">class</span> <span class="nc">ParamType</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Possible gParameters types.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Possible gParameters types.&quot;&quot;&quot;</span>
 
     <span class="n">STRING</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
     <span class="n">BOOLEAN</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
@@ -659,17 +663,17 @@
 
 
 <span class="k">def</span> <span class="nf">enabled</span><span class="p">(</span><span class="n">gParameters</span><span class="p">:</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Is this parameter set to True?&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Is this parameter set to True?&quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">gParameters</span> <span class="ow">and</span> <span class="n">gParameters</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
 
 
 <span class="k">def</span> <span class="nf">disabled</span><span class="p">(</span><span class="n">gParameters</span><span class="p">:</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Is this parameter set to False?&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Is this parameter set to False?&quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">gParameters</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">gParameters</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
 
 
 <span class="k">def</span> <span class="nf">param</span><span class="p">(</span><span class="n">gParameters</span><span class="p">:</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">dflt</span><span class="p">,</span> <span class="n">type_</span><span class="o">=</span><span class="n">ParamType</span><span class="o">.</span><span class="n">STRING</span><span class="p">,</span> <span class="n">allowed</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Pull key from parameters with type checks and conversions.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Pull key from parameters with type checks and conversions.&quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">gParameters</span><span class="p">:</span>
         <span class="n">result</span> <span class="o">=</span> <span class="n">gParameters</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
     <span class="k">else</span><span class="p">:</span>
@@ -682,7 +686,7 @@
 
 
 <span class="k">def</span> <span class="nf">param_type_check</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">type_</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Check that value is convertable to given type:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Check that value is convertable to given type:</span>
 
 <span class="sd">    if not, raise TypeError Return the value as converted to given type</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -764,7 +768,7 @@
 
 
 <span class="k">def</span> <span class="nf">checksum_file</span><span class="p">(</span><span class="n">logger</span><span class="p">:</span> <span class="n">Logger</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Read file, compute checksum, return it as a string.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Read file, compute checksum, return it as a string.&quot;&quot;&quot;</span>
     <span class="kn">import</span> <span class="nn">zlib</span>
 
     <span class="n">start</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
@@ -789,7 +793,7 @@
 
 
 <span class="k">def</span> <span class="nf">param_allowed</span><span class="p">(</span><span class="n">key</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">allowed</span><span class="p">:</span> <span class="n">List</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Check that the value is in the list of allowed values If allowed is</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Check that the value is in the list of allowed values If allowed is</span>
 <span class="sd">    None, there is no check, simply success.&quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="n">allowed</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="k">return</span>
@@ -945,7 +949,7 @@
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2021, ANL.gov.</p>
+    <p>&#169; Copyright 2023 | https://www.anl.gov.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a

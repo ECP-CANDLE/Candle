@@ -3,17 +3,21 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>candle.data_utils &mdash; CANDLE  documentation</title><link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
-    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <title>candle.data_utils &mdash; ECP-CANDLE</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/graphviz.css" type="text/css" />
+    <link rel="shortcut icon" href="../../_static/favicon.ico"/>
   <!--[if lt IE 9]>
     <script src="../../_static/js/html5shiv.min.js"></script>
   <![endif]-->
-  <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
         <script src="../../_static/jquery.js"></script>
         <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../../_static/doctools.js"></script>
-        <script src="../../_static/language_data.js"></script>
+        <script src="../../_static/sphinx_highlight.js"></script>
     <script src="../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" /> 
@@ -34,7 +38,7 @@
   </form>
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
-              <p class="caption"><span class="caption-text">Contents:</span></p>
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../readme.html">What is CANDLE?</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../tutorials/index.html">Tutorials</a></li>
@@ -56,9 +60,9 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
-          <li><a href="../index.html">Module code</a> &raquo;</li>
-      <li>candle.data_utils</li>
+      <li><a href="../../index.html" class="icon icon-home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">candle.data_utils</li>
       <li class="wy-breadcrumbs-aside">
       </li>
   </ul>
@@ -70,9 +74,10 @@
   <h1>Source code for candle.data_utils</h1><div class="highlight"><pre>
 <span></span><span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">absolute_import</span>
 
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span>
+
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span>
 
 <span class="c1"># Adding conditional import for compatibility between</span>
 <span class="c1"># sklearn versions</span>
@@ -94,7 +99,7 @@
 
 <span class="c1"># TAKEN from tensorflow</span>
 <span class="k">def</span> <span class="nf">to_categorical</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">num_classes</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Converts a class vector (integers) to binary class matrix.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Converts a class vector (integers) to binary class matrix.</span>
 <span class="sd">    E.g. for use with categorical_crossentropy.</span>
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
@@ -125,7 +130,7 @@
 
 
 <span class="k">def</span> <span class="nf">convert_to_class</span><span class="p">(</span><span class="n">y_one_hot</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Converts a one-hot class encoding (array with as many positions as total</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Converts a one-hot class encoding (array with as many positions as total</span>
 <span class="sd">    classes, with 1 in the corresponding class position, 0 in the other</span>
 <span class="sd">    positions), or soft-max class encoding (array with as many positions as</span>
 <span class="sd">    total classes, whose largest valued position is used as class membership)</span>
@@ -158,7 +163,7 @@
 
 
 <span class="k">def</span> <span class="nf">scale_array</span><span class="p">(</span><span class="n">mat</span><span class="p">,</span> <span class="n">scaling</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Scale data included in numpy array.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Scale data included in numpy array.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
@@ -197,7 +202,7 @@
 
 
 <span class="k">def</span> <span class="nf">impute_and_scale_array</span><span class="p">(</span><span class="n">mat</span><span class="p">,</span> <span class="n">scaling</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Impute missing values with mean and scale data included in numpy array.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Impute missing values with mean and scale data included in numpy array.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
@@ -229,7 +234,7 @@
 
 
 <span class="k">def</span> <span class="nf">drop_impute_and_scale_dataframe</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">scaling</span><span class="o">=</span><span class="s2">&quot;std&quot;</span><span class="p">,</span> <span class="n">imputing</span><span class="o">=</span><span class="s2">&quot;mean&quot;</span><span class="p">,</span> <span class="n">dropna</span><span class="o">=</span><span class="s2">&quot;all&quot;</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Impute missing values with mean and scale data included in pandas</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Impute missing values with mean and scale data included in pandas</span>
 <span class="sd">    dataframe.</span>
 
 <span class="sd">    Parameters</span>
@@ -290,7 +295,7 @@
 
 
 <span class="k">def</span> <span class="nf">discretize_dataframe</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">col</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">cutoffs</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Discretize values of given column in pandas dataframe.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Discretize values of given column in pandas dataframe.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
@@ -323,7 +328,7 @@
 
 
 <span class="k">def</span> <span class="nf">discretize_array</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">5</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Discretize values of given array.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Discretize values of given array.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
@@ -345,7 +350,7 @@
 
 
 <span class="k">def</span> <span class="nf">lookup</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">query</span><span class="p">,</span> <span class="n">ret</span><span class="p">,</span> <span class="n">keys</span><span class="p">,</span> <span class="n">match</span><span class="o">=</span><span class="s2">&quot;match&quot;</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Dataframe lookup.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Dataframe lookup.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
@@ -387,7 +392,7 @@
     <span class="n">dtype</span><span class="o">=</span><span class="n">DEFAULT_DATATYPE</span><span class="p">,</span>
     <span class="n">seed</span><span class="o">=</span><span class="n">DEFAULT_SEED</span><span class="p">,</span>
 <span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Load training and testing unlabeleled data from the files specified and</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Load training and testing unlabeleled data from the files specified and</span>
 <span class="sd">    construct corresponding training and testing pandas DataFrames. Columns to</span>
 <span class="sd">    load can be selected or dropped. Order of rows can be shuffled. Data can be</span>
 <span class="sd">    rescaled. Training and testing partitions (coming from the respective</span>
@@ -475,7 +480,7 @@
     <span class="n">dtype</span><span class="o">=</span><span class="n">DEFAULT_DATATYPE</span><span class="p">,</span>
     <span class="n">seed</span><span class="o">=</span><span class="n">DEFAULT_SEED</span><span class="p">,</span>
 <span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Load training and testing unlabeleled data from the files specified.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Load training and testing unlabeleled data from the files specified.</span>
 <span class="sd">    Further split trainig data into training and validation partitions, and</span>
 <span class="sd">    construct corresponding training, validation and testing pandas DataFrames.</span>
 <span class="sd">    Columns to load can be selected or dropped. Order of rows can be shuffled.</span>
@@ -578,7 +583,7 @@
     <span class="n">dtype</span><span class="o">=</span><span class="n">DEFAULT_DATATYPE</span><span class="p">,</span>
     <span class="n">seed</span><span class="o">=</span><span class="n">DEFAULT_SEED</span><span class="p">,</span>
 <span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Load training and testing data from the files specified, with a column</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Load training and testing data from the files specified, with a column</span>
 <span class="sd">    indicated to use as label. Construct corresponding training and testing</span>
 <span class="sd">    pandas DataFrames, separated into data (i.e. features) and labels. Labels</span>
 <span class="sd">    to output are one-hot encoded (categorical). Columns to load can be</span>
@@ -691,7 +696,7 @@
     <span class="n">dtype</span><span class="o">=</span><span class="n">DEFAULT_DATATYPE</span><span class="p">,</span>
     <span class="n">seed</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">DEFAULT_SEED</span><span class="p">,</span>
 <span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Load training and testing data from the files specified, with a column</span>
 <span class="sd">    indicated to use as label. Further split trainig data into training and</span>
 <span class="sd">    validation partitions, and construct corresponding training, validation and</span>
@@ -800,7 +805,7 @@
     <span class="n">dtype</span><span class="o">=</span><span class="n">DEFAULT_DATATYPE</span><span class="p">,</span>
     <span class="n">seed</span><span class="o">=</span><span class="n">DEFAULT_SEED</span><span class="p">,</span>
 <span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Load training and testing data from the files specified, with a column</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Load training and testing data from the files specified, with a column</span>
 <span class="sd">    indicated to use as label. Further split trainig data into training and</span>
 <span class="sd">    validation partitions, and construct corresponding training, validation and</span>
 <span class="sd">    testing pandas DataFrames, separated into data (i.e. features) and labels.</span>
@@ -902,9 +907,9 @@
     <span class="n">classes</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
     <span class="n">usecols</span><span class="p">:</span> <span class="n">List</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">scaling</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-    <span class="n">dtype</span><span class="o">=</span><span class="n">DEFAULT_DATATYPE</span>
+    <span class="n">dtype</span><span class="o">=</span><span class="n">DEFAULT_DATATYPE</span><span class="p">,</span>
 <span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Load training and testing data from the files specified, with the first</span>
 <span class="sd">    column to use as label. Construct corresponding training and testing pandas</span>
 <span class="sd">    DataFrames, separated into data (i.e. features) and labels. Labels to</span>
@@ -991,7 +996,7 @@
     <span class="n">return_header</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
     <span class="n">seed</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">DEFAULT_SEED</span><span class="p">,</span>
 <span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Load data from the files specified. Columns corresponding to data</span>
 <span class="sd">    features and labels can be specified. A one-hot encoding can be used for</span>
 <span class="sd">    either features or labels. If validation_split is specified, trainig data</span>
@@ -1163,7 +1168,7 @@
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2021, ANL.gov.</p>
+    <p>&#169; Copyright 2023 | https://www.anl.gov.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a

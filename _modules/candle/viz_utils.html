@@ -3,17 +3,21 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>candle.viz_utils &mdash; CANDLE  documentation</title><link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
-    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <title>candle.viz_utils &mdash; ECP-CANDLE</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/graphviz.css" type="text/css" />
+    <link rel="shortcut icon" href="../../_static/favicon.ico"/>
   <!--[if lt IE 9]>
     <script src="../../_static/js/html5shiv.min.js"></script>
   <![endif]-->
-  <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
         <script src="../../_static/jquery.js"></script>
         <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../../_static/doctools.js"></script>
-        <script src="../../_static/language_data.js"></script>
+        <script src="../../_static/sphinx_highlight.js"></script>
     <script src="../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" /> 
@@ -34,7 +38,7 @@
   </form>
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
-              <p class="caption"><span class="caption-text">Contents:</span></p>
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../readme.html">What is CANDLE?</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../tutorials/index.html">Tutorials</a></li>
@@ -56,9 +60,9 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
-          <li><a href="../index.html">Module code</a> &raquo;</li>
-      <li>candle.viz_utils</li>
+      <li><a href="../../index.html" class="icon icon-home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">candle.viz_utils</li>
       <li class="wy-breadcrumbs-aside">
       </li>
   </ul>
@@ -169,7 +173,7 @@
 
 
 <div class="viewcode-block" id="plot_density_observed_vs_predicted"><a class="viewcode-back" href="../../candle/candle.html#candle.plot_density_observed_vs_predicted">[docs]</a><span class="k">def</span> <span class="nf">plot_density_observed_vs_predicted</span><span class="p">(</span><span class="n">Ytest</span><span class="p">,</span> <span class="n">Ypred</span><span class="p">,</span> <span class="n">pred_name</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">figprefix</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Functionality to plot a 2D histogram of the distribution of observed</span>
 <span class="sd">    (ground truth) values vs. predicted values. The plot generated is stored in</span>
 <span class="sd">    a png file.</span>
@@ -204,7 +208,7 @@
 
 
 <div class="viewcode-block" id="plot_2d_density_sigma_vs_error"><a class="viewcode-back" href="../../candle/candle.html#candle.plot_2d_density_sigma_vs_error">[docs]</a><span class="k">def</span> <span class="nf">plot_2d_density_sigma_vs_error</span><span class="p">(</span><span class="n">sigma</span><span class="p">,</span> <span class="n">yerror</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">figprefix</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Functionality to plot a 2D histogram of the distribution of the standard</span>
 <span class="sd">    deviations computed for the predictions vs. the computed errors (i.e. values of observed - predicted).</span>
 <span class="sd">    The plot generated is stored in a png file.</span>
@@ -237,8 +241,8 @@
 
 
 <div class="viewcode-block" id="plot_histogram_error_per_sigma"><a class="viewcode-back" href="../../candle/candle.html#candle.plot_histogram_error_per_sigma">[docs]</a><span class="k">def</span> <span class="nf">plot_histogram_error_per_sigma</span><span class="p">(</span><span class="n">sigma</span><span class="p">,</span> <span class="n">yerror</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">figprefix</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Functionality to plot a 1D histogram of the distribution of computed errors </span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Functionality to plot a 1D histogram of the distribution of computed errors</span>
 <span class="sd">    (i.e. values of observed - predicted) observed</span>
 <span class="sd">    for specific values of standard deviations computed. The range of</span>
 <span class="sd">    standard deviations computed is split in xbins values and the</span>
@@ -288,7 +292,7 @@
 <div class="viewcode-block" id="plot_decile_predictions"><a class="viewcode-back" href="../../candle/candle.html#candle.plot_decile_predictions">[docs]</a><span class="k">def</span> <span class="nf">plot_decile_predictions</span><span class="p">(</span>
     <span class="n">Ypred</span><span class="p">,</span> <span class="n">Ypred_Lp</span><span class="p">,</span> <span class="n">Ypred_Hp</span><span class="p">,</span> <span class="n">decile_list</span><span class="p">,</span> <span class="n">pred_name</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">figprefix</span><span class="o">=</span><span class="kc">None</span>
 <span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Functionality to plot the mean of the deciles predicted. The plot</span>
 <span class="sd">    generated is stored in a png file.</span>
 
@@ -322,7 +326,7 @@
 <div class="viewcode-block" id="plot_calibration_interpolation"><a class="viewcode-back" href="../../candle/candle.html#candle.plot_calibration_interpolation">[docs]</a><span class="k">def</span> <span class="nf">plot_calibration_interpolation</span><span class="p">(</span>
     <span class="n">mean_sigma</span><span class="p">,</span> <span class="n">error</span><span class="p">,</span> <span class="n">splineobj1</span><span class="p">,</span> <span class="n">splineobj2</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">figprefix</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">steps</span><span class="o">=</span><span class="kc">False</span>
 <span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Functionality to plot empirical calibration curves estimated by</span>
 <span class="sd">    interpolation of the computed standard deviations and errors. Since the</span>
 <span class="sd">    estimations are very noisy, two levels of smoothing are used. Both can be</span>
@@ -400,7 +404,7 @@
 <div class="viewcode-block" id="plot_calibrated_std"><a class="viewcode-back" href="../../candle/candle.html#candle.plot_calibrated_std">[docs]</a><span class="k">def</span> <span class="nf">plot_calibrated_std</span><span class="p">(</span>
     <span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">,</span> <span class="n">std_calibrated</span><span class="p">,</span> <span class="n">thresC</span><span class="p">,</span> <span class="n">pred_name</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">figprefix</span><span class="o">=</span><span class="kc">None</span>
 <span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Functionality to plot values in testing set after calibration. An</span>
 <span class="sd">    estimation of the lower-confidence samples is made. The plot generated is</span>
 <span class="sd">    stored in a png file.</span>
@@ -453,7 +457,7 @@
 <div class="viewcode-block" id="plot_contamination"><a class="viewcode-back" href="../../candle/candle.html#candle.plot_contamination">[docs]</a><span class="k">def</span> <span class="nf">plot_contamination</span><span class="p">(</span>
     <span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">,</span> <span class="n">sigma</span><span class="p">,</span> <span class="n">T</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">thresC</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">pred_name</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">figprefix</span><span class="o">=</span><span class="kc">None</span>
 <span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Functionality to plot results for the contamination model. This includes</span>
 <span class="sd">    the latent variables T if they are given (i.e. if the results provided</span>
 <span class="sd">    correspond to training results). Global parameters for the normal</span>
@@ -536,7 +540,7 @@
 
 <span class="c1"># plot training and validation metrics together and generate one chart per metrics</span>
 <div class="viewcode-block" id="plot_metrics"><a class="viewcode-back" href="../../candle/candle.html#candle.plot_metrics">[docs]</a><span class="k">def</span> <span class="nf">plot_metrics</span><span class="p">(</span><span class="n">history</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">skip_ep</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">outdir</span><span class="o">=</span><span class="s2">&quot;.&quot;</span><span class="p">,</span> <span class="n">add_lr</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Plots keras training curves history.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Plots keras training curves history.</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        skip_ep: number of epochs to skip when plotting metrics</span>
@@ -635,7 +639,7 @@
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2021, ANL.gov.</p>
+    <p>&#169; Copyright 2023 | https://www.anl.gov.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a

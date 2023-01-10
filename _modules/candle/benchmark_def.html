@@ -3,17 +3,21 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>candle.benchmark_def &mdash; CANDLE  documentation</title><link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
-    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <title>candle.benchmark_def &mdash; ECP-CANDLE</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/graphviz.css" type="text/css" />
+    <link rel="shortcut icon" href="../../_static/favicon.ico"/>
   <!--[if lt IE 9]>
     <script src="../../_static/js/html5shiv.min.js"></script>
   <![endif]-->
-  <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
         <script src="../../_static/jquery.js"></script>
         <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../../_static/doctools.js"></script>
-        <script src="../../_static/language_data.js"></script>
+        <script src="../../_static/sphinx_highlight.js"></script>
     <script src="../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" /> 
@@ -34,7 +38,7 @@
   </form>
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
-              <p class="caption"><span class="caption-text">Contents:</span></p>
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../readme.html">What is CANDLE?</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../tutorials/index.html">Tutorials</a></li>
@@ -56,9 +60,9 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
-          <li><a href="../index.html">Module code</a> &raquo;</li>
-      <li>candle.benchmark_def</li>
+      <li><a href="../../index.html" class="icon icon-home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">candle.benchmark_def</li>
       <li class="wy-breadcrumbs-aside">
       </li>
   </ul>
@@ -87,7 +91,7 @@
 
 
 <div class="viewcode-block" id="Benchmark"><a class="viewcode-back" href="../../candle/candle.html#candle.Benchmark">[docs]</a><span class="k">class</span> <span class="nc">Benchmark</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Class that implements an interface to handle configuration options for</span>
 <span class="sd">    the different CANDLE benchmarks.</span>
 
@@ -108,7 +112,7 @@
         <span class="n">desc</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">parser</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Initialize Benchmark object.</span>
 
 <span class="sd">        :param string filepath: ./</span>
@@ -148,7 +152,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">set_locals</span><span class="p">()</span>
 
 <div class="viewcode-block" id="Benchmark.parse_parameters"><a class="viewcode-back" href="../../candle/candle.html#candle.Benchmark.parse_parameters">[docs]</a>    <span class="k">def</span> <span class="nf">parse_parameters</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Functionality to parse options common for all benchmarks.</span>
 
 <span class="sd">        This functionality is based on methods &#39;get_default_neon_parser&#39;</span>
@@ -167,7 +171,7 @@
 <div class="viewcode-block" id="Benchmark.format_benchmark_config_arguments"><a class="viewcode-back" href="../../candle/candle.html#candle.Benchmark.format_benchmark_config_arguments">[docs]</a>    <span class="k">def</span> <span class="nf">format_benchmark_config_arguments</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span> <span class="n">dictfileparam</span><span class="p">:</span> <span class="n">ConfigDict</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ConfigDict</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Functionality to format the particular parameters of the benchmark.</span>
 
 <span class="sd">        :param ConfigDict dictfileparam: parameters read from configuration file</span>
@@ -208,7 +212,7 @@
         <span class="k">return</span> <span class="n">configOut</span></div>
 
 <div class="viewcode-block" id="Benchmark.read_config_file"><a class="viewcode-back" href="../../candle/candle.html#candle.Benchmark.read_config_file">[docs]</a>    <span class="k">def</span> <span class="nf">read_config_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">file</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ConfigDict</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Functionality to read the configue file specific for each</span>
 <span class="sd">        benchmark.</span>
 
@@ -239,7 +243,7 @@
         <span class="k">return</span> <span class="n">fileParams</span></div>
 
 <div class="viewcode-block" id="Benchmark.set_locals"><a class="viewcode-back" href="../../candle/candle.html#candle.Benchmark.set_locals">[docs]</a>    <span class="k">def</span> <span class="nf">set_locals</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Functionality to set variables specific for the benchmark.</span>
 
 <span class="sd">        - required: set of required parameters for the benchmark.</span>
@@ -250,7 +254,7 @@
         <span class="k">pass</span></div>
 
 <div class="viewcode-block" id="Benchmark.check_required_exists"><a class="viewcode-back" href="../../candle/candle.html#candle.Benchmark.check_required_exists">[docs]</a>    <span class="k">def</span> <span class="nf">check_required_exists</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">gparam</span><span class="p">:</span> <span class="n">ConfigDict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Functionality to verify that the required model parameters have been</span>
 <span class="sd">        specified.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -274,7 +278,7 @@
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2021, ANL.gov.</p>
+    <p>&#169; Copyright 2023 | https://www.anl.gov.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a

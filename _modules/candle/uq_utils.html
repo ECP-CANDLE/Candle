@@ -3,17 +3,21 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>candle.uq_utils &mdash; CANDLE  documentation</title><link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
-    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <title>candle.uq_utils &mdash; ECP-CANDLE</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/graphviz.css" type="text/css" />
+    <link rel="shortcut icon" href="../../_static/favicon.ico"/>
   <!--[if lt IE 9]>
     <script src="../../_static/js/html5shiv.min.js"></script>
   <![endif]-->
-  <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
         <script src="../../_static/jquery.js"></script>
         <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../../_static/doctools.js"></script>
-        <script src="../../_static/language_data.js"></script>
+        <script src="../../_static/sphinx_highlight.js"></script>
     <script src="../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" /> 
@@ -34,7 +38,7 @@
   </form>
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
-              <p class="caption"><span class="caption-text">Contents:</span></p>
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../readme.html">What is CANDLE?</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../tutorials/index.html">Tutorials</a></li>
@@ -56,9 +60,9 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
-          <li><a href="../index.html">Module code</a> &raquo;</li>
-      <li>candle.uq_utils</li>
+      <li><a href="../../index.html" class="icon icon-home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">candle.uq_utils</li>
       <li class="wy-breadcrumbs-aside">
       </li>
   </ul>
@@ -90,7 +94,7 @@
 
 
 <span class="k">class</span> <span class="nc">UQDistDict</span><span class="p">(</span><span class="n">TypedDict</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Definition of the dictionary structure expected for the parsing of UQ</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Definition of the dictionary structure expected for the parsing of UQ</span>
 <span class="sd">    parameters for generating distributions.&quot;&quot;&quot;</span>
 
     <span class="n">uq_train_fr</span><span class="p">:</span> <span class="nb">float</span>
@@ -107,7 +111,7 @@
 <div class="viewcode-block" id="generate_index_distribution"><a class="viewcode-back" href="../../candle/candle.html#candle.generate_index_distribution">[docs]</a><span class="k">def</span> <span class="nf">generate_index_distribution</span><span class="p">(</span>
     <span class="n">numTrain</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">numTest</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">numValidation</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">params</span><span class="p">:</span> <span class="n">UQDistDict</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">Any</span><span class="p">,</span> <span class="o">...</span><span class="p">]:</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Generates a vector of indices to partition the data for training. NO</span>
 <span class="sd">    CHECKING IS DONE: it is assumed that the data could be partitioned in the</span>
 <span class="sd">    specified blocks and that the block indices describe a coherent partition.</span>
@@ -118,7 +122,7 @@
 <span class="sd">    :param Dict params: Contains the keywords that control the behavior of the function \</span>
 <span class="sd">        (uq_train_fr, uq_valid_fr, uq_test_fr for fraction specification, \</span>
 <span class="sd">        uq_train_vec, uq_valid_vec, uq_test_vec for block list specification, and \</span>
-<span class="sd">        uq_train_bks, uq_valid_bks, uq_test_bks for block number specification) </span>
+<span class="sd">        uq_train_bks, uq_valid_bks, uq_test_bks for block number specification)</span>
 
 <span class="sd">    :return: Tuple of numpy arrays</span>
 
@@ -154,7 +158,7 @@
 <span class="k">def</span> <span class="nf">generate_index_distribution_from_fraction</span><span class="p">(</span>
     <span class="n">numTrain</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">numTest</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">numValidation</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">params</span><span class="p">:</span> <span class="n">UQDistDict</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">Any</span><span class="p">,</span> <span class="o">...</span><span class="p">]:</span>
-    <span class="sd">&quot;&quot;&quot;Generates a vector of indices to partition the data for training. It</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Generates a vector of indices to partition the data for training. It</span>
 <span class="sd">    checks that the fractions provided are (0, 1) and add up to 1.</span>
 
 <span class="sd">    Parameters</span>
@@ -238,7 +242,7 @@
 <span class="k">def</span> <span class="nf">generate_index_distribution_from_blocks</span><span class="p">(</span>
     <span class="n">numTrain</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">numTest</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">numValidation</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">params</span><span class="p">:</span> <span class="n">UQDistDict</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">Any</span><span class="p">,</span> <span class="o">...</span><span class="p">]:</span>
-    <span class="sd">&quot;&quot;&quot;Generates a vector of indices to partition the data for training. NO</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Generates a vector of indices to partition the data for training. NO</span>
 <span class="sd">    CHECKING IS DONE: it is assumed that the data could be partitioned in the</span>
 <span class="sd">    specified block quantities and that the block quantities describe a</span>
 <span class="sd">    coherent partition.</span>
@@ -312,7 +316,7 @@
 <span class="k">def</span> <span class="nf">generate_index_distribution_from_block_list</span><span class="p">(</span>
     <span class="n">numTrain</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">numTest</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">numValidation</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">params</span><span class="p">:</span> <span class="n">UQDistDict</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">Any</span><span class="p">,</span> <span class="o">...</span><span class="p">]:</span>
-    <span class="sd">&quot;&quot;&quot;Generates a vector of indices to partition the data for training. NO</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Generates a vector of indices to partition the data for training. NO</span>
 <span class="sd">    CHECKING IS DONE: it is assumed that the data could be partitioned in the</span>
 <span class="sd">    specified list of blocks and that the block indices describe a coherent</span>
 <span class="sd">    partition.</span>
@@ -396,7 +400,7 @@
 <span class="k">def</span> <span class="nf">compute_limits</span><span class="p">(</span>
     <span class="n">numdata</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">numblocks</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">blocksize</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">blockn</span><span class="p">:</span> <span class="nb">int</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="o">...</span><span class="p">]:</span>
-    <span class="sd">&quot;&quot;&quot;Generates the limit of indices corresponding to a specific block. It</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Generates the limit of indices corresponding to a specific block. It</span>
 <span class="sd">    takes into account the non-exact divisibility of numdata into numblocks</span>
 <span class="sd">    letting the last block to take the extra chunk.</span>
 
@@ -429,7 +433,7 @@
 <span class="k">def</span> <span class="nf">fill_array</span><span class="p">(</span>
     <span class="n">blocklist</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span> <span class="n">maxsize</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">numdata</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">numblocks</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">blocksize</span><span class="p">:</span> <span class="nb">int</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Array</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;Fills a new array of integers with the indices corresponding to the</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Fills a new array of integers with the indices corresponding to the</span>
 <span class="sd">    specified block structure.</span>
 
 <span class="sd">    Parameters</span>
@@ -475,7 +479,7 @@
     <span class="n">col_pred</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">6</span><span class="p">,</span>
     <span class="n">col_std_pred</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">7</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">Array</span><span class="p">,</span> <span class="o">...</span><span class="p">]:</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Extracts ground truth, mean prediction, error and standard deviation of</span>
 <span class="sd">    prediction from inference data frame. The latter includes the statistics</span>
 <span class="sd">    over all the inference realizations.</span>
@@ -531,7 +535,7 @@
 <div class="viewcode-block" id="compute_statistics_homoscedastic"><a class="viewcode-back" href="../../candle/candle.html#candle.compute_statistics_homoscedastic">[docs]</a><span class="k">def</span> <span class="nf">compute_statistics_homoscedastic</span><span class="p">(</span>
     <span class="n">df_data</span><span class="p">:</span> <span class="n">DataFrame</span><span class="p">,</span> <span class="n">col_true</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">4</span><span class="p">,</span> <span class="n">col_pred_start</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">6</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">Array</span><span class="p">,</span> <span class="o">...</span><span class="p">]:</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Extracts ground truth, mean prediction, error and standard deviation of</span>
 <span class="sd">    prediction from inference data frame. The latter includes all the</span>
 <span class="sd">    individual inference realizations.</span>
@@ -590,7 +594,7 @@
     <span class="n">col_pred_start</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">6</span><span class="p">,</span>
     <span class="n">col_std_pred_start</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">7</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">Array</span><span class="p">,</span> <span class="o">...</span><span class="p">]:</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Extracts ground truth, mean prediction, error, standard deviation of</span>
 <span class="sd">    prediction and predicted (learned) standard deviation from inference data</span>
 <span class="sd">    frame. The latter includes all the individual inference realizations.</span>
@@ -656,7 +660,7 @@
     <span class="n">col_true</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">4</span><span class="p">,</span>
     <span class="n">col_pred_start</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">6</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">Array</span><span class="p">,</span> <span class="o">...</span><span class="p">]:</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Extracts ground truth, 50th percentile mean prediction, low percentile</span>
 <span class="sd">    and high percentile mean prediction (usually 1st decile and 9th decile</span>
 <span class="sd">    respectively), error (using 5th decile), standard deviation of prediction</span>
@@ -737,7 +741,7 @@
 <div class="viewcode-block" id="split_data_for_empirical_calibration"><a class="viewcode-back" href="../../candle/candle.html#candle.split_data_for_empirical_calibration">[docs]</a><span class="k">def</span> <span class="nf">split_data_for_empirical_calibration</span><span class="p">(</span>
     <span class="n">Ytrue</span><span class="p">:</span> <span class="n">Array</span><span class="p">,</span> <span class="n">Ypred</span><span class="p">:</span> <span class="n">Array</span><span class="p">,</span> <span class="n">sigma</span><span class="p">:</span> <span class="n">Array</span><span class="p">,</span> <span class="n">cal_split</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.8</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">Array</span><span class="p">,</span> <span class="o">...</span><span class="p">]:</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Extracts a portion of the arrays provided for the computation of the</span>
 <span class="sd">    calibration and reserves the remainder portion for testing.</span>
 
@@ -799,7 +803,7 @@
 <div class="viewcode-block" id="compute_empirical_calibration_interpolation"><a class="viewcode-back" href="../../candle/candle.html#candle.compute_empirical_calibration_interpolation">[docs]</a><span class="k">def</span> <span class="nf">compute_empirical_calibration_interpolation</span><span class="p">(</span>
     <span class="n">pSigma_cal</span><span class="p">:</span> <span class="n">Array</span><span class="p">,</span> <span class="n">pPred_cal</span><span class="p">:</span> <span class="n">Array</span><span class="p">,</span> <span class="n">true_cal</span><span class="p">:</span> <span class="n">Array</span><span class="p">,</span> <span class="n">cv</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">10</span>
 <span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Use the arrays provided to estimate an empirical mapping between</span>
 <span class="sd">    standard deviation and absolute value of error, both of which have been</span>
 <span class="sd">    observed during inference. Since most of the times the prediction</span>
@@ -893,7 +897,7 @@
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2021, ANL.gov.</p>
+    <p>&#169; Copyright 2023 | https://www.anl.gov.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a

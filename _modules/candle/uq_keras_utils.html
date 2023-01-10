@@ -3,17 +3,21 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>candle.uq_keras_utils &mdash; CANDLE  documentation</title><link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
-    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <title>candle.uq_keras_utils &mdash; ECP-CANDLE</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/graphviz.css" type="text/css" />
+    <link rel="shortcut icon" href="../../_static/favicon.ico"/>
   <!--[if lt IE 9]>
     <script src="../../_static/js/html5shiv.min.js"></script>
   <![endif]-->
-  <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
         <script src="../../_static/jquery.js"></script>
         <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../../_static/doctools.js"></script>
-        <script src="../../_static/language_data.js"></script>
+        <script src="../../_static/sphinx_highlight.js"></script>
     <script src="../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" /> 
@@ -34,7 +38,7 @@
   </form>
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
-              <p class="caption"><span class="caption-text">Contents:</span></p>
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../readme.html">What is CANDLE?</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../tutorials/index.html">Tutorials</a></li>
@@ -56,9 +60,9 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
-          <li><a href="../index.html">Module code</a> &raquo;</li>
-      <li>candle.uq_keras_utils</li>
+      <li><a href="../../index.html" class="icon icon-home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">candle.uq_keras_utils</li>
       <li class="wy-breadcrumbs-aside">
       </li>
   </ul>
@@ -92,7 +96,7 @@
 
 
 <div class="viewcode-block" id="abstention_loss"><a class="viewcode-back" href="../../candle/candle.html#candle.abstention_loss">[docs]</a><span class="k">def</span> <span class="nf">abstention_loss</span><span class="p">(</span><span class="n">alpha</span><span class="p">,</span> <span class="n">mask</span><span class="p">:</span> <span class="n">Array</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Function to compute abstention loss. It is composed by two terms: (i)</span>
 <span class="sd">    original loss of the multiclass classification problem, (ii) cost</span>
 <span class="sd">    associated to the abstaining samples.</span>
@@ -103,7 +107,7 @@
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="nf">loss</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :param y_true: keras tensor. True values to predict</span>
 <span class="sd">        :param y_pred: keras tensor. Prediction made by the model. \</span>
 <span class="sd">            It is assumed that this keras tensor includes extra columns to store the abstaining classes.</span>
@@ -124,7 +128,7 @@
 
 
 <div class="viewcode-block" id="sparse_abstention_loss"><a class="viewcode-back" href="../../candle/candle.html#candle.sparse_abstention_loss">[docs]</a><span class="k">def</span> <span class="nf">sparse_abstention_loss</span><span class="p">(</span><span class="n">alpha</span><span class="p">,</span> <span class="n">mask</span><span class="p">:</span> <span class="n">Array</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Function to compute abstention loss. It is composed by two terms: (i)</span>
 <span class="sd">    original loss of the multiclass classification problem, (ii) cost</span>
 <span class="sd">    associated to the abstaining samples. Assumes y_true is not one-hot</span>
@@ -136,7 +140,7 @@
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="nf">loss</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :param y_true: keras tensor. True values to predict</span>
 <span class="sd">        :param y_pred: keras tensor. Prediction made by the model. \</span>
 <span class="sd">            It is assumed that this keras tensor includes extra columns to store the abstaining classes.</span>
@@ -157,7 +161,7 @@
 
 
 <div class="viewcode-block" id="abstention_acc_metric"><a class="viewcode-back" href="../../candle/candle.html#candle.abstention_acc_metric">[docs]</a><span class="k">def</span> <span class="nf">abstention_acc_metric</span><span class="p">(</span><span class="n">nb_classes</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="n">Array</span><span class="p">]):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Abstained accuracy: Function to estimate accuracy over the predicted</span>
 <span class="sd">    samples after removing the samples where the model is abstaining.</span>
 
@@ -165,7 +169,7 @@
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="nf">metric</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :param y_true: keras tensor. True values to predict</span>
 <span class="sd">        :param y_pred: keras tensor. Prediction made by the model.\</span>
 <span class="sd">            It is assumed that this keras tensor includes extra columns to store the abstaining classes.</span>
@@ -201,7 +205,7 @@
 
 
 <div class="viewcode-block" id="sparse_abstention_acc_metric"><a class="viewcode-back" href="../../candle/candle.html#candle.sparse_abstention_acc_metric">[docs]</a><span class="k">def</span> <span class="nf">sparse_abstention_acc_metric</span><span class="p">(</span><span class="n">nb_classes</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="n">Array</span><span class="p">]):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Abstained accuracy: Function to estimate accuracy over the predicted</span>
 <span class="sd">    samples after removing the samples where the model is abstaining. Assumes</span>
 <span class="sd">    y_true is not one-hot encoded.</span>
@@ -210,7 +214,7 @@
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="nf">metric</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :param y_true: keras tensor. True values to predict</span>
 <span class="sd">        :param y_pred: keras tensor. Prediction made by the model. \</span>
 <span class="sd">            It is assumed that this keras tensor includes extra columns to store the abstaining classes.</span>
@@ -244,7 +248,7 @@
 
 
 <div class="viewcode-block" id="abstention_metric"><a class="viewcode-back" href="../../candle/candle.html#candle.abstention_metric">[docs]</a><span class="k">def</span> <span class="nf">abstention_metric</span><span class="p">(</span><span class="n">nb_classes</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="n">Array</span><span class="p">]):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Function to estimate fraction of the samples where the model is</span>
 <span class="sd">    abstaining.</span>
 
@@ -252,7 +256,7 @@
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="nf">metric</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :param y_true: keras tensor. True values to predict</span>
 <span class="sd">        :param y_pred: keras tensor.  Prediction made by the model. \</span>
 <span class="sd">            It is assumed that this keras tensor includes extra columns to store the abstaining classes.</span>
@@ -276,7 +280,7 @@
 
 
 <div class="viewcode-block" id="acc_class_i_metric"><a class="viewcode-back" href="../../candle/candle.html#candle.acc_class_i_metric">[docs]</a><span class="k">def</span> <span class="nf">acc_class_i_metric</span><span class="p">(</span><span class="n">class_i</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Function to estimate accuracy over the ith class prediction. This</span>
 <span class="sd">    estimation is global (i.e. abstaining samples are not removed)</span>
 
@@ -284,7 +288,7 @@
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="nf">metric</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :param y_true: keras tensor. True values to predict</span>
 <span class="sd">        :param y_pred: keras tensor. Prediction made by the model. \</span>
 <span class="sd">            It is assumed that this keras tensor includes extra columns to store the abstaining classes.</span>
@@ -321,7 +325,7 @@
 
 
 <div class="viewcode-block" id="abstention_acc_class_i_metric"><a class="viewcode-back" href="../../candle/candle.html#candle.abstention_acc_class_i_metric">[docs]</a><span class="k">def</span> <span class="nf">abstention_acc_class_i_metric</span><span class="p">(</span><span class="n">nb_classes</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="n">Array</span><span class="p">],</span> <span class="n">class_i</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Function to estimate accuracy over the class i prediction after removing</span>
 <span class="sd">    the samples where the model is abstaining.</span>
 
@@ -330,7 +334,7 @@
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="nf">metric</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :param y_true: keras tensor. True values to predict</span>
 <span class="sd">        :param y_pred: keras tensor. Prediction made by the model. \</span>
 <span class="sd">            It is assumed that this keras tensor includes extra columns to store the abstaining classes.</span>
@@ -373,7 +377,7 @@
 
 
 <div class="viewcode-block" id="abstention_class_i_metric"><a class="viewcode-back" href="../../candle/candle.html#candle.abstention_class_i_metric">[docs]</a><span class="k">def</span> <span class="nf">abstention_class_i_metric</span><span class="p">(</span><span class="n">nb_classes</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="n">Array</span><span class="p">],</span> <span class="n">class_i</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Function to estimate fraction of the samples where the model is</span>
 <span class="sd">    abstaining in class i.</span>
 
@@ -382,7 +386,7 @@
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="nf">metric</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :param y_true: keras tensor. True values to predict</span>
 <span class="sd">        :param y_pred: keras tensor. Prediction made by the model. \</span>
 <span class="sd">            It is assumed that this keras tensor includes extra columns to store the abstaining classes.</span>
@@ -408,7 +412,7 @@
 
 
 <div class="viewcode-block" id="AbstentionAdapt_Callback"><a class="viewcode-back" href="../../candle/candle.html#candle.AbstentionAdapt_Callback">[docs]</a><span class="k">class</span> <span class="nc">AbstentionAdapt_Callback</span><span class="p">(</span><span class="n">Callback</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    This callback is used to adapt the parameter alpha in the abstention</span>
 <span class="sd">    loss.</span>
 
@@ -444,7 +448,7 @@
         <span class="n">acc_gain</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">5.0</span><span class="p">,</span>
         <span class="n">abs_gain</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">,</span>
     <span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Initializer of the AbstentionAdapt_Callback.</span>
 
 <span class="sd">        :param keras.metric acc_monitor: Accuracy metric to monitor during the run and use \</span>
@@ -478,7 +482,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">alphavalues</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>  <span class="c1"># array to store alpha evolution</span>
 
 <div class="viewcode-block" id="AbstentionAdapt_Callback.on_epoch_end"><a class="viewcode-back" href="../../candle/candle.html#candle.AbstentionAdapt_Callback.on_epoch_end">[docs]</a>    <span class="k">def</span> <span class="nf">on_epoch_end</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">epoch</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">logs</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Updates the weight of abstention term on epoch end.</span>
 
 <span class="sd">        :param int epoch: Current epoch in training.</span>
@@ -536,7 +540,7 @@
 <div class="viewcode-block" id="modify_labels"><a class="viewcode-back" href="../../candle/candle.html#candle.modify_labels">[docs]</a><span class="k">def</span> <span class="nf">modify_labels</span><span class="p">(</span>
     <span class="n">numclasses_out</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">ytrain</span><span class="p">:</span> <span class="n">Array</span><span class="p">,</span> <span class="n">ytest</span><span class="p">:</span> <span class="n">Array</span><span class="p">,</span> <span class="n">yval</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Array</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">Array</span><span class="p">,</span> <span class="o">...</span><span class="p">]:</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    This function generates a categorical representation with a class added</span>
 <span class="sd">    for indicating abstention.</span>
 
@@ -594,7 +598,7 @@
     <span class="n">num_add</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">activation</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
 <span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    This function modifies the last dense layer in the passed keras model.</span>
 <span class="sd">    The modification includes adding units and optionally changing the</span>
 <span class="sd">    activation function.</span>
@@ -677,7 +681,7 @@
 
 
 <div class="viewcode-block" id="r2_heteroscedastic_metric"><a class="viewcode-back" href="../../candle/candle.html#candle.r2_heteroscedastic_metric">[docs]</a><span class="k">def</span> <span class="nf">r2_heteroscedastic_metric</span><span class="p">(</span><span class="n">nout</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    This function computes the r2 for the heteroscedastic model. The r2 is</span>
 <span class="sd">    computed over the prediction of the mean and the standard deviation</span>
 <span class="sd">    prediction is not taken into account.</span>
@@ -686,7 +690,7 @@
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="nf">metric</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :param y_true: Keras tensor. Keras tensor including the ground truth</span>
 <span class="sd">        :param y_pred: Keras tensor. Keras tensor including the predictions of a heteroscedastic model. \</span>
 <span class="sd">            The predictions follow the order: (mean_0, S_0, mean_1, S_1, ...) with S_i the log of the variance for the ith output.</span>
@@ -706,7 +710,7 @@
 
 
 <div class="viewcode-block" id="mae_heteroscedastic_metric"><a class="viewcode-back" href="../../candle/candle.html#candle.mae_heteroscedastic_metric">[docs]</a><span class="k">def</span> <span class="nf">mae_heteroscedastic_metric</span><span class="p">(</span><span class="n">nout</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    This function computes the mean absolute error (mae) for the</span>
 <span class="sd">    heteroscedastic model. The mae is computed over the prediction of the mean</span>
 <span class="sd">    and the standard deviation prediction is not taken into account.</span>
@@ -715,7 +719,7 @@
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="nf">metric</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :param y_true: Keras tensor. Keras tensor including the ground truth</span>
 <span class="sd">        :param y_pred: Keras tensor. Keras tensor including the predictions of a heteroscedastic model. \</span>
 <span class="sd">            The predictions follow the order: (mean_0, S_0, mean_1, S_1, ...) with S_i the log of the variance for the ith output.</span>
@@ -732,7 +736,7 @@
 
 
 <div class="viewcode-block" id="mse_heteroscedastic_metric"><a class="viewcode-back" href="../../candle/candle.html#candle.mse_heteroscedastic_metric">[docs]</a><span class="k">def</span> <span class="nf">mse_heteroscedastic_metric</span><span class="p">(</span><span class="n">nout</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    This function computes the mean squared error (mse) for the</span>
 <span class="sd">    heteroscedastic model. The mse is computed over the prediction of the mean</span>
 <span class="sd">    and the standard deviation prediction is not taken into account.</span>
@@ -741,7 +745,7 @@
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="nf">metric</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :param y_true: Keras tensor. Keras tensor including the ground truth</span>
 <span class="sd">        :param y_pred: Keras tensor. Keras tensor including the predictions of a heteroscedastic model. \</span>
 <span class="sd">            The predictions follow the order: (mean_0, S_0, mean_1, S_1, ...) with S_i the log of the variance for the ith output.</span>
@@ -758,7 +762,7 @@
 
 
 <div class="viewcode-block" id="meanS_heteroscedastic_metric"><a class="viewcode-back" href="../../candle/candle.html#candle.meanS_heteroscedastic_metric">[docs]</a><span class="k">def</span> <span class="nf">meanS_heteroscedastic_metric</span><span class="p">(</span><span class="n">nout</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    This function computes the mean log of the variance (log S) for the</span>
 <span class="sd">    heteroscedastic model. The mean log is computed over the standard deviation</span>
 <span class="sd">    prediction and the mean prediction is not taken into account.</span>
@@ -767,7 +771,7 @@
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="nf">metric</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :param y_true: Keras tensor. Keras tensor including the ground truth</span>
 <span class="sd">        :param y_pred: Keras tensor. Keras tensor including the predictions of a heteroscedastic model. \</span>
 <span class="sd">            The predictions follow the order: (mean_0, S_0, mean_1, S_1, ...) with S_i the log of the variance for the ith output.</span>
@@ -784,7 +788,7 @@
 
 
 <div class="viewcode-block" id="heteroscedastic_loss"><a class="viewcode-back" href="../../candle/candle.html#candle.heteroscedastic_loss">[docs]</a><span class="k">def</span> <span class="nf">heteroscedastic_loss</span><span class="p">(</span><span class="n">nout</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    This function computes the heteroscedastic loss for the heteroscedastic</span>
 <span class="sd">    model. Both mean and standard deviation predictions are taken into account.</span>
 
@@ -792,7 +796,7 @@
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="nf">loss</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        This function computes the heteroscedastic loss.</span>
 
 <span class="sd">        :param y_true: Keras tensor. Keras tensor including the ground truth</span>
@@ -817,7 +821,7 @@
 
 
 <div class="viewcode-block" id="quantile_loss"><a class="viewcode-back" href="../../candle/candle.html#candle.quantile_loss">[docs]</a><span class="k">def</span> <span class="nf">quantile_loss</span><span class="p">(</span><span class="n">quantile</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    This function computes the quantile loss for a given quantile fraction.</span>
 
 <span class="sd">    :param quantile: float in (0, 1). Quantile fraction to compute the loss.</span>
@@ -830,7 +834,7 @@
 
 
 <div class="viewcode-block" id="triple_quantile_loss"><a class="viewcode-back" href="../../candle/candle.html#candle.triple_quantile_loss">[docs]</a><span class="k">def</span> <span class="nf">triple_quantile_loss</span><span class="p">(</span><span class="n">nout</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">lowquantile</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">highquantile</span><span class="p">:</span> <span class="nb">float</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    This function computes the quantile loss for the median and low and high</span>
 <span class="sd">    quantiles. The median is given twice the weight of the other components.</span>
 
@@ -840,7 +844,7 @@
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="nf">loss</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        This function computes the quantile loss, considering the median and</span>
 <span class="sd">        low and high quantiles.</span>
 
@@ -871,7 +875,7 @@
 
 
 <div class="viewcode-block" id="quantile_metric"><a class="viewcode-back" href="../../candle/candle.html#candle.quantile_metric">[docs]</a><span class="k">def</span> <span class="nf">quantile_metric</span><span class="p">(</span><span class="n">nout</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">index</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">quantile</span><span class="p">:</span> <span class="nb">float</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    This function computes the quantile metric for a given quantile and</span>
 <span class="sd">    corresponding output index. This is provided as a metric to track evolution</span>
 <span class="sd">    while training.</span>
@@ -882,7 +886,7 @@
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="nf">metric</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :param y_true: Keras tensor. Keras tensor including the ground truth</span>
 <span class="sd">        :param y_pred: Keras tensor. Keras tensor including the predictions of a quantile model. \</span>
 <span class="sd">            The predictions follow the order: (q50_0, qlow_0, qhigh_0, q50_1, qlow_1, qhigh_1, ...) \</span>
@@ -906,7 +910,7 @@
 
 
 <div class="viewcode-block" id="add_index_to_output"><a class="viewcode-back" href="../../candle/candle.html#candle.add_index_to_output">[docs]</a><span class="k">def</span> <span class="nf">add_index_to_output</span><span class="p">(</span><span class="n">y_train</span><span class="p">:</span> <span class="n">Array</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Array</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    This function adds a column to the training output to store the indices</span>
 <span class="sd">    of the corresponding samples in the training set.</span>
 
@@ -924,7 +928,7 @@
 
 
 <div class="viewcode-block" id="contamination_loss"><a class="viewcode-back" href="../../candle/candle.html#candle.contamination_loss">[docs]</a><span class="k">def</span> <span class="nf">contamination_loss</span><span class="p">(</span><span class="n">nout</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">T_k</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">sigmaSQ</span><span class="p">,</span> <span class="n">gammaSQ</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Function to compute contamination loss. It is composed by two terms: (i)</span>
 <span class="sd">    the loss with respect to the normal distribution that models the</span>
 <span class="sd">    distribution of the training data samples, (ii) the loss with respect to</span>
@@ -947,7 +951,7 @@
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="nf">loss</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :param y_true: keras tensor. True values to predict. It is assumed that this keras tensor \</span>
 <span class="sd">            includes extra columns to store the index of the data sample in the training set.</span>
 <span class="sd">        :param y_pred: keras tensor. Prediction made by the model.</span>
@@ -982,7 +986,7 @@
 
 
 <div class="viewcode-block" id="Contamination_Callback"><a class="viewcode-back" href="../../candle/candle.html#candle.Contamination_Callback">[docs]</a><span class="k">class</span> <span class="nc">Contamination_Callback</span><span class="p">(</span><span class="n">Callback</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    This callback is used to update the parameters of the contamination</span>
 <span class="sd">    model.</span>
 
@@ -998,7 +1002,7 @@
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">a_max</span><span class="o">=</span><span class="mf">0.99</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Initializer of the Contamination_Callback.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Initializer of the Contamination_Callback.</span>
 
 <span class="sd">        :param ndarray x: Array of samples (= input features) in training set.</span>
 <span class="sd">        :param ndarray y: Array of sample outputs in training set.</span>
@@ -1037,7 +1041,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">gammaSQvalues</span> <span class="o">=</span> <span class="p">[]</span>  <span class="c1"># array to store gammaSQ evolution</span>
 
 <div class="viewcode-block" id="Contamination_Callback.on_epoch_end"><a class="viewcode-back" href="../../candle/candle.html#candle.Contamination_Callback.on_epoch_end">[docs]</a>    <span class="k">def</span> <span class="nf">on_epoch_end</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">epoch</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">logs</span><span class="o">=</span><span class="p">{}):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Updates the parameters of the distributions in the contamination</span>
 <span class="sd">        model on epoch end. The parameters updated are: &#39;a&#39; for the global</span>
 <span class="sd">        weight of the membership to the normal distribution, &#39;sigmaSQ&#39; for the</span>
@@ -1094,7 +1098,7 @@
 
 
 <div class="viewcode-block" id="mse_contamination_metric"><a class="viewcode-back" href="../../candle/candle.html#candle.mse_contamination_metric">[docs]</a><span class="k">def</span> <span class="nf">mse_contamination_metric</span><span class="p">(</span><span class="n">nout</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;This function computes the mean squared error (mse) for the</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;This function computes the mean squared error (mse) for the</span>
 <span class="sd">    contamination model. The mse is computed over the prediction. Therefore,</span>
 <span class="sd">    the augmentation for the index variable is ignored.</span>
 
@@ -1103,7 +1107,7 @@
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="nf">metric</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :param y_true: Keras tensor. \</span>
 <span class="sd">            Keras tensor including the ground truth. Since the keras tensor includes an extra column to store the index of the data sample in the training set this column is ignored.</span>
 <span class="sd">        :param y_pred: Keras tensor. \</span>
@@ -1117,7 +1121,7 @@
 
 
 <div class="viewcode-block" id="mae_contamination_metric"><a class="viewcode-back" href="../../candle/candle.html#candle.mae_contamination_metric">[docs]</a><span class="k">def</span> <span class="nf">mae_contamination_metric</span><span class="p">(</span><span class="n">nout</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    This function computes the mean absolute error (mae) for the</span>
 <span class="sd">    contamination model. The mae is computed over the prediction. Therefore,</span>
 <span class="sd">    the augmentation for the index variable is ignored.</span>
@@ -1127,7 +1131,7 @@
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="nf">metric</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :param y_true: Keras tensor. \</span>
 <span class="sd">            Keras tensor including the ground truth. Since the keras tensor includes an extra column to store the index of the data sample in the training set this column is ignored.</span>
 <span class="sd">        :param y_pred: Keras tensor. \</span>
@@ -1141,7 +1145,7 @@
 
 
 <div class="viewcode-block" id="r2_contamination_metric"><a class="viewcode-back" href="../../candle/candle.html#candle.r2_contamination_metric">[docs]</a><span class="k">def</span> <span class="nf">r2_contamination_metric</span><span class="p">(</span><span class="n">nout</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    This function computes the r2 for the contamination model. The r2 is</span>
 <span class="sd">    computed over the prediction. Therefore, the augmentation for the index</span>
 <span class="sd">    variable is ignored.</span>
@@ -1151,7 +1155,7 @@
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="nf">metric</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :param y_true: Keras tensor. \</span>
 <span class="sd">            Keras tensor including the ground truth. Since the keras tensor includes an extra column to store the index of the data sample in the training set this column is ignored.</span>
 <span class="sd">        :param y_pred: Keras tensor. \</span>
@@ -1178,7 +1182,7 @@
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2021, ANL.gov.</p>
+    <p>&#169; Copyright 2023 | https://www.anl.gov.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a

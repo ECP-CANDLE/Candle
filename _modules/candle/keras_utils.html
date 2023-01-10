@@ -3,17 +3,21 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>candle.keras_utils &mdash; CANDLE  documentation</title><link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
-    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <title>candle.keras_utils &mdash; ECP-CANDLE</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/graphviz.css" type="text/css" />
+    <link rel="shortcut icon" href="../../_static/favicon.ico"/>
   <!--[if lt IE 9]>
     <script src="../../_static/js/html5shiv.min.js"></script>
   <![endif]-->
-  <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
         <script src="../../_static/jquery.js"></script>
         <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../../_static/doctools.js"></script>
-        <script src="../../_static/language_data.js"></script>
+        <script src="../../_static/sphinx_highlight.js"></script>
     <script src="../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" /> 
@@ -34,7 +38,7 @@
   </form>
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
-              <p class="caption"><span class="caption-text">Contents:</span></p>
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../readme.html">What is CANDLE?</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../tutorials/index.html">Tutorials</a></li>
@@ -56,9 +60,9 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
-          <li><a href="../index.html">Module code</a> &raquo;</li>
-      <li>candle.keras_utils</li>
+      <li><a href="../../index.html" class="icon icon-home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">candle.keras_utils</li>
       <li class="wy-breadcrumbs-aside">
       </li>
   </ul>
@@ -96,7 +100,7 @@
 
 
 <div class="viewcode-block" id="set_parallelism_threads"><a class="viewcode-back" href="../../candle/candle.html#candle.set_parallelism_threads">[docs]</a><span class="k">def</span> <span class="nf">set_parallelism_threads</span><span class="p">():</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Set the number of parallel threads according to the number available on</span>
 <span class="sd">    the hardware.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -118,7 +122,7 @@
 
 
 <div class="viewcode-block" id="set_seed"><a class="viewcode-back" href="../../candle/candle.html#candle.set_seed">[docs]</a><span class="k">def</span> <span class="nf">set_seed</span><span class="p">(</span><span class="n">seed</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Set the random number seed to the desired value.</span>
 
 <span class="sd">    :param int seed: Random number seed.</span>
@@ -146,7 +150,7 @@
 
 
 <div class="viewcode-block" id="build_optimizer"><a class="viewcode-back" href="../../candle/candle.html#candle.build_optimizer">[docs]</a><span class="k">def</span> <span class="nf">build_optimizer</span><span class="p">(</span><span class="n">optimizer</span><span class="p">,</span> <span class="n">lr</span><span class="p">,</span> <span class="n">kerasDefaults</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Set the optimizer to the appropriate Keras optimizer function based on</span>
 <span class="sd">    the input string and learning rate. Other required values are set to the</span>
 <span class="sd">    Keras default values.</span>
@@ -202,7 +206,7 @@
 <div class="viewcode-block" id="build_initializer"><a class="viewcode-back" href="../../candle/candle.html#candle.build_initializer">[docs]</a><span class="k">def</span> <span class="nf">build_initializer</span><span class="p">(</span>
     <span class="n">initializer</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">kerasDefaults</span><span class="p">:</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">seed</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">constant</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.0</span>
 <span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Set the initializer to the appropriate Keras initializer function based</span>
 <span class="sd">    on the input string and learning rate. Other required values are set to the</span>
 <span class="sd">    Keras default values.</span>
@@ -316,7 +320,7 @@
 
 
 <div class="viewcode-block" id="compute_trainable_params"><a class="viewcode-back" href="../../candle/candle.html#candle.compute_trainable_params">[docs]</a><span class="k">def</span> <span class="nf">compute_trainable_params</span><span class="p">(</span><span class="n">model</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Extract number of parameters from the given Keras model</span>
 
 <span class="sd">    :param model: Keras model</span>
@@ -341,7 +345,7 @@
 
 
 <div class="viewcode-block" id="TerminateOnTimeOut"><a class="viewcode-back" href="../../candle/candle.html#candle.TerminateOnTimeOut">[docs]</a><span class="k">class</span> <span class="nc">TerminateOnTimeOut</span><span class="p">(</span><span class="n">Callback</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    This class implements timeout on model training.</span>
 
 <span class="sd">    When the script reaches timeout,</span>
@@ -349,7 +353,7 @@
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">timeout_in_sec</span><span class="o">=</span><span class="mi">10</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Initialize TerminateOnTimeOut class.</span>
 
 <span class="sd">        :param int timeout_in_sec: seconds to timeout</span>
@@ -360,11 +364,11 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">timeout_in_sec</span> <span class="o">=</span> <span class="n">timeout_in_sec</span>
 
 <div class="viewcode-block" id="TerminateOnTimeOut.on_train_begin"><a class="viewcode-back" href="../../candle/candle.html#candle.TerminateOnTimeOut.on_train_begin">[docs]</a>    <span class="k">def</span> <span class="nf">on_train_begin</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">logs</span><span class="o">=</span><span class="p">{}):</span>
-        <span class="sd">&quot;&quot;&quot;Start clock to calculate timeout.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Start clock to calculate timeout.&quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">run_timestamp</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span></div>
 
 <div class="viewcode-block" id="TerminateOnTimeOut.on_epoch_end"><a class="viewcode-back" href="../../candle/candle.html#candle.TerminateOnTimeOut.on_epoch_end">[docs]</a>    <span class="k">def</span> <span class="nf">on_epoch_end</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">epoch</span><span class="p">,</span> <span class="n">logs</span><span class="o">=</span><span class="p">{}):</span>
-        <span class="sd">&quot;&quot;&quot;On every epoch end, check whether it exceeded timeout and terminate</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;On every epoch end, check whether it exceeded timeout and terminate</span>
 <span class="sd">        training if necessary.&quot;&quot;&quot;</span>
         <span class="n">run_end</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
         <span class="n">run_duration</span> <span class="o">=</span> <span class="n">run_end</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">run_timestamp</span>
@@ -380,7 +384,7 @@
 
 
 <div class="viewcode-block" id="CandleRemoteMonitor"><a class="viewcode-back" href="../../candle/candle.html#candle.CandleRemoteMonitor">[docs]</a><span class="k">class</span> <span class="nc">CandleRemoteMonitor</span><span class="p">(</span><span class="n">Callback</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Capture Run level output and store/send for monitoring.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
@@ -468,7 +472,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">save</span><span class="p">()</span></div>
 
 <div class="viewcode-block" id="CandleRemoteMonitor.save"><a class="viewcode-back" href="../../candle/candle.html#candle.CandleRemoteMonitor.save">[docs]</a>    <span class="k">def</span> <span class="nf">save</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Save log_messages to file.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Save log_messages to file.&quot;&quot;&quot;</span>
         <span class="c1"># path = os.getenv(&#39;TURBINE_OUTPUT&#39;) if &#39;TURBINE_OUTPUT&#39; in os.environ else &#39;.&#39;</span>
         <span class="n">path</span> <span class="o">=</span> <span class="p">(</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">global_params</span><span class="p">[</span><span class="s2">&quot;output_dir&quot;</span><span class="p">]</span>
@@ -492,7 +496,7 @@
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2021, ANL.gov.</p>
+    <p>&#169; Copyright 2023 | https://www.anl.gov.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a

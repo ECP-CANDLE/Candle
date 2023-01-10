@@ -140,7 +140,7 @@ Functions
   Functionality to plot a 2D histogram of the distribution of observed
 
 - :py:func:`plot_histogram_error_per_sigma`:
-  Functionality to plot a 1D histogram of the distribution of computed errors 
+  Functionality to plot a 1D histogram of the distribution of computed errors
 
 - :py:func:`plot_history`:
   Undocumented.
