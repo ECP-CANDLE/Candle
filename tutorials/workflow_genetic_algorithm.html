@@ -1,19 +1,24 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>GA (genetic algorithm) based based hyperparameter optimization on CANDLE Benchmarks &mdash; ECP-CANDLE</title><link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
-    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" /><link rel="shortcut icon" href="../_static/favicon.ico"/>
+  <title>GA (genetic algorithm) based based hyperparameter optimization on CANDLE Benchmarks &mdash; ECP-CANDLE</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
   <!--[if lt IE 9]>
     <script src="../_static/js/html5shiv.min.js"></script>
   <![endif]-->
-  <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../_static/doctools.js"></script>
-        <script src="../_static/language_data.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -36,7 +41,7 @@
   </form>
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
-              <p class="caption"><span class="caption-text">Contents:</span></p>
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../readme.html">What is CANDLE?</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="index.html">Tutorials</a><ul class="current">
@@ -89,13 +94,13 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <div class="section" id="ga-genetic-algorithm-based-based-hyperparameter-optimization-on-candle-benchmarks">
-<h1>GA (genetic algorithm) based based hyperparameter optimization on CANDLE Benchmarks<a class="headerlink" href="#ga-genetic-algorithm-based-based-hyperparameter-optimization-on-candle-benchmarks" title="Permalink to this headline">¶</a></h1>
+  <section id="ga-genetic-algorithm-based-based-hyperparameter-optimization-on-candle-benchmarks">
+<h1>GA (genetic algorithm) based based hyperparameter optimization on CANDLE Benchmarks<a class="headerlink" href="#ga-genetic-algorithm-based-based-hyperparameter-optimization-on-candle-benchmarks" title="Permalink to this heading">¶</a></h1>
 <p>The GA workflow uses the Python deap package
 (<a class="reference external" href="http://deap.readthedocs.io/en/master">http://deap.readthedocs.io/en/master</a>) to optimize hyperparameters using
 a genetic algorithm.</p>
-<div class="section" id="running">
-<h2>Running<a class="headerlink" href="#running" title="Permalink to this headline">¶</a></h2>
+<section id="running">
+<h2>Running<a class="headerlink" href="#running" title="Permalink to this heading">¶</a></h2>
 <ol class="arabic simple">
 <li><p>cd into the <strong>Supervisor/workflows/GA/test</strong> directory</p></li>
 <li><p>Specify the GA parameters in the <strong>cfg-prm-1.sh</strong> file (see
@@ -118,9 +123,9 @@ parameter space json file is further described <a class="reference external" hre
 available in the experiments directory in a <strong>finals_results</strong> file
 and also printed to standard out.</p></li>
 </ol>
-</div>
-<div class="section" id="user-requirements">
-<h2>User requirements<a class="headerlink" href="#user-requirements" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="user-requirements">
+<h2>User requirements<a class="headerlink" href="#user-requirements" title="Permalink to this heading">¶</a></h2>
 <p>What you need to install to run the workflow:</p>
 <ul class="simple">
 <li><p>This workflow - <code class="docutils literal notranslate"><span class="pre">git&#64;github.com:ECP-CANDLE/Supervisor.git</span></code> . Clone
@@ -144,9 +149,9 @@ installed using the same python installation used by swift-t. A
 probably need to add your local site-packages directory to the
 PYTHONPATH specified in <strong>cfg-sys-1.sh</strong>. For example,</p>
 <p><code class="docutils literal notranslate"><span class="pre">export</span> <span class="pre">PYTHONPATH=/global/u1/n/ncollier/.local/cori/deeplearning2.7/lib/python2.7/site-packages</span></code></p>
-</div>
-<div class="section" id="calling-sequence">
-<h2>Calling sequence<a class="headerlink" href="#calling-sequence" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="calling-sequence">
+<h2>Calling sequence<a class="headerlink" href="#calling-sequence" title="Permalink to this heading">¶</a></h2>
 <p>Function calls:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">test</span><span class="o">-</span><span class="mf">1.</span><span class="n">sh</span> <span class="o">-&gt;</span> <span class="n">swift</span><span class="o">/</span><span class="n">workflow</span><span class="o">.</span><span class="n">sh</span> <span class="o">-&gt;</span>
 
@@ -167,15 +172,15 @@ PYTHONPATH specified in <strong>cfg-sys-1.sh</strong>. For example,</p>
       <span class="n">common</span><span class="o">/</span><span class="n">sh</span><span class="o">/&lt;</span><span class="n">machine_name</span><span class="o">&gt;</span> <span class="o">-</span> <span class="n">module</span><span class="p">,</span> <span class="n">scheduling</span><span class="p">,</span> <span class="n">langs</span> <span class="o">.</span><span class="n">sh</span> <span class="n">files</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="making-changes">
-<h2>Making Changes<a class="headerlink" href="#making-changes" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="making-changes">
+<h2>Making Changes<a class="headerlink" href="#making-changes" title="Permalink to this heading">¶</a></h2>
 <p>To create your own SITE files in workflows/common/sh/: - langs-SITE.sh -
 langs-app-SITE.sh - modules-SITE.sh - sched-SITE.sh config</p>
 <p>copy existing ones but modify the langs-SITE.sh file to define the EQPy
 location (see workflows/common/sh/langs-local-as.sh for an example).</p>
-<div class="section" id="structure">
-<h3>Structure<a class="headerlink" href="#structure" title="Permalink to this headline">¶</a></h3>
+<section id="structure">
+<h3>Structure<a class="headerlink" href="#structure" title="Permalink to this heading">¶</a></h3>
 <p>The point of the script structure is that it is easy to make copy and
 modify the <code class="docutils literal notranslate"><span class="pre">test-*.sh</span></code> script, and the <code class="docutils literal notranslate"><span class="pre">cfg-*.sh</span></code> scripts. These can
 be checked back into the repo for use by others. The <code class="docutils literal notranslate"><span class="pre">test-*.sh</span></code>
@@ -193,9 +198,9 @@ GA_STRATEGY: The algorithm used by the GA. Can be one of “simple” or
 “mu_plus_lambda”. See eaSimple and eaMuPlusLambda at
 <a class="reference external" href="https://deap.readthedocs.io/en/master/api/algo.html?highlight=eaSimple#module-deap.algorithms">https://deap.readthedocs.io/en/master/api/algo.html?highlight=eaSimple#module-deap.algorithms</a>
 for more information.</p>
-</div>
-<div class="section" id="hyperparameter-configuration-file">
-<h3>Hyperparameter Configuration File<a class="headerlink" href="#hyperparameter-configuration-file" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="hyperparameter-configuration-file">
+<h3>Hyperparameter Configuration File<a class="headerlink" href="#hyperparameter-configuration-file" title="Permalink to this heading">¶</a></h3>
 <p>The GA workflow uses a json format file for defining the hyperparameter
 space. The GA workflow comes with 4 sample hyperparameter spaces in the
 <code class="docutils literal notranslate"><span class="pre">GA/data</span></code> directory, one each for the combo, nt3, p1b1 and tc1
@@ -277,35 +282,35 @@ from. One of <code class="docutils literal notranslate"><span class="pre">int</s
 <code class="docutils literal notranslate"><span class="pre">sigma</span></code>: the sigma value used by the mutation operator (see above).</p>
 <p>A sample hyperparameter definition file:</p>
 <div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="p">[</span>
-  <span class="p">{</span>
-    <span class="s2">&quot;name&quot;</span><span class="o">:</span> <span class="s2">&quot;activation&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;type&quot;</span><span class="o">:</span> <span class="s2">&quot;categorical&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;element_type&quot;</span><span class="o">:</span> <span class="s2">&quot;string&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;values&quot;</span><span class="o">:</span> <span class="p">[</span><span class="s2">&quot;softmax&quot;</span><span class="p">,</span> <span class="s2">&quot;elu&quot;</span><span class="p">,</span> <span class="s2">&quot;softplus&quot;</span><span class="p">,</span> <span class="s2">&quot;softsign&quot;</span><span class="p">,</span> <span class="s2">&quot;relu&quot;</span><span class="p">,</span> <span class="s2">&quot;tanh&quot;</span><span class="p">,</span> <span class="s2">&quot;sigmoid&quot;</span><span class="p">,</span> <span class="s2">&quot;hard_sigmoid&quot;</span><span class="p">,</span> <span class="s2">&quot;linear&quot;</span><span class="p">]</span>
-  <span class="p">},</span>
+<span class="w">  </span><span class="p">{</span>
+<span class="w">    </span><span class="s2">&quot;name&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;activation&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="s2">&quot;type&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;categorical&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="s2">&quot;element_type&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;string&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="s2">&quot;values&quot;</span><span class="o">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;softmax&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;elu&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;softplus&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;softsign&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;relu&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;tanh&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;sigmoid&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;hard_sigmoid&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;linear&quot;</span><span class="p">]</span>
+<span class="w">  </span><span class="p">},</span>
 
-  <span class="p">{</span>
-    <span class="s2">&quot;name&quot;</span><span class="o">:</span> <span class="s2">&quot;optimizer&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;type&quot;</span><span class="o">:</span> <span class="s2">&quot;categorical&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;element_type&quot;</span><span class="o">:</span> <span class="s2">&quot;string&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;values&quot;</span><span class="o">:</span> <span class="p">[</span><span class="s2">&quot;adam&quot;</span><span class="p">,</span> <span class="s2">&quot;rmsprop&quot;</span><span class="p">]</span>
-  <span class="p">},</span>
+<span class="w">  </span><span class="p">{</span>
+<span class="w">    </span><span class="s2">&quot;name&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;optimizer&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="s2">&quot;type&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;categorical&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="s2">&quot;element_type&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;string&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="s2">&quot;values&quot;</span><span class="o">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;adam&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;rmsprop&quot;</span><span class="p">]</span>
+<span class="w">  </span><span class="p">},</span>
 
-  <span class="p">{</span>
-    <span class="s2">&quot;name&quot;</span><span class="o">:</span> <span class="s2">&quot;lr&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;type&quot;</span><span class="o">:</span> <span class="s2">&quot;float&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;lower&quot;</span><span class="o">:</span> <span class="mf">0.0001</span><span class="p">,</span>
-    <span class="s2">&quot;upper&quot;</span><span class="o">:</span> <span class="mf">0.01</span><span class="p">,</span>
-    <span class="s2">&quot;sigma&quot;</span><span class="o">:</span> <span class="s2">&quot;0.000495&quot;</span>
-  <span class="p">},</span>
+<span class="w">  </span><span class="p">{</span>
+<span class="w">    </span><span class="s2">&quot;name&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;lr&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="s2">&quot;type&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;float&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="s2">&quot;lower&quot;</span><span class="o">:</span><span class="w"> </span><span class="mf">0.0001</span><span class="p">,</span>
+<span class="w">    </span><span class="s2">&quot;upper&quot;</span><span class="o">:</span><span class="w"> </span><span class="mf">0.01</span><span class="p">,</span>
+<span class="w">    </span><span class="s2">&quot;sigma&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;0.000495&quot;</span>
+<span class="w">  </span><span class="p">},</span>
 
-  <span class="p">{</span>
-    <span class="s2">&quot;name&quot;</span><span class="o">:</span> <span class="s2">&quot;batch_size&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;type&quot;</span><span class="o">:</span> <span class="s2">&quot;ordered&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;element_type&quot;</span><span class="o">:</span> <span class="s2">&quot;int&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;values&quot;</span><span class="o">:</span> <span class="p">[</span><span class="mi">16</span><span class="p">,</span> <span class="mi">32</span><span class="p">,</span> <span class="mi">64</span><span class="p">,</span> <span class="mi">128</span><span class="p">,</span> <span class="mi">256</span><span class="p">],</span>
-    <span class="s2">&quot;sigma&quot;</span><span class="o">:</span> <span class="mi">1</span>
-  <span class="p">}</span>
+<span class="w">  </span><span class="p">{</span>
+<span class="w">    </span><span class="s2">&quot;name&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;batch_size&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="s2">&quot;type&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;ordered&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="s2">&quot;element_type&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;int&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="s2">&quot;values&quot;</span><span class="o">:</span><span class="w"> </span><span class="p">[</span><span class="mf">16</span><span class="p">,</span><span class="w"> </span><span class="mf">32</span><span class="p">,</span><span class="w"> </span><span class="mf">64</span><span class="p">,</span><span class="w"> </span><span class="mf">128</span><span class="p">,</span><span class="w"> </span><span class="mf">256</span><span class="p">],</span>
+<span class="w">    </span><span class="s2">&quot;sigma&quot;</span><span class="o">:</span><span class="w"> </span><span class="mf">1</span>
+<span class="w">  </span><span class="p">}</span>
 <span class="p">]</span>
 </pre></div>
 </div>
@@ -313,9 +318,9 @@ from. One of <code class="docutils literal notranslate"><span class="pre">int</s
 add additional information about the hyperparameter. For example, the
 sample files contain a <code class="docutils literal notranslate"><span class="pre">comment</span></code> entry that contains additional
 information about that hyperparameter.</p>
-</div>
-<div class="section" id="where-to-check-for-output">
-<h3>Where to check for output<a class="headerlink" href="#where-to-check-for-output" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="where-to-check-for-output">
+<h3>Where to check for output<a class="headerlink" href="#where-to-check-for-output" title="Permalink to this heading">¶</a></h3>
 <p>This includes error output.</p>
 <p>When you run the test script, you will get a message about
 <code class="docutils literal notranslate"><span class="pre">TURBINE_OUTPUT</span></code> . This will be the main output directory for your
@@ -350,9 +355,9 @@ size as some combinations will already have been evaluated.</p></li>
 <li><p>ts: a timestamp recording when this generation finished. The value is
 the number of seconds since the epoch in floating point format</p></li>
 </ul>
-</div>
-</div>
-</div>
+</section>
+</section>
+</section>
 
 
            </div>

@@ -1,19 +1,24 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Run Asynchronous Search based hyperparameter optimization on CANDLE Benchmarks &mdash; ECP-CANDLE</title><link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
-    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" /><link rel="shortcut icon" href="../_static/favicon.ico"/>
+  <title>Run Asynchronous Search based hyperparameter optimization on CANDLE Benchmarks &mdash; ECP-CANDLE</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
   <!--[if lt IE 9]>
     <script src="../_static/js/html5shiv.min.js"></script>
   <![endif]-->
-  <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../_static/doctools.js"></script>
-        <script src="../_static/language_data.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -36,7 +41,7 @@
   </form>
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
-              <p class="caption"><span class="caption-text">Contents:</span></p>
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../readme.html">What is CANDLE?</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="index.html">Tutorials</a><ul class="current">
@@ -89,13 +94,13 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <div class="section" id="run-asynchronous-search-based-hyperparameter-optimization-on-candle-benchmarks">
-<h1>Run Asynchronous Search based hyperparameter optimization on CANDLE Benchmarks<a class="headerlink" href="#run-asynchronous-search-based-hyperparameter-optimization-on-candle-benchmarks" title="Permalink to this headline">¶</a></h1>
+  <section id="run-asynchronous-search-based-hyperparameter-optimization-on-candle-benchmarks">
+<h1>Run Asynchronous Search based hyperparameter optimization on CANDLE Benchmarks<a class="headerlink" href="#run-asynchronous-search-based-hyperparameter-optimization-on-candle-benchmarks" title="Permalink to this heading">¶</a></h1>
 <p>async-search is an asynchronous iterative optimizer written in Python.
 It evaluates the best values of hyperparameters for CANDLE “Benchmarks”
 available here: <code class="docutils literal notranslate"><span class="pre">git&#64;github.com:ECP-CANDLE/Benchmarks.git</span></code></p>
-<div class="section" id="running">
-<h2>Running<a class="headerlink" href="#running" title="Permalink to this headline">¶</a></h2>
+<section id="running">
+<h2>Running<a class="headerlink" href="#running" title="Permalink to this heading">¶</a></h2>
 <ol class="arabic simple">
 <li><p>cd into the <strong>Supervisor/workflows/async-search/test</strong> directory</p></li>
 <li><p>Specify the async-search parameters in the <em>cfg-prm-1.sh</em> file
@@ -115,9 +120,9 @@ tc1.). This is imported as <code class="docutils literal notranslate"><span clas
 <li><p>Final objective function values, along with parameters, will be
 available in the experiments directory and also printed</p></li>
 </ol>
-</div>
-<div class="section" id="user-requirements">
-<h2>User requirements<a class="headerlink" href="#user-requirements" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="user-requirements">
+<h2>User requirements<a class="headerlink" href="#user-requirements" title="Permalink to this heading">¶</a></h2>
 <p>What you need to install to run the workflow:</p>
 <ul class="simple">
 <li><p>This workflow - <code class="docutils literal notranslate"><span class="pre">git&#64;github.com:ECP-CANDLE/Supervisor.git</span></code> . Clone
@@ -137,9 +142,9 @@ the initial data</p></li>
 <span class="n">conda</span> <span class="n">install</span> <span class="o">-</span><span class="n">c</span> <span class="n">conda</span><span class="o">-</span><span class="n">forge</span> <span class="n">scikit</span><span class="o">-</span><span class="n">optimize</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="calling-sequence">
-<h2>Calling sequence<a class="headerlink" href="#calling-sequence" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="calling-sequence">
+<h2>Calling sequence<a class="headerlink" href="#calling-sequence" title="Permalink to this heading">¶</a></h2>
 <p>Function calls:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">test</span><span class="o">-</span><span class="mf">1.</span><span class="n">sh</span> <span class="o">-&gt;</span> <span class="n">swift</span><span class="o">/</span><span class="n">workflow</span><span class="o">.</span><span class="n">sh</span> <span class="o">-&gt;</span>
 
@@ -159,15 +164,15 @@ the initial data</p></li>
       <span class="n">common</span><span class="o">/</span><span class="n">sh</span><span class="o">/&lt;</span><span class="n">machine_name</span><span class="o">&gt;</span> <span class="o">-</span> <span class="n">module</span><span class="p">,</span> <span class="n">scheduling</span><span class="p">,</span> <span class="n">langs</span> <span class="o">.</span><span class="n">sh</span> <span class="n">files</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="making-changes">
-<h2>Making Changes<a class="headerlink" href="#making-changes" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="making-changes">
+<h2>Making Changes<a class="headerlink" href="#making-changes" title="Permalink to this heading">¶</a></h2>
 <p>To create your own SITE files in workflows/common/sh/: - langs-SITE.sh -
 langs-app-SITE.sh - modules-SITE.sh - sched-SITE.sh config</p>
 <p>copy existing ones but modify the langs-SITE.sh file to define the EQPy
 location (see workflows/common/sh/langs-local.sh for an example).</p>
-<div class="section" id="structure">
-<h3>Structure<a class="headerlink" href="#structure" title="Permalink to this headline">¶</a></h3>
+<section id="structure">
+<h3>Structure<a class="headerlink" href="#structure" title="Permalink to this heading">¶</a></h3>
 <p>The point of the script structure is that it is easy to make copy and
 modify the <code class="docutils literal notranslate"><span class="pre">test-*.sh</span></code> script, and the <code class="docutils literal notranslate"><span class="pre">cfg-*.sh</span></code> scripts. These can
 be checked back into the repo for use by others. The <code class="docutils literal notranslate"><span class="pre">test-*.sh</span></code>
@@ -192,9 +197,9 @@ produced for evaluation. This can help with performance when many models
 finish within a few seconds of each other. - N_JOBS: The number of jobs
 to run in parallel when producing points (i.e. hyperparameter values)
 for evaluation. -1 will set this to the number of cores.</p>
-</div>
-<div class="section" id="where-to-check-for-output">
-<h3>Where to check for output<a class="headerlink" href="#where-to-check-for-output" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="where-to-check-for-output">
+<h3>Where to check for output<a class="headerlink" href="#where-to-check-for-output" title="Permalink to this heading">¶</a></h3>
 <p>This includes error output.</p>
 <p>When you run the test script, you will get a message about
 <code class="docutils literal notranslate"><span class="pre">TURBINE_OUTPUT</span></code> . This will be the main output directory for your
@@ -212,9 +217,9 @@ directories of the form:</p>
 the various model runs generated by async-search, one per parameter set,
 of the form <code class="docutils literal notranslate"><span class="pre">R_I_J</span></code> where <code class="docutils literal notranslate"><span class="pre">R</span></code> is the restart number, <code class="docutils literal notranslate"><span class="pre">I</span></code> is the
 iteration number, and <code class="docutils literal notranslate"><span class="pre">J</span></code> is the sample within the iteration.</p>
-</div>
-</div>
-</div>
+</section>
+</section>
+</section>
 
 
            </div>

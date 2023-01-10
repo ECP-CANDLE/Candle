@@ -1,19 +1,24 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>DARTS Examples &mdash; ECP-CANDLE</title><link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
-    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="../../../_static/graphviz.css" type="text/css" /><link rel="shortcut icon" href="../../../_static/favicon.ico"/>
+  <title>DARTS Examples &mdash; ECP-CANDLE</title>
+      <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/graphviz.css" type="text/css" />
+    <link rel="shortcut icon" href="../../../_static/favicon.ico"/>
   <!--[if lt IE 9]>
     <script src="../../../_static/js/html5shiv.min.js"></script>
   <![endif]-->
-  <script id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+  
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
         <script src="../../../_static/jquery.js"></script>
         <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../../../_static/doctools.js"></script>
-        <script src="../../../_static/language_data.js"></script>
+        <script src="../../../_static/sphinx_highlight.js"></script>
     <script src="../../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" />
@@ -36,7 +41,7 @@
   </form>
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
-              <p class="caption"><span class="caption-text">Contents:</span></p>
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../../../readme.html">What is CANDLE?</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="../../index.html">Tutorials</a><ul class="current">
@@ -87,11 +92,11 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <div class="section" id="darts-examples">
-<h1>DARTS Examples<a class="headerlink" href="#darts-examples" title="Permalink to this headline">¶</a></h1>
+  <section id="darts-examples">
+<h1>DARTS Examples<a class="headerlink" href="#darts-examples" title="Permalink to this heading">¶</a></h1>
 <p>Differentiable architecture search</p>
-<div class="section" id="tldr">
-<h2>TLDR<a class="headerlink" href="#tldr" title="Permalink to this headline">¶</a></h2>
+<section id="tldr">
+<h2>TLDR<a class="headerlink" href="#tldr" title="Permalink to this heading">¶</a></h2>
 <p>Our recommended ordering of examples:</p>
 <ol class="arabic simple">
 <li><p><strong>Uno</strong>: learn how to use the neural network building blocks in DARTS to
@@ -99,14 +104,14 @@ define a fully connected model using DARTS.</p></li>
 <li><p><strong>Advanced</strong>: how to define our own neural network primitives to be optimized
 by DARTS.</p></li>
 </ol>
-</div>
-<div class="section" id="setup">
-<h2>Setup<a class="headerlink" href="#setup" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="setup">
+<h2>Setup<a class="headerlink" href="#setup" title="Permalink to this heading">¶</a></h2>
 <p>Darts makes use of Pytorch. You can find binaries for both Pytorch and Torchvision (used in the advanced
 example) at the <a class="reference external" href="https://pytorch.org/">pytorch website</a>.</p>
-</div>
-<div class="section" id="the-algorithm">
-<h2>The Algorithm<a class="headerlink" href="#the-algorithm" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="the-algorithm">
+<h2>The Algorithm<a class="headerlink" href="#the-algorithm" title="Permalink to this heading">¶</a></h2>
 <p>This is an adaptation of Hanxiao Liu et al’s DARTS algorithm, extending
 the work to handle convolutional neural networks for NLP problems and more.
 Details of the original authors’ approach can be found in their 2019 ICLR <a class="reference external" href="https://openreview.net/forum?id=S1eYHoC5FX">paper</a>.</p>
@@ -146,8 +151,8 @@ as defined in the paper. The end result is that we have a differentiable model t
 components as the model is training.</p>
 <p>As the optimization runs, the model will print the resulting loss with respect to a given <em>Genotype</em>.
 The final model will be the <em>Genotype</em> with corresponding to the lowest loss.</p>
-</div>
-</div>
+</section>
+</section>
 
 
            </div>

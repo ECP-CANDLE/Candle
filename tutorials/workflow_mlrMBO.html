@@ -1,19 +1,24 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Run mlrMBO based hyperparameter optimization on CANDLE Benchmarks &mdash; ECP-CANDLE</title><link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
-    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" /><link rel="shortcut icon" href="../_static/favicon.ico"/>
+  <title>Run mlrMBO based hyperparameter optimization on CANDLE Benchmarks &mdash; ECP-CANDLE</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
   <!--[if lt IE 9]>
     <script src="../_static/js/html5shiv.min.js"></script>
   <![endif]-->
-  <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../_static/doctools.js"></script>
-        <script src="../_static/language_data.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -36,7 +41,7 @@
   </form>
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
-              <p class="caption"><span class="caption-text">Contents:</span></p>
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../readme.html">What is CANDLE?</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="index.html">Tutorials</a><ul class="current">
@@ -89,13 +94,13 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <div class="section" id="run-mlrmbo-based-hyperparameter-optimization-on-candle-benchmarks">
-<h1>Run mlrMBO based hyperparameter optimization on CANDLE Benchmarks<a class="headerlink" href="#run-mlrmbo-based-hyperparameter-optimization-on-candle-benchmarks" title="Permalink to this headline">¶</a></h1>
+  <section id="run-mlrmbo-based-hyperparameter-optimization-on-candle-benchmarks">
+<h1>Run mlrMBO based hyperparameter optimization on CANDLE Benchmarks<a class="headerlink" href="#run-mlrmbo-based-hyperparameter-optimization-on-candle-benchmarks" title="Permalink to this heading">¶</a></h1>
 <p>mlrMBO is an iterative optimizer written in R. It evaluates the best
 values of hyperparameters for CANDLE “Benchmarks” available here:
 <code class="docutils literal notranslate"><span class="pre">git&#64;github.com:ECP-CANDLE/Benchmarks.git</span></code> - given set of parameters.</p>
-<div class="section" id="running">
-<h2>Running<a class="headerlink" href="#running" title="Permalink to this headline">¶</a></h2>
+<section id="running">
+<h2>Running<a class="headerlink" href="#running" title="Permalink to this heading">¶</a></h2>
 <ol class="arabic simple">
 <li><p>cd into the <code class="docutils literal notranslate"><span class="pre">~/Supervisor/workflows/mlrMBO/test</span></code> directory</p></li>
 <li><p>Specify the <code class="docutils literal notranslate"><span class="pre">MODEL_NAME</span></code> in the <code class="docutils literal notranslate"><span class="pre">test-&lt;model&gt;.sh</span></code> file, hyperparameters in
@@ -106,9 +111,9 @@ values of hyperparameters for CANDLE “Benchmarks” available here:
 <li><p>Final objective function value will be available in the experiments
 directory and also printed</p></li>
 </ol>
-</div>
-<div class="section" id="user-requirements">
-<h2>User requirements<a class="headerlink" href="#user-requirements" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="user-requirements">
+<h2>User requirements<a class="headerlink" href="#user-requirements" title="Permalink to this heading">¶</a></h2>
 <p>What you need to install to run the workflow:</p>
 <ul class="simple">
 <li><p>This workflow - <code class="docutils literal notranslate"><span class="pre">git&#64;github.com:ECP-CANDLE/Supervisor.git</span></code> . Clone
@@ -119,9 +124,9 @@ and switch to the <code class="docutils literal notranslate"><span class="pre">f
 <li><p>benchmark data - See the individual benchmarks README for obtaining
 the initial data</p></li>
 </ul>
-</div>
-<div class="section" id="calling-sequence">
-<h2>Calling sequence<a class="headerlink" href="#calling-sequence" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="calling-sequence">
+<h2>Calling sequence<a class="headerlink" href="#calling-sequence" title="Permalink to this heading">¶</a></h2>
 <dl class="simple">
 <dt>Script call stack</dt><dd><ul class="simple">
 <li><p>user shell -&gt;</p></li>
@@ -142,11 +147,11 @@ the initial data</p></li>
 </ul>
 </dd>
 </dl>
-</div>
-<div class="section" id="making-changes">
-<h2>Making Changes<a class="headerlink" href="#making-changes" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="structure">
-<h3>Structure<a class="headerlink" href="#structure" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="making-changes">
+<h2>Making Changes<a class="headerlink" href="#making-changes" title="Permalink to this heading">¶</a></h2>
+<section id="structure">
+<h3>Structure<a class="headerlink" href="#structure" title="Permalink to this heading">¶</a></h3>
 <p>The point of the script structure is that it is easy to make copy and
 modify the <code class="docutils literal notranslate"><span class="pre">test-*.sh</span></code> script, and the <code class="docutils literal notranslate"><span class="pre">cfg-*.sh</span></code> scripts. These
 can be checked back into the repo for use by others. The <code class="docutils literal notranslate"><span class="pre">test-*.sh</span></code>
@@ -155,9 +160,9 @@ variables that control how <code class="docutils literal notranslate"><span clas
 operate.</p>
 <p><code class="docutils literal notranslate"><span class="pre">test-1</span></code> and <code class="docutils literal notranslate"><span class="pre">cfg-{sys,prm}-1</span></code> should be unmodified for simple
 testing.</p>
-</div>
-<div class="section" id="calling-a-different-objective-function">
-<h3>Calling a different objective function<a class="headerlink" href="#calling-a-different-objective-function" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="calling-a-different-objective-function">
+<h3>Calling a different objective function<a class="headerlink" href="#calling-a-different-objective-function" title="Permalink to this heading">¶</a></h3>
 <p>To call a different objective function:</p>
 <ol class="arabic simple">
 <li><p>Copy <code class="docutils literal notranslate"><span class="pre">common/swift/obj_app.swift</span></code> to a new directory and/or file
@@ -186,9 +191,9 @@ Swift: Assertion failed!: test-obj-fail.swift was successfully invoked!
 </div>
 <p>This indicates that the code in <code class="docutils literal notranslate"><span class="pre">test_obj_fail.swift</span></code> was executed
 instead of <code class="docutils literal notranslate"><span class="pre">obj_app.swift</span></code> .</p>
-</div>
-<div class="section" id="where-to-check-for-output">
-<h3>Where to check for output<a class="headerlink" href="#where-to-check-for-output" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="where-to-check-for-output">
+<h3>Where to check for output<a class="headerlink" href="#where-to-check-for-output" title="Permalink to this heading">¶</a></h3>
 <p>This includes error output.</p>
 <p>When you run the test script, you will get a message about
 <code class="docutils literal notranslate"><span class="pre">TURBINE_OUTPUT</span></code> . This will be the main output directory for your
@@ -206,9 +211,9 @@ directories of the form:</p>
 the various model runs generated by mlrMBO, one per parameter set, of
 the form <code class="docutils literal notranslate"><span class="pre">R_I_J</span></code> where <code class="docutils literal notranslate"><span class="pre">R</span></code> is the restart number, <code class="docutils literal notranslate"><span class="pre">I</span></code> is the
 iteration number, and <code class="docutils literal notranslate"><span class="pre">J</span></code> is the sample within the iteration.</p>
-</div>
-</div>
-</div>
+</section>
+</section>
+</section>
 
 
            </div>

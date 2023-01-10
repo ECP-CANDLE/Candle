@@ -1,19 +1,24 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>How to write CANDLE compliant deep learning code &mdash; ECP-CANDLE</title><link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
-    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" /><link rel="shortcut icon" href="../_static/favicon.ico"/>
+  <title>How to write CANDLE compliant deep learning code &mdash; ECP-CANDLE</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
   <!--[if lt IE 9]>
     <script src="../_static/js/html5shiv.min.js"></script>
   <![endif]-->
-  <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../_static/doctools.js"></script>
-        <script src="../_static/language_data.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -36,7 +41,7 @@
   </form>
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
-              <p class="caption"><span class="caption-text">Contents:</span></p>
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../readme.html">What is CANDLE?</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="index.html">Tutorials</a><ul class="current">
@@ -90,18 +95,18 @@ methods (will be explained in section 1) and follow some procedures (see
 section 2) for each workflow. This user guide will provide an overview
 of these code structures and an explanation of parameters or variables
 as needed.</p>
-<div class="section" id="how-to-write-candle-compliant-deep-learning-code">
-<h1>How to write CANDLE compliant deep learning code<a class="headerlink" href="#how-to-write-candle-compliant-deep-learning-code" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="minimum-requirements">
-<h2>Minimum requirements<a class="headerlink" href="#minimum-requirements" title="Permalink to this headline">¶</a></h2>
+<section id="how-to-write-candle-compliant-deep-learning-code">
+<h1>How to write CANDLE compliant deep learning code<a class="headerlink" href="#how-to-write-candle-compliant-deep-learning-code" title="Permalink to this heading">¶</a></h1>
+<section id="minimum-requirements">
+<h2>Minimum requirements<a class="headerlink" href="#minimum-requirements" title="Permalink to this heading">¶</a></h2>
 <p>CANDLE compliant code requires you to create a Python class and
 implement two methods, <code class="docutils literal notranslate"><span class="pre">run()</span></code> and <code class="docutils literal notranslate"><span class="pre">initialize_parameters()</span></code>. The
 base class already provides common parameters such as <code class="docutils literal notranslate"><span class="pre">batch_size</span></code>,
 <code class="docutils literal notranslate"><span class="pre">epoch</span></code>, etc. and enables you to register additional parameters as
 needed. In addition to that, you can mandate that some parameters exist
 and have values, if needed.</p>
-<div class="section" id="base-class">
-<h3>Base Class<a class="headerlink" href="#base-class" title="Permalink to this headline">¶</a></h3>
+<section id="base-class">
+<h3>Base Class<a class="headerlink" href="#base-class" title="Permalink to this heading">¶</a></h3>
 <p>The CANDLE library provides a base class (<code class="docutils literal notranslate"><span class="pre">candle.Benchmark</span></code>), which
 you will extend to configure your parameters. If you don’t have any
 additional parameters to define, you can use this code as is (see <a class="reference external" href="https://github.com/ECP-CANDLE/Candle/blob/master/examples/mnist/mnist.py">MNIST
@@ -121,8 +126,8 @@ example</a>).</p>
 <ul class="simple">
 <li><p># 1: Create a new class by extending <code class="docutils literal notranslate"><span class="pre">candle.Benchmark</span></code></p></li>
 </ul>
-<div class="section" id="additional-parameters">
-<h4>Additional Parameters<a class="headerlink" href="#additional-parameters" title="Permalink to this headline">¶</a></h4>
+<section id="additional-parameters">
+<h4>Additional Parameters<a class="headerlink" href="#additional-parameters" title="Permalink to this heading">¶</a></h4>
 <p>You can add a parameter like <a class="reference external" href="https://github.com/ECP-CANDLE/Benchmarks/blob/release_01/Pilot1/TC1/tc1.py#L16-L58">this
 example</a>.
 The example illustrates how to define an integer type parameter,
@@ -142,9 +147,9 @@ The example illustrates how to define an integer type parameter,
 <li><p># 3: required. The type to which the command-line arguments should be converted.</p></li>
 <li><p># 4: optional. A brief description of what the argument does.</p></li>
 </ul>
-</div>
-<div class="section" id="mandatory-parameters">
-<h4>Mandatory parameters<a class="headerlink" href="#mandatory-parameters" title="Permalink to this headline">¶</a></h4>
+</section>
+<section id="mandatory-parameters">
+<h4>Mandatory parameters<a class="headerlink" href="#mandatory-parameters" title="Permalink to this heading">¶</a></h4>
 <p>If you would like to make some common parameters mandatory, you will
 need to define a <code class="docutils literal notranslate"><span class="pre">required</span></code> variable, a list of parameter names, and
 pass it to the definition of your class.</p>
@@ -157,9 +162,9 @@ pass it to the definition of your class.</p>
 <span class="p">]</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="thread-optimization">
-<h4>Thread Optimization<a class="headerlink" href="#thread-optimization" title="Permalink to this headline">¶</a></h4>
+</section>
+<section id="thread-optimization">
+<h4>Thread Optimization<a class="headerlink" href="#thread-optimization" title="Permalink to this heading">¶</a></h4>
 <p>On some high-performance computing machines like <code class="docutils literal notranslate"><span class="pre">Theta</span></code>, the
 performance will be greatly improved if we let CANDLE handle threads.
 So, it is generally recommended to have code like lines 14 to 21 in
@@ -176,10 +181,10 @@ which sets appropriate parameters in a tensorflow session.</p>
     <span class="n">K</span><span class="o">.</span><span class="n">set_session</span><span class="p">(</span><span class="n">sess</span><span class="p">)</span>
 </pre></div>
 </div>
-</div>
-</div>
-<div class="section" id="initialize-parameters-method">
-<h3>initialize_parameters Method<a class="headerlink" href="#initialize-parameters-method" title="Permalink to this headline">¶</a></h3>
+</section>
+</section>
+<section id="initialize-parameters-method">
+<h3>initialize_parameters Method<a class="headerlink" href="#initialize-parameters-method" title="Permalink to this heading">¶</a></h3>
 <p>In the <code class="docutils literal notranslate"><span class="pre">initialize_parameters()</span></code> method, we will instantiate the base
 class, and finally build an argument parser to recognize your customized
 parameters in addition to the default parameters (
@@ -221,9 +226,9 @@ which will be passed to the <code class="docutils literal notranslate"><span cla
 </div>
 <p>When parameters are not overwritten by workflows, their values will be
 used as defaults.</p>
-</div>
-<div class="section" id="run-method">
-<h3>Run Method<a class="headerlink" href="#run-method" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="run-method">
+<h3>Run Method<a class="headerlink" href="#run-method" title="Permalink to this heading">¶</a></h3>
 <p>You can place your deep learning code in the <code class="docutils literal notranslate"><span class="pre">run()</span></code> method. Your
 parameters are accessible in the input dictionary like
 <code class="docutils literal notranslate"><span class="pre">gParameters['batch_size']</span></code>.</p>
@@ -278,9 +283,9 @@ not have the evaluation process, so you can return <code class="docutils literal
 </div></blockquote>
 </li>
 </ul>
-</div>
-</div>
-</div>
+</section>
+</section>
+</section>
 
 
            </div>

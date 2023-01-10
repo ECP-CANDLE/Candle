@@ -1,19 +1,24 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>U-NET Example &mdash; ECP-CANDLE</title><link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
-    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="../../../_static/graphviz.css" type="text/css" /><link rel="shortcut icon" href="../../../_static/favicon.ico"/>
+  <title>U-NET Example &mdash; ECP-CANDLE</title>
+      <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/graphviz.css" type="text/css" />
+    <link rel="shortcut icon" href="../../../_static/favicon.ico"/>
   <!--[if lt IE 9]>
     <script src="../../../_static/js/html5shiv.min.js"></script>
   <![endif]-->
-  <script id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+  
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
         <script src="../../../_static/jquery.js"></script>
         <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../../../_static/doctools.js"></script>
-        <script src="../../../_static/language_data.js"></script>
+        <script src="../../../_static/sphinx_highlight.js"></script>
     <script src="../../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" />
@@ -36,7 +41,7 @@
   </form>
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
-              <p class="caption"><span class="caption-text">Contents:</span></p>
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../../../readme.html">What is CANDLE?</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="../../index.html">Tutorials</a><ul class="current">
@@ -87,8 +92,8 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <div class="section" id="u-net-example">
-<h1>U-NET Example<a class="headerlink" href="#u-net-example" title="Permalink to this headline">¶</a></h1>
+  <section id="u-net-example">
+<h1>U-NET Example<a class="headerlink" href="#u-net-example" title="Permalink to this heading">¶</a></h1>
 <p>The U-Net is a convolutional network architecture designed for image
 segmentation. This architecture captures context and localization
 features precisely and outperforms the traditional convolutional
@@ -98,8 +103,8 @@ website</a>
 or <a class="reference external" href="https://arxiv.org/abs/1505.04597">paper</a> for more detail. In
 this document, we will use biomedical images to train unet network and
 demonstrate how to run the U-NET with CANDLE library.</p>
-<div class="section" id="before-getting-started">
-<h2>Before Getting Started<a class="headerlink" href="#before-getting-started" title="Permalink to this headline">¶</a></h2>
+<section id="before-getting-started">
+<h2>Before Getting Started<a class="headerlink" href="#before-getting-started" title="Permalink to this heading">¶</a></h2>
 <p>Please read <a class="reference external" href="https://github.com/ECP-CANDLE/Supervisor/blob/master/docs/user_guide.adoc">CANDLE Library User Guide</a>.
 This guide explains how to embed your neural
 network in CANDLE compliant way. We provide CANDLE compliant unet
@@ -158,9 +163,9 @@ and <code class="docutils literal notranslate"><span class="pre">unet_candle.py<
    <span class="k">return</span> <span class="n">history</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="download-data-and-pre-process">
-<h2>Download data and pre-process<a class="headerlink" href="#download-data-and-pre-process" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="download-data-and-pre-process">
+<h2>Download data and pre-process<a class="headerlink" href="#download-data-and-pre-process" title="Permalink to this heading">¶</a></h2>
 <p>Before we start training unet, we need training images. We will use
 Kaggle Competition images. Go to <a class="reference external" href="https://www.kaggle.com/c/ultrasound-nerve-segmentation">Ultrasound Nerve
 Segmentation</a>
@@ -202,9 +207,9 @@ This basically reads all the images and store as an numpy array in
 <span class="n">np</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s2">&quot;./npydata/&quot;</span><span class="p">,</span> <span class="s1">&#39;imgs_mask_train.npy&#39;</span><span class="p">),</span> <span class="n">img_mask</span><span class="p">)</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="running-unet-example-on-theta">
-<h2>Running UNET example on Theta<a class="headerlink" href="#running-unet-example-on-theta" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="running-unet-example-on-theta">
+<h2>Running UNET example on Theta<a class="headerlink" href="#running-unet-example-on-theta" title="Permalink to this heading">¶</a></h2>
 <p>Once we have data files ready, we need to setup CANDLE framework. You
 will need to clone Benchmarks and Supervisor repositories, and modify
 some evironmental variables to run. Please read <a class="reference external" href="https://github.com/ECP-CANDLE/Supervisor/blob/master/docs/user_guide.adoc">CANDLE
@@ -212,13 +217,13 @@ User Guide</a>
 for more detail information with regard to workflows that
 CANDLE provides. This tutorial will run CANDLE’s UPF workflow.</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># clone Supervisor</span>
-$ git clone https://github.com/ECP-CANDLE/Supervisor.git
-$ <span class="nb">cd</span> Supervisor
-$ git checkout master
+$<span class="w"> </span>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/ECP-CANDLE/Supervisor.git
+$<span class="w"> </span><span class="nb">cd</span><span class="w"> </span>Supervisor
+$<span class="w"> </span>git<span class="w"> </span>checkout<span class="w"> </span>master
 
 <span class="c1"># clone Benchmark</span>
-$ git clone https://github.com/ECP-CANDLE/Benchmarks.git $ <span class="nb">cd</span> Benchmarks
-$ git checkout release_01
+$<span class="w"> </span>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/ECP-CANDLE/Benchmarks.git<span class="w"> </span>$<span class="w"> </span><span class="nb">cd</span><span class="w"> </span>Benchmarks
+$<span class="w"> </span>git<span class="w"> </span>checkout<span class="w"> </span>release_01
 </pre></div>
 </div>
 <p>place nypdata and update file path in <code class="docutils literal notranslate"><span class="pre">unet.py</span></code>. It is recommended to
@@ -232,14 +237,14 @@ use full path (starting from <code class="docutils literal notranslate"><span cl
    <span class="n">y_train</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s1">&#39;imgs_mask_train.npy&#39;</span><span class="p">))</span>
 </pre></div>
 </div>
-<div class="section" id="step1-go-to-workflow-directory">
-<h3>Step1. Go to workflow directory.<a class="headerlink" href="#step1-go-to-workflow-directory" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span> <span class="nv">$SUPERVISOR</span>/workflows/upf
+<section id="step1-go-to-workflow-directory">
+<h3>Step1. Go to workflow directory.<a class="headerlink" href="#step1-go-to-workflow-directory" title="Permalink to this heading">¶</a></h3>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span><span class="nv">$SUPERVISOR</span>/workflows/upf
 </pre></div>
 </div>
-</div>
-<div class="section" id="step-2-update-cfg-sys-1-sh-to-config-env-variables">
-<h3>Step 2. Update <code class="docutils literal notranslate"><span class="pre">cfg-sys-1.sh</span></code> to config env variables.<a class="headerlink" href="#step-2-update-cfg-sys-1-sh-to-config-env-variables" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="step-2-update-cfg-sys-1-sh-to-config-env-variables">
+<h3>Step 2. Update <code class="docutils literal notranslate"><span class="pre">cfg-sys-1.sh</span></code> to config env variables.<a class="headerlink" href="#step-2-update-cfg-sys-1-sh-to-config-env-variables" title="Permalink to this heading">¶</a></h3>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Uncomment below to use custom python script to run</span>
 <span class="c1"># Use file name without .py (e.g, my_script.py)</span>
 
@@ -247,26 +252,26 @@ use full path (starting from <code class="docutils literal notranslate"><span cl
 <span class="nv">BENCHMARK_DIR</span><span class="o">=</span>/projects/CSC249ADOA01/hsyoo/candle_lib/Benchmarks/examples/unet/
 </pre></div>
 </div>
-</div>
-<div class="section" id="step-3-update-upf-1-txt">
-<h3>Step 3. Update <code class="docutils literal notranslate"><span class="pre">upf-1.txt</span></code><a class="headerlink" href="#step-3-update-upf-1-txt" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="step-3-update-upf-1-txt">
+<h3>Step 3. Update <code class="docutils literal notranslate"><span class="pre">upf-1.txt</span></code><a class="headerlink" href="#step-3-update-upf-1-txt" title="Permalink to this heading">¶</a></h3>
 <p>Each line is a json doc, and you can modify params like below. This
 example will run 3 training jobs with varying <code class="docutils literal notranslate"><span class="pre">activation</span></code> method and
 <code class="docutils literal notranslate"><span class="pre">optimizer</span></code>.</p>
-<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="s2">&quot;test0&quot;</span><span class="p">,</span> <span class="nt">&quot;epoches&quot;</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span> <span class="nt">&quot;activation&quot;</span><span class="p">:</span> <span class="s2">&quot;relu&quot;</span><span class="p">,</span> <span class="nt">&quot;optimizer&quot;</span><span class="p">:</span> <span class="s2">&quot;adam&quot;</span><span class="p">}</span>
-<span class="p">{</span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="s2">&quot;test1&quot;</span><span class="p">,</span> <span class="nt">&quot;epoches&quot;</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span> <span class="nt">&quot;activation&quot;</span><span class="p">:</span> <span class="s2">&quot;sigmoid&quot;</span><span class="p">,</span> <span class="nt">&quot;optimizer&quot;</span><span class="p">:</span> <span class="s2">&quot;adam&quot;</span><span class="p">}</span>
-<span class="p">{</span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="s2">&quot;test2&quot;</span><span class="p">,</span> <span class="nt">&quot;epoches&quot;</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span> <span class="nt">&quot;activation&quot;</span><span class="p">:</span> <span class="s2">&quot;relu&quot;</span><span class="p">,</span> <span class="nt">&quot;optimizer&quot;</span><span class="p">:</span> <span class="s2">&quot;sgd&quot;</span><span class="p">}</span>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="s2">&quot;test0&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;epoches&quot;</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;activation&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;relu&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;optimizer&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;adam&quot;</span><span class="p">}</span>
+<span class="p">{</span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="s2">&quot;test1&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;epoches&quot;</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;activation&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;sigmoid&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;optimizer&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;adam&quot;</span><span class="p">}</span>
+<span class="p">{</span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="s2">&quot;test2&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;epoches&quot;</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;activation&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;relu&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;optimizer&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;sgd&quot;</span><span class="p">}</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="step-4-submit">
-<h3>Step 4. Submit<a class="headerlink" href="#step-4-submit" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ <span class="nv">QUEUE</span><span class="o">=</span>default <span class="nv">PROCS</span><span class="o">=</span><span class="m">4</span> <span class="nv">WALLTIME</span><span class="o">=</span><span class="m">02</span>:00:00 ./test/upf-1.sh theta
+</section>
+<section id="step-4-submit">
+<h3>Step 4. Submit<a class="headerlink" href="#step-4-submit" title="Permalink to this heading">¶</a></h3>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span><span class="nv">QUEUE</span><span class="o">=</span>default<span class="w"> </span><span class="nv">PROCS</span><span class="o">=</span><span class="m">4</span><span class="w"> </span><span class="nv">WALLTIME</span><span class="o">=</span><span class="m">02</span>:00:00<span class="w"> </span>./test/upf-1.sh<span class="w"> </span>theta
 </pre></div>
 </div>
-</div>
-</div>
-</div>
+</section>
+</section>
+</section>
 
 
            </div>

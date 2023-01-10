@@ -1,19 +1,24 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>What is CANDLE? &mdash; ECP-CANDLE</title><link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
-    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="_static/graphviz.css" type="text/css" /><link rel="shortcut icon" href="_static/favicon.ico"/>
+  <title>What is CANDLE? &mdash; ECP-CANDLE</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="_static/graphviz.css" type="text/css" />
+    <link rel="shortcut icon" href="_static/favicon.ico"/>
   <!--[if lt IE 9]>
     <script src="_static/js/html5shiv.min.js"></script>
   <![endif]-->
-  <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
         <script src="_static/jquery.js"></script>
         <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="_static/doctools.js"></script>
-        <script src="_static/language_data.js"></script>
+        <script src="_static/sphinx_highlight.js"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -36,7 +41,7 @@
   </form>
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
-              <p class="caption"><span class="caption-text">Contents:</span></p>
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul class="current">
 <li class="toctree-l1 current"><a class="current reference internal" href="#">What is CANDLE?</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#candle">CANDLE</a></li>
@@ -74,30 +79,30 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <div class="section" id="what-is-candle">
-<h1>What is CANDLE?<a class="headerlink" href="#what-is-candle" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="candle">
-<h2>CANDLE<a class="headerlink" href="#candle" title="Permalink to this headline">¶</a></h2>
+  <section id="what-is-candle">
+<h1>What is CANDLE?<a class="headerlink" href="#what-is-candle" title="Permalink to this heading">¶</a></h1>
+<section id="candle">
+<h2>CANDLE<a class="headerlink" href="#candle" title="Permalink to this heading">¶</a></h2>
 <p>CANDLE is software for deep learning at scale. In the early stages, the software is being developed for execution on the Department of Energy’s leadership computing resources. However, in theory the software can execute on any reasonably configured cluster. This repository serves as a place for top level documents, tests, and other artifacts that span multiple repositories in the ECP-Candle organization.</p>
-</div>
-<div class="section" id="background">
-<h2>Background<a class="headerlink" href="#background" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="background">
+<h2>Background<a class="headerlink" href="#background" title="Permalink to this heading">¶</a></h2>
 <p>The code for our cancer work has three main components: deep learning cancer related benchmarks (Benchmarks repository), infrastructure for scaling deep learning onto DOE leadership systems (multiple repositories to which we will generally refer to as Candle), and codes that push the science forward (ModelZoo repository). For the ModelZoo repository, we have not yet started work.</p>
 <p>From the perspective of source code management, we would like for these three main components to evolve independently. We imagine that the vast majority of the community would use the Benchmarks and ModelZoo but not Candle since few will have big machines.</p>
-</div>
-<div class="section" id="candle-releases">
-<h2>CANDLE Releases<a class="headerlink" href="#candle-releases" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="candle-releases">
+<h2>CANDLE Releases<a class="headerlink" href="#candle-releases" title="Permalink to this heading">¶</a></h2>
 <p>The Candle releases will include examples that demonstrate scalability and utility of things like hyper-parameter searches and data parallelism. The Candle releases can and will include things that are not in the benchmarks. They have different purposes.  Candle releases should include codes aimed at demonstrating utility. For example in the first release with the focus on hyper-parameter sweeps, the codes we include should show interesting behavior from such searchers.</p>
 <p>In the first release, we focus on demonstrating early scaling of hyper-parameter searches. In the second release, we will improve on the hyper-parameter search but also introduce data parallelism. Examples that benefit from data parallelism may not necessarily be drawn from the benchmarks.</p>
 <p>The third release that might focus on advancing model parallelism and will need to include more examples that benefit from this parallelism.  The fourth release starts to make sure they combine well.</p>
-</div>
-<div class="section" id="cancer-deep-learning-benchmarks">
-<h2>Cancer Deep Learning Benchmarks<a class="headerlink" href="#cancer-deep-learning-benchmarks" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="cancer-deep-learning-benchmarks">
+<h2>Cancer Deep Learning Benchmarks<a class="headerlink" href="#cancer-deep-learning-benchmarks" title="Permalink to this heading">¶</a></h2>
 <p>Benchmarks may also be included as the examples in CANDLE releases, but not necessarily all benchmarks will be used as CANDLE examples. Benchmarks are simple for individuals to run stand-alone and are representative problems. The benchmarks are not necessarily codes that we would run big time cycles on for pushing research forward.</p>
 <p>The Benchmarks releases will change over time. For example, in pilot one we are investigating changes the P1B1 and P1B2 codes. NT3 might end up replacing P1B2 and the variational autoencoder might end up replacing P1B1.</p>
 <p>We will continue to add things to the benchmarks as each pilot project develops codes that are pushing the science. These codes will not necessarily be the codes in the benchmarks or used as examples for CANDLE releases, however could reside in the Zoo.</p>
-</div>
-</div>
+</section>
+</section>
 
 
            </div>

@@ -1,19 +1,24 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>PBT Workflow &mdash; ECP-CANDLE</title><link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
-    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" /><link rel="shortcut icon" href="../_static/favicon.ico"/>
+  <title>PBT Workflow &mdash; ECP-CANDLE</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
   <!--[if lt IE 9]>
     <script src="../_static/js/html5shiv.min.js"></script>
   <![endif]-->
-  <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../_static/doctools.js"></script>
-        <script src="../_static/language_data.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -36,7 +41,7 @@
   </form>
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
-              <p class="caption"><span class="caption-text">Contents:</span></p>
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../readme.html">What is CANDLE?</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="index.html">Tutorials</a><ul class="current">
@@ -89,8 +94,8 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <div class="section" id="pbt-workflow">
-<h1>PBT Workflow<a class="headerlink" href="#pbt-workflow" title="Permalink to this headline">¶</a></h1>
+  <section id="pbt-workflow">
+<h1>PBT Workflow<a class="headerlink" href="#pbt-workflow" title="Permalink to this heading">¶</a></h1>
 <p>PBT is an asynchronous optimization algorithm for jointly optimizing a
 population of models and their hyperparameters while effectively using a
 fixed computational budget. Like a simple parallel grid search, PBT
@@ -124,8 +129,8 @@ weights are serialized every epoch and then loaded as necessary.) During
 the explore, a model perturbs the learning rate of the selected better
 performing model, and then continues training with the new weights and
 learning rate.</p>
-<div class="section" id="requirements">
-<h2>Requirements<a class="headerlink" href="#requirements" title="Permalink to this headline">¶</a></h2>
+<section id="requirements">
+<h2>Requirements<a class="headerlink" href="#requirements" title="Permalink to this heading">¶</a></h2>
 <ul>
 <li><p>This workflow: <a class="reference external" href="mailto:git&#37;&#52;&#48;github&#46;com">git<span>&#64;</span>github<span>&#46;</span>com</a>:ECP-CANDLE/Supervisor.git. Clone and cd
 to workflows/pbt (the directory containing this README).</p></li>
@@ -148,9 +153,9 @@ X/Benchmarks</p>
 </div>
 </li>
 </ul>
-</div>
-<div class="section" id="running-the-workflow">
-<h2>Running the Workflow<a class="headerlink" href="#running-the-workflow" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="running-the-workflow">
+<h2>Running the Workflow<a class="headerlink" href="#running-the-workflow" title="Permalink to this heading">¶</a></h2>
 <p>The PBT workflow is an MPI application that when given N number of
 processes, runs N - 1 tc1 models, and uses the remaining process to run
 a datastore into which the models can put and get model peformance data.
@@ -168,8 +173,8 @@ rate, validation accuracy, and validation loss for each model
 (identified by MPI rank) each epoch. Additionally each tc1 model run
 will execute within its own <code class="docutils literal notranslate"><span class="pre">run_N</span></code> instance directory (e.g.
 <code class="docutils literal notranslate"><span class="pre">run_1</span></code>, <code class="docutils literal notranslate"><span class="pre">run_2</span></code> and so forth) within the output directory.</p>
-<div class="section" id="local-run-pbt-sh">
-<h3>local_run_pbt.sh<a class="headerlink" href="#local-run-pbt-sh" title="Permalink to this headline">¶</a></h3>
+<section id="local-run-pbt-sh">
+<h3>local_run_pbt.sh<a class="headerlink" href="#local-run-pbt-sh" title="Permalink to this heading">¶</a></h3>
 <p><code class="docutils literal notranslate"><span class="pre">local_run_pbt.sh</span></code> takes 3 arguments</p>
 <ol class="arabic simple">
 <li><p>The number of processes to use</p></li>
@@ -182,9 +187,9 @@ into which the model output will be written as mentioned above. For
 example, given the location of the <code class="docutils literal notranslate"><span class="pre">scripts</span></code> directory as
 <code class="docutils literal notranslate"><span class="pre">workflows/pbt/scripts</span></code> and an experiment id of <code class="docutils literal notranslate"><span class="pre">r1</span></code>, the
 experiments directory will be <code class="docutils literal notranslate"><span class="pre">workflows/pbt/experiments/r1</span></code>.</p>
-</div>
-<div class="section" id="sbatch-run-pbt-sh">
-<h3>sbatch_run_pbt.sh<a class="headerlink" href="#sbatch-run-pbt-sh" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="sbatch-run-pbt-sh">
+<h3>sbatch_run_pbt.sh<a class="headerlink" href="#sbatch-run-pbt-sh" title="Permalink to this heading">¶</a></h3>
 <p><code class="docutils literal notranslate"><span class="pre">sbatch_run_pbt.sh</span></code> takes 2 arguments:</p>
 <ol class="arabic simple">
 <li><p>An experiment id</p></li>
@@ -200,9 +205,9 @@ experiments directory will be <code class="docutils literal notranslate"><span c
 defined in <code class="docutils literal notranslate"><span class="pre">scripts/pbt.sbatch</span></code>. That file can be copied and edited as
 appropriate, setting the queue, walltime, python, etc. for your HPC
 machine. It is currently configured for NERSC’s Cori system.</p>
-</div>
-<div class="section" id="hyperparameter-configuration-file">
-<h3>Hyperparameter Configuration File<a class="headerlink" href="#hyperparameter-configuration-file" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="hyperparameter-configuration-file">
+<h3>Hyperparameter Configuration File<a class="headerlink" href="#hyperparameter-configuration-file" title="Permalink to this heading">¶</a></h3>
 <p>The PBT workflow uses a json format file for defining the hyperparameter
 space used by the PBT algorithm. The PBT workflow includes 2 sample
 hyperparameter configuration files for the tc1 model.</p>
@@ -244,32 +249,32 @@ to randomly choose from * <code class="docutils literal notranslate"><span class
 choose from. One of <code class="docutils literal notranslate"><span class="pre">int</span></code>, <code class="docutils literal notranslate"><span class="pre">float</span></code>, <code class="docutils literal notranslate"><span class="pre">string</span></code>, or <code class="docutils literal notranslate"><span class="pre">logical</span></code></p>
 <p>A sample hyperparameter definition file:</p>
 <div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="p">[</span>
-  <span class="p">{</span>
-    <span class="s2">&quot;name&quot;</span><span class="o">:</span> <span class="s2">&quot;epochs&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;type&quot;</span><span class="o">:</span> <span class="s2">&quot;constant&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;value&quot;</span><span class="o">:</span> <span class="mi">5</span>
-  <span class="p">},</span>
+<span class="w">  </span><span class="p">{</span>
+<span class="w">    </span><span class="s2">&quot;name&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;epochs&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="s2">&quot;type&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;constant&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="s2">&quot;value&quot;</span><span class="o">:</span><span class="w"> </span><span class="mf">5</span>
+<span class="w">  </span><span class="p">},</span>
 
-  <span class="p">{</span>
-    <span class="s2">&quot;name&quot;</span><span class="o">:</span> <span class="s2">&quot;activation&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;type&quot;</span><span class="o">:</span> <span class="s2">&quot;categorical&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;element_type&quot;</span><span class="o">:</span> <span class="s2">&quot;string&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;values&quot;</span><span class="o">:</span> <span class="p">[</span><span class="s2">&quot;softmax&quot;</span><span class="p">,</span> <span class="s2">&quot;elu&quot;</span><span class="p">,</span> <span class="s2">&quot;softplus&quot;</span><span class="p">,</span> <span class="s2">&quot;softsign&quot;</span><span class="p">,</span> <span class="s2">&quot;relu&quot;</span><span class="p">,</span> <span class="s2">&quot;tanh&quot;</span><span class="p">,</span> <span class="s2">&quot;sigmoid&quot;</span><span class="p">,</span> <span class="s2">&quot;hard_sigmoid&quot;</span><span class="p">,</span> <span class="s2">&quot;linear&quot;</span><span class="p">]</span>
-  <span class="p">},</span>
+<span class="w">  </span><span class="p">{</span>
+<span class="w">    </span><span class="s2">&quot;name&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;activation&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="s2">&quot;type&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;categorical&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="s2">&quot;element_type&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;string&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="s2">&quot;values&quot;</span><span class="o">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;softmax&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;elu&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;softplus&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;softsign&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;relu&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;tanh&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;sigmoid&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;hard_sigmoid&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;linear&quot;</span><span class="p">]</span>
+<span class="w">  </span><span class="p">},</span>
 
-  <span class="p">{</span>
-    <span class="s2">&quot;name&quot;</span><span class="o">:</span> <span class="s2">&quot;batch_size&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;type&quot;</span><span class="o">:</span> <span class="s2">&quot;categorical&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;element_type&quot;</span><span class="o">:</span> <span class="s2">&quot;int&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;values&quot;</span><span class="o">:</span> <span class="p">[</span><span class="mi">32</span><span class="p">,</span> <span class="mi">64</span><span class="p">]</span>
-  <span class="p">},</span>
+<span class="w">  </span><span class="p">{</span>
+<span class="w">    </span><span class="s2">&quot;name&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;batch_size&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="s2">&quot;type&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;categorical&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="s2">&quot;element_type&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;int&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="s2">&quot;values&quot;</span><span class="o">:</span><span class="w"> </span><span class="p">[</span><span class="mf">32</span><span class="p">,</span><span class="w"> </span><span class="mf">64</span><span class="p">]</span>
+<span class="w">  </span><span class="p">},</span>
 
-  <span class="p">{</span>
-    <span class="s2">&quot;name&quot;</span><span class="o">:</span> <span class="s2">&quot;lr&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;type&quot;</span><span class="o">:</span> <span class="s2">&quot;float&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;lower&quot;</span><span class="o">:</span> <span class="mf">0.0001</span><span class="p">,</span>
-    <span class="s2">&quot;upper&quot;</span><span class="o">:</span> <span class="mf">0.01</span>
-  <span class="p">}</span>
+<span class="w">  </span><span class="p">{</span>
+<span class="w">    </span><span class="s2">&quot;name&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;lr&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="s2">&quot;type&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;float&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="s2">&quot;lower&quot;</span><span class="o">:</span><span class="w"> </span><span class="mf">0.0001</span><span class="p">,</span>
+<span class="w">    </span><span class="s2">&quot;upper&quot;</span><span class="o">:</span><span class="w"> </span><span class="mf">0.01</span>
+<span class="w">  </span><span class="p">}</span>
 <span class="p">]</span>
 </pre></div>
 </div>
@@ -277,22 +282,22 @@ choose from. One of <code class="docutils literal notranslate"><span class="pre"
 add additional information about the hyperparameter. For example, the
 sample files contain a <code class="docutils literal notranslate"><span class="pre">comment</span></code> entry that contains additional
 information about that hyperparameter.</p>
-</div>
-</div>
-<div class="section" id="workflow-explained">
-<h2>Workflow Explained<a class="headerlink" href="#workflow-explained" title="Permalink to this headline">¶</a></h2>
+</section>
+</section>
+<section id="workflow-explained">
+<h2>Workflow Explained<a class="headerlink" href="#workflow-explained" title="Permalink to this heading">¶</a></h2>
 <p>The workflow consists of 3 parts. The DNN tc1 model in <code class="docutils literal notranslate"><span class="pre">models/tc1</span></code>,
 the PBT python code in <code class="docutils literal notranslate"><span class="pre">python/pbt.py</span></code> and the python code that runs
 the tc1 model using PBT, <code class="docutils literal notranslate"><span class="pre">python/tc1_pbt.py</span></code>.</p>
-<div class="section" id="tc1">
-<h3>tc1<a class="headerlink" href="#tc1" title="Permalink to this headline">¶</a></h3>
+<section id="tc1">
+<h3>tc1<a class="headerlink" href="#tc1" title="Permalink to this heading">¶</a></h3>
 <p>The tc1 model is a lightly modified version of the CANDLE tc1 benchmark.
 The code has been updated so that an external Keras callback can be
 passed through <code class="docutils literal notranslate"><span class="pre">models/tc1/tc1_runner.run()</span></code> and attached to the
 model. The PBT algorithnm is run via this callback.</p>
-</div>
-<div class="section" id="python-pbt-py">
-<h3><code class="docutils literal notranslate"><span class="pre">python/pbt.py</span></code><a class="headerlink" href="#python-pbt-py" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="python-pbt-py">
+<h3><code class="docutils literal notranslate"><span class="pre">python/pbt.py</span></code><a class="headerlink" href="#python-pbt-py" title="Permalink to this heading">¶</a></h3>
 <p><code class="docutils literal notranslate"><span class="pre">pbt.py</span></code> provides the model-agnostic framework code for implementing a
 PBT workflow. It has 4 main components.</p>
 <ol class="arabic simple">
@@ -318,9 +323,9 @@ ommunicate with a PBTMetaDataStore.</p></li>
 interface, supplying implementations appropriate to that particular
 workflow.</p></li>
 </ol>
-</div>
-<div class="section" id="python-tc1-pbt-py">
-<h3><code class="docutils literal notranslate"><span class="pre">python/tc1_pbt.py</span></code><a class="headerlink" href="#python-tc1-pbt-py" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="python-tc1-pbt-py">
+<h3><code class="docutils literal notranslate"><span class="pre">python/tc1_pbt.py</span></code><a class="headerlink" href="#python-tc1-pbt-py" title="Permalink to this heading">¶</a></h3>
 <p><code class="docutils literal notranslate"><span class="pre">tc1_pbt.py</span></code> implements PBT for the tc1 model using the classes and
 functions in <code class="docutils literal notranslate"><span class="pre">pbt.py</span></code>. In <code class="docutils literal notranslate"><span class="pre">tc1_pbt.py</span></code>, rank 0 first generates and
 distribute the hyperparameters to the models running on the other ranks.
@@ -388,10 +393,10 @@ with the better performing hyperparameters, and the PBTCallback loads
 the better performing model’s weights into the under performing
 model.</p></li>
 </ol>
-</div>
-</div>
-<div class="section" id="adapting-the-workflow-to-a-different-model">
-<h2>Adapting the Workflow to a Different Model<a class="headerlink" href="#adapting-the-workflow-to-a-different-model" title="Permalink to this headline">¶</a></h2>
+</section>
+</section>
+<section id="adapting-the-workflow-to-a-different-model">
+<h2>Adapting the Workflow to a Different Model<a class="headerlink" href="#adapting-the-workflow-to-a-different-model" title="Permalink to this heading">¶</a></h2>
 <p><code class="docutils literal notranslate"><span class="pre">tc1_pbt.py</span></code> can easily be adapted to work with a different model. The
 following changes will need to be made:</p>
 <ul class="simple">
@@ -404,8 +409,8 @@ constructor in place of <code class="docutils literal notranslate"><span class="
 workflow. This can be passed to the PBTCallback in place of
 <code class="docutils literal notranslate"><span class="pre">TC1PBTWorker</span></code>.</p></li>
 </ul>
-</div>
-</div>
+</section>
+</section>
 
 
            </div>

@@ -1,19 +1,24 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>How to Contribute &mdash; ECP-CANDLE</title><link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
-    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="_static/graphviz.css" type="text/css" /><link rel="shortcut icon" href="_static/favicon.ico"/>
+  <title>How to Contribute &mdash; ECP-CANDLE</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="_static/graphviz.css" type="text/css" />
+    <link rel="shortcut icon" href="_static/favicon.ico"/>
   <!--[if lt IE 9]>
     <script src="_static/js/html5shiv.min.js"></script>
   <![endif]-->
-  <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
         <script src="_static/jquery.js"></script>
         <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="_static/doctools.js"></script>
-        <script src="_static/language_data.js"></script>
+        <script src="_static/sphinx_highlight.js"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -35,7 +40,7 @@
   </form>
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
-              <p class="caption"><span class="caption-text">Contents:</span></p>
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="readme.html">What is CANDLE?</a></li>
 <li class="toctree-l1"><a class="reference internal" href="tutorials/index.html">Tutorials</a></li>
@@ -73,45 +78,45 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <div class="section" id="how-to-contribute">
-<h1>How to Contribute<a class="headerlink" href="#how-to-contribute" title="Permalink to this headline">¶</a></h1>
+  <section id="how-to-contribute">
+<h1>How to Contribute<a class="headerlink" href="#how-to-contribute" title="Permalink to this heading">¶</a></h1>
 <p>Current documentation site is built with a python documentation generator, <a class="reference external" href="http://www.sphinx-doc.org/en/master/">Sphinx</a>, and hosted in Github.
 In order to make modifications, the changes need to be built with Sphinx, and the generated html files must be
 committed to the Github repository.</p>
-<div class="section" id="how-to-add-a-new-document">
-<h2>How to add a new document<a class="headerlink" href="#how-to-add-a-new-document" title="Permalink to this headline">¶</a></h2>
+<section id="how-to-add-a-new-document">
+<h2>How to add a new document<a class="headerlink" href="#how-to-add-a-new-document" title="Permalink to this heading">¶</a></h2>
 <p>The Sphinx reads rst (ReStructuredText) files. For a quick reference, please checkout <a class="reference external" href="http://docutils.sourceforge.net/docs/user/rst/quickref.html">here</a>.</p>
 <p>Clone our repo <code class="docutils literal notranslate"><span class="pre">https://github.com/ECP-CANDLE/Candle.git</span></code> and create a new file inside <code class="docutils literal notranslate"><span class="pre">docs_/source/</span></code> directory.
 You can start a directory structure under the source directory, if you want to organize files. Just make sure your changes are reflected in the index file.</p>
 <p>Don’t forget to <strong>link</strong> the new document in the index file. If you want to link from the top level, please add in <code class="docutils literal notranslate"><span class="pre">docs_/source/index.rst</span></code>.</p>
-</div>
-<div class="section" id="how-to-add-candle-library-api">
-<h2>How to add CANDLE Library API<a class="headerlink" href="#how-to-add-candle-library-api" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="how-to-add-candle-library-api">
+<h2>How to add CANDLE Library API<a class="headerlink" href="#how-to-add-candle-library-api" title="Permalink to this heading">¶</a></h2>
 <ol class="arabic simple">
 <li><p>create rst file in <cite>docs_/source/candle_lib/</cite></p></li>
 <li><p>add to <cite>docs_/source/candle_lib.rst</cite> for index</p></li>
 </ol>
-</div>
-<div class="section" id="how-to-build-html">
-<h2>How to build html<a class="headerlink" href="#how-to-build-html" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="how-to-build-html">
+<h2>How to build html<a class="headerlink" href="#how-to-build-html" title="Permalink to this heading">¶</a></h2>
 <p>The html files are generated by Github action automatically. Just commit the changes add new docs and push to master branch.</p>
-</div>
-<div class="section" id="how-to-convert-asciidoc-format-to-rst">
-<h2>How to convert asciidoc format to rst<a class="headerlink" href="#how-to-convert-asciidoc-format-to-rst" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="how-to-convert-asciidoc-format-to-rst">
+<h2>How to convert asciidoc format to rst<a class="headerlink" href="#how-to-convert-asciidoc-format-to-rst" title="Permalink to this heading">¶</a></h2>
 <p>Sphinx by default does not support Asciidoc and do not have plan to support in near future (check this <a class="reference external" href="https://github.com/rtfd/readthedocs.org/issues/17">issue</a> for detail).
 However, <a class="reference external" href="https://pandoc.org/">Pandoc</a>, a univeral document convert, can be used to convert rst format. For example,</p>
-<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>  <span class="c1"># install pandoc first. Refer the pandoc website for installation.</span>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="w">  </span><span class="c1"># install pandoc first. Refer the pandoc website for installation.</span>
 
-  <span class="c1"># target format rst (-t), output file (-o)</span>
-  $ pandoc -t rst -o new_rst_file.rst input_asciidoc_file.adoc
+<span class="w">  </span><span class="c1"># target format rst (-t), output file (-o)</span>
+<span class="w">  </span>$<span class="w"> </span>pandoc<span class="w"> </span>-t<span class="w"> </span>rst<span class="w"> </span>-o<span class="w"> </span>new_rst_file.rst<span class="w"> </span>input_asciidoc_file.adoc
 
-  <span class="c1"># convert markdown to rst</span>
-  $ pandoc -t rst -o new_rst_file.rst input_markdown_file.md
+<span class="w">  </span><span class="c1"># convert markdown to rst</span>
+<span class="w">  </span>$<span class="w"> </span>pandoc<span class="w"> </span>-t<span class="w"> </span>rst<span class="w"> </span>-o<span class="w"> </span>new_rst_file.rst<span class="w"> </span>input_markdown_file.md
 ..
 </pre></div>
 </div>
-</div>
-</div>
+</section>
+</section>
 
 
            </div>

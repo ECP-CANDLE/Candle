@@ -1,19 +1,24 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>How to run CANDLE compliant code in Theta &mdash; ECP-CANDLE</title><link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
-    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" /><link rel="shortcut icon" href="../_static/favicon.ico"/>
+  <title>How to run CANDLE compliant code in Theta &mdash; ECP-CANDLE</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
   <!--[if lt IE 9]>
     <script src="../_static/js/html5shiv.min.js"></script>
   <![endif]-->
-  <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../_static/doctools.js"></script>
-        <script src="../_static/language_data.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -36,7 +41,7 @@
   </form>
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
-              <p class="caption"><span class="caption-text">Contents:</span></p>
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../readme.html">What is CANDLE?</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="index.html">Tutorials</a><ul class="current">
@@ -87,23 +92,23 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <div class="section" id="how-to-run-candle-compliant-code-in-theta">
-<h1>How to run CANDLE compliant code in Theta<a class="headerlink" href="#how-to-run-candle-compliant-code-in-theta" title="Permalink to this headline">¶</a></h1>
+  <section id="how-to-run-candle-compliant-code-in-theta">
+<h1>How to run CANDLE compliant code in Theta<a class="headerlink" href="#how-to-run-candle-compliant-code-in-theta" title="Permalink to this heading">¶</a></h1>
 <p>As mentioned above, we offer two different workflows in CANDLE: Unrolled
 Parameter File (UPF) and Hyper Parameter Optimization (HPO). The UPF
 workflow allows you to run parallel multi-node executions with different
 parameters, while the HPO workflow evaluates the best values of the
 hyperparameters based on the mlrMBO algorithm.</p>
-<div class="section" id="running-upf-on-theta">
-<h2>Running UPF on Theta<a class="headerlink" href="#running-upf-on-theta" title="Permalink to this headline">¶</a></h2>
+<section id="running-upf-on-theta">
+<h2>Running UPF on Theta<a class="headerlink" href="#running-upf-on-theta" title="Permalink to this heading">¶</a></h2>
 <p>In this tutorial, we will execute an mnist example rewritten for CANDLE.
 The source code is available on <a class="reference external" href="https://github.com/ECP-CANDLE/Candle/tree/master/examples/mnist">CANDLE github
 repo</a>. This example assumes that you have access to the Candle_ECP project on theta.</p>
 <p>Step 1. Create directory and checkout Supervisor &amp; Candle repos</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ mkdir candle_tutorial
-$ <span class="nb">cd</span> candle_tutorial
-$ git clone -b master https://github.com/ECP-CANDLE/Supervisor.git
-$ git clone https://github.com/ECP-CANDLE/Candle.git
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>mkdir<span class="w"> </span>candle_tutorial
+$<span class="w"> </span><span class="nb">cd</span><span class="w"> </span>candle_tutorial
+$<span class="w"> </span>git<span class="w"> </span>clone<span class="w"> </span>-b<span class="w"> </span>master<span class="w"> </span>https://github.com/ECP-CANDLE/Supervisor.git
+$<span class="w"> </span>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/ECP-CANDLE/Candle.git
 </pre></div>
 </div>
 <p>Step 2. Move to upf workflow directory</p>
@@ -176,7 +181,7 @@ will contain files like below,</p>
 <span class="o">-</span><span class="n">rw</span><span class="o">-</span><span class="n">r</span><span class="o">--</span><span class="n">r</span><span class="o">--</span> <span class="mi">1</span> <span class="n">hsyoo</span> <span class="n">users</span>      <span class="mi">7</span> <span class="n">Aug</span> <span class="mi">17</span> <span class="mi">18</span><span class="p">:</span><span class="mi">55</span> <span class="n">jobid</span><span class="o">.</span><span class="n">txt</span>
 <span class="o">-</span><span class="n">rw</span><span class="o">-</span><span class="n">r</span><span class="o">--</span><span class="n">r</span><span class="o">--</span> <span class="mi">1</span> <span class="n">hsyoo</span> <span class="n">users</span>   <span class="mi">3310</span> <span class="n">Aug</span> <span class="mi">17</span> <span class="mi">19</span><span class="p">:</span><span class="mi">13</span> <span class="n">output</span><span class="o">.</span><span class="n">txt</span>
 <span class="n">drwxr</span><span class="o">-</span><span class="n">xr</span><span class="o">-</span><span class="n">x</span> <span class="mi">4</span> <span class="n">hsyoo</span> <span class="n">users</span>    <span class="mi">512</span> <span class="n">Aug</span> <span class="mi">17</span> <span class="mi">19</span><span class="p">:</span><span class="mi">07</span> <span class="n">run</span>
-<span class="o">-</span><span class="n">rw</span><span class="o">-------</span> <span class="mi">1</span> <span class="n">hsyoo</span> <span class="n">users</span>  <span class="mi">10863</span> <span class="n">Aug</span> <span class="mi">17</span> <span class="mi">18</span><span class="p">:</span><span class="mi">55</span> <span class="n">swift</span><span class="o">-</span><span class="n">t</span><span class="o">-</span><span class="n">workflow</span><span class="o">.</span><span class="mi">8</span><span class="n">X4</span><span class="o">.</span><span class="n">tic</span>
+<span class="o">-</span><span class="n">rw</span><span class="o">-------</span> <span class="mi">1</span> <span class="n">hsyoo</span> <span class="n">users</span>  <span class="mi">10863</span> <span class="n">Aug</span> <span class="mi">17</span> <span class="mi">18</span><span class="p">:</span><span class="mi">55</span> <span class="n">swift</span><span class="o">-</span><span class="n">t</span><span class="o">-</span><span class="n">workflow</span><span class="mf">.8</span><span class="n">X4</span><span class="o">.</span><span class="n">tic</span>
 <span class="o">-</span><span class="n">rw</span><span class="o">-</span><span class="n">r</span><span class="o">--</span><span class="n">r</span><span class="o">--</span> <span class="mi">1</span> <span class="n">hsyoo</span> <span class="n">users</span>    <span class="mi">677</span> <span class="n">Aug</span> <span class="mi">17</span> <span class="mi">18</span><span class="p">:</span><span class="mi">55</span> <span class="n">turbine</span><span class="o">.</span><span class="n">log</span>
 <span class="o">-</span><span class="n">rwxr</span><span class="o">--</span><span class="n">r</span><span class="o">--</span> <span class="mi">1</span> <span class="n">hsyoo</span> <span class="n">users</span>   <span class="mi">5103</span> <span class="n">Aug</span> <span class="mi">17</span> <span class="mi">18</span><span class="p">:</span><span class="mi">55</span> <span class="n">turbine</span><span class="o">-</span><span class="n">theta</span><span class="o">.</span><span class="n">sh</span>
 <span class="o">-</span><span class="n">rw</span><span class="o">-</span><span class="n">r</span><span class="o">--</span><span class="n">r</span><span class="o">--</span> <span class="mi">1</span> <span class="n">hsyoo</span> <span class="n">users</span>     <span class="mi">60</span> <span class="n">Aug</span> <span class="mi">17</span> <span class="mi">18</span><span class="p">:</span><span class="mi">55</span> <span class="n">upf</span><span class="o">-</span><span class="mf">1.</span><span class="n">txt</span>
@@ -207,9 +212,9 @@ directories that are corresponding the IDs configured in upf-1.txt</p></li>
 what were passed to this experiment.</p></li>
 <li><p>stdout of test0. After 10 epoches, validation loss was 2.1082.</p></li>
 </ul>
-</div>
-<div class="section" id="running-mlrmbo-based-hyperparameters-optimization-hpo-on-theta">
-<h2>Running mlrMBO based Hyperparameters Optimization (HPO) on Theta<a class="headerlink" href="#running-mlrmbo-based-hyperparameters-optimization-hpo-on-theta" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="running-mlrmbo-based-hyperparameters-optimization-hpo-on-theta">
+<h2>Running mlrMBO based Hyperparameters Optimization (HPO) on Theta<a class="headerlink" href="#running-mlrmbo-based-hyperparameters-optimization-hpo-on-theta" title="Permalink to this heading">¶</a></h2>
 <p>Step 1. Create directory and checkout Supervisor &amp; Candle repos. You can
 skip this step if you already have done it in previous section.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ mkdir candle_tutorial
@@ -281,8 +286,8 @@ evaluate in each iteration. So, if <code class="docutils literal notranslate"><s
 <li><p><code class="docutils literal notranslate"><span class="pre">MAX_BUDGET</span></code> should be greater than total evaluations. In this
 example, 45.</p></li>
 </ul>
-</div>
-</div>
+</section>
+</section>
 
 
            </div>
