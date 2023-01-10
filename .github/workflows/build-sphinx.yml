@@ -12,15 +12,15 @@ jobs:
     steps:
     - uses: actions/checkout@v1
 
-    - name: Install candle lib
+    - name: Install dependencies
       run: |
-        pip install git+https://github.com/ECP-CANDLE/candle_lib.git@develop
-
-    - uses: ammaraskar/sphinx-action@master
-      with:
-        docs-folder: "docs_/"
-        pre-build-command: "apt --allow-releaseinfo-change update --yes && apt install -y git"
-
+        pip install git+https://github.com/ECP-CANDLE/candle_lib.git
+        pip install sphinx
+        pwd
+        ls
+        cd docs_
+        make html
+        
     - name: Commit documentation changes
       run: |
         git clone https://github.com/ECP-CANDLE/Candle.git --branch gh-pages --single-branch gh-pages
