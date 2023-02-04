@@ -47,7 +47,7 @@ extensions = [
     'sphinx.ext.viewcode',
     'sphinx.ext.githubpages',
     'sphinx.ext.graphviz',
-    'sphinx.ext.inheritance_diagram',
+#    'sphinx.ext.inheritance_diagram',
     'autoapi.sphinx',
 ]
 
