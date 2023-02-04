@@ -39,7 +39,7 @@ release = ''
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
 extensions = [
-#    'sphinx.ext.autodoc',
+    # 'sphinx.ext.autodoc',
     'sphinx.ext.todo',
     'sphinx.ext.coverage',
     'sphinx.ext.mathjax',
@@ -47,16 +47,16 @@ extensions = [
     'sphinx.ext.viewcode',
     'sphinx.ext.githubpages',
     'sphinx.ext.graphviz',
-#    'sphinx.ext.inheritance_diagram',
+    # 'sphinx.ext.inheritance_diagram',
     'autoapi.sphinx',
 ]
 
 # autoapi settings
-autoapi_modules = {
-    'candle': {
-        'prune': True
-    }
-}
+# autoapi_modules = {
+#     'candle': {
+#         'prune': True
+#     }
+# }
 
 
 # Add any paths that contain templates here, relative to this directory.
