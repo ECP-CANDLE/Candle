@@ -14,7 +14,9 @@ jobs:
 
     - name: Install dependencies
       run: |
-        pip install git+https://github.com/ECP-CANDLE/candle_lib.git
+        git clone git+https://github.com/ECP-CANDLE/candle_lib.git
+        git checkout develop
+        pip install .
         pip install sphinx_rtd_theme
         pip install autoapi
         pip install sphinx
