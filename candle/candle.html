@@ -1940,12 +1940,6 @@ instantiate the corresponding benchmark. It interacts with the
 argparser to extract command-line options and arguments from the
 benchmark’s configuration files.</p>
 <p class="rubric">Inheritance</p>
-digraph inheritance4a5c9e4366 {
-bgcolor=transparent;
-rankdir=LR;
-size=&quot;8.0, 12.0&quot;;
-  &quot;Benchmark&quot; [URL=&quot;#candle.Benchmark&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;Class that implements an interface to handle configuration options for&quot;];
-}
 <dl class="py method">
 <dt class="sig sig-object py" id="candle.Benchmark.check_required_exists">
 <span class="sig-name descname"><span class="pre">check_required_exists</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">gparam</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ConfigDict</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/candle/benchmark_def.html#Benchmark.check_required_exists"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#candle.Benchmark.check_required_exists" title="Permalink to this definition">¶</a></dt>
@@ -2038,12 +2032,6 @@ benchmark.</p>
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">candle.</span></span><span class="sig-name descname"><span class="pre">Progbar</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">target</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">width</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">30</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">interval</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.01</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/candle/generic_utils.html#Progbar"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#candle.Progbar" title="Permalink to this definition">¶</a></dt>
 <dd><p>Progress bar</p>
 <p class="rubric">Inheritance</p>
-digraph inheritance3f45136383 {
-bgcolor=transparent;
-rankdir=LR;
-size=&quot;8.0, 12.0&quot;;
-  &quot;Progbar&quot; [URL=&quot;#candle.Progbar&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;Progress bar&quot;];
-}
 <dl class="py method">
 <dt class="sig sig-object py" id="candle.Progbar.update">
 <span class="sig-name descname"><span class="pre">update</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">current</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">values</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">force</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/candle/generic_utils.html#Progbar.update"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#candle.Progbar.update" title="Permalink to this definition">¶</a></dt>
@@ -2070,28 +2058,12 @@ dictionary values (corresponding to problem parameters). After the
 object instantiation both modes of access (dictionary or object
 entries) can be used.</p>
 <p class="rubric">Inheritance</p>
-digraph inheritancede336c108e {
-bgcolor=transparent;
-rankdir=LR;
-size=&quot;8.0, 12.0&quot;;
-  &quot;ArgumentStruct&quot; [URL=&quot;#candle.ArgumentStruct&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;Class that converts a python dictionary into an object with named&quot;];
-}
 </dd></dl>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="candle.MultiGPUCheckpoint">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">candle.</span></span><span class="sig-name descname"><span class="pre">MultiGPUCheckpoint</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filepath</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">monitor</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'val_loss'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save_best_only</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save_weights_only</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mode</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'auto'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save_freq</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'epoch'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">options</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">initial_value_threshold</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/candle/ckpt_keras_utils.html#MultiGPUCheckpoint"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#candle.MultiGPUCheckpoint" title="Permalink to this definition">¶</a></dt>
 <dd><p class="rubric">Inheritance</p>
-digraph inheritance4215683b1a {
-bgcolor=transparent;
-rankdir=LR;
-size=&quot;8.0, 12.0&quot;;
-  &quot;Callback&quot; [fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,tooltip=&quot;Abstract base class used to build new callbacks.&quot;];
-  &quot;ModelCheckpoint&quot; [fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,tooltip=&quot;Callback to save the Keras model or model weights at some frequency.&quot;];
-  &quot;Callback&quot; -&gt; &quot;ModelCheckpoint&quot; [arrowsize=0.5,style=&quot;setlinewidth(0.5)&quot;];
-  &quot;MultiGPUCheckpoint&quot; [URL=&quot;#candle.MultiGPUCheckpoint&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;];
-  &quot;ModelCheckpoint&quot; -&gt; &quot;MultiGPUCheckpoint&quot; [arrowsize=0.5,style=&quot;setlinewidth(0.5)&quot;];
-}
 </dd></dl>
 
 <dl class="py class">
@@ -2138,14 +2110,6 @@ This class has three built-in policies, as put forth in the paper.</p>
 </ul>
 </div></blockquote>
 <p class="rubric">Inheritance</p>
-digraph inheritance2850616bfe {
-bgcolor=transparent;
-rankdir=LR;
-size=&quot;8.0, 12.0&quot;;
-  &quot;Callback&quot; [fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,tooltip=&quot;Abstract base class used to build new callbacks.&quot;];
-  &quot;CyclicLR&quot; [URL=&quot;#candle.CyclicLR&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;This callback implements a cyclical learning rate policy (CLR). The&quot;];
-  &quot;Callback&quot; -&gt; &quot;CyclicLR&quot; [arrowsize=0.5,style=&quot;setlinewidth(0.5)&quot;];
-}
 <dl class="py method">
 <dt class="sig sig-object py" id="candle.CyclicLR.on_batch_end">
 <span class="sig-name descname"><span class="pre">on_batch_end</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">epoch</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">logs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/candle/clr_keras_utils.html#CyclicLR.on_batch_end"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#candle.CyclicLR.on_batch_end" title="Permalink to this definition">¶</a></dt>
@@ -2192,14 +2156,6 @@ the <cite>Model</cite>’s metrics are returned. Example:
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">candle.</span></span><span class="sig-name descname"><span class="pre">CandleRemoteMonitor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">params</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/candle/keras_utils.html#CandleRemoteMonitor"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#candle.CandleRemoteMonitor" title="Permalink to this definition">¶</a></dt>
 <dd><p>Capture Run level output and store/send for monitoring.</p>
 <p class="rubric">Inheritance</p>
-digraph inheritancedd3c1641c7 {
-bgcolor=transparent;
-rankdir=LR;
-size=&quot;8.0, 12.0&quot;;
-  &quot;Callback&quot; [fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,tooltip=&quot;Abstract base class used to build new callbacks.&quot;];
-  &quot;CandleRemoteMonitor&quot; [URL=&quot;#candle.CandleRemoteMonitor&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;Capture Run level output and store/send for monitoring.&quot;];
-  &quot;Callback&quot; -&gt; &quot;CandleRemoteMonitor&quot; [arrowsize=0.5,style=&quot;setlinewidth(0.5)&quot;];
-}
 <dl class="py method">
 <dt class="sig sig-object py" id="candle.CandleRemoteMonitor.on_epoch_begin">
 <span class="sig-name descname"><span class="pre">on_epoch_begin</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">epoch</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">logs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/candle/keras_utils.html#CandleRemoteMonitor.on_epoch_begin"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#candle.CandleRemoteMonitor.on_epoch_begin" title="Permalink to this definition">¶</a></dt>
@@ -2276,14 +2232,6 @@ that may change in the future.</p>
 <dt class="sig sig-object py" id="candle.LoggingCallback">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">candle.</span></span><span class="sig-name descname"><span class="pre">LoggingCallback</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">print_fcn=&lt;built-in</span> <span class="pre">function</span> <span class="pre">print&gt;</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/candle/keras_utils.html#LoggingCallback"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#candle.LoggingCallback" title="Permalink to this definition">¶</a></dt>
 <dd><p class="rubric">Inheritance</p>
-digraph inheritance7a76597093 {
-bgcolor=transparent;
-rankdir=LR;
-size=&quot;8.0, 12.0&quot;;
-  &quot;Callback&quot; [fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,tooltip=&quot;Abstract base class used to build new callbacks.&quot;];
-  &quot;LoggingCallback&quot; [URL=&quot;#candle.LoggingCallback&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;];
-  &quot;Callback&quot; -&gt; &quot;LoggingCallback&quot; [arrowsize=0.5,style=&quot;setlinewidth(0.5)&quot;];
-}
 <dl class="py method">
 <dt class="sig sig-object py" id="candle.LoggingCallback.on_epoch_end">
 <span class="sig-name descname"><span class="pre">on_epoch_end</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">epoch</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">logs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">{}</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/candle/keras_utils.html#LoggingCallback.on_epoch_end"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#candle.LoggingCallback.on_epoch_end" title="Permalink to this definition">¶</a></dt>
@@ -2309,26 +2257,6 @@ the <cite>Model</cite>’s metrics are returned. Example:
 <dt class="sig sig-object py" id="candle.PermanentDropout">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">candle.</span></span><span class="sig-name descname"><span class="pre">PermanentDropout</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/candle/keras_utils.html#PermanentDropout"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#candle.PermanentDropout" title="Permalink to this definition">¶</a></dt>
 <dd><p class="rubric">Inheritance</p>
-digraph inheritance0e1cb854cd {
-bgcolor=transparent;
-rankdir=LR;
-size=&quot;8.0, 12.0&quot;;
-  &quot;AutoTrackable&quot; [fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,tooltip=&quot;Manages dependencies on other objects.&quot;];
-  &quot;Trackable&quot; -&gt; &quot;AutoTrackable&quot; [arrowsize=0.5,style=&quot;setlinewidth(0.5)&quot;];
-  &quot;BaseRandomLayer&quot; [fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,tooltip=&quot;A layer handle the random number creation and savemodel behavior.&quot;];
-  &quot;Layer&quot; -&gt; &quot;BaseRandomLayer&quot; [arrowsize=0.5,style=&quot;setlinewidth(0.5)&quot;];
-  &quot;Dropout&quot; [fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,tooltip=&quot;Applies Dropout to the input.&quot;];
-  &quot;BaseRandomLayer&quot; -&gt; &quot;Dropout&quot; [arrowsize=0.5,style=&quot;setlinewidth(0.5)&quot;];
-  &quot;Layer&quot; [fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,tooltip=&quot;This is the class from which all layers inherit.&quot;];
-  &quot;Module&quot; -&gt; &quot;Layer&quot; [arrowsize=0.5,style=&quot;setlinewidth(0.5)&quot;];
-  &quot;LayerVersionSelector&quot; -&gt; &quot;Layer&quot; [arrowsize=0.5,style=&quot;setlinewidth(0.5)&quot;];
-  &quot;LayerVersionSelector&quot; [fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,tooltip=&quot;Chooses between Keras v1 and v2 Layer class.&quot;];
-  &quot;Module&quot; [fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,tooltip=&quot;Base neural network module class.&quot;];
-  &quot;AutoTrackable&quot; -&gt; &quot;Module&quot; [arrowsize=0.5,style=&quot;setlinewidth(0.5)&quot;];
-  &quot;PermanentDropout&quot; [URL=&quot;#candle.PermanentDropout&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;];
-  &quot;Dropout&quot; -&gt; &quot;PermanentDropout&quot; [arrowsize=0.5,style=&quot;setlinewidth(0.5)&quot;];
-  &quot;Trackable&quot; [fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,tooltip=&quot;Base class for `Trackable` objects without automatic dependencies.&quot;];
-}
 <dl class="py method">
 <dt class="sig sig-object py" id="candle.PermanentDropout.call">
 <span class="sig-name descname"><span class="pre">call</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mask</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/candle/keras_utils.html#PermanentDropout.call"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#candle.PermanentDropout.call" title="Permalink to this definition">¶</a></dt>
@@ -2398,14 +2326,6 @@ from a Keras layer with masking support).</p></li>
 <p>When the script reaches timeout,
 this class sets model.stop_training = True</p>
 <p class="rubric">Inheritance</p>
-digraph inheritance83191cc935 {
-bgcolor=transparent;
-rankdir=LR;
-size=&quot;8.0, 12.0&quot;;
-  &quot;Callback&quot; [fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,tooltip=&quot;Abstract base class used to build new callbacks.&quot;];
-  &quot;TerminateOnTimeOut&quot; [URL=&quot;#candle.TerminateOnTimeOut&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;This class implements timeout on model training.&quot;];
-  &quot;Callback&quot; -&gt; &quot;TerminateOnTimeOut&quot; [arrowsize=0.5,style=&quot;setlinewidth(0.5)&quot;];
-}
 <dl class="py method">
 <dt class="sig sig-object py" id="candle.TerminateOnTimeOut.on_epoch_end">
 <span class="sig-name descname"><span class="pre">on_epoch_end</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">epoch</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">logs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">{}</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/candle/keras_utils.html#TerminateOnTimeOut.on_epoch_end"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#candle.TerminateOnTimeOut.on_epoch_end" title="Permalink to this definition">¶</a></dt>
@@ -2445,14 +2365,6 @@ maximum correction factors are computed and the correction over
 alpha is not allowed to be less or greater than them, respectively,
 to avoid huge swings in the abstention loss evolution.</p>
 <p class="rubric">Inheritance</p>
-digraph inheritancea330576ef3 {
-bgcolor=transparent;
-rankdir=LR;
-size=&quot;8.0, 12.0&quot;;
-  &quot;AbstentionAdapt_Callback&quot; [URL=&quot;#candle.AbstentionAdapt_Callback&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;This callback is used to adapt the parameter alpha in the abstention&quot;];
-  &quot;Callback&quot; -&gt; &quot;AbstentionAdapt_Callback&quot; [arrowsize=0.5,style=&quot;setlinewidth(0.5)&quot;];
-  &quot;Callback&quot; [fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,tooltip=&quot;Abstract base class used to build new callbacks.&quot;];
-}
 <dl class="py method">
 <dt class="sig sig-object py" id="candle.AbstentionAdapt_Callback.on_epoch_end">
 <span class="sig-name descname"><span class="pre">on_epoch_end</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">epoch</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">logs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/candle/uq_keras_utils.html#AbstentionAdapt_Callback.on_epoch_end"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#candle.AbstentionAdapt_Callback.on_epoch_end" title="Permalink to this definition">¶</a></dt>
@@ -2484,14 +2396,6 @@ probability of membership to the normal distribution, while the
 second column corresponds to the probability of membership to the
 Cauchy distribution i.e. outlier).</p>
 <p class="rubric">Inheritance</p>
-digraph inheritance17bbdbb80b {
-bgcolor=transparent;
-rankdir=LR;
-size=&quot;8.0, 12.0&quot;;
-  &quot;Callback&quot; [fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,tooltip=&quot;Abstract base class used to build new callbacks.&quot;];
-  &quot;Contamination_Callback&quot; [URL=&quot;#candle.Contamination_Callback&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;This callback is used to update the parameters of the contamination&quot;];
-  &quot;Callback&quot; -&gt; &quot;Contamination_Callback&quot; [arrowsize=0.5,style=&quot;setlinewidth(0.5)&quot;];
-}
 <dl class="py method">
 <dt class="sig sig-object py" id="candle.Contamination_Callback.on_epoch_end">
 <span class="sig-name descname"><span class="pre">on_epoch_end</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">epoch</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">logs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">{}</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/candle/uq_keras_utils.html#Contamination_Callback.on_epoch_end"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#candle.Contamination_Callback.on_epoch_end" title="Permalink to this definition">¶</a></dt>
