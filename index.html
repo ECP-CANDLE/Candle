@@ -44,7 +44,6 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="readme.html">What is CANDLE?</a></li>
 <li class="toctree-l1"><a class="reference internal" href="tutorials/index.html">Tutorials</a></li>
-<li class="toctree-l1"><a class="reference internal" href="candle/candle.html"><code class="docutils literal notranslate"><span class="pre">candle</span></code></a></li>
 <li class="toctree-l1"><a class="reference internal" href="shared_installation.html">CANDLE Shared Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="contribute.html">How to Contribute</a></li>
 </ul>
@@ -108,116 +107,6 @@
 <li class="toctree-l3"><a class="reference internal" href="tutorials/examples/mnist/README.html">MNIST Example</a></li>
 <li class="toctree-l3"><a class="reference internal" href="tutorials/examples/unet/README.html">U-NET Example</a></li>
 <li class="toctree-l3"><a class="reference internal" href="tutorials/examples/run-summit/README.html">Run Modes: Summit</a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="candle/candle.html"><code class="docutils literal notranslate"><span class="pre">candle</span></code></a><ul>
-<li class="toctree-l2"><a class="reference internal" href="candle/candle.html#functions">Functions</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="candle/candle.html#candle.generate_cross_validation_partition"><code class="docutils literal notranslate"><span class="pre">generate_cross_validation_partition()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="candle/candle.html#candle.quantile_normalization"><code class="docutils literal notranslate"><span class="pre">quantile_normalization()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="candle/candle.html#candle.load_csv_data"><code class="docutils literal notranslate"><span class="pre">load_csv_data()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="candle/candle.html#candle.load_Xy_data_noheader"><code class="docutils literal notranslate"><span class="pre">load_Xy_data_noheader()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="candle/candle.html#candle.load_Xy_one_hot_data2"><code class="docutils literal notranslate"><span class="pre">load_Xy_one_hot_data2()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="candle/candle.html#candle.select_decorrelated_features"><code class="docutils literal notranslate"><span class="pre">select_decorrelated_features()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="candle/candle.html#candle.select_features_by_missing_values"><code class="docutils literal notranslate"><span class="pre">select_features_by_missing_values()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="candle/candle.html#candle.select_features_by_variation"><code class="docutils literal notranslate"><span class="pre">select_features_by_variation()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="candle/candle.html#candle.get_file"><code class="docutils literal notranslate"><span class="pre">get_file()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="candle/candle.html#candle.validate_file"><code class="docutils literal notranslate"><span class="pre">validate_file()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="candle/candle.html#candle.fetch_file"><code class="docutils literal notranslate"><span class="pre">fetch_file()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="candle/candle.html#candle.keras_default_config"><code class="docutils literal notranslate"><span class="pre">keras_default_config()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="candle/candle.html#candle.set_up_logger"><code class="docutils literal notranslate"><span class="pre">set_up_logger()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="candle/candle.html#candle.str2bool"><code class="docutils literal notranslate"><span class="pre">str2bool()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="candle/candle.html#candle.verify_path"><code class="docutils literal notranslate"><span class="pre">verify_path()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="candle/candle.html#candle.add_cluster_noise"><code class="docutils literal notranslate"><span class="pre">add_cluster_noise()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="candle/candle.html#candle.add_column_noise"><code class="docutils literal notranslate"><span class="pre">add_column_noise()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="candle/candle.html#candle.add_gaussian_noise"><code class="docutils literal notranslate"><span class="pre">add_gaussian_noise()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="candle/candle.html#candle.add_noise"><code class="docutils literal notranslate"><span class="pre">add_noise()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="candle/candle.html#candle.label_flip"><code class="docutils literal notranslate"><span class="pre">label_flip()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="candle/candle.html#candle.label_flip_correlated"><code class="docutils literal notranslate"><span class="pre">label_flip_correlated()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="candle/candle.html#candle.combat_batch_effect_removal"><code class="docutils literal notranslate"><span class="pre">combat_batch_effect_removal()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="candle/candle.html#candle.coxen_multi_drug_gene_selection"><code class="docutils literal notranslate"><span class="pre">coxen_multi_drug_gene_selection()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="candle/candle.html#candle.coxen_single_drug_gene_selection"><code class="docutils literal notranslate"><span class="pre">coxen_single_drug_gene_selection()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="candle/candle.html#candle.generate_gene_set_data"><code class="docutils literal notranslate"><span class="pre">generate_gene_set_data()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="candle/candle.html#candle.check_flag_conflicts"><code class="docutils literal notranslate"><span class="pre">check_flag_conflicts()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="candle/candle.html#candle.finalize_parameters"><code class="docutils literal notranslate"><span class="pre">finalize_parameters()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="candle/candle.html#candle.parse_from_dictlist"><code class="docutils literal notranslate"><span class="pre">parse_from_dictlist()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="candle/candle.html#candle.compute_empirical_calibration_interpolation"><code class="docutils literal notranslate"><span class="pre">compute_empirical_calibration_interpolation()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="candle/candle.html#candle.compute_statistics_heteroscedastic"><code class="docutils literal notranslate"><span class="pre">compute_statistics_heteroscedastic()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="candle/candle.html#candle.compute_statistics_homoscedastic"><code class="docutils literal notranslate"><span class="pre">compute_statistics_homoscedastic()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="candle/candle.html#candle.compute_statistics_homoscedastic_summary"><code class="docutils literal notranslate"><span class="pre">compute_statistics_homoscedastic_summary()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="candle/candle.html#candle.compute_statistics_quantile"><code class="docutils literal notranslate"><span class="pre">compute_statistics_quantile()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="candle/candle.html#candle.generate_index_distribution"><code class="docutils literal notranslate"><span class="pre">generate_index_distribution()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="candle/candle.html#candle.split_data_for_empirical_calibration"><code class="docutils literal notranslate"><span class="pre">split_data_for_empirical_calibration()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="candle/candle.html#candle.plot_2d_density_sigma_vs_error"><code class="docutils literal notranslate"><span class="pre">plot_2d_density_sigma_vs_error()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="candle/candle.html#candle.plot_array"><code class="docutils literal notranslate"><span class="pre">plot_array()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="candle/candle.html#candle.plot_calibrated_std"><code class="docutils literal notranslate"><span class="pre">plot_calibrated_std()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="candle/candle.html#candle.plot_calibration_interpolation"><code class="docutils literal notranslate"><span class="pre">plot_calibration_interpolation()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="candle/candle.html#candle.plot_contamination"><code class="docutils literal notranslate"><span class="pre">plot_contamination()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="candle/candle.html#candle.plot_decile_predictions"><code class="docutils literal notranslate"><span class="pre">plot_decile_predictions()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="candle/candle.html#candle.plot_density_observed_vs_predicted"><code class="docutils literal notranslate"><span class="pre">plot_density_observed_vs_predicted()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="candle/candle.html#candle.plot_histogram_error_per_sigma"><code class="docutils literal notranslate"><span class="pre">plot_histogram_error_per_sigma()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="candle/candle.html#candle.plot_history"><code class="docutils literal notranslate"><span class="pre">plot_history()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="candle/candle.html#candle.plot_scatter"><code class="docutils literal notranslate"><span class="pre">plot_scatter()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="candle/candle.html#candle.clr_callback"><code class="docutils literal notranslate"><span class="pre">clr_callback()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="candle/candle.html#candle.clr_check_args"><code class="docutils literal notranslate"><span class="pre">clr_check_args()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="candle/candle.html#candle.clr_set_args"><code class="docutils literal notranslate"><span class="pre">clr_set_args()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="candle/candle.html#candle.build_initializer"><code class="docutils literal notranslate"><span class="pre">build_initializer()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="candle/candle.html#candle.build_optimizer"><code class="docutils literal notranslate"><span class="pre">build_optimizer()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="candle/candle.html#candle.compute_trainable_params"><code class="docutils literal notranslate"><span class="pre">compute_trainable_params()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="candle/candle.html#candle.get_function"><code class="docutils literal notranslate"><span class="pre">get_function()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="candle/candle.html#candle.mae"><code class="docutils literal notranslate"><span class="pre">mae()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="candle/candle.html#candle.mse"><code class="docutils literal notranslate"><span class="pre">mse()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="candle/candle.html#candle.r2"><code class="docutils literal notranslate"><span class="pre">r2()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="candle/candle.html#candle.register_permanent_dropout"><code class="docutils literal notranslate"><span class="pre">register_permanent_dropout()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="candle/candle.html#candle.set_parallelism_threads"><code class="docutils literal notranslate"><span class="pre">set_parallelism_threads()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="candle/candle.html#candle.set_seed"><code class="docutils literal notranslate"><span class="pre">set_seed()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="candle/candle.html#candle.abstention_acc_class_i_metric"><code class="docutils literal notranslate"><span class="pre">abstention_acc_class_i_metric()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="candle/candle.html#candle.abstention_acc_metric"><code class="docutils literal notranslate"><span class="pre">abstention_acc_metric()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="candle/candle.html#candle.abstention_class_i_metric"><code class="docutils literal notranslate"><span class="pre">abstention_class_i_metric()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="candle/candle.html#candle.abstention_loss"><code class="docutils literal notranslate"><span class="pre">abstention_loss()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="candle/candle.html#candle.abstention_metric"><code class="docutils literal notranslate"><span class="pre">abstention_metric()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="candle/candle.html#candle.acc_class_i_metric"><code class="docutils literal notranslate"><span class="pre">acc_class_i_metric()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="candle/candle.html#candle.add_index_to_output"><code class="docutils literal notranslate"><span class="pre">add_index_to_output()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="candle/candle.html#candle.add_model_output"><code class="docutils literal notranslate"><span class="pre">add_model_output()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="candle/candle.html#candle.contamination_loss"><code class="docutils literal notranslate"><span class="pre">contamination_loss()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="candle/candle.html#candle.heteroscedastic_loss"><code class="docutils literal notranslate"><span class="pre">heteroscedastic_loss()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="candle/candle.html#candle.mae_contamination_metric"><code class="docutils literal notranslate"><span class="pre">mae_contamination_metric()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="candle/candle.html#candle.mae_heteroscedastic_metric"><code class="docutils literal notranslate"><span class="pre">mae_heteroscedastic_metric()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="candle/candle.html#candle.meanS_heteroscedastic_metric"><code class="docutils literal notranslate"><span class="pre">meanS_heteroscedastic_metric()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="candle/candle.html#candle.modify_labels"><code class="docutils literal notranslate"><span class="pre">modify_labels()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="candle/candle.html#candle.mse_contamination_metric"><code class="docutils literal notranslate"><span class="pre">mse_contamination_metric()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="candle/candle.html#candle.mse_heteroscedastic_metric"><code class="docutils literal notranslate"><span class="pre">mse_heteroscedastic_metric()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="candle/candle.html#candle.quantile_loss"><code class="docutils literal notranslate"><span class="pre">quantile_loss()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="candle/candle.html#candle.quantile_metric"><code class="docutils literal notranslate"><span class="pre">quantile_metric()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="candle/candle.html#candle.r2_contamination_metric"><code class="docutils literal notranslate"><span class="pre">r2_contamination_metric()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="candle/candle.html#candle.r2_heteroscedastic_metric"><code class="docutils literal notranslate"><span class="pre">r2_heteroscedastic_metric()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="candle/candle.html#candle.sparse_abstention_acc_metric"><code class="docutils literal notranslate"><span class="pre">sparse_abstention_acc_metric()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="candle/candle.html#candle.sparse_abstention_loss"><code class="docutils literal notranslate"><span class="pre">sparse_abstention_loss()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="candle/candle.html#candle.triple_quantile_loss"><code class="docutils literal notranslate"><span class="pre">triple_quantile_loss()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="candle/candle.html#candle.plot_metrics"><code class="docutils literal notranslate"><span class="pre">plot_metrics()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="candle/candle.html#candle.build_pytorch_activation"><code class="docutils literal notranslate"><span class="pre">build_pytorch_activation()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="candle/candle.html#candle.build_pytorch_optimizer"><code class="docutils literal notranslate"><span class="pre">build_pytorch_optimizer()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="candle/candle.html#candle.get_pytorch_function"><code class="docutils literal notranslate"><span class="pre">get_pytorch_function()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="candle/candle.html#candle.pytorch_initialize"><code class="docutils literal notranslate"><span class="pre">pytorch_initialize()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="candle/candle.html#candle.pytorch_mse"><code class="docutils literal notranslate"><span class="pre">pytorch_mse()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="candle/candle.html#candle.pytorch_xent"><code class="docutils literal notranslate"><span class="pre">pytorch_xent()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="candle/candle.html#candle.set_pytorch_seed"><code class="docutils literal notranslate"><span class="pre">set_pytorch_seed()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="candle/candle.html#candle.set_pytorch_threads"><code class="docutils literal notranslate"><span class="pre">set_pytorch_threads()</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="candle/candle.html#classes">Classes</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="candle/candle.html#candle.Benchmark"><code class="docutils literal notranslate"><span class="pre">Benchmark</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="candle/candle.html#candle.Progbar"><code class="docutils literal notranslate"><span class="pre">Progbar</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="candle/candle.html#candle.ArgumentStruct"><code class="docutils literal notranslate"><span class="pre">ArgumentStruct</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="candle/candle.html#candle.MultiGPUCheckpoint"><code class="docutils literal notranslate"><span class="pre">MultiGPUCheckpoint</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="candle/candle.html#candle.CyclicLR"><code class="docutils literal notranslate"><span class="pre">CyclicLR</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="candle/candle.html#candle.CandleRemoteMonitor"><code class="docutils literal notranslate"><span class="pre">CandleRemoteMonitor</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="candle/candle.html#candle.LoggingCallback"><code class="docutils literal notranslate"><span class="pre">LoggingCallback</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="candle/candle.html#candle.PermanentDropout"><code class="docutils literal notranslate"><span class="pre">PermanentDropout</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="candle/candle.html#candle.TerminateOnTimeOut"><code class="docutils literal notranslate"><span class="pre">TerminateOnTimeOut</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="candle/candle.html#candle.AbstentionAdapt_Callback"><code class="docutils literal notranslate"><span class="pre">AbstentionAdapt_Callback</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="candle/candle.html#candle.Contamination_Callback"><code class="docutils literal notranslate"><span class="pre">Contamination_Callback</span></code></a></li>
 </ul>
 </li>
 </ul>
