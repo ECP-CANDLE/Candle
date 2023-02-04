@@ -92,7 +92,6 @@
 <li class="toctree-l3"><a class="reference internal" href="#candle.plot_histogram_error_per_sigma"><code class="docutils literal notranslate"><span class="pre">plot_histogram_error_per_sigma()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#candle.plot_history"><code class="docutils literal notranslate"><span class="pre">plot_history()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#candle.plot_scatter"><code class="docutils literal notranslate"><span class="pre">plot_scatter()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#candle.restart"><code class="docutils literal notranslate"><span class="pre">restart()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#candle.clr_callback"><code class="docutils literal notranslate"><span class="pre">clr_callback()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#candle.clr_check_args"><code class="docutils literal notranslate"><span class="pre">clr_check_args()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#candle.clr_set_args"><code class="docutils literal notranslate"><span class="pre">clr_set_args()</span></code></a></li>
@@ -130,12 +129,21 @@
 <li class="toctree-l3"><a class="reference internal" href="#candle.sparse_abstention_loss"><code class="docutils literal notranslate"><span class="pre">sparse_abstention_loss()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#candle.triple_quantile_loss"><code class="docutils literal notranslate"><span class="pre">triple_quantile_loss()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#candle.plot_metrics"><code class="docutils literal notranslate"><span class="pre">plot_metrics()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#candle.build_pytorch_activation"><code class="docutils literal notranslate"><span class="pre">build_pytorch_activation()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#candle.build_pytorch_optimizer"><code class="docutils literal notranslate"><span class="pre">build_pytorch_optimizer()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#candle.get_pytorch_function"><code class="docutils literal notranslate"><span class="pre">get_pytorch_function()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#candle.pytorch_initialize"><code class="docutils literal notranslate"><span class="pre">pytorch_initialize()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#candle.pytorch_mse"><code class="docutils literal notranslate"><span class="pre">pytorch_mse()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#candle.pytorch_xent"><code class="docutils literal notranslate"><span class="pre">pytorch_xent()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#candle.set_pytorch_seed"><code class="docutils literal notranslate"><span class="pre">set_pytorch_seed()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#candle.set_pytorch_threads"><code class="docutils literal notranslate"><span class="pre">set_pytorch_threads()</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#classes">Classes</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#candle.Benchmark"><code class="docutils literal notranslate"><span class="pre">Benchmark</span></code></a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#candle.Benchmark.check_required_exists"><code class="docutils literal notranslate"><span class="pre">Benchmark.check_required_exists()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#candle.Benchmark.format_benchmark_config_arguments"><code class="docutils literal notranslate"><span class="pre">Benchmark.format_benchmark_config_arguments()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#candle.Benchmark.get_parameter_from_file"><code class="docutils literal notranslate"><span class="pre">Benchmark.get_parameter_from_file()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#candle.Benchmark.parse_parameters"><code class="docutils literal notranslate"><span class="pre">Benchmark.parse_parameters()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#candle.Benchmark.read_config_file"><code class="docutils literal notranslate"><span class="pre">Benchmark.read_config_file()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#candle.Benchmark.set_locals"><code class="docutils literal notranslate"><span class="pre">Benchmark.set_locals()</span></code></a></li>
@@ -146,19 +154,6 @@
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="#candle.ArgumentStruct"><code class="docutils literal notranslate"><span class="pre">ArgumentStruct</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#candle.CandleCheckpointCallback"><code class="docutils literal notranslate"><span class="pre">CandleCheckpointCallback</span></code></a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#candle.CandleCheckpointCallback.checksum"><code class="docutils literal notranslate"><span class="pre">CandleCheckpointCallback.checksum()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#candle.CandleCheckpointCallback.clean"><code class="docutils literal notranslate"><span class="pre">CandleCheckpointCallback.clean()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#candle.CandleCheckpointCallback.keep"><code class="docutils literal notranslate"><span class="pre">CandleCheckpointCallback.keep()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#candle.CandleCheckpointCallback.on_epoch_end"><code class="docutils literal notranslate"><span class="pre">CandleCheckpointCallback.on_epoch_end()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#candle.CandleCheckpointCallback.on_train_end"><code class="docutils literal notranslate"><span class="pre">CandleCheckpointCallback.on_train_end()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#candle.CandleCheckpointCallback.report_initial"><code class="docutils literal notranslate"><span class="pre">CandleCheckpointCallback.report_initial()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#candle.CandleCheckpointCallback.save_check"><code class="docutils literal notranslate"><span class="pre">CandleCheckpointCallback.save_check()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#candle.CandleCheckpointCallback.scan_params"><code class="docutils literal notranslate"><span class="pre">CandleCheckpointCallback.scan_params()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#candle.CandleCheckpointCallback.symlink"><code class="docutils literal notranslate"><span class="pre">CandleCheckpointCallback.symlink()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#candle.CandleCheckpointCallback.write_model"><code class="docutils literal notranslate"><span class="pre">CandleCheckpointCallback.write_model()</span></code></a></li>
-</ul>
-</li>
 <li class="toctree-l3"><a class="reference internal" href="#candle.MultiGPUCheckpoint"><code class="docutils literal notranslate"><span class="pre">MultiGPUCheckpoint</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#candle.CyclicLR"><code class="docutils literal notranslate"><span class="pre">CyclicLR</span></code></a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#candle.CyclicLR.on_batch_end"><code class="docutils literal notranslate"><span class="pre">CyclicLR.on_batch_end()</span></code></a></li>
@@ -328,8 +323,6 @@ Functionality to plot a 1D histogram of the distribution of computed errors</p><
 Undocumented.</p></li>
 <li><p><a class="reference internal" href="#candle.plot_scatter" title="candle.plot_scatter"><code class="xref py py-func docutils literal notranslate"><span class="pre">plot_scatter()</span></code></a>:
 Undocumented.</p></li>
-<li><p><a class="reference internal" href="#candle.restart" title="candle.restart"><code class="xref py py-func docutils literal notranslate"><span class="pre">restart()</span></code></a>:
-Possibly restarts model from CheckpointCallback according to given</p></li>
 <li><p><a class="reference internal" href="#candle.clr_callback" title="candle.clr_callback"><code class="xref py py-func docutils literal notranslate"><span class="pre">clr_callback()</span></code></a>:
 Creates keras callback for cyclical learning rate.</p></li>
 <li><p><a class="reference internal" href="#candle.clr_check_args" title="candle.clr_check_args"><code class="xref py py-func docutils literal notranslate"><span class="pre">clr_check_args()</span></code></a>:
@@ -404,6 +397,22 @@ Function to compute abstention loss. It is composed by two terms: (i)</p></li>
 This function computes the quantile loss for the median and low and high</p></li>
 <li><p><a class="reference internal" href="#candle.plot_metrics" title="candle.plot_metrics"><code class="xref py py-func docutils literal notranslate"><span class="pre">plot_metrics()</span></code></a>:
 Plots keras training curves history.</p></li>
+<li><p><a class="reference internal" href="#candle.build_pytorch_activation" title="candle.build_pytorch_activation"><code class="xref py py-func docutils literal notranslate"><span class="pre">build_pytorch_activation()</span></code></a>:
+Undocumented.</p></li>
+<li><p><a class="reference internal" href="#candle.build_pytorch_optimizer" title="candle.build_pytorch_optimizer"><code class="xref py py-func docutils literal notranslate"><span class="pre">build_pytorch_optimizer()</span></code></a>:
+Undocumented.</p></li>
+<li><p><a class="reference internal" href="#candle.get_pytorch_function" title="candle.get_pytorch_function"><code class="xref py py-func docutils literal notranslate"><span class="pre">get_pytorch_function()</span></code></a>:
+Undocumented.</p></li>
+<li><p><a class="reference internal" href="#candle.pytorch_initialize" title="candle.pytorch_initialize"><code class="xref py py-func docutils literal notranslate"><span class="pre">pytorch_initialize()</span></code></a>:
+Undocumented.</p></li>
+<li><p><a class="reference internal" href="#candle.pytorch_mse" title="candle.pytorch_mse"><code class="xref py py-func docutils literal notranslate"><span class="pre">pytorch_mse()</span></code></a>:
+Undocumented.</p></li>
+<li><p><a class="reference internal" href="#candle.pytorch_xent" title="candle.pytorch_xent"><code class="xref py py-func docutils literal notranslate"><span class="pre">pytorch_xent()</span></code></a>:
+Undocumented.</p></li>
+<li><p><a class="reference internal" href="#candle.set_pytorch_seed" title="candle.set_pytorch_seed"><code class="xref py py-func docutils literal notranslate"><span class="pre">set_pytorch_seed()</span></code></a>:
+Set the random number seed to the desired value</p></li>
+<li><p><a class="reference internal" href="#candle.set_pytorch_threads" title="candle.set_pytorch_threads"><code class="xref py py-func docutils literal notranslate"><span class="pre">set_pytorch_threads()</span></code></a>:
+Undocumented.</p></li>
 </ul>
 <dl class="py function">
 <dt class="sig sig-object py" id="candle.generate_cross_validation_partition">
@@ -1374,18 +1383,6 @@ The plot generated is stored in a png file.</p>
 <dd></dd></dl>
 
 <dl class="py function">
-<dt class="sig sig-object py" id="candle.restart">
-<span class="sig-prename descclassname"><span class="pre">candle.</span></span><span class="sig-name descname"><span class="pre">restart</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">gParameters</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/candle/ckpt_keras_utils.html#restart"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#candle.restart" title="Permalink to this definition">¶</a></dt>
-<dd><p>Possibly restarts model from CheckpointCallback according to given
-settings and the ckpt-info.json.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p>The JSON dict if the restart happened or None if the restart did not happen.</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py function">
 <dt class="sig sig-object py" id="candle.clr_callback">
 <span class="sig-prename descclassname"><span class="pre">candle.</span></span><span class="sig-name descname"><span class="pre">clr_callback</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mode</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">base_lr</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.0001</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_lr</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.001</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gamma</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.999994</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Callback</span></span></span><a class="reference internal" href="../_modules/candle/clr_keras_utils.html#clr_callback"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#candle.clr_callback" title="Permalink to this definition">¶</a></dt>
 <dd><p>Creates keras callback for cyclical learning rate.</p>
@@ -1856,6 +1853,54 @@ add_lr: add curve of learning rate progression over epochs</p>
 </dl>
 </dd></dl>
 
+<dl class="py function">
+<dt class="sig sig-object py" id="candle.build_pytorch_activation">
+<span class="sig-prename descclassname"><span class="pre">candle.</span></span><span class="sig-name descname"><span class="pre">build_pytorch_activation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">activation</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/candle/pytorch_utils.html#build_pytorch_activation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#candle.build_pytorch_activation" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="candle.build_pytorch_optimizer">
+<span class="sig-prename descclassname"><span class="pre">candle.</span></span><span class="sig-name descname"><span class="pre">build_pytorch_optimizer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">optimizer</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lr</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">kerasDefaults</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">trainable_only</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/candle/pytorch_utils.html#build_pytorch_optimizer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#candle.build_pytorch_optimizer" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="candle.get_pytorch_function">
+<span class="sig-prename descclassname"><span class="pre">candle.</span></span><span class="sig-name descname"><span class="pre">get_pytorch_function</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/candle/pytorch_utils.html#get_pytorch_function"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#candle.get_pytorch_function" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="candle.pytorch_initialize">
+<span class="sig-prename descclassname"><span class="pre">candle.</span></span><span class="sig-name descname"><span class="pre">pytorch_initialize</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">weights</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">initializer</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">kerasDefaults</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">constant</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/candle/pytorch_utils.html#pytorch_initialize"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#candle.pytorch_initialize" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="candle.pytorch_mse">
+<span class="sig-prename descclassname"><span class="pre">candle.</span></span><span class="sig-name descname"><span class="pre">pytorch_mse</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">y_true</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_pred</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/candle/pytorch_utils.html#pytorch_mse"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#candle.pytorch_mse" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="candle.pytorch_xent">
+<span class="sig-prename descclassname"><span class="pre">candle.</span></span><span class="sig-name descname"><span class="pre">pytorch_xent</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">y_true</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_pred</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/candle/pytorch_utils.html#pytorch_xent"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#candle.pytorch_xent" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="candle.set_pytorch_seed">
+<span class="sig-prename descclassname"><span class="pre">candle.</span></span><span class="sig-name descname"><span class="pre">set_pytorch_seed</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">seed</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/candle/pytorch_utils.html#set_pytorch_seed"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#candle.set_pytorch_seed" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the random number seed to the desired value</p>
+<section id="parameters">
+<h3>Parameters<a class="headerlink" href="#parameters" title="Permalink to this heading">¶</a></h3>
+<dl class="simple">
+<dt>seed<span class="classifier">integer</span></dt><dd><p>Random number seed.</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="candle.set_pytorch_threads">
+<span class="sig-prename descclassname"><span class="pre">candle.</span></span><span class="sig-name descname"><span class="pre">set_pytorch_threads</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/candle/pytorch_utils.html#set_pytorch_threads"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#candle.set_pytorch_threads" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
 </section>
 <section id="classes">
 <h2><a class="toc-backref" href="#id6">Classes</a><a class="headerlink" href="#classes" title="Permalink to this heading">¶</a></h2>
@@ -1866,8 +1911,6 @@ Class that implements an interface to handle configuration options for</p></li>
 Progress bar</p></li>
 <li><p><a class="reference internal" href="#candle.ArgumentStruct" title="candle.ArgumentStruct"><code class="xref py py-class docutils literal notranslate"><span class="pre">ArgumentStruct</span></code></a>:
 Class that converts a python dictionary into an object with named</p></li>
-<li><p><a class="reference internal" href="#candle.CandleCheckpointCallback" title="candle.CandleCheckpointCallback"><code class="xref py py-class docutils literal notranslate"><span class="pre">CandleCheckpointCallback</span></code></a>:
-Keras Callback for CANDLE-compliant Benchmarks to use for checkpointing</p></li>
 <li><p><a class="reference internal" href="#candle.MultiGPUCheckpoint" title="candle.MultiGPUCheckpoint"><code class="xref py py-class docutils literal notranslate"><span class="pre">MultiGPUCheckpoint</span></code></a>:
 Callback to save the Keras model or model weights at some frequency.</p></li>
 <li><p><a class="reference internal" href="#candle.CyclicLR" title="candle.CyclicLR"><code class="xref py py-class docutils literal notranslate"><span class="pre">CyclicLR</span></code></a>:
@@ -1887,7 +1930,7 @@ This callback is used to update the parameters of the contamination</p></li>
 </ul>
 <dl class="py class">
 <dt class="sig sig-object py" id="candle.Benchmark">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">candle.</span></span><span class="sig-name descname"><span class="pre">Benchmark</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filepath</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">defmodel</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">framework</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prog</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">desc</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parser</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/candle/benchmark_def.html#Benchmark"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#candle.Benchmark" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">candle.</span></span><span class="sig-name descname"><span class="pre">Benchmark</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filepath</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">defmodel</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">framework</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prog</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">desc</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parser</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">additional_definitions</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">required</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/candle/benchmark_def.html#Benchmark"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#candle.Benchmark" title="Permalink to this definition">¶</a></dt>
 <dd><p>Class that implements an interface to handle configuration options for
 the different CANDLE benchmarks.</p>
 <p>It provides access to all the common configuration options and
@@ -1926,6 +1969,26 @@ config file defines those values</p>
 </dd>
 <dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p>ConfigDict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="candle.Benchmark.get_parameter_from_file">
+<span class="sig-name descname"><span class="pre">get_parameter_from_file</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">absfname</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">param</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/candle/benchmark_def.html#Benchmark.get_parameter_from_file"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#candle.Benchmark.get_parameter_from_file" title="Permalink to this definition">¶</a></dt>
+<dd><p>Functionality to extract the value of one parameter from the configuration file given. Execution is terminated if the parameter specified is not found in the configuration file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>absfname</strong> (<em>string</em>) – filename of the the configuration file including absolute path.</p></li>
+<li><p><strong>param</strong> (<em>string</em>) – parameter to extract from configuration file.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>a string with the value of the parameter read from the configuration file.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>string</p>
 </dd>
 </dl>
 </dd></dl>
@@ -2013,111 +2076,6 @@ rankdir=LR;
 size=&quot;8.0, 12.0&quot;;
   &quot;ArgumentStruct&quot; [URL=&quot;#candle.ArgumentStruct&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;Class that converts a python dictionary into an object with named&quot;];
 }
-</dd></dl>
-
-<dl class="py class">
-<dt class="sig sig-object py" id="candle.CandleCheckpointCallback">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">candle.</span></span><span class="sig-name descname"><span class="pre">CandleCheckpointCallback</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">gParameters</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">logger</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'DEFAULT'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/candle/ckpt_keras_utils.html#CandleCheckpointCallback"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#candle.CandleCheckpointCallback" title="Permalink to this definition">¶</a></dt>
-<dd><p>Keras Callback for CANDLE-compliant Benchmarks to use for checkpointing
-Creates a JSON file alongside the weights and optimizer checkpoints that
-includes important metadata, particularly for restarting and tracking
-complex workflows.</p>
-<p class="rubric">Inheritance</p>
-digraph inheritance12d3c100ae {
-bgcolor=transparent;
-rankdir=LR;
-size=&quot;8.0, 12.0&quot;;
-  &quot;Callback&quot; [fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,tooltip=&quot;Abstract base class used to build new callbacks.&quot;];
-  &quot;CandleCheckpointCallback&quot; [URL=&quot;#candle.CandleCheckpointCallback&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;Keras Callback for CANDLE-compliant Benchmarks to use for checkpointing&quot;];
-  &quot;Callback&quot; -&gt; &quot;CandleCheckpointCallback&quot; [arrowsize=0.5,style=&quot;setlinewidth(0.5)&quot;];
-}
-<dl class="py method">
-<dt class="sig sig-object py" id="candle.CandleCheckpointCallback.checksum">
-<span class="sig-name descname"><span class="pre">checksum</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dir_work</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/candle/ckpt_keras_utils.html#CandleCheckpointCallback.checksum"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#candle.CandleCheckpointCallback.checksum" title="Permalink to this definition">¶</a></dt>
-<dd><p>Simple checksum dispatch
-dir_work: A Path</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="candle.CandleCheckpointCallback.clean">
-<span class="sig-name descname"><span class="pre">clean</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">epoch_now</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/candle/ckpt_keras_utils.html#CandleCheckpointCallback.clean"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#candle.CandleCheckpointCallback.clean" title="Permalink to this definition">¶</a></dt>
-<dd><p>Clean old epoch directories in accordance with ckpt_keep policies.</p>
-<p>Return number of checkpoints kept and deleted</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="candle.CandleCheckpointCallback.keep">
-<span class="sig-name descname"><span class="pre">keep</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">epoch</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">epoch_now</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">kept</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/candle/ckpt_keras_utils.html#CandleCheckpointCallback.keep"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#candle.CandleCheckpointCallback.keep" title="Permalink to this definition">¶</a></dt>
-<dd><p>kept: Number of epochs already kept
-return True if we are keeping this epoch, else False</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="candle.CandleCheckpointCallback.on_epoch_end">
-<span class="sig-name descname"><span class="pre">on_epoch_end</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">epoch</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">logs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/candle/ckpt_keras_utils.html#CandleCheckpointCallback.on_epoch_end"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#candle.CandleCheckpointCallback.on_epoch_end" title="Permalink to this definition">¶</a></dt>
-<dd><p>Note: We immediately increment epoch
-from index-from-0 to index-from-1
-to match the TensorFlow output.
-Normally, ckpts/best is the best saved state, and ckpts/last is the last saved state.</p>
-<dl class="simple">
-<dt>Procedure:</dt><dd><ol class="arabic simple">
-<li><p>Write current state to ckpts/work</p></li>
-<li><p>Rename ckpts/work to ckpts/epoch/NNN</p></li>
-<li><p>If best, link ckpts/best to ckpts/epoch/NNN</p></li>
-<li><p>Link ckpts/last to ckpts/epoch/NNN</p></li>
-<li><p>Clean up old ckpts according to keep policy</p></li>
-</ol>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="candle.CandleCheckpointCallback.on_train_end">
-<span class="sig-name descname"><span class="pre">on_train_end</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">logs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/candle/ckpt_keras_utils.html#CandleCheckpointCallback.on_train_end"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#candle.CandleCheckpointCallback.on_train_end" title="Permalink to this definition">¶</a></dt>
-<dd><p>Called at the end of training.</p>
-<p>Subclasses should override for any actions to run.</p>
-<dl class="simple">
-<dt>Args:</dt><dd><dl class="simple">
-<dt>logs: Dict. Currently the output of the last call to</dt><dd><p><cite>on_epoch_end()</cite> is passed to this argument for this method but
-that may change in the future.</p>
-</dd>
-</dl>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="candle.CandleCheckpointCallback.report_initial">
-<span class="sig-name descname"><span class="pre">report_initial</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/candle/ckpt_keras_utils.html#CandleCheckpointCallback.report_initial"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#candle.CandleCheckpointCallback.report_initial" title="Permalink to this definition">¶</a></dt>
-<dd><p>Simply report that we are ready to run.</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="candle.CandleCheckpointCallback.save_check">
-<span class="sig-name descname"><span class="pre">save_check</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">logs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">epoch</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/candle/ckpt_keras_utils.html#CandleCheckpointCallback.save_check"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#candle.CandleCheckpointCallback.save_check" title="Permalink to this definition">¶</a></dt>
-<dd><p>Make sure we want to save this epoch based on the model metrics in
-given logs Also updates epoch_best if appropriate.</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="candle.CandleCheckpointCallback.scan_params">
-<span class="sig-name descname"><span class="pre">scan_params</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">gParameters</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/candle/ckpt_keras_utils.html#CandleCheckpointCallback.scan_params"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#candle.CandleCheckpointCallback.scan_params" title="Permalink to this definition">¶</a></dt>
-<dd><p>Simply translate gParameters into instance fields.</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="candle.CandleCheckpointCallback.symlink">
-<span class="sig-name descname"><span class="pre">symlink</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">src</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dst</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/candle/ckpt_keras_utils.html#CandleCheckpointCallback.symlink"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#candle.CandleCheckpointCallback.symlink" title="Permalink to this definition">¶</a></dt>
-<dd><p>Like os.symlink, but overwrites dst and logs.</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="candle.CandleCheckpointCallback.write_model">
-<span class="sig-name descname"><span class="pre">write_model</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dir_work</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">epoch</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/candle/ckpt_keras_utils.html#CandleCheckpointCallback.write_model"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#candle.CandleCheckpointCallback.write_model" title="Permalink to this definition">¶</a></dt>
-<dd><p>Do the I/O, report stats
-dir_work: A Path</p>
-</dd></dl>
-
 </dd></dl>
 
 <dl class="py class">

@@ -89,7 +89,7 @@
 
 <span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Set</span><span class="p">,</span> <span class="n">Type</span><span class="p">,</span> <span class="n">Union</span>
 
-<span class="kn">from</span> <span class="nn">.file_utils</span> <span class="kn">import</span> <span class="n">directory_from_parameters</span>
+<span class="kn">from</span> <span class="nn">.file_utils</span> <span class="kn">import</span> <span class="n">directory_tree_from_parameters</span>
 <span class="kn">from</span> <span class="nn">.helper_utils</span> <span class="kn">import</span> <span class="n">str2bool</span>
 
 <span class="c1"># Seed for random generation -- default value</span>
@@ -187,6 +187,7 @@
 <span class="sd">    parameters.&quot;&quot;&quot;</span>
 
     <span class="n">name</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="c1"># ABV = abbreviated form</span>
     <span class="n">abv</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span>
     <span class="n">action</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Type</span><span class="p">[</span><span class="n">ListOfListsAction</span><span class="p">]]</span>
     <span class="nb">type</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Any</span><span class="p">]</span>
@@ -824,8 +825,21 @@
     <span class="k">else</span><span class="p">:</span>  <span class="c1"># a &#39;config_file&#39; has been set --&gt; use this file</span>
         <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isabs</span><span class="p">(</span><span class="n">conffile_txt</span><span class="p">):</span>
             <span class="n">conffile</span> <span class="o">=</span> <span class="n">conffile_txt</span>
-        <span class="k">else</span><span class="p">:</span>
+        <span class="k">elif</span> <span class="n">conffile_txt</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span>
+            <span class="s2">&quot;./&quot;</span>
+        <span class="p">):</span>  <span class="c1"># user is trying to use a builtin alternate model file</span>
             <span class="n">conffile</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">bmk</span><span class="o">.</span><span class="n">file_path</span><span class="p">,</span> <span class="n">conffile_txt</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;CANDLE_DATA_DIR&quot;</span><span class="p">]</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">conffile</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;CANDLE_DATA_DIR&quot;</span><span class="p">],</span> <span class="n">conffile_txt</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">conffile</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">bmk</span><span class="o">.</span><span class="n">file_path</span><span class="p">,</span> <span class="n">conffile_txt</span><span class="p">)</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">conffile</span><span class="p">):</span>
+                <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span>
+                    <span class="s2">&quot;ERROR ! Specified configuration file &quot;</span>
+                    <span class="o">+</span> <span class="n">conffile</span>
+                    <span class="o">+</span> <span class="s2">&quot; not found ... Exiting&quot;</span>
+                <span class="p">)</span>
 
     <span class="c1"># print(&quot;Configuration file: &quot;, conffile)</span>
     <span class="n">fileParameters</span> <span class="o">=</span> <span class="n">bmk</span><span class="o">.</span><span class="n">read_config_file</span><span class="p">(</span>
@@ -876,9 +890,13 @@
             <span class="n">params</span><span class="p">[</span><span class="s2">&quot;data_type&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">get_choice</span><span class="p">(</span><span class="n">params</span><span class="p">[</span><span class="s2">&quot;data_type&quot;</span><span class="p">])</span>
 
     <span class="k">if</span> <span class="s2">&quot;output_dir&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">params</span><span class="p">:</span>
-        <span class="n">params</span><span class="p">[</span><span class="s2">&quot;output_dir&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">directory_from_parameters</span><span class="p">(</span><span class="n">params</span><span class="p">)</span>
+        <span class="n">params</span><span class="p">[</span><span class="s2">&quot;data_dir&quot;</span><span class="p">],</span> <span class="n">params</span><span class="p">[</span><span class="s2">&quot;output_dir&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">directory_tree_from_parameters</span><span class="p">(</span>
+            <span class="n">params</span>
+        <span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
-        <span class="n">params</span><span class="p">[</span><span class="s2">&quot;output_dir&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">directory_from_parameters</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">params</span><span class="p">[</span><span class="s2">&quot;output_dir&quot;</span><span class="p">])</span>
+        <span class="n">params</span><span class="p">[</span><span class="s2">&quot;data_dir&quot;</span><span class="p">],</span> <span class="n">params</span><span class="p">[</span><span class="s2">&quot;output_dir&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">directory_tree_from_parameters</span><span class="p">(</span>
+            <span class="n">params</span><span class="p">,</span> <span class="n">params</span><span class="p">[</span><span class="s2">&quot;output_dir&quot;</span><span class="p">]</span>
+        <span class="p">)</span>
 
     <span class="k">if</span> <span class="s2">&quot;rng_seed&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">params</span><span class="p">:</span>
         <span class="n">params</span><span class="p">[</span><span class="s2">&quot;rng_seed&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">DEFAULT_SEED</span>

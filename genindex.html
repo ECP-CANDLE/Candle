@@ -91,7 +91,6 @@
  | <a href="#T"><strong>T</strong></a>
  | <a href="#U"><strong>U</strong></a>
  | <a href="#V"><strong>V</strong></a>
- | <a href="#W"><strong>W</strong></a>
  
 </div>
 <h2 id="A">A</h2>
@@ -135,11 +134,15 @@
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="candle/candle.html#candle.Benchmark">Benchmark (class in candle)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="candle/candle.html#candle.build_initializer">build_initializer() (in module candle)</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="candle/candle.html#candle.build_optimizer">build_optimizer() (in module candle)</a>
+</li>
+      <li><a href="candle/candle.html#candle.build_pytorch_activation">build_pytorch_activation() (in module candle)</a>
+</li>
+      <li><a href="candle/candle.html#candle.build_pytorch_optimizer">build_pytorch_optimizer() (in module candle)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -156,17 +159,11 @@
         <li><a href="candle/candle.html#module-candle">module</a>
 </li>
       </ul></li>
-      <li><a href="candle/candle.html#candle.CandleCheckpointCallback">CandleCheckpointCallback (class in candle)</a>
-</li>
       <li><a href="candle/candle.html#candle.CandleRemoteMonitor">CandleRemoteMonitor (class in candle)</a>
 </li>
       <li><a href="candle/candle.html#candle.check_flag_conflicts">check_flag_conflicts() (in module candle)</a>
 </li>
       <li><a href="candle/candle.html#candle.Benchmark.check_required_exists">check_required_exists() (candle.Benchmark method)</a>
-</li>
-      <li><a href="candle/candle.html#candle.CandleCheckpointCallback.checksum">checksum() (candle.CandleCheckpointCallback method)</a>
-</li>
-      <li><a href="candle/candle.html#candle.CandleCheckpointCallback.clean">clean() (candle.CandleCheckpointCallback method)</a>
 </li>
       <li><a href="candle/candle.html#candle.clr_callback">clr_callback() (in module candle)</a>
 </li>
@@ -174,10 +171,10 @@
 </li>
       <li><a href="candle/candle.html#candle.clr_set_args">clr_set_args() (in module candle)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="candle/candle.html#candle.combat_batch_effect_removal">combat_batch_effect_removal() (in module candle)</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="candle/candle.html#candle.compute_empirical_calibration_interpolation">compute_empirical_calibration_interpolation() (in module candle)</a>
 </li>
       <li><a href="candle/candle.html#candle.compute_statistics_heteroscedastic">compute_statistics_heteroscedastic() (in module candle)</a>
@@ -224,13 +221,17 @@
 </li>
       <li><a href="candle/candle.html#candle.generate_gene_set_data">generate_gene_set_data() (in module candle)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="candle/candle.html#candle.generate_index_distribution">generate_index_distribution() (in module candle)</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="candle/candle.html#candle.get_file">get_file() (in module candle)</a>
 </li>
       <li><a href="candle/candle.html#candle.get_function">get_function() (in module candle)</a>
+</li>
+      <li><a href="candle/candle.html#candle.Benchmark.get_parameter_from_file">get_parameter_from_file() (candle.Benchmark method)</a>
+</li>
+      <li><a href="candle/candle.html#candle.get_pytorch_function">get_pytorch_function() (in module candle)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -245,10 +246,6 @@
 
 <h2 id="K">K</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
-  <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="candle/candle.html#candle.CandleCheckpointCallback.keep">keep() (candle.CandleCheckpointCallback method)</a>
-</li>
-  </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="candle/candle.html#candle.keras_default_config">keras_default_config() (in module candle)</a>
 </li>
@@ -318,8 +315,6 @@
       <li><a href="candle/candle.html#candle.AbstentionAdapt_Callback.on_epoch_end">on_epoch_end() (candle.AbstentionAdapt_Callback method)</a>
 
       <ul>
-        <li><a href="candle/candle.html#candle.CandleCheckpointCallback.on_epoch_end">(candle.CandleCheckpointCallback method)</a>
-</li>
         <li><a href="candle/candle.html#candle.CandleRemoteMonitor.on_epoch_end">(candle.CandleRemoteMonitor method)</a>
 </li>
         <li><a href="candle/candle.html#candle.Contamination_Callback.on_epoch_end">(candle.Contamination_Callback method)</a>
@@ -341,12 +336,8 @@
         <li><a href="candle/candle.html#candle.TerminateOnTimeOut.on_train_begin">(candle.TerminateOnTimeOut method)</a>
 </li>
       </ul></li>
-      <li><a href="candle/candle.html#candle.CandleCheckpointCallback.on_train_end">on_train_end() (candle.CandleCheckpointCallback method)</a>
-
-      <ul>
-        <li><a href="candle/candle.html#candle.CandleRemoteMonitor.on_train_end">(candle.CandleRemoteMonitor method)</a>
+      <li><a href="candle/candle.html#candle.CandleRemoteMonitor.on_train_end">on_train_end() (candle.CandleRemoteMonitor method)</a>
 </li>
-      </ul></li>
   </ul></td>
 </tr></table>
 
@@ -367,12 +358,12 @@
 </li>
       <li><a href="candle/candle.html#candle.plot_calibration_interpolation">plot_calibration_interpolation() (in module candle)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="candle/candle.html#candle.plot_contamination">plot_contamination() (in module candle)</a>
 </li>
       <li><a href="candle/candle.html#candle.plot_decile_predictions">plot_decile_predictions() (in module candle)</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="candle/candle.html#candle.plot_density_observed_vs_predicted">plot_density_observed_vs_predicted() (in module candle)</a>
 </li>
       <li><a href="candle/candle.html#candle.plot_histogram_error_per_sigma">plot_histogram_error_per_sigma() (in module candle)</a>
@@ -384,6 +375,12 @@
       <li><a href="candle/candle.html#candle.plot_scatter">plot_scatter() (in module candle)</a>
 </li>
       <li><a href="candle/candle.html#candle.Progbar">Progbar (class in candle)</a>
+</li>
+      <li><a href="candle/candle.html#candle.pytorch_initialize">pytorch_initialize() (in module candle)</a>
+</li>
+      <li><a href="candle/candle.html#candle.pytorch_mse">pytorch_mse() (in module candle)</a>
+</li>
+      <li><a href="candle/candle.html#candle.pytorch_xent">pytorch_xent() (in module candle)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -409,17 +406,13 @@
 </li>
       <li><a href="candle/candle.html#candle.r2_contamination_metric">r2_contamination_metric() (in module candle)</a>
 </li>
-      <li><a href="candle/candle.html#candle.r2_heteroscedastic_metric">r2_heteroscedastic_metric() (in module candle)</a>
-</li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="candle/candle.html#candle.r2_heteroscedastic_metric">r2_heteroscedastic_metric() (in module candle)</a>
+</li>
       <li><a href="candle/candle.html#candle.Benchmark.read_config_file">read_config_file() (candle.Benchmark method)</a>
 </li>
       <li><a href="candle/candle.html#candle.register_permanent_dropout">register_permanent_dropout() (in module candle)</a>
-</li>
-      <li><a href="candle/candle.html#candle.CandleCheckpointCallback.report_initial">report_initial() (candle.CandleCheckpointCallback method)</a>
-</li>
-      <li><a href="candle/candle.html#candle.restart">restart() (in module candle)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -429,10 +422,6 @@
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="candle/candle.html#candle.CandleRemoteMonitor.save">save() (candle.CandleRemoteMonitor method)</a>
 </li>
-      <li><a href="candle/candle.html#candle.CandleCheckpointCallback.save_check">save_check() (candle.CandleCheckpointCallback method)</a>
-</li>
-      <li><a href="candle/candle.html#candle.CandleCheckpointCallback.scan_params">scan_params() (candle.CandleCheckpointCallback method)</a>
-</li>
       <li><a href="candle/candle.html#candle.select_decorrelated_features">select_decorrelated_features() (in module candle)</a>
 </li>
       <li><a href="candle/candle.html#candle.select_features_by_missing_values">select_features_by_missing_values() (in module candle)</a>
@@ -441,9 +430,13 @@
 </li>
       <li><a href="candle/candle.html#candle.Benchmark.set_locals">set_locals() (candle.Benchmark method)</a>
 </li>
+      <li><a href="candle/candle.html#candle.set_parallelism_threads">set_parallelism_threads() (in module candle)</a>
+</li>
+      <li><a href="candle/candle.html#candle.set_pytorch_seed">set_pytorch_seed() (in module candle)</a>
+</li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="candle/candle.html#candle.set_parallelism_threads">set_parallelism_threads() (in module candle)</a>
+      <li><a href="candle/candle.html#candle.set_pytorch_threads">set_pytorch_threads() (in module candle)</a>
 </li>
       <li><a href="candle/candle.html#candle.set_seed">set_seed() (in module candle)</a>
 </li>
@@ -456,8 +449,6 @@
       <li><a href="candle/candle.html#candle.split_data_for_empirical_calibration">split_data_for_empirical_calibration() (in module candle)</a>
 </li>
       <li><a href="candle/candle.html#candle.str2bool">str2bool() (in module candle)</a>
-</li>
-      <li><a href="candle/candle.html#candle.CandleCheckpointCallback.symlink">symlink() (candle.CandleCheckpointCallback method)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -490,14 +481,6 @@
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="candle/candle.html#candle.verify_path">verify_path() (in module candle)</a>
-</li>
-  </ul></td>
-</tr></table>
-
-<h2 id="W">W</h2>
-<table style="width: 100%" class="indextable genindextable"><tr>
-  <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="candle/candle.html#candle.CandleCheckpointCallback.write_model">write_model() (candle.CandleCheckpointCallback method)</a>
 </li>
   </ul></td>
 </tr></table>

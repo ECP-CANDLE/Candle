@@ -82,6 +82,7 @@
 <span class="kn">from</span> <span class="nn">candle.parsing_utils</span> <span class="kn">import</span> <span class="p">(</span>
     <span class="n">ConfigDict</span><span class="p">,</span>
     <span class="n">ParseDict</span><span class="p">,</span>
+    <span class="n">finalize_parameters</span><span class="p">,</span>
     <span class="n">parse_common</span><span class="p">,</span>
     <span class="n">parse_from_dictlist</span><span class="p">,</span>
     <span class="n">registered_conf</span><span class="p">,</span>
@@ -111,6 +112,8 @@
         <span class="n">prog</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">desc</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">parser</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">additional_definitions</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">required</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Initialize Benchmark object.</span>
@@ -130,6 +133,24 @@
 <span class="sd">            if &#39;neon&#39; framework a NeonArgparser is passed. Otherwise an argparser is constructed.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
+        <span class="c1"># Check that required system variable specifying path to data has been defined</span>
+        <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;CANDLE_DATA_DIR&quot;</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span>
+                <span class="s2">&quot;ERROR ! Required system variable not specified.  You must define CANDLE_DATA_DIR ... Exiting&quot;</span>
+            <span class="p">)</span>
+
+        <span class="c1"># Check that default model configuration exits</span>
+        <span class="n">fname</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">filepath</span><span class="p">,</span> <span class="n">defmodel</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">fname</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span>
+                <span class="s2">&quot;ERROR ! Required default configuration file not available.  File &quot;</span>
+                <span class="o">+</span> <span class="n">fname</span>
+                <span class="o">+</span> <span class="s2">&quot; ... Exiting&quot;</span>
+            <span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">model_name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_parameter_from_file</span><span class="p">(</span><span class="n">fname</span><span class="p">,</span> <span class="s2">&quot;model_name&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;model name: &quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">model_name</span><span class="p">)</span>
+
         <span class="k">if</span> <span class="n">parser</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">parser</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">(</span>
                 <span class="n">prog</span><span class="o">=</span><span class="n">prog</span><span class="p">,</span>
@@ -147,8 +168,16 @@
         <span class="k">for</span> <span class="n">lst</span> <span class="ow">in</span> <span class="n">registered_conf</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">registered_conf</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">lst</span><span class="p">)</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">required</span><span class="p">:</span> <span class="n">Set</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="nb">set</span><span class="p">([])</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">additional_definitions</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">ParseDict</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">if</span> <span class="n">required</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">required</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">required</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">required</span><span class="p">:</span> <span class="n">Set</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="nb">set</span><span class="p">([])</span>
+        <span class="k">if</span> <span class="n">additional_definitions</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">additional_definitions</span> <span class="o">=</span> <span class="n">additional_definitions</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">additional_definitions</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">ParseDict</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="c1"># legacy call for compatibility with existing Benchmarks</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">set_locals</span><span class="p">()</span>
 
 <div class="viewcode-block" id="Benchmark.parse_parameters"><a class="viewcode-back" href="../../candle/candle.html#candle.Benchmark.parse_parameters">[docs]</a>    <span class="k">def</span> <span class="nf">parse_parameters</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
@@ -242,6 +271,37 @@
 
         <span class="k">return</span> <span class="n">fileParams</span></div>
 
+<div class="viewcode-block" id="Benchmark.get_parameter_from_file"><a class="viewcode-back" href="../../candle/candle.html#candle.Benchmark.get_parameter_from_file">[docs]</a>    <span class="k">def</span> <span class="nf">get_parameter_from_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">absfname</span><span class="p">,</span> <span class="n">param</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Functionality to extract the value of one parameter from the configuration file given. Execution is terminated if the parameter specified is not found in the configuration file.</span>
+
+<span class="sd">        :param string absfname: filename of the the configuration file including absolute path.</span>
+
+<span class="sd">        :param string param: parameter to extract from configuration file.</span>
+
+<span class="sd">        :return: a string with the value of the parameter read from the configuration file.</span>
+<span class="sd">        :rtype: string</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">aux</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">absfname</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fp</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">fp</span><span class="p">:</span>
+                <span class="c1"># search string</span>
+                <span class="k">if</span> <span class="n">param</span> <span class="ow">in</span> <span class="n">line</span><span class="p">:</span>
+                    <span class="n">aux</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;=&quot;</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">(</span><span class="s2">&quot;&#39;</span><span class="se">\n</span><span class="s2"> &quot;</span><span class="p">)</span>
+                    <span class="c1"># don&#39;t look for next lines</span>
+                    <span class="k">break</span>
+        <span class="k">if</span> <span class="n">aux</span> <span class="o">==</span> <span class="s2">&quot;&quot;</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span>
+                <span class="s2">&quot;ERROR ! Parameter &quot;</span>
+                <span class="o">+</span> <span class="n">param</span>
+                <span class="o">+</span> <span class="s2">&quot; was not found in file &quot;</span>
+                <span class="o">+</span> <span class="n">absfname</span>
+                <span class="o">+</span> <span class="s2">&quot;... Exiting&quot;</span>
+            <span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">aux</span></div>
+
 <div class="viewcode-block" id="Benchmark.set_locals"><a class="viewcode-back" href="../../candle/candle.html#candle.Benchmark.set_locals">[docs]</a>    <span class="k">def</span> <span class="nf">set_locals</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Functionality to set variables specific for the benchmark.</span>
@@ -250,7 +310,6 @@
 <span class="sd">        - additional_definitions: list of dictionaries describing \</span>
 <span class="sd">            the additional parameters for the benchmark.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-
         <span class="k">pass</span></div>
 
 <div class="viewcode-block" id="Benchmark.check_required_exists"><a class="viewcode-back" href="../../candle/candle.html#candle.Benchmark.check_required_exists">[docs]</a>    <span class="k">def</span> <span class="nf">check_required_exists</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">gparam</span><span class="p">:</span> <span class="n">ConfigDict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
@@ -269,6 +328,34 @@
                 <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="n">diff_set</span><span class="p">))</span>
                 <span class="o">+</span> <span class="s2">&quot;... Exiting&quot;</span>
             <span class="p">)</span></div></div>
+
+
+<span class="k">def</span> <span class="nf">create_params</span><span class="p">(</span>
+    <span class="n">file_path</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">default_model</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">framework</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">prog_name</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">desc</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">additional_definitions</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">required</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+<span class="p">):</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Generating parameters for standard benchmark</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="c1"># file_path = os.path.dirname(os.path.realpath(__file__))</span>
+    <span class="n">tmp_bmk</span> <span class="o">=</span> <span class="n">Benchmark</span><span class="p">(</span>
+        <span class="n">file_path</span><span class="p">,</span>
+        <span class="n">default_model</span><span class="p">,</span>
+        <span class="n">framework</span><span class="p">,</span>
+        <span class="n">prog_name</span><span class="p">,</span>
+        <span class="n">desc</span><span class="p">,</span>
+        <span class="n">additional_definitions</span><span class="o">=</span><span class="n">additional_definitions</span><span class="p">,</span>
+        <span class="n">required</span><span class="o">=</span><span class="n">required</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="n">params</span> <span class="o">=</span> <span class="n">finalize_parameters</span><span class="p">(</span><span class="n">tmp_bmk</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">params</span>
 </pre></div>
 
            </div>

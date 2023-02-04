@@ -148,9 +148,6 @@ Functions
 - :py:func:`plot_scatter`:
   Undocumented.
 
-- :py:func:`restart`:
-  Possibly restarts model from CheckpointCallback according to given
-
 - :py:func:`clr_callback`:
   Creates keras callback for cyclical learning rate.
 
@@ -262,6 +259,30 @@ Functions
 - :py:func:`plot_metrics`:
   Plots keras training curves history.
 
+- :py:func:`build_pytorch_activation`:
+  Undocumented.
+
+- :py:func:`build_pytorch_optimizer`:
+  Undocumented.
+
+- :py:func:`get_pytorch_function`:
+  Undocumented.
+
+- :py:func:`pytorch_initialize`:
+  Undocumented.
+
+- :py:func:`pytorch_mse`:
+  Undocumented.
+
+- :py:func:`pytorch_xent`:
+  Undocumented.
+
+- :py:func:`set_pytorch_seed`:
+  Set the random number seed to the desired value
+
+- :py:func:`set_pytorch_threads`:
+  Undocumented.
+
 
 .. autofunction:: generate_cross_validation_partition
 
@@ -353,8 +374,6 @@ Functions
 
 .. autofunction:: plot_scatter
 
-.. autofunction:: restart
-
 .. autofunction:: clr_callback
 
 .. autofunction:: clr_check_args
@@ -429,6 +448,22 @@ Functions
 
 .. autofunction:: plot_metrics
 
+.. autofunction:: build_pytorch_activation
+
+.. autofunction:: build_pytorch_optimizer
+
+.. autofunction:: get_pytorch_function
+
+.. autofunction:: pytorch_initialize
+
+.. autofunction:: pytorch_mse
+
+.. autofunction:: pytorch_xent
+
+.. autofunction:: set_pytorch_seed
+
+.. autofunction:: set_pytorch_threads
+
 
 Classes
 =======
@@ -441,9 +476,6 @@ Classes
 
 - :py:class:`ArgumentStruct`:
   Class that converts a python dictionary into an object with named
-
-- :py:class:`CandleCheckpointCallback`:
-  Keras Callback for CANDLE-compliant Benchmarks to use for checkpointing
 
 - :py:class:`MultiGPUCheckpoint`:
   Callback to save the Keras model or model weights at some frequency.
@@ -489,13 +521,6 @@ Classes
 
    .. rubric:: Inheritance
    .. inheritance-diagram:: ArgumentStruct
-      :parts: 1
-
-.. autoclass:: CandleCheckpointCallback
-   :members:
-
-   .. rubric:: Inheritance
-   .. inheritance-diagram:: CandleCheckpointCallback
       :parts: 1
 
 .. autoclass:: MultiGPUCheckpoint

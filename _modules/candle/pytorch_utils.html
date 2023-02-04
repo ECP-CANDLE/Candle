@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>candle.pytorch_utils &mdash; ECP-CANDLE</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/graphviz.css" type="text/css" />
+    <link rel="shortcut icon" href="../../_static/favicon.ico"/>
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/sphinx_highlight.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../index.html" class="icon icon-home"> CANDLE
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../readme.html">What is CANDLE?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../tutorials/index.html">Tutorials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../candle/candle.html"><code class="docutils literal notranslate"><span class="pre">candle</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../shared_installation.html">CANDLE Shared Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../contribute.html">How to Contribute</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">CANDLE</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">candle.pytorch_utils</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for candle.pytorch_utils</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">absolute_import</span>
+
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Dict</span>
+
+<span class="kn">import</span> <span class="nn">torch</span>
+<span class="kn">import</span> <span class="nn">torch.nn</span>
+<span class="kn">import</span> <span class="nn">torch.nn.functional</span> <span class="k">as</span> <span class="nn">F</span>
+<span class="kn">import</span> <span class="nn">torch.nn.init</span>
+<span class="kn">import</span> <span class="nn">torch.optim</span>
+
+<span class="kn">from</span> <span class="nn">.helper_utils</span> <span class="kn">import</span> <span class="n">set_seed</span> <span class="k">as</span> <span class="n">set_seed_defaultUtils</span>
+
+
+<div class="viewcode-block" id="set_pytorch_threads"><a class="viewcode-back" href="../../candle/candle.html#candle.set_pytorch_threads">[docs]</a><span class="k">def</span> <span class="nf">set_pytorch_threads</span><span class="p">():</span>  <span class="c1"># for compatibility</span>
+    <span class="k">pass</span></div>
+
+
+<div class="viewcode-block" id="set_pytorch_seed"><a class="viewcode-back" href="../../candle/candle.html#candle.set_pytorch_seed">[docs]</a><span class="k">def</span> <span class="nf">set_pytorch_seed</span><span class="p">(</span><span class="n">seed</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Set the random number seed to the desired value</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    seed : integer</span>
+<span class="sd">        Random number seed.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">set_seed_defaultUtils</span><span class="p">(</span><span class="n">seed</span><span class="p">)</span>
+    <span class="n">torch</span><span class="o">.</span><span class="n">manual_seed</span><span class="p">(</span><span class="n">seed</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="get_pytorch_function"><a class="viewcode-back" href="../../candle/candle.html#candle.get_pytorch_function">[docs]</a><span class="k">def</span> <span class="nf">get_pytorch_function</span><span class="p">(</span><span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+    <span class="n">mapping</span> <span class="o">=</span> <span class="p">{}</span>
+
+    <span class="c1"># loss</span>
+    <span class="n">mapping</span><span class="p">[</span><span class="s2">&quot;mse&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">MSELoss</span><span class="p">()</span>
+    <span class="n">mapping</span><span class="p">[</span><span class="s2">&quot;binary_crossentropy&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">BCELoss</span><span class="p">()</span>
+    <span class="n">mapping</span><span class="p">[</span><span class="s2">&quot;categorical_crossentropy&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">CrossEntropyLoss</span><span class="p">()</span>
+    <span class="n">mapping</span><span class="p">[</span><span class="s2">&quot;smoothL1&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">SmoothL1Loss</span><span class="p">()</span>
+
+    <span class="n">mapped</span> <span class="o">=</span> <span class="n">mapping</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">mapped</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s1">&#39;No pytorch function found for &quot;</span><span class="si">{}</span><span class="s1">&quot;&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">name</span><span class="p">))</span>
+
+    <span class="k">return</span> <span class="n">mapped</span></div>
+
+
+<div class="viewcode-block" id="build_pytorch_activation"><a class="viewcode-back" href="../../candle/candle.html#candle.build_pytorch_activation">[docs]</a><span class="k">def</span> <span class="nf">build_pytorch_activation</span><span class="p">(</span><span class="n">activation</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+
+    <span class="c1"># activation</span>
+    <span class="k">if</span> <span class="n">activation</span> <span class="o">==</span> <span class="s2">&quot;relu&quot;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">ReLU</span><span class="p">()</span>
+    <span class="k">elif</span> <span class="n">activation</span> <span class="o">==</span> <span class="s2">&quot;sigmoid&quot;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">Sigmoid</span><span class="p">()</span>
+    <span class="k">elif</span> <span class="n">activation</span> <span class="o">==</span> <span class="s2">&quot;tanh&quot;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">Tanh</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="build_pytorch_optimizer"><a class="viewcode-back" href="../../candle/candle.html#candle.build_pytorch_optimizer">[docs]</a><span class="k">def</span> <span class="nf">build_pytorch_optimizer</span><span class="p">(</span>
+    <span class="n">model</span><span class="p">,</span> <span class="n">optimizer</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">lr</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">kerasDefaults</span><span class="p">:</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">trainable_only</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span>
+<span class="p">):</span>
+    <span class="k">if</span> <span class="n">trainable_only</span><span class="p">:</span>
+        <span class="n">params</span> <span class="o">=</span> <span class="nb">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">p</span><span class="p">:</span> <span class="n">p</span><span class="o">.</span><span class="n">requires_grad</span><span class="p">,</span> <span class="n">model</span><span class="o">.</span><span class="n">parameters</span><span class="p">())</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">params</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">parameters</span><span class="p">()</span>
+
+    <span class="c1"># schedule = optimizers.optimizer.Schedule() # constant lr (equivalent to default keras setting)</span>
+
+    <span class="k">if</span> <span class="n">optimizer</span> <span class="o">==</span> <span class="s2">&quot;sgd&quot;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">torch</span><span class="o">.</span><span class="n">optim</span><span class="o">.</span><span class="n">GradientDescentMomentum</span><span class="p">(</span>
+            <span class="n">params</span><span class="p">,</span>
+            <span class="n">lr</span><span class="o">=</span><span class="n">lr</span><span class="p">,</span>
+            <span class="n">momentum_coef</span><span class="o">=</span><span class="n">kerasDefaults</span><span class="p">[</span><span class="s2">&quot;momentum_sgd&quot;</span><span class="p">],</span>
+            <span class="n">nesterov</span><span class="o">=</span><span class="n">kerasDefaults</span><span class="p">[</span><span class="s2">&quot;nesterov_sgd&quot;</span><span class="p">],</span>
+        <span class="p">)</span>
+
+    <span class="k">elif</span> <span class="n">optimizer</span> <span class="o">==</span> <span class="s2">&quot;rmsprop&quot;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">torch</span><span class="o">.</span><span class="n">optim</span><span class="o">.</span><span class="n">RMSprop</span><span class="p">(</span>
+            <span class="n">model</span><span class="o">.</span><span class="n">parameters</span><span class="p">(),</span>
+            <span class="n">lr</span><span class="o">=</span><span class="n">lr</span><span class="p">,</span>
+            <span class="n">alpha</span><span class="o">=</span><span class="n">kerasDefaults</span><span class="p">[</span><span class="s2">&quot;rho&quot;</span><span class="p">],</span>
+            <span class="n">eps</span><span class="o">=</span><span class="n">kerasDefaults</span><span class="p">[</span><span class="s2">&quot;epsilon&quot;</span><span class="p">],</span>
+        <span class="p">)</span>
+
+    <span class="k">elif</span> <span class="n">optimizer</span> <span class="o">==</span> <span class="s2">&quot;adagrad&quot;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">torch</span><span class="o">.</span><span class="n">optim</span><span class="o">.</span><span class="n">Adagrad</span><span class="p">(</span>
+            <span class="n">model</span><span class="o">.</span><span class="n">parameters</span><span class="p">(),</span> <span class="n">lr</span><span class="o">=</span><span class="n">lr</span><span class="p">,</span> <span class="n">eps</span><span class="o">=</span><span class="n">kerasDefaults</span><span class="p">[</span><span class="s2">&quot;epsilon&quot;</span><span class="p">]</span>
+        <span class="p">)</span>
+
+    <span class="k">elif</span> <span class="n">optimizer</span> <span class="o">==</span> <span class="s2">&quot;adadelta&quot;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">torch</span><span class="o">.</span><span class="n">optim</span><span class="o">.</span><span class="n">Adadelta</span><span class="p">(</span>
+            <span class="n">params</span><span class="p">,</span> <span class="n">eps</span><span class="o">=</span><span class="n">kerasDefaults</span><span class="p">[</span><span class="s2">&quot;epsilon&quot;</span><span class="p">],</span> <span class="n">rho</span><span class="o">=</span><span class="n">kerasDefaults</span><span class="p">[</span><span class="s2">&quot;rho&quot;</span><span class="p">]</span>
+        <span class="p">)</span>
+
+    <span class="k">elif</span> <span class="n">optimizer</span> <span class="o">==</span> <span class="s2">&quot;adam&quot;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">torch</span><span class="o">.</span><span class="n">optim</span><span class="o">.</span><span class="n">Adam</span><span class="p">(</span>
+            <span class="n">params</span><span class="p">,</span>
+            <span class="n">lr</span><span class="o">=</span><span class="n">lr</span><span class="p">,</span>
+            <span class="n">betas</span><span class="o">=</span><span class="p">[</span><span class="n">kerasDefaults</span><span class="p">[</span><span class="s2">&quot;beta_1&quot;</span><span class="p">],</span> <span class="n">kerasDefaults</span><span class="p">[</span><span class="s2">&quot;beta_2&quot;</span><span class="p">]],</span>
+            <span class="n">eps</span><span class="o">=</span><span class="n">kerasDefaults</span><span class="p">[</span><span class="s2">&quot;epsilon&quot;</span><span class="p">],</span>
+        <span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="pytorch_initialize"><a class="viewcode-back" href="../../candle/candle.html#candle.pytorch_initialize">[docs]</a><span class="k">def</span> <span class="nf">pytorch_initialize</span><span class="p">(</span><span class="n">weights</span><span class="p">,</span> <span class="n">initializer</span><span class="p">,</span> <span class="n">kerasDefaults</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">constant</span><span class="o">=</span><span class="mf">0.0</span><span class="p">):</span>
+
+    <span class="k">if</span> <span class="n">initializer</span> <span class="o">==</span> <span class="s2">&quot;constant&quot;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">init</span><span class="o">.</span><span class="n">constant_</span><span class="p">(</span><span class="n">weights</span><span class="p">,</span> <span class="n">val</span><span class="o">=</span><span class="n">constant</span><span class="p">)</span>
+
+    <span class="k">elif</span> <span class="n">initializer</span> <span class="o">==</span> <span class="s2">&quot;uniform&quot;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">init</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span>
+            <span class="n">weights</span><span class="p">,</span>
+            <span class="n">a</span><span class="o">=</span><span class="n">kerasDefaults</span><span class="p">[</span><span class="s2">&quot;minval_uniform&quot;</span><span class="p">],</span>
+            <span class="n">b</span><span class="o">=</span><span class="n">kerasDefaults</span><span class="p">[</span><span class="s2">&quot;maxval_uniform&quot;</span><span class="p">],</span>
+        <span class="p">)</span>
+
+    <span class="k">elif</span> <span class="n">initializer</span> <span class="o">==</span> <span class="s2">&quot;normal&quot;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">init</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span>
+            <span class="n">weights</span><span class="p">,</span>
+            <span class="n">mean</span><span class="o">=</span><span class="n">kerasDefaults</span><span class="p">[</span><span class="s2">&quot;mean_normal&quot;</span><span class="p">],</span>
+            <span class="n">std</span><span class="o">=</span><span class="n">kerasDefaults</span><span class="p">[</span><span class="s2">&quot;stddev_normal&quot;</span><span class="p">],</span>
+        <span class="p">)</span>
+
+    <span class="k">elif</span> <span class="n">initializer</span> <span class="o">==</span> <span class="s2">&quot;glorot_normal&quot;</span><span class="p">:</span>  <span class="c1"># not quite Xavier</span>
+        <span class="k">return</span> <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">init</span><span class="o">.</span><span class="n">xavier_normal</span><span class="p">(</span><span class="n">weights</span><span class="p">)</span>
+
+    <span class="k">elif</span> <span class="n">initializer</span> <span class="o">==</span> <span class="s2">&quot;glorot_uniform&quot;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">init</span><span class="o">.</span><span class="n">xavier_uniform_</span><span class="p">(</span><span class="n">weights</span><span class="p">)</span>
+
+    <span class="k">elif</span> <span class="n">initializer</span> <span class="o">==</span> <span class="s2">&quot;he_normal&quot;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">init</span><span class="o">.</span><span class="n">kaiming_uniform</span><span class="p">(</span><span class="n">weights</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="pytorch_xent"><a class="viewcode-back" href="../../candle/candle.html#candle.pytorch_xent">[docs]</a><span class="k">def</span> <span class="nf">pytorch_xent</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">F</span><span class="o">.</span><span class="n">cross_entropy</span><span class="p">(</span><span class="n">y_pred</span><span class="p">,</span> <span class="n">y_true</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="pytorch_mse"><a class="viewcode-back" href="../../candle/candle.html#candle.pytorch_mse">[docs]</a><span class="k">def</span> <span class="nf">pytorch_mse</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">F</span><span class="o">.</span><span class="n">mse_loss</span><span class="p">(</span><span class="n">y_pred</span><span class="p">,</span> <span class="n">y_true</span><span class="p">)</span></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023 | https://www.anl.gov.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
