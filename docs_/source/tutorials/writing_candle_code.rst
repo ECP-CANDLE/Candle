@@ -101,7 +101,7 @@ which sets appropriate parameters in a tensorflow session.
 
     # thread optimization
     import os
-    from keras import backend as K
+    from tensorflow.keras import backend as K
     if K.backend() == 'tensorflow' and 'NUM_INTRA_THREADS' in os.environ:
         import tensorflow as tf
         sess = tf.Session(config=tf.ConfigProto(inter_op_parallelism_threads=int(os.environ['NUM_INTER_THREADS']),
@@ -123,7 +123,7 @@ which will be passed to the ``run()`` method.
     # this is a part of mnist_mlp_candle.py
 
     import mnist
-    import candle_keras as candle
+    import candle
 
     def initialize_parameters():
         mnist_common = mnist.MNIST(mnist.file_path,
