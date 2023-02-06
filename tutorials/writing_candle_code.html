@@ -173,7 +173,7 @@ example</a>,
 which sets appropriate parameters in a tensorflow session.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># thread optimization</span>
 <span class="kn">import</span> <span class="nn">os</span>
-<span class="kn">from</span> <span class="nn">keras</span> <span class="kn">import</span> <span class="n">backend</span> <span class="k">as</span> <span class="n">K</span>
+<span class="kn">from</span> <span class="nn">tensorflow.keras</span> <span class="kn">import</span> <span class="n">backend</span> <span class="k">as</span> <span class="n">K</span>
 <span class="k">if</span> <span class="n">K</span><span class="o">.</span><span class="n">backend</span><span class="p">()</span> <span class="o">==</span> <span class="s1">&#39;tensorflow&#39;</span> <span class="ow">and</span> <span class="s1">&#39;NUM_INTRA_THREADS&#39;</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">:</span>
     <span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="nn">tf</span>
     <span class="n">sess</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">Session</span><span class="p">(</span><span class="n">config</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">ConfigProto</span><span class="p">(</span><span class="n">inter_op_parallelism_threads</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s1">&#39;NUM_INTER_THREADS&#39;</span><span class="p">]),</span>
@@ -194,7 +194,7 @@ which will be passed to the <code class="docutils literal notranslate"><span cla
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># this is a part of mnist_mlp_candle.py</span>
 
 <span class="kn">import</span> <span class="nn">mnist</span>
-<span class="kn">import</span> <span class="nn">candle_keras</span> <span class="k">as</span> <span class="nn">candle</span>
+<span class="kn">import</span> <span class="nn">candle</span>
 
 <span class="k">def</span> <span class="nf">initialize_parameters</span><span class="p">():</span>
     <span class="n">mnist_common</span> <span class="o">=</span> <span class="n">mnist</span><span class="o">.</span><span class="n">MNIST</span><span class="p">(</span><span class="n">mnist</span><span class="o">.</span><span class="n">file_path</span><span class="p">,</span>
