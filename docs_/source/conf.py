@@ -104,8 +104,8 @@ pygments_style = 'sphinx'
 #
 # html_theme = 'alabaster'
 import sphinx_rtd_theme
-html_theme = "sphinx_book_theme"
-# html_theme = "sphinx_rtd_theme"
+# html_theme = "sphinx_book_theme"
+html_theme = "sphinx_rtd_theme"
 html_theme_options = {
     'collapse_navigation': True,
     'display_version': True
