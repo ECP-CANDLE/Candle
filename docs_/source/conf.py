@@ -55,7 +55,7 @@ extensions = [
     "sphinx.ext.mathjax",
     # "myst_nb",
     # "sphinx_design",
-    "nbsphinx",
+    # "nbsphinx",
     'autoapi.sphinx',
 ]
 
