@@ -53,7 +53,7 @@ extensions = [
     "sphinx.ext.autosummary",
     "sphinx.ext.intersphinx",
     "sphinx.ext.mathjax",
-    "myst_nb",
+    # "myst_nb",
     "sphinx_design",
     "nbsphinx",
     'autoapi.sphinx',
