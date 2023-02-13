@@ -16,6 +16,8 @@ import os
 import sys
 sys.path.insert(0, os.path.abspath('../../examples/mnist'))
 
+from sphinx.application import Sphinx
+from sphinx.util import logging
 
 # -- Project information -----------------------------------------------------
 
@@ -39,7 +41,7 @@ release = ''
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
 extensions = [
-    # 'sphinx.ext.autodoc',
+    'sphinx.ext.autodoc',
     'sphinx.ext.todo',
     'sphinx.ext.coverage',
     'sphinx.ext.mathjax',
