@@ -48,6 +48,14 @@ extensions = [
     'sphinx.ext.githubpages',
     'sphinx.ext.graphviz',
     # 'sphinx.ext.inheritance_diagram',
+    "sphinx.ext.autodoc",
+    "sphinx.ext.napoleon",
+    "sphinx.ext.autosummary",
+    "sphinx.ext.intersphinx",
+    "sphinx.ext.mathjax",
+    "myst_nb",
+    "sphinx_design",
+    "nbsphinx",
     'autoapi.sphinx',
 ]
 
